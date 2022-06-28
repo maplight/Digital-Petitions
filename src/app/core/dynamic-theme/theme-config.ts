@@ -15,7 +15,7 @@ export enum ThemeMainColorType {
   primaryColor = 'primaryColor',
   accentColor = 'accentColor',
   warnColor = 'warnColor',
-  headerColor = 'headerColor'
+  headerColor = 'headerColor',
 }
 
 export interface ThemeableComponentConfig {
@@ -29,5 +29,3 @@ export interface ThemeableComponentProperties {
   textColor?: string;
   hoverTextColor?: string;
 }
-
-

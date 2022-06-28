@@ -4,12 +4,10 @@ import { DEFAULT_THEME } from './default-theme';
 import * as tinycolor from 'tinycolor2';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemingService {
-
   private static readonly THEME_VARIABLE_PREFIX = '--theme';
-  
 
   /**
    * The load method must return a Promise, since that will make the application wait in the APP_INITIALIZER DI token
@@ -27,17 +25,22 @@ export class ThemingService {
    */
   private setupMainPalettes(themeConfig: ThemeConfig): void {
     Object.keys(themeConfig.mainColors).forEach((key: string) => {
-      const selectedColorValue: string = themeConfig.mainColors[key as ThemeMainColorType];
+      const selectedColorValue: string =
+        themeConfig.mainColors[key as ThemeMainColorType];
 
       // Should be for example: --theme-primary or --theme-accent etc..
-      const variableName: string = this.prependVariableName(this.convertCamelCaseToKebabCase(key));
+      const variableName: string = this.prependVariableName(
+        this.convertCamelCaseToKebabCase(key)
+      );
 
       // Generate the palette colors
-      const colorPalette: Array<ColorConfig> = this.generateColorPalette(selectedColorValue);
+      const colorPalette: Array<ColorConfig> =
+        this.generateColorPalette(selectedColorValue);
 
       colorPalette.forEach((colorConfig: ColorConfig) => {
         // Destructure the color config
-        const {colorVariant, colorHexValue, shouldHaveDarkContrast} = colorConfig;
+        const { colorVariant, colorHexValue, shouldHaveDarkContrast } =
+          colorConfig;
 
         // Set the color variable
         const colorVariableName = `${variableName}-${colorVariant}`;
@@ -46,8 +49,13 @@ export class ThemingService {
         // By Angular material, contrasted colors are either white, or a darker color
         // Set the contrast color
         const contrastedColorVariableName = `${variableName}-contrast-${colorVariant}`;
-        const contrastedColorValue = shouldHaveDarkContrast ? 'rgba(0, 0, 0, 0.87)' : '#fff';
-        this.setColorVariable(contrastedColorVariableName, contrastedColorValue);
+        const contrastedColorValue = shouldHaveDarkContrast
+          ? 'rgba(0, 0, 0, 0.87)'
+          : '#fff';
+        this.setColorVariable(
+          contrastedColorVariableName,
+          contrastedColorValue
+        );
       });
     });
   }
@@ -63,7 +71,10 @@ export class ThemingService {
    */
   private generateColorPalette(hexColor: string): Array<ColorConfig> {
     const baseLight = tinycolor('#ffffff');
-    const baseDark = this.multiply(tinycolor(hexColor).toRgb(), tinycolor(hexColor).toRgb());
+    const baseDark = this.multiply(
+      tinycolor(hexColor).toRgb(),
+      tinycolor(hexColor).toRgb()
+    );
     const baseTriad = tinycolor(hexColor).tetrad();
 
     return [
@@ -77,10 +88,22 @@ export class ThemingService {
       this.mapColorConfig(tinycolor.mix(baseDark, hexColor, 70), '700'),
       this.mapColorConfig(tinycolor.mix(baseDark, hexColor, 54), '800'),
       this.mapColorConfig(tinycolor.mix(baseDark, hexColor, 25), '900'),
-      this.mapColorConfig(tinycolor.mix(baseDark, baseTriad[3], 15).saturate(80).lighten(65), 'A100'),
-      this.mapColorConfig(tinycolor.mix(baseDark, baseTriad[3], 15).saturate(80).lighten(55), 'A200'),
-      this.mapColorConfig(tinycolor.mix(baseDark, baseTriad[3], 15).saturate(100).lighten(45), 'A400'),
-      this.mapColorConfig(tinycolor.mix(baseDark, baseTriad[3], 15).saturate(100).lighten(40), 'A700')
+      this.mapColorConfig(
+        tinycolor.mix(baseDark, baseTriad[3], 15).saturate(80).lighten(65),
+        'A100'
+      ),
+      this.mapColorConfig(
+        tinycolor.mix(baseDark, baseTriad[3], 15).saturate(80).lighten(55),
+        'A200'
+      ),
+      this.mapColorConfig(
+        tinycolor.mix(baseDark, baseTriad[3], 15).saturate(100).lighten(45),
+        'A400'
+      ),
+      this.mapColorConfig(
+        tinycolor.mix(baseDark, baseTriad[3], 15).saturate(100).lighten(40),
+        'A700'
+      ),
     ];
   }
 
@@ -91,19 +114,25 @@ export class ThemingService {
    * @param colorVariant
    * @private
    */
-  private mapColorConfig(tinyColorInstance: tinycolor.Instance, colorVariant: string): ColorConfig {
+  private mapColorConfig(
+    tinyColorInstance: tinycolor.Instance,
+    colorVariant: string
+  ): ColorConfig {
     return {
       colorVariant,
       colorHexValue: tinyColorInstance.toHexString(),
-      shouldHaveDarkContrast: tinyColorInstance.isLight()
+      shouldHaveDarkContrast: tinyColorInstance.isLight(),
     };
   }
 
-  private multiply(rgb1: tinycolor.ColorFormats.RGB, rgb2: tinycolor.ColorFormats.RGB): tinycolor.Instance {
+  private multiply(
+    rgb1: tinycolor.ColorFormats.RGB,
+    rgb2: tinycolor.ColorFormats.RGB
+  ): tinycolor.Instance {
     rgb1.r = Math.floor((rgb1.r * rgb2.r) / 255);
     rgb1.g = Math.floor((rgb1.g * rgb2.g) / 255);
     rgb1.b = Math.floor((rgb1.b * rgb2.b) / 255);
-    const {r, g, b} = rgb1;
+    const { r, g, b } = rgb1;
 
     return tinycolor(`rgb ${r} ${g} ${b}`);
   }

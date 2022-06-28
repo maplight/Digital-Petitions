@@ -4,29 +4,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ThemingService } from './dynamic-teme/theming.service';
-
-
-
+import { ThemingService } from './core/dynamic-theme/theming.service';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
   providers: [
     {
       provide: APP_INITIALIZER,
       // Provide the APP_INITIALIZER, wait until the theming configuration is fetched and set up correctly
-      useFactory: (themingService: ThemingService) => () => themingService.initializeTheme(),
+      useFactory: (themingService: ThemingService) => () =>
+        themingService.initializeTheme(),
       deps: [ThemingService],
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -6,6 +6,6 @@ export const DEFAULT_THEME: ThemeConfig = {
     primaryColor: '#0c3edf',
     accentColor: '#46a35e',
     warnColor: '#ff0700',
-    headerColor: '#ffcf00'
+    headerColor: '#ffcf00',
   },
 };
