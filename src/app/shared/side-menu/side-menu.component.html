@@ -1,0 +1,11 @@
+<div class="flex flex-col pt-16 mx-8">
+  <a
+    class="flex flex-row pb-7 text-gray-600"
+    *ngFor="let item of items"
+    [routerLink]="[item.route]"
+    ><mat-icon>{{ item.icon }}</mat-icon>
+    <p class="font-mulish font-extrabold text-base px-5">
+      {{ item.text }}
+    </p></a
+  >
+</div>
