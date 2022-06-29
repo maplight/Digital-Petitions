@@ -6,11 +6,26 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    data: { showMenu: false },
     children: [
       {
         path: 'example',
         loadChildren: () =>
           import('./example/example.module').then((m) => m.ExampleModule),
+      },
+    ],
+  },
+  {
+    path: '',
+    component: LayoutComponent,
+    data: { showMenu: true },
+    children: [
+      {
+        path: 'city-staff',
+        loadChildren: () =>
+          import('./city-staff/city-staff.module').then(
+            (m) => m.CityStaffModule
+          ),
       },
     ],
   },

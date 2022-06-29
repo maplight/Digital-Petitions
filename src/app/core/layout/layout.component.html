@@ -1,4 +1,12 @@
 <app-header></app-header>
-<div class="px-6 lg:px-30 pt-6">
-  <router-outlet></router-outlet>
-</div>
+<mat-drawer-container class="h-full">
+  <mat-drawer #drawer class="h-full w-64" mode="side" [opened]="showMenu">
+    <dp-side-menu></dp-side-menu>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <div class="px-6 lg:px-30 pt-6">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
