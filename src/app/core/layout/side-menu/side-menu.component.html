@@ -1,11 +1,22 @@
-<div class="flex flex-col pt-16 mx-8">
+<mat-nav-list
+  class="flex flex-col pt-16"
+  *ngIf="activatedRoute$ | async as route"
+>
   <a
-    class="flex flex-row pb-7 text-gray-600"
-    *ngFor="let item of items"
+    mat-list-item
     [routerLink]="[item.route]"
-    ><mat-icon>{{ item.icon }}</mat-icon>
-    <p class="font-mulish font-extrabold text-base px-5">
-      {{ item.text }}
-    </p></a
+    *ngFor="let item of items"
+    class="text-gray-600"
   >
-</div>
+    <span
+      [ngClass]="{
+        'text-primary-500': route.startsWith(item.route)
+      }"
+      class="flex flex-row ml-8"
+      ><mat-icon>{{ item.icon }}</mat-icon>
+      <span class="font-mulish font-extrabold text-base ml-5">
+        {{ item.text }}
+      </span></span
+    >
+  </a>
+</mat-nav-list>

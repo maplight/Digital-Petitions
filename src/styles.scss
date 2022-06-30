@@ -160,3 +160,7 @@ html,
 body {
   height: 100%;
 }
+
+.content-height {
+  min-height: calc(100vh - 6.25rem);
+}
