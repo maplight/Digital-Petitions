@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    data: { showMenu: false },
+    data: { showMenu: false, showDemo: true },
     children: [
       {
         path: 'example',
@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    data: { showMenu: true },
+    data: { showMenu: true, showDemo: true },
     children: [
       {
         path: 'city-staff',
