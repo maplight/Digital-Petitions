@@ -1,12 +1,10 @@
 <app-header></app-header>
-<mat-drawer-container class="h-full">
-  <mat-drawer #drawer class="h-full w-64" mode="side" [opened]="showMenu">
+<mat-drawer-container>
+  <mat-drawer #drawer class="w-64" mode="side" [opened]="showMenu">
     <dp-side-menu></dp-side-menu>
   </mat-drawer>
 
-  <div class="example-sidenav-content">
-    <div class="px-6 lg:px-30 pt-6">
-      <router-outlet></router-outlet>
-    </div>
+  <div class="pt-6 px-6 lg:px-30 content-height">
+    <router-outlet></router-outlet>
   </div>
 </mat-drawer-container>
