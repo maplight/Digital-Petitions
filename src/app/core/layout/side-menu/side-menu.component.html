@@ -1,11 +1,10 @@
-<div class="flex flex-col pt-16 mx-8">
-  <a
-    class="flex flex-row pb-7 text-gray-600"
-    *ngFor="let item of items"
-    [routerLink]="[item.route]"
-    ><mat-icon>{{ item.icon }}</mat-icon>
-    <p class="font-mulish font-extrabold text-base px-5">
-      {{ item.text }}
-    </p></a
-  >
-</div>
+<mat-nav-list class="flex flex-col pt-16">
+  <mat-list-item *ngFor="let item of items">
+    <a [routerLink]="[item.route]" class="flex flex-row text-gray-600 ml-8"
+      ><mat-icon>{{ item.icon }}</mat-icon>
+      <span class="font-mulish font-extrabold text-base px-5">
+        {{ item.text }}
+      </span></a
+    >
+  </mat-list-item>
+</mat-nav-list>
