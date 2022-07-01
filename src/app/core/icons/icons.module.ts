@@ -18,5 +18,11 @@ export class IconsModule {
         'assets/heroicons-outline.svg'
       )
     );
+    this.matIconRegistry.addSvgIconSetInNamespace(
+      'custom_icons',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        'assets/custom-icons.svg'
+      )
+    );
   }
 }
