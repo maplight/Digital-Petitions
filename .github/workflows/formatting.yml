@@ -23,7 +23,7 @@ jobs:
       - name: Prettify code
         uses: creyD/prettier_action@v4.2
         with:
-          same_commit: True
+          same_commit: False
           prettier_options: --write **/*.{ts,js,md,html,css,less,scss,json,xml} --ignore-unknown
           only_changed: True
         env:
