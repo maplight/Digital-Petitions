@@ -393,7 +393,7 @@ module.exports = {
       xl: ['1.25rem', { lineHeight: '1.75rem' }],
       '2xl': ['1.5rem', { lineHeight: '2rem' }],
       '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-      '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+      '4xl': ['2rem', { lineHeight: '2.5rem' }],//custom
       '5xl': ['3rem', { lineHeight: '1' }],
       '6xl': ['3.75rem', { lineHeight: '1' }],
       '7xl': ['4.5rem', { lineHeight: '1' }],
@@ -606,7 +606,9 @@ module.exports = {
       relaxed: '1.625',
       loose: '2',
       3: '.75rem',
+      3.5:'0.875rem',
       4: '1rem',
+      4.5: '1.125rem',
       5: '1.25rem',
       6: '1.5rem',
       7: '1.75rem',
