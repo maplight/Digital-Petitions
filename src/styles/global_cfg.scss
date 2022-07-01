@@ -35,6 +35,18 @@ p {
   @apply text-base font-normal text-black;
 }
 
-.mat-button {
-  @apply rounded-xl py-3 px-8;
+// .mat-button {
+//   @apply rounded-xl py-3 px-8;
+// }
+
+/* Buttons style overrides */
+
+.mat-button,
+.mat-flat-button,
+.mat-raised-button,
+.mat-stroked-button {
+  padding: 8px 24px !important;
+  line-height: 16px !important;
+  border-radius: 0.5rem !important;
+  letter-spacing: 0.02rem !important;
 }
