@@ -13,7 +13,7 @@
         'text-primary-500': route.startsWith(item.route)
       }"
       class="flex flex-row ml-8"
-      ><mat-icon>{{ item.icon }}</mat-icon>
+      ><mat-icon [svgIcon]="item.icon"></mat-icon>
       <span class="font-mulish font-extrabold text-base ml-5">
         {{ item.text }}
       </span></span

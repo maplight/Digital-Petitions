@@ -10,12 +10,12 @@ import { filter, map, Observable, startWith } from 'rxjs';
 export class SideMenuComponent implements OnInit {
   readonly items = [
     {
-      icon: 'home',
+      icon: 'custom_icons:home',
       route: '/city-staff/home',
       text: 'Home',
     },
     {
-      icon: 'settings_applications',
+      icon: 'custom_icons:sliders',
       route: '/city-staff/admin',
       text: 'Site Admin',
     },
