@@ -14,18 +14,6 @@ import { MatIconModule } from '@angular/material/icon';
     ExampleRoutingModule,
     ExampleMaterialModule,
     MatIconModule,
-    /*
-    HeroIconModule.forRoot(
-      {
-        menu,
-        annotation,
-      },
-      {
-        defaultHostDisplay: 'inlineBlock', // default 'none'
-        attachDefaultDimensionsIfNoneFound: true, // default 'false'
-      }
-    ),
-    */
   ],
 })
 export class ExampleModule {}
