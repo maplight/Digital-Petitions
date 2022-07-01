@@ -5,7 +5,7 @@ import { ExampleRoutingModule } from './example-routing.module';
 import { ExampleComponent } from './example.component';
 import { ExampleMaterialModule } from './example-material.module';
 
-import { menu, annotation, HeroIconModule } from 'ng-heroicon';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [ExampleComponent],
@@ -13,6 +13,8 @@ import { menu, annotation, HeroIconModule } from 'ng-heroicon';
     CommonModule,
     ExampleRoutingModule,
     ExampleMaterialModule,
+    MatIconModule,
+    /*
     HeroIconModule.forRoot(
       {
         menu,
@@ -23,6 +25,7 @@ import { menu, annotation, HeroIconModule } from 'ng-heroicon';
         attachDefaultDimensionsIfNoneFound: true, // default 'false'
       }
     ),
+    */
   ],
 })
 export class ExampleModule {}
