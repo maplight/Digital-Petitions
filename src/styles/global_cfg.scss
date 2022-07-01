@@ -1,0 +1,36 @@
+html,
+body {
+  @apply w-full font-mulish;
+}
+
+.content-height {
+  min-height: calc(100vh - 6.25rem);
+}
+
+h1 {
+  @apply text-4xl  text-black;
+}
+
+h2 {
+  @apply text-2xl text-black;
+}
+
+h3 {
+  @apply text-xl leading-5  text-black;
+}
+
+h4 {
+  @apply text-base  text-black;
+}
+
+h5 {
+  @apply text-sm leading-4.5 text-black;
+}
+
+h6 {
+  @apply text-xs leading-3.5 text-black;
+}
+
+p {
+  @apply text-base font-normal text-black;
+}
