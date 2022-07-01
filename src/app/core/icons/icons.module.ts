@@ -13,12 +13,6 @@ export class IconsModule {
     private domSanitizer: DomSanitizer
   ) {
     this.matIconRegistry.addSvgIconSetInNamespace(
-      'heroicons_outline',
-      this.domSanitizer.bypassSecurityTrustResourceUrl(
-        'assets/heroicons-outline.svg'
-      )
-    );
-    this.matIconRegistry.addSvgIconSetInNamespace(
       'custom_icons',
       this.domSanitizer.bypassSecurityTrustResourceUrl(
         'assets/custom-icons.svg'
