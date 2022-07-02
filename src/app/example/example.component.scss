@@ -29,3 +29,19 @@ section {
   justify-content: center;
   width: 120px;
 }
+
+/*
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: none;
+}
+*/
+
+.demo-row-is-clicked {
+  @apply bg-primary-50 border-solid border-1;
+}

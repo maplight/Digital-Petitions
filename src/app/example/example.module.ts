@@ -6,6 +6,11 @@ import { ExampleComponent } from './example.component';
 import { ExampleMaterialModule } from './example-material.module';
 
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ExampleComponent],
@@ -14,6 +19,10 @@ import { MatIconModule } from '@angular/material/icon';
     ExampleRoutingModule,
     ExampleMaterialModule,
     MatIconModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    FormsModule,
   ],
 })
 export class ExampleModule {}

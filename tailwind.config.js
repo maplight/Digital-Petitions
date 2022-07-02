@@ -92,6 +92,7 @@ module.exports = {
       10: "2.5rem",
       11: "2.75rem",
       12: "3rem",
+      13: "3.25rem",//custom
       14: "3.5rem",
       16: "4rem",
       20: "5rem",
@@ -212,7 +213,9 @@ module.exports = {
     borderWidth: {
       DEFAULT: "1px",
       0: "0px",
+      1: "1px",
       2: "2px",
+      3: "3px",
       4: "4px",
       8: "8px",
     },
@@ -607,6 +610,7 @@ module.exports = {
       wide: "0.02em", //custom
       wider: "0.05em",
       widest: "0.1em",
+      dp_px_1:"0.1px",
     },
     lineHeight: {
       none: "1",
