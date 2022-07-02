@@ -41,6 +41,22 @@ p {
 
 /* Buttons style overrides */
 
+.mat-button.mat-primary {  
+  @apply bg-primary-50 #{'!important'};  
+}
+
+.mat-button.mat-accent {
+  @apply bg-accent-50 #{'!important'};
+}
+
+.mat-button.mat-warn {
+  @apply bg-red-100 #{'!important'};
+}
+
+.mat-button.mat-button-disabled {
+  @apply bg-black bg-opacity-[0.12] #{'!important'}
+}
+
 .mat-button,
 .mat-flat-button,
 .mat-raised-button,
