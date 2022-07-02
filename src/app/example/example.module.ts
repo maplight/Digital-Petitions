@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ExampleComponent],
@@ -19,18 +21,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatTableModule,
     MatCheckboxModule,
-    /*
-    HeroIconModule.forRoot(
-      {
-        menu,
-        annotation,
-      },
-      {
-        defaultHostDisplay: 'inlineBlock', // default 'none'
-        attachDefaultDimensionsIfNoneFound: true, // default 'false'
-      }
-    ),
-    */
+    MatSlideToggleModule,
+    FormsModule,
   ],
 })
 export class ExampleModule {}
