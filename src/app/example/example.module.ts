@@ -17,6 +17,20 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ExampleRoutingModule,
     ExampleMaterialModule,
     MatIconModule,
+    MatTableModule,
+    MatCheckboxModule,
+    /*
+    HeroIconModule.forRoot(
+      {
+        menu,
+        annotation,
+      },
+      {
+        defaultHostDisplay: 'inlineBlock', // default 'none'
+        attachDefaultDimensionsIfNoneFound: true, // default 'false'
+      }
+    ),
+    */
   ],
 })
 export class ExampleModule {}
