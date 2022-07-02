@@ -41,8 +41,8 @@ p {
 
 /* Buttons style overrides */
 
-.mat-button.mat-primary {  
-  @apply bg-primary-50 #{'!important'};  
+.mat-button.mat-primary {
+  @apply bg-primary-50 #{'!important'};
 }
 
 .mat-button.mat-accent {
@@ -54,7 +54,7 @@ p {
 }
 
 .mat-button.mat-button-disabled {
-  @apply bg-black bg-opacity-[0.12] #{'!important'}
+  @apply bg-black bg-opacity-[0.12] #{'!important'};
 }
 
 .mat-button,
