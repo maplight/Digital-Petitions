@@ -159,3 +159,37 @@ $table-border: #d7d7d7;
     }
   }
 }
+
+.mat-dialog-container {
+  padding: 40px !important;
+  border-radius: 16px !important;
+  .mat-dialog-title {
+    //typography
+    font-family: "Mulish" !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+    line-height: 24px !important;
+    //display
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .mat-icon {
+      height: 16px;
+      width: 16px;
+    }
+  }
+  .mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .mat-dialog-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}

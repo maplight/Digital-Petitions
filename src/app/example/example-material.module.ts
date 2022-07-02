@@ -6,6 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
@@ -16,6 +17,7 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     MatCheckboxModule,
     MatTableModule,
+    MatDialogModule,
   ],
 })
 export class ExampleMaterialModule {}

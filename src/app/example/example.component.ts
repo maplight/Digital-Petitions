@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogExampleComponent } from './dialog-example/dialog-example.component';
 import { SignElement } from './sign-element.interface';
 
 const ELEMENT_DATA: SignElement[] = [
@@ -40,7 +42,7 @@ const ELEMENT_DATA: SignElement[] = [
 export class ExampleComponent implements OnInit {
   tableBorderless: boolean = false;
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   title = 'digital-petitions';
   displayedColumns: string[] = [
@@ -55,4 +57,10 @@ export class ExampleComponent implements OnInit {
   clickedRows = new Set<SignElement>();
 
   ngOnInit(): void {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogExampleComponent, {
+      width: '690px',
+    });
+  }
 }
