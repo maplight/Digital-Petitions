@@ -44,34 +44,6 @@ const ELEMENT_DATA: SignElement[] = [
     email: 'jackson.graham@example.com',
     registered: 'Registered',
   },
-  {
-    signer_name: 'Savannah Nguyen',
-    signer_date: 'Signe 11/25/2018 2:34 PM EDT',
-    address: '1901 Thornridge Cir. Shiloh, Hawaii 81063 ',
-    email: 'jackson.graham@example.com',
-    registered: 'Registered',
-  },
-  {
-    signer_name: 'Savannah Nguyen',
-    signer_date: 'Signe 11/25/2018 2:34 PM EDT',
-    address: '1901 Thornridge Cir. Shiloh, Hawaii 81063 ',
-    email: 'jackson.graham@example.com',
-    registered: 'Registered',
-  },
-  {
-    signer_name: 'Savannah Nguyen',
-    signer_date: 'Signe 11/25/2018 2:34 PM EDT',
-    address: '1901 Thornridge Cir. Shiloh, Hawaii 81063 ',
-    email: 'jackson.graham@example.com',
-    registered: 'Registered',
-  },
-  {
-    signer_name: 'Savannah Nguyen',
-    signer_date: 'Signe 11/25/2018 2:34 PM EDT',
-    address: '1901 Thornridge Cir. Shiloh, Hawaii 81063 ',
-    email: 'jackson.graham@example.com',
-    registered: 'Registered',
-  },
 ];
 
 @Component({
