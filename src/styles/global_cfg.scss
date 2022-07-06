@@ -219,6 +219,13 @@ $table-border: #d7d7d7;
     font-weight: 400 !important;
   }
 
+  .mat-select-value {
+    color: #181818 !important;
+    font-size: 0.875rem /* 12px */ !important;
+    line-height: 1.125rem /* 16px */ !important;
+    font-weight: 400 !important;
+  }
+
   .mat-form-field-label {
     color: #5c5c5c !important;
     transform: translateY(-0.59375em) scale(1) !important;
@@ -256,6 +263,12 @@ $table-border: #d7d7d7;
   }
 
   .mat-input-element {
+    color: #181818 !important;
+    font-size: 0.875rem /* 12px */ !important;
+    line-height: 1.125rem /* 16px */ !important;
+    font-weight: 400 !important;
+  }
+  .mat-select-value {
     color: #181818 !important;
     font-size: 0.875rem /* 12px */ !important;
     line-height: 1.125rem /* 16px */ !important;
