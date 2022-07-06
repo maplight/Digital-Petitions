@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ExampleRoutingModule } from './example-routing.module';
 import { ExampleComponent } from './example.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogExampleComponent } from './dialog-example/dialog-example.component';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [ExampleComponent, DialogExampleComponent],
@@ -31,6 +32,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatTableModule,
     MatDialogModule,
     FormsModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class ExampleModule {}

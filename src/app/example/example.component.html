@@ -290,4 +290,39 @@
       Launch example dialog
     </button>
   </section>
+  <!--FORM-->
+  <section>
+    <form>
+      <table class="w-full" cellspacing="0">
+        <tr>
+          <td class="p-4">
+            <mat-form-field [floatLabel]="'always'" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input
+                type="email"
+                matInput
+                [formControl]="emailFormControl"
+                [errorStateMatcher]="matcher"
+              />
+            </mat-form-field>
+          </td>
+          <td class="p-4">
+            <mat-form-field [floatLabel]="'always'" appearance="fill">
+              <mat-label>Long Last Name That Will Be Truncated</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+
+      <p class="p-4">
+        <mat-form-field [floatLabel]="'always'" appearance="fill">
+          <mat-label>Address</mat-label>
+          <textarea matInput placeholder="Ex. 100 Main St">
+1600 Amphitheatre Pkwy</textarea
+          >
+        </mat-form-field>
+      </p>
+    </form>
+  </section>
 </div>
