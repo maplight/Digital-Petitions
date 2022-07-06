@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>
+  Hi Human
+
+  <button mat-icon-button (click)="onCancelClick()">
+    <mat-icon [svgIcon]="'custom_icons:close'"></mat-icon>
+  </button>
+</h1>
+<div mat-dialog-content>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero non veniam
+    impedit ut similique, optio voluptas, consectetur odio eveniet possimus eos
+    velit nulla voluptatem et quia adipisci aperiam assumenda praesentium.
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary" (click)="onCancelClick()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]=""
+    cdkFocusInitial
+  >
+    OK
+  </button>
+</div>

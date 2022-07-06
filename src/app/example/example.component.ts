@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogExampleComponent } from './dialog-example/dialog-example.component';
 import { SignElement } from './sign-element.interface';
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 const ELEMENT_DATA: SignElement[] = [
   {
@@ -32,6 +41,20 @@ const ELEMENT_DATA: SignElement[] = [
   },
 ];
 
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
+
 @Component({
   selector: 'app-example',
   templateUrl: './example.component.html',
@@ -40,7 +63,7 @@ const ELEMENT_DATA: SignElement[] = [
 export class ExampleComponent implements OnInit {
   tableBorderless: boolean = false;
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   title = 'digital-petitions';
   displayedColumns: string[] = [
@@ -55,4 +78,17 @@ export class ExampleComponent implements OnInit {
   clickedRows = new Set<SignElement>();
 
   ngOnInit(): void {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogExampleComponent, {
+      width: '690px',
+    });
+  }
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  matcher = new MyErrorStateMatcher();
 }
