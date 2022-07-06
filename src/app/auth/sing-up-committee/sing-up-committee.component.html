@@ -1,0 +1,44 @@
+<div class="w-full flex justify-center">
+  <div
+    class="grid grid-cols-2 gap-8 bg-white py-8 px-6 rounded-3xl border-solid border-1 border-gray-200 shadow-lg w-[824px]"
+  >
+    <mat-form-field [floatLabel]="'always'" appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input type="email" matInput />
+    </mat-form-field>
+    <mat-form-field [floatLabel]="'always'" appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input type="email" matInput />
+    </mat-form-field>
+    <mat-form-field [floatLabel]="'always'" appearance="fill">
+      <mat-label>Address</mat-label>
+      <input type="email" matInput />
+    </mat-form-field>
+    <mat-form-field [floatLabel]="'always'" appearance="fill">
+      <mat-label>Apt/Number</mat-label>
+      <input type="email" matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>State</mat-label>
+      <mat-select>
+        <mat-option
+          *ngFor="let state of local_states"
+          value="{{ state.value }}"
+          >{{ state.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field [floatLabel]="'always'" appearance="fill">
+      <mat-label>Zip Code</mat-label>
+      <input type="email" matInput />
+    </mat-form-field>
+    <mat-form-field [floatLabel]="'always'" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput />
+    </mat-form-field>
+    <mat-form-field [floatLabel]="'always'" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input type="email" matInput />
+    </mat-form-field>
+  </div>
+</div>

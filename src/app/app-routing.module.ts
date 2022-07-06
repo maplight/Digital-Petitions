@@ -29,6 +29,18 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: '',
+    component: LayoutComponent,
+    data: { showMenu: false, showDemo: true },
+    children: [
+      {
+        path: 'committee',
+        loadChildren: () =>
+          import('./committee/committee.module').then((m) => m.CommitteeModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
