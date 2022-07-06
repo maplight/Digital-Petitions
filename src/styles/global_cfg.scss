@@ -193,3 +193,89 @@ $table-border: #d7d7d7;
     justify-content: flex-end;
   }
 }
+
+.mat-form-field {
+  @apply border-solid border-1 rounded-lg max-w-full bg-gray-100 border-transparent;
+
+  .mat-form-field-wrapper {
+    padding: 0px;
+  }
+
+  .mat-form-field-flex {
+    border-radius: 0px !important;
+    padding: 6px 16px !important;
+    gap: 4px !important;
+    min-height: 48px !important;
+  }
+
+  .mat-form-field-infix {
+    padding: 0px !important;
+  }
+
+  .mat-input-element {
+    color: #181818 !important;
+    font-size: 0.875rem /* 12px */ !important;
+    line-height: 1.125rem /* 16px */ !important;
+    font-weight: 400 !important;
+  }
+
+  .mat-form-field-label {
+    color: #5c5c5c !important;
+    transform: translateY(-0.59375em) scale(1) !important;
+    font-size: 0.75rem /* 12px */ !important;
+    line-height: 1rem /* 16px */ !important;
+    font-weight: 700 !important;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
+  .mat-form-field-ripple {
+    background-color: slategray;
+  }
+  .mat-form-field-required-marker {
+    color: slategray;
+  }
+}
+
+.mat-form-field.mat-focused {
+  @apply border-solid border-1 rounded-lg max-w-full bg-gray-100 border-primary-500;
+
+  .mat-form-field-wrapper {
+    padding: 0px;
+  }
+
+  .mat-form-field-flex {
+    border-radius: 0px !important;
+    padding: 6px 16px !important;
+    gap: 4px !important;
+    min-height: 48px !important;
+  }
+
+  .mat-form-field-infix {
+    padding: 0px !important;
+  }
+
+  .mat-input-element {
+    color: #181818 !important;
+    font-size: 0.875rem /* 12px */ !important;
+    line-height: 1.125rem /* 16px */ !important;
+    font-weight: 400 !important;
+  }
+
+  .mat-form-field-label {
+    color: #5c5c5c !important;
+    transform: translateY(-0.59375em) scale(1) !important;
+    font-size: 0.75rem /* 12px */ !important;
+    line-height: 1rem /* 16px */ !important;
+    font-weight: 700 !important;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
+  .mat-form-field-ripple {
+    background-color: slategray;
+  }
+  .mat-form-field-required-marker {
+    color: slategray;
+  }
+}
