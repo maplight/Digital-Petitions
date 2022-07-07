@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SingUpCommitteeComponent } from './sing-up-committee.component';
+import { SignUpCommitteeComponent } from './sign-up-committee.component';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [SingUpCommitteeComponent],
+  declarations: [SignUpCommitteeComponent],
   imports: [
     CommonModule,
     MatInputModule,
@@ -19,4 +19,4 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
 })
-export class SingUpCommitteeModule {}
+export class SignUpCommitteeModule {}

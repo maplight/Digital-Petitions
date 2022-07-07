@@ -1,4 +1,4 @@
-export interface SingUpForm {
+export interface SignUpForm {
   first_name: string;
   last_name: string;
   address: string;
