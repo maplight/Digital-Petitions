@@ -4,19 +4,19 @@
   >
     <mat-form-field [floatLabel]="'always'" appearance="fill">
       <mat-label>First Name</mat-label>
-      <input type="email" matInput />
+      <input type="text" matInput />
     </mat-form-field>
     <mat-form-field [floatLabel]="'always'" appearance="fill">
       <mat-label>Last Name</mat-label>
-      <input type="email" matInput />
+      <input type="text" matInput />
     </mat-form-field>
     <mat-form-field [floatLabel]="'always'" appearance="fill">
       <mat-label>Address</mat-label>
-      <input type="email" matInput />
+      <input type="text" matInput />
     </mat-form-field>
     <mat-form-field [floatLabel]="'always'" appearance="fill">
       <mat-label>Apt/Number</mat-label>
-      <input type="email" matInput />
+      <input type="text" matInput />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>State</mat-label>
@@ -30,15 +30,26 @@
     </mat-form-field>
     <mat-form-field [floatLabel]="'always'" appearance="fill">
       <mat-label>Zip Code</mat-label>
-      <input type="email" matInput />
+      <input type="text" matInput />
     </mat-form-field>
     <mat-form-field [floatLabel]="'always'" appearance="fill">
       <mat-label>Email</mat-label>
-      <input type="email" matInput />
+      <input type="text" matInput />
     </mat-form-field>
     <mat-form-field [floatLabel]="'always'" appearance="fill">
       <mat-label>Password</mat-label>
-      <input type="email" matInput />
+      <div class="flex flex-row items-center">
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <mat-icon
+          class="w-[16px] h-[16px]"
+          [svgIcon]="hide ? 'custom_icons:edge' : 'custom_icons:no-edge'"
+          (click)="hide = !hide"
+        ></mat-icon>
+      </div>
     </mat-form-field>
   </div>
 </div>
