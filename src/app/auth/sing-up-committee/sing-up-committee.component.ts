@@ -8,6 +8,7 @@ import { state, states } from './states';
 })
 export class SingUpCommitteeComponent implements OnInit {
   local_states: state[] = [];
+  hide = true;
   constructor() {
     this.local_states = states;
   }
