@@ -3,8 +3,11 @@
     <h1 class="p-6 font-extrabold">Petition Portal</h1>
     <form [formGroup]="formGroup">
       <div
-        class="grid grid-cols-2 gap-8 bg-white py-8 px-6 rounded-3xl border-solid border-1 border-gray-200 shadow-lg w-[824px]"
+        class="grid grid-cols-2 gap-[22px] bg-white py-8 px-6 rounded-3xl border-solid border-1 border-gray-200 shadow-lg w-[824px]"
       >
+        <div class="col-span-2 w-full flex justify-start">
+          <h4 class="font-bold text-lg">Create an account</h4>
+        </div>
         <mat-form-field [floatLabel]="'always'" appearance="fill">
           <mat-label>First Name</mat-label>
           <input type="text" matInput formControlName="first_name" />
