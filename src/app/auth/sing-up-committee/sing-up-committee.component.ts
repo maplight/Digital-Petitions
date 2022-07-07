@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SingUpForm } from './sing-up-form.interface';
 import { state, states } from './states';
 
 @Component({
@@ -7,11 +9,28 @@ import { state, states } from './states';
   styleUrls: ['./sing-up-committee.component.scss'],
 })
 export class SingUpCommitteeComponent implements OnInit {
-  local_states: state[] = [];
-  hide = true;
-  constructor() {
-    this.local_states = states;
+  public local_states: state[] = states;
+
+  public hide = true;
+
+  public formGroup: FormGroup;
+  public form_data: SingUpForm = {
+    first_name: '',
+    last_name: '',
+    address: '',
+    apt_number: '',
+    state: '',
+    zip_code: '',
+    email: '',
+    password: '',
+  };
+  constructor(private formBuilder: FormBuilder) {
+    this.formGroup = this.formBuilder.group(this.form_data);
   }
 
   ngOnInit(): void {}
+
+  saveForm() {
+    console.log(this.formGroup.value);
+  }
 }
