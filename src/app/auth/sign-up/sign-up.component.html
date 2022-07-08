@@ -12,18 +12,62 @@
         <mat-form-field>
           <mat-label>First Name</mat-label>
           <input type="text" matInput formControlName="first_name" />
+          <mat-error
+            *ngIf="this.formGroup.get('first_name')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">First Name is required</span>
+            </div>
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Last Name</mat-label>
           <input type="text" matInput formControlName="last_name" />
+          <mat-error
+            *ngIf="this.formGroup.get('last_name')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Last Name is required</span>
+            </div>
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Address</mat-label>
           <input type="text" matInput formControlName="address" />
+          <mat-error
+            *ngIf="this.formGroup.get('address')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Address is required</span>
+            </div>
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Apt/Number</mat-label>
           <input type="text" matInput formControlName="apt_number" />
+          <mat-error
+            *ngIf="this.formGroup.get('apt_number')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Apt Number is required</span>
+            </div>
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>State</mat-label>
@@ -33,16 +77,57 @@
               value="{{ state.value }}"
               >{{ state.name }}</mat-option
             >
+            <mat-error
+              *ngIf="this.formGroup.get('state')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">State is required</span>
+              </div>
+            </mat-error>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Zip Code</mat-label>
           <input type="text" matInput formControlName="zip_code" />
+          <mat-error
+            *ngIf="this.formGroup.get('zip_code')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Zip Code is required</span>
+            </div>
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input type="text" matInput formControlName="email" />
+          <mat-error *ngIf="this.formGroup.get('email')?.errors?.['required']">
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Email is required</span>
+            </div>
+          </mat-error>
+          <mat-error *ngIf="this.formGroup.get('email')?.errors?.['required']">
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Email is incorrect</span>
+            </div>
+          </mat-error>
         </mat-form-field>
+
         <mat-form-field>
           <mat-label>Password</mat-label>
           <input
@@ -50,13 +135,25 @@
             [type]="hide_password ? 'password' : 'text'"
             formControlName="password"
           />
+
+          <mat-error
+            *ngIf="this.formGroup.get('password')?.errors?.['pattern']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Password is required</span>
+            </div>
+          </mat-error>
           <button
             matSuffix
             mat-icon-button
             (click)="hide_password = !hide_password"
           >
             <mat-icon
-              class="w-[16px] h-[16px]"
+              class="w-[14px] h-[14px]"
               [svgIcon]="
                 hide_password ? 'custom_icons:edge' : 'custom_icons:no-edge'
               "
@@ -75,17 +172,21 @@
         </button>
       </div>
     </dp-basic-card>
-    <div class="my-6 w-full flex flex-row justify-center">
-      <h4 class="font-extrabold text-base tracking-wide">
-        Already have an account?
-      </h4>
-      <a [routerLink]="'/login'"
-        ><h4
-          class="font-extrabold text-base tracking-wide mx-3 text-primary-500"
+    <div class="my-6 w-full flex flex-col md:flex-row justify-center">
+      <div class="w-full md:w-auto flex justify-center">
+        <h4 class="font-extrabold text-base tracking-wide">
+          Already have an account?
+        </h4>
+      </div>
+      <div class="w-full md:w-auto flex justify-center">
+        <a [routerLink]="'/login'"
+          ><h4
+            class="font-extrabold text-base tracking-wide mx-3 text-primary-500"
+          >
+            Log In
+          </h4></a
         >
-          Log In
-        </h4></a
-      >
+      </div>
     </div>
   </div>
 </div>
