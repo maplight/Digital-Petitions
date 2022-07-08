@@ -8,7 +8,7 @@ import { SignInForm } from './sign-in-form.interface';
   styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
-  public hide = true;
+  protected hide_password = true;
 
   public formGroup: FormGroup;
   public form_data: SignInForm = {
