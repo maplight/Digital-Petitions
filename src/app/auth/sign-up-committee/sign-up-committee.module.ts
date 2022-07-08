@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [SignUpCommitteeComponent],
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    RouterModule,
   ],
 })
 export class SignUpCommitteeModule {}
