@@ -1,7 +1,7 @@
-export interface state {
+export type state = {
   name: string;
   value: string;
-}
+};
 export const states: state[] = [
   {
     name: 'Alabama',
