@@ -195,16 +195,20 @@ $table-border: #d7d7d7;
 }
 
 .mat-form-field {
-  @apply border-solid border-1 rounded-lg max-w-full bg-gray-100 border-transparent;
+  @apply max-w-full;
 
   .mat-form-field-wrapper {
     padding: 0px;
   }
 
+  .mat-icon-button {
+    width: auto !important;
+    height: auto !important;
+  }
+
   .mat-form-field-flex {
-    border-radius: 0px !important;
+    @apply flex items-center border-solid border-1 rounded-lg border-transparent bg-gray-200 #{!important};
     padding: 6px 16px !important;
-    gap: 4px !important;
     min-height: 48px !important;
   }
 
@@ -237,24 +241,48 @@ $table-border: #d7d7d7;
     display: none;
   }
   .mat-form-field-ripple {
-    background-color: slategray;
+    display: none;
   }
   .mat-form-field-required-marker {
-    color: slategray;
+    display: none;
+  }
+  .mat-form-field-subscript-wrapper {
+    @apply font-mulish;
+    position: relative;
+    top: auto;
+    padding: 0 !important;
+    margin-top: 0;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+
+    .mat-error,
+    .mat-hint {
+      display: block;
+      margin-top: 4px;
+    }
+
+    .mat-hint {
+      @apply text-orange-600 #{'!important'};
+    }
   }
 }
 
 .mat-form-field.mat-focused {
-  @apply border-solid border-1 rounded-lg max-w-full bg-gray-100 border-primary-500;
+  @apply max-w-full;
 
   .mat-form-field-wrapper {
     padding: 0px;
   }
 
+  .mat-icon-button {
+    width: auto !important;
+    height: auto !important;
+  }
+
   .mat-form-field-flex {
-    border-radius: 0px !important;
+    @apply flex items-center border-solid border-1 rounded-lg border-primary-500 bg-gray-200 #{!important};
     padding: 6px 16px !important;
-    gap: 4px !important;
     min-height: 48px !important;
   }
 
@@ -268,6 +296,7 @@ $table-border: #d7d7d7;
     line-height: 1.125rem /* 16px */ !important;
     font-weight: 400 !important;
   }
+
   .mat-select-value {
     color: #181818 !important;
     font-size: 0.875rem /* 12px */ !important;
@@ -286,9 +315,29 @@ $table-border: #d7d7d7;
     display: none;
   }
   .mat-form-field-ripple {
-    background-color: slategray;
+    display: none;
   }
   .mat-form-field-required-marker {
-    color: slategray;
+    display: none;
+  }
+  .mat-form-field-subscript-wrapper {
+    @apply font-mulish;
+    position: relative;
+    top: auto;
+    padding: 0 !important;
+    margin-top: 0;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+
+    .mat-error,
+    .mat-hint {
+      display: block;
+      margin-top: 4px;
+    }
+
+    .mat-hint {
+      @apply text-orange-600 #{'!important'};
+    }
   }
 }
