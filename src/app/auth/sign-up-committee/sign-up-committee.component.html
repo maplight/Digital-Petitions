@@ -1,26 +1,27 @@
 <div class="w-full flex justify-center">
-  <div class="flex flex-col">
+  <div class="flex flex-col max-w-[824px] w-full">
     <h1 class="p-6 font-extrabold">Petition Portal</h1>
-    <form [formGroup]="formGroup">
-      <div
-        class="grid grid-cols-2 gap-[22px] bg-white py-8 px-6 rounded-3xl border-solid border-1 border-gray-200 shadow-lg w-[824px]"
+    <dp-basic-card class="w-full">
+      <div class="w-full flex justify-start">
+        <h4 class="font-bold text-lg">Create an account</h4>
+      </div>
+      <form
+        [formGroup]="formGroup"
+        class="grid grid-cols-1 md:grid-cols-2 gap-[16px]"
       >
-        <div class="col-span-2 w-full flex justify-start">
-          <h4 class="font-bold text-lg">Create an account</h4>
-        </div>
-        <mat-form-field [floatLabel]="'always'" appearance="fill">
+        <mat-form-field>
           <mat-label>First Name</mat-label>
           <input type="text" matInput formControlName="first_name" />
         </mat-form-field>
-        <mat-form-field [floatLabel]="'always'" appearance="fill">
+        <mat-form-field>
           <mat-label>Last Name</mat-label>
           <input type="text" matInput formControlName="last_name" />
         </mat-form-field>
-        <mat-form-field [floatLabel]="'always'" appearance="fill">
+        <mat-form-field>
           <mat-label>Address</mat-label>
           <input type="text" matInput formControlName="address" />
         </mat-form-field>
-        <mat-form-field [floatLabel]="'always'" appearance="fill">
+        <mat-form-field>
           <mat-label>Apt/Number</mat-label>
           <input type="text" matInput formControlName="apt_number" />
         </mat-form-field>
@@ -34,41 +35,46 @@
             >
           </mat-select>
         </mat-form-field>
-        <mat-form-field [floatLabel]="'always'" appearance="fill">
+        <mat-form-field>
           <mat-label>Zip Code</mat-label>
           <input type="text" matInput formControlName="zip_code" />
         </mat-form-field>
-        <mat-form-field [floatLabel]="'always'" appearance="fill">
+        <mat-form-field>
           <mat-label>Email</mat-label>
           <input type="text" matInput formControlName="email" />
         </mat-form-field>
-        <mat-form-field [floatLabel]="'always'" appearance="fill">
+        <mat-form-field>
           <mat-label>Password</mat-label>
-          <div class="flex flex-row items-center">
-            <input
-              matInput
-              [type]="hide ? 'password' : 'text'"
-              formControlName="password"
-            />
+          <input
+            matInput
+            [type]="hide_password ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <button
+            matSuffix
+            mat-icon-button
+            (click)="hide_password = !hide_password"
+          >
             <mat-icon
               class="w-[16px] h-[16px]"
-              [svgIcon]="hide ? 'custom_icons:edge' : 'custom_icons:no-edge'"
-              (click)="hide = !hide"
+              [svgIcon]="
+                hide_password ? 'custom_icons:edge' : 'custom_icons:no-edge'
+              "
             ></mat-icon>
-          </div>
-        </mat-form-field>
-        <div class="col-span-2 w-full flex justify-end">
-          <button
-            mat-raised-button
-            class="h-10 max-w-[157px]"
-            color="primary"
-            (click)="saveForm()"
-          >
-            Create Account
           </button>
-        </div>
+        </mat-form-field>
+      </form>
+      <div class="md:col-span-2 w-full flex justify-end">
+        <button
+          mat-flat-button
+          class="h-10 md:max-w-[157px] w-full"
+          color="primary"
+          (click)="saveForm()"
+        >
+          Create Account
+        </button>
       </div>
-    </form>
+    </dp-basic-card>
     <div class="my-6 w-full flex flex-row justify-center">
       <h4 class="font-extrabold text-base tracking-wide">
         Already have an account?

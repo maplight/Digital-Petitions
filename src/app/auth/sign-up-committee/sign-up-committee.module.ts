@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 
 @NgModule({
   declarations: [SignUpCommitteeComponent],
@@ -19,6 +20,7 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    BasicCardModule,
   ],
 })
 export class SignUpCommitteeModule {}

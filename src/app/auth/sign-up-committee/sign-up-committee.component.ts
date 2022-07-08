@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SignUpForm } from './sign-up-form.interface';
-import { state, states } from './states';
+import { state, states } from '../../core/states';
 
 @Component({
   selector: 'dp-sign-up',
@@ -9,9 +9,9 @@ import { state, states } from './states';
   styleUrls: ['./sign-up-committee.component.scss'],
 })
 export class SignUpCommitteeComponent implements OnInit {
-  public local_states: state[] = states;
+  protected local_states: state[] = states;
 
-  public hide = true;
+  protected hide_password = true;
 
   public formGroup: FormGroup;
   public form_data: SignUpForm = {
