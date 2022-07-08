@@ -5,10 +5,9 @@ import { state, states } from '../../core/states';
 
 @Component({
   selector: 'dp-sign-up',
-  templateUrl: './sign-up-committee.component.html',
-  styleUrls: ['./sign-up-committee.component.scss'],
+  templateUrl: './sign-up.component.html',
 })
-export class SignUpCommitteeComponent implements OnInit {
+export class SignUpComponent implements OnInit {
   protected local_states: state[] = states;
 
   protected hide_password = true;

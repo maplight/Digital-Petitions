@@ -8,11 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
+import { SingInRoutingModule } from './sign-in-routing.module';
 
 @NgModule({
   declarations: [SignInComponent],
   imports: [
     CommonModule,
+    SingInRoutingModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
