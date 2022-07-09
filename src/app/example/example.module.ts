@@ -27,7 +27,6 @@ import { MatInputModule } from '@angular/material/input';
     MatSlideToggleModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule,
     MatCheckboxModule,
     MatTableModule,
     MatDialogModule,

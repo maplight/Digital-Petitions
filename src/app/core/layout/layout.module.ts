@@ -5,6 +5,7 @@ import { HeaderModule } from './header/header.module';
 import { RouterModule } from '@angular/router';
 import { LayoutMaterialModule } from './layout-material.module';
 import { SideMenuModule } from 'src/app/core/layout/side-menu/side-menu.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -14,6 +15,7 @@ import { SideMenuModule } from 'src/app/core/layout/side-menu/side-menu.module';
     RouterModule,
     LayoutMaterialModule,
     SideMenuModule,
+    MatMenuModule,
   ],
   exports: [LayoutComponent],
 })

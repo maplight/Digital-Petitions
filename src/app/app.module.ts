@@ -8,6 +8,7 @@ import { ThemingService } from './core/dynamic-theme/theming.service';
 import { LayoutModule } from './core/layout/layout.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
+    AuthModule,
   ],
   providers: [
     {

@@ -4,10 +4,14 @@
   *ngIf="showDemo"
   class="absolute top-4 right-4 grid grid-cols-2 gap-2 justify-center items-center z-50"
 >
-  <a mat-flat-button color="primary" [routerLink]="'/example'">Example</a>
-  <a mat-flat-button color="primary" [routerLink]="'/city-staff/home'"
-    >City Staff</a
-  >
+  <button mat-flat-button color="primary" [matMenuTriggerFor]="menu">
+    Demo
+  </button>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item [routerLink]="'/example'">Example</a>
+    <a mat-menu-item [routerLink]="'/city-staff/home'">City Staff Home</a>
+    <a mat-menu-item [routerLink]="'/committee/sing-up'">Sing up Committee</a>
+  </mat-menu>
 </div>
 
 <mat-drawer-container>
