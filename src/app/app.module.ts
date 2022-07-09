@@ -8,7 +8,8 @@ import { ThemingService } from './core/dynamic-theme/theming.service';
 import { LayoutModule } from './core/layout/layout.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
-import { AuthModule } from './auth/auth.module';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { appearance } from './core/dynamic-theme/default-mat-form-field';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,6 @@ import { AuthModule } from './auth/auth.module';
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
-    AuthModule,
   ],
   providers: [
     {
@@ -29,6 +29,10 @@ import { AuthModule } from './auth/auth.module';
         themingService.initializeTheme(),
       deps: [ThemingService],
       multi: true,
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: appearance,
     },
   ],
   bootstrap: [AppComponent],

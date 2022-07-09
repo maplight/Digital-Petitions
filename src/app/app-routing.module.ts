@@ -13,6 +13,16 @@ const routes: Routes = [
         loadChildren: () =>
           import('./example/example.module').then((m) => m.ExampleModule),
       },
+      {
+        path: 'sign-up',
+        loadChildren: () =>
+          import('./auth/sign-up/sign-up.module').then((m) => m.SignUpModule),
+      },
+      {
+        path: 'login',
+        loadChildren: () =>
+          import('./auth/sign-in/sign-in.module').then((m) => m.SignInModule),
+      },
     ],
   },
   {
@@ -26,18 +36,6 @@ const routes: Routes = [
           import('./city-staff/city-staff.module').then(
             (m) => m.CityStaffModule
           ),
-      },
-    ],
-  },
-  {
-    path: '',
-    component: LayoutComponent,
-    data: { showMenu: false, showDemo: true },
-    children: [
-      {
-        path: 'committee',
-        loadChildren: () =>
-          import('./committee/committee.module').then((m) => m.CommitteeModule),
       },
     ],
   },

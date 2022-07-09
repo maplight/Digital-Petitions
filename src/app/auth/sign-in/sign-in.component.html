@@ -1,0 +1,67 @@
+<div class="w-full flex justify-center">
+  <div class="flex flex-col max-w-[432px] w-full">
+    <h1 class="p-6 font-extrabold">Petition Creators</h1>
+    <dp-basic-card class="w-full">
+      <div class="w-full flex justify-start">
+        <h4 class="font-bold text-lg">Create an account</h4>
+      </div>
+      <form [formGroup]="formGroup" class="grid grid-cols-1 gap-[16px]">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="text" matInput formControlName="email" />
+        </mat-form-field>
+        <span class="w-full flex flex-col justify-end">
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              [type]="hide_password ? 'password' : 'text'"
+              formControlName="password"
+            />
+            <button
+              matSuffix
+              mat-icon-button
+              (click)="hide_password = !hide_password"
+            >
+              <mat-icon
+                class="w-[16px] h-[16px]"
+                [svgIcon]="
+                  hide_password ? 'custom_icons:edge' : 'custom_icons:no-edge'
+                "
+              ></mat-icon>
+            </button>
+          </mat-form-field>
+          <span class="w-full flex justify-end">
+            <a
+              ><h4
+                class="font-extrabold text-base tracking-wide text-primary-500"
+              >
+                Forgot Password?
+              </h4></a
+            >
+          </span>
+        </span>
+      </form>
+      <button
+        mat-flat-button
+        class="h-10 w-full mt-2"
+        color="primary"
+        (click)="saveForm()"
+      >
+        Log In
+      </button>
+    </dp-basic-card>
+    <div class="my-6 w-full flex flex-row justify-center">
+      <h4 class="font-extrabold text-base tracking-wide">
+        Don't have an account?
+      </h4>
+      <a [routerLink]="'/sign-up'"
+        ><h4
+          class="font-extrabold text-base tracking-wide mx-3 text-primary-500"
+        >
+          Sign Up
+        </h4></a
+      >
+    </div>
+  </div>
+</div>
