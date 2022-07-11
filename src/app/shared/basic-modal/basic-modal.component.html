@@ -1,11 +1,30 @@
-<div class="flex flex-col">
-  <div>
-    <ng-content select="[title]"></ng-content>
+<div class="flex flex-col gap-6">
+  <h1 mat-dialog-title>
+    <ng-content select="[modal-title]"></ng-content>
+
+    <button mat-icon-button (click)="onCancelClick()">
+      <mat-icon [svgIcon]="'custom_icons:close'"></mat-icon>
+    </button>
+  </h1>
+
+  <div mat-dialog-content>
+    <ng-content select="[modal-body]"></ng-content>
   </div>
-  <div>
-    <ng-content select="[form]"></ng-content>
-  </div>
-  <div>
-    <ng-content select="[buttons]"></ng-content>
+
+  <div mat-dialog-actions>
+    <button class="h-10" mat-button color="primary" (click)="onCancelClick()">
+      Cancel
+    </button>
+    <button
+      type="submit"
+      [formTarget]="id_form"
+      class="h-10"
+      mat-flat-button
+      color="primary"
+      cdkFocusInitial
+      (click)="onSend()"
+    >
+      <ng-content select="[modal-footer]"></ng-content>
+    </button>
   </div>
 </div>
