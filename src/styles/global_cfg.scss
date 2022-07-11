@@ -163,6 +163,7 @@ $table-border: #d7d7d7;
 .mat-dialog-container {
   padding: 40px !important;
   border-radius: 16px !important;
+  gap: 24px;
   .mat-dialog-title {
     //typography
     font-family: "Mulish" !important;
@@ -175,6 +176,8 @@ $table-border: #d7d7d7;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin: 0px !important;
+    height: 32px !important;
     .mat-icon {
       height: 16px;
       width: 16px;
