@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
 import { LayoutMaterialModule } from './layout-material.module';
 import { SideMenuModule } from 'src/app/core/layout/side-menu/side-menu.module';
 import { MatMenuModule } from '@angular/material/menu';
+import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
+import { ChangePasswordModalModule } from 'src/app/auth/change-password-modal/change-password-modal.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -16,6 +19,9 @@ import { MatMenuModule } from '@angular/material/menu';
     LayoutMaterialModule,
     SideMenuModule,
     MatMenuModule,
+    BasicModalModule,
+    ChangePasswordModalModule,
+    MatDialogModule,
   ],
   exports: [LayoutComponent],
 })
