@@ -10,4 +10,4 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [CommonModule, MatIconModule, BasicModalModule, MatButtonModule],
   exports: [DialogResultComponent],
 })
-export class ChangePasswordResultModule {}
+export class DialogResultModule {}

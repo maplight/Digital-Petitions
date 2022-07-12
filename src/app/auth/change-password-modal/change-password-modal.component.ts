@@ -41,7 +41,7 @@ export class ChangePasswordModalComponent implements OnInit {
       this.dialogRef.close();
       this.openDialog(
         'This is the title',
-        'this is the long test if it need',
+        'This is a long example text',
         false
       );
     } else {
