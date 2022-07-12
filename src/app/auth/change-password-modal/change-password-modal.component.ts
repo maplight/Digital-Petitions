@@ -5,8 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
+import { DialogResultComponent } from '../../shared/dialog-result/dialog-result.component';
 import { ChangePasswordForm } from './change-password-form.interface';
 
 @Component({
@@ -26,7 +27,8 @@ export class ChangePasswordModalComponent implements OnInit {
   };
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<BasicModalComponent>
+    public dialogRef: MatDialogRef<BasicModalComponent>,
+    public dialog: MatDialog
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
   }
@@ -37,8 +39,24 @@ export class ChangePasswordModalComponent implements OnInit {
     if (this.formGroup.valid) {
       console.log(this.formGroup.value);
       this.dialogRef.close();
+      this.openDialog(
+        'This is the title',
+        'this is the long test if it need',
+        false
+      );
     } else {
       this.formGroup.markAllAsTouched();
     }
+  }
+
+  openDialog(title: string, message: string, success: boolean): void {
+    const dialogRef = this.dialog.open(DialogResultComponent, {
+      width: '520px',
+      data: {
+        title: title,
+        message: message,
+        success: success,
+      },
+    });
   }
 }

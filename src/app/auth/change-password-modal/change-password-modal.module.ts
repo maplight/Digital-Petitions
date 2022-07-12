@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { ChangePasswordResultModule } from '../../shared/dialog-result/change-password-result.module';
 
 @NgModule({
   declarations: [ChangePasswordModalComponent],
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    ChangePasswordResultModule,
   ],
 })
 export class ChangePasswordModalModule {}
