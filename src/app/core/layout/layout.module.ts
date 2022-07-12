@@ -9,7 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
 import { ChangePasswordModalModule } from 'src/app/auth/change-password-modal/change-password-modal.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ConfirmEmailChangeModalModule } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-modal.module';
+import { EmailChangeModalModule } from 'src/app/auth/email-change-modal/email-change-modal.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -22,7 +22,7 @@ import { ConfirmEmailChangeModalModule } from 'src/app/auth/confirm-email-change
     MatMenuModule,
     BasicModalModule,
     ChangePasswordModalModule,
-    ConfirmEmailChangeModalModule,
+    EmailChangeModalModule,
     MatDialogModule,
   ],
   exports: [LayoutComponent],
