@@ -1,10 +1,12 @@
+import { FormControl } from '@angular/forms';
+
 export interface SignUpForm {
-  first_name: string;
-  last_name: string;
-  address: string;
-  apt_number: string;
-  state: string;
-  zip_code: string;
-  email: string;
-  password: string;
+  first_name: FormControl;
+  last_name: FormControl;
+  address: FormControl;
+  apt_number: FormControl;
+  state: FormControl;
+  zip_code: FormControl;
+  email: FormControl;
+  password: FormControl;
 }
