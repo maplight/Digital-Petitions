@@ -1,1 +1,103 @@
-<p>change-personal-details-modal works!</p>
+<dp-basic-modal (event)="onOk()">
+  <span modal-title>Change Personal Details</span>
+  <span modal-body class="w-full flex flex-col gap-6">
+    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+      <div class="grid grid-cols-1 gap-[24px]">
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input type="text" matInput formControlName="first_name" />
+          <mat-error
+            *ngIf="this.formGroup.get('first_name')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">First Name is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input type="text" matInput formControlName="last_name" />
+          <mat-error
+            *ngIf="this.formGroup.get('last_name')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Last Name is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input type="text" matInput formControlName="address" />
+          <mat-error
+            *ngIf="this.formGroup.get('address')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Address is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apt/Number</mat-label>
+          <input type="text" matInput formControlName="apt_number" />
+          <mat-error
+            *ngIf="this.formGroup.get('apt_number')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Apt Number is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>State</mat-label>
+          <mat-select formControlName="state">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let state of local_states" [value]="state">{{
+              state.name
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formGroup.get('state')?.errors?.['required']">
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">State is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Zip Code</mat-label>
+          <input type="text" matInput formControlName="zip_code" />
+          <mat-error
+            *ngIf="this.formGroup.get('zip_code')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Zip Code is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </span>
+  <span modal-footer>Save</span>
+</dp-basic-modal>
