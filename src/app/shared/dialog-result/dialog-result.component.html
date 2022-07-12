@@ -1,0 +1,25 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col w-full">
+    <div class="w-full flex justify-end gap-0">
+      <button class="w-4 h-4" mat-dialog-close (click)="onCancelClick()">
+        <mat-icon class="w-4 h-4" [svgIcon]="'custom_icons:close'"></mat-icon>
+      </button>
+    </div>
+
+    <h4 class="w-full flex justify-center font-bold text-lg leading-6">
+      {{ data.title }}
+    </h4>
+  </div>
+
+  <p class="w-full justify-center text-center">
+    {{ data.message }}
+  </p>
+  <div class="w-full flex justify-center">
+    <button mat-icon-button (click)="onCancelClick()">
+      <mat-icon
+        class="w-[26.67px] h-[26.67px]"
+        [svgIcon]="data.success ? 'custom_icons:like' : 'custom_icons:c_close'"
+      ></mat-icon>
+    </button>
+  </div>
+</div>
