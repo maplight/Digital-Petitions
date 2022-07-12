@@ -1,1 +1,22 @@
-<p>confirm-email-change-modal works!</p>
+<dp-basic-modal (event)="onOk()">
+  <span modal-title>Confirm Email Change</span>
+  <span modal-body class="w-full flex flex-col gap-6">
+    <p class="w-full flex justify-center text-left">
+      We’ve sent a confirmation code to the new email address. Enter the code to
+      confirm your new email
+    </p>
+    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+      <mat-form-field>
+        <mat-label>Confirmation Code</mat-label>
+        <input type="text" matInput formControlName="code" />
+        <mat-error *ngIf="this.formGroup.get('code')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
+            <span class="ml-[9px]">Confirmation Code is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </span>
+  <span modal-footer>Proceed</span>
+</dp-basic-modal>
