@@ -10,6 +10,7 @@ import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module'
 import { ChangePasswordModalModule } from 'src/app/auth/change-password-modal/change-password-modal.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EmailChangeModalModule } from 'src/app/auth/email-change-modal/email-change-modal.module';
+import { ChangePersonalDetailsModalModule } from 'src/app/auth/change-personal-details-modal/change-personal-details-modal.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -24,6 +25,7 @@ import { EmailChangeModalModule } from 'src/app/auth/email-change-modal/email-ch
     ChangePasswordModalModule,
     EmailChangeModalModule,
     MatDialogModule,
+    ChangePersonalDetailsModalModule,
   ],
   exports: [LayoutComponent],
 })
