@@ -12,7 +12,6 @@ import { ConfirmEmailChangeForm } from './confirm-email-change-form.interface';
 @Component({
   selector: 'dp-confirm-email-change-modal',
   templateUrl: './confirm-email-change-modal.component.html',
-  styleUrls: ['./confirm-email-change-modal.component.scss'],
 })
 export class ConfirmEmailChangeModalComponent implements OnInit {
   public formGroup: FormGroup;

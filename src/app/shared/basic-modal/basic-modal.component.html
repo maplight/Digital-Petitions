@@ -12,13 +12,10 @@
   </div>
 
   <div mat-dialog-actions>
-    <button class="h-10" mat-button color="primary" (click)="onCancelClick()">
-      Cancel
-    </button>
+    <button mat-button color="primary" (click)="onCancelClick()">Cancel</button>
     <button
       type="submit"
       [formTarget]="id_form"
-      class="h-10"
       mat-flat-button
       color="primary"
       cdkFocusInitial

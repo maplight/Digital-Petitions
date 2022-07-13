@@ -5,7 +5,6 @@ import { SignInForm } from './sign-in-form.interface';
 @Component({
   selector: 'dp-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
   protected hide_password = true;
