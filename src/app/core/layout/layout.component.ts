@@ -21,22 +21,4 @@ export class LayoutComponent implements OnInit {
     this.showMenu = this.activatedroute.snapshot.data['showMenu'];
     this.showDemo = this.activatedroute.snapshot.data['showDemo'];
   }
-
-  openDialogPassword(): void {
-    const dialogRef = this.dialog.open(ChangePasswordModalComponent, {
-      width: '690px',
-    });
-  }
-
-  openDialogEmail(): void {
-    const dialogRef = this.dialog.open(EmailChangeModalComponent, {
-      width: '690px',
-    });
-  }
-
-  openDialogPerosnalDetails(): void {
-    const dialogRef = this.dialog.open(ChangePersonalDetailsModalComponent, {
-      width: '690px',
-    });
-  }
 }
