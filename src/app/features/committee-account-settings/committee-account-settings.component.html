@@ -10,6 +10,44 @@
     <p class="mt-[22px]">
       Edit or change your account informaton and password.
     </p>
-    <div class="mt-8">here</div>
+    <dp-basic-card class="mt-8">
+      <div class="w-full flex flex-col gap-11">
+        <div
+          class="w-full flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="font-bold leading-5 md:min-w-[150px]">Email</p>
+          <p class="max-w-full">{{ email }}</p>
+          <button mat-flat-button color="primary" (click)="openDialogEmail()">
+            Edit
+          </button>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="font-bold leading-5 md:min-w-[150px]">Password</p>
+          <p class="max-w-full">******************</p>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="openDialogPassword()"
+          >
+            Edit
+          </button>
+        </div>
+        <div
+          class="w-full flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="font-bold leading-5 md:min-w-[150px]">Contact informaton</p>
+          <p class="max-w-full">{{ name }}</p>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="openDialogPerosnalDetails()"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </dp-basic-card>
   </div>
 </div>
