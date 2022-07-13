@@ -69,6 +69,7 @@ p {
   line-height: 1rem !important;
   border-radius: 0.5rem !important;
   letter-spacing: 0.02rem !important;
+  height: 2.5rem !important;
 }
 
 // table styles
@@ -198,6 +199,7 @@ $table-border: #d7d7d7;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
+    gap: 1rem;
   }
 }
 
