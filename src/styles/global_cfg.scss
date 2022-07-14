@@ -73,13 +73,19 @@ p {
 }
 
 .menu-button {
+  .mat-button-wrapper {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
   height: 56px !important;
   width: 56px !important;
   padding: 0px !important;
 }
 
 .menu-img {
-  display: flex;
+  display: block;
 }
 // table styles
 
