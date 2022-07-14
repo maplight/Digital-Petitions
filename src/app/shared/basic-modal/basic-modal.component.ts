@@ -4,7 +4,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'dp-basic-modal',
   templateUrl: './basic-modal.component.html',
-  styleUrls: ['./basic-modal.component.scss'],
 })
 export class BasicModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<BasicModalComponent>) {}
