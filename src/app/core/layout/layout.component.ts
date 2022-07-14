@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { ChangePasswordModalComponent } from 'src/app/auth/change-password-modal/change-password-modal.component';
-import { ChangePersonalDetailsModalComponent } from 'src/app/auth/change-personal-details-modal/change-personal-details-modal.component';
-import { EmailChangeModalComponent } from 'src/app/auth/email-change-modal/email-change-modal.component';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
