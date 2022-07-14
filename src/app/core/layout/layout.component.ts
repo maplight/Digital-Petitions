@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ChangePasswordModalComponent } from 'src/app/auth/change-password-modal/change-password-modal.component';
 import { EmailChangeModalComponent } from 'src/app/auth/email-change-modal/email-change-modal.component';
+import { ConfirmEmailChangeModalComponent } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-modal.component';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -28,7 +29,7 @@ export class LayoutComponent implements OnInit {
   }
 
   openDialogEmail(): void {
-    const dialogRef = this.dialog.open(EmailChangeModalComponent, {
+    const dialogRef = this.dialog.open(ConfirmEmailChangeModalComponent, {
       width: '690px',
     });
   }

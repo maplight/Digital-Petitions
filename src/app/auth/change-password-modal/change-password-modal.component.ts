@@ -13,7 +13,6 @@ import { ChangePasswordForm } from './change-password-form.interface';
 @Component({
   selector: 'dp-change-password-modal',
   templateUrl: './change-password-modal.component.html',
-  styleUrls: ['./change-password-modal.component.scss'],
 })
 export class ChangePasswordModalComponent implements OnInit {
   protected hide_new_password = true;
