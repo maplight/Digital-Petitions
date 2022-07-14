@@ -117,9 +117,7 @@
                 <span class="ml-[9px]">Email is required</span>
               </div>
             </mat-error>
-            <mat-error
-              *ngIf="this.formGroup.get('email')?.errors?.['required']"
-            >
+            <mat-error *ngIf="this.formGroup.get('email')?.errors?.['email']">
               <div class="flex flex-row items-center">
                 <mat-icon
                   class="w-[14px] h-[14px]"
