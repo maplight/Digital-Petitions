@@ -24,6 +24,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit {
     last_name: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
     apt_number: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
     state: new FormControl<state | null>(null, [Validators.required]),
     zip_code: new FormControl('', [Validators.required]),
   };
