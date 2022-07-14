@@ -26,6 +26,20 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'committee',
+    component: LayoutComponent,
+    data: { showMenu: false, showDemo: true },
+    children: [
+      {
+        path: 'account-settings',
+        loadChildren: () =>
+          import(
+            './features/committee-account-settings/committee-account-settings.module'
+          ).then((m) => m.CommitteeAccountSettingsModule),
+      },
+    ],
+  },
+  {
     path: '',
     component: LayoutComponent,
     data: { showMenu: true, showDemo: true },
