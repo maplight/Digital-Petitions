@@ -1,1 +1,24 @@
-<p>user-menu works!</p>
+<div class="h-14 w-14">
+  <button mat-button class="menu-button" [matMenuTriggerFor]="user_menu">
+    <img
+      class="menu-img"
+      src="data:image/png;base64,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"
+    />
+  </button>
+</div>
+
+<mat-menu #user_menu="matMenu">
+  <button
+    class="hover:bg-primary-500 font-bold text-xs hover:text-on-primary-500"
+    mat-menu-item
+    [routerLink]="'/committee/account-settings'"
+  >
+    Account Settings
+  </button>
+  <button
+    class="hover:bg-primary-500 font-bold text-xs hover:text-on-primary-500"
+    mat-menu-item
+  >
+    Logout
+  </button>
+</mat-menu>
