@@ -2,7 +2,7 @@
 
 <div
   *ngIf="showDemo"
-  class="absolute top-4 right-4 grid grid-cols-2 gap-2 justify-center items-center z-50"
+  class="absolute bottom-4 right-4 grid grid-cols-2 gap-2 justify-center items-center z-50"
 >
   <button mat-flat-button color="primary" [matMenuTriggerFor]="menu">
     Demo
@@ -12,10 +12,8 @@
     <a mat-menu-item [routerLink]="'/city-staff/home'">City Staff Home</a>
     <a mat-menu-item [routerLink]="'/sign-up'">Sing up Committee</a>
     <a mat-menu-item [routerLink]="'/login'">Login</a>
-    <a mat-menu-item (click)="openDialogPassword()">Change Password</a>
-    <a mat-menu-item (click)="openDialogEmail()">Change Email</a>
-    <a mat-menu-item (click)="openDialogPerosnalDetails()"
-      >Change Personal Details</a
+    <a mat-menu-item [routerLink]="'/committee/account-settings'"
+      >Committee Account Setings</a
     >
   </mat-menu>
 </div>

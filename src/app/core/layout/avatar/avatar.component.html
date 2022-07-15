@@ -1,0 +1,11 @@
+<p
+  *ngIf="url === ''"
+  class="w-14 h-14 bg-[#C0F3FA] flex justify-center items-center rounded-full font-bold text-2xl leading-5 text-[#4BE5FA]"
+>
+  {{ l_avatar }}
+</p>
+<img
+  class="w-14 h-14 flex justify-center items-center rounded-full"
+  *ngIf="url != ''"
+  src="{{ url }}"
+/>
