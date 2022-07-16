@@ -7,6 +7,19 @@ import {
 } from '@angular/forms';
 import { SignUpForm } from './sign-up-form.interface';
 import { state, states } from '../../core/states';
+import { AccountService } from '../account-service/account.service';
+import {
+  BehaviorSubject,
+  delay,
+  exhaustMap,
+  filter,
+  map,
+  mapTo,
+  merge,
+  Observable,
+  partition,
+  shareReplay,
+} from 'rxjs';
 
 @Component({
   selector: 'dp-sign-up',
@@ -28,15 +41,52 @@ export class SignUpComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   };
-  constructor(private formBuilder: FormBuilder) {
+
+  private submit = new BehaviorSubject<any>(null);
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private account_service: AccountService
+  ) {
     this.formGroup = this.formBuilder.group(this.form_data);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const start$ = this.submit.pipe(
+      filter((_) => this.formGroup.valid),
+      shareReplay(1)
+    );
+    const result$ = start$.pipe(
+      exhaustMap((data) => this.account_service.signUp(data)),
+      shareReplay(1)
+    );
+    const [success$, error$] = partition(result$, (value) => value.result);
+
+    success$.pipe(map((value) => value.result)).subscribe((data) => {
+      console.log('success ' + data);
+    });
+
+    error$.pipe(map((value) => value.error)).subscribe((data) => {
+      console.log('error ' + data);
+    });
+
+    const end$ = merge(success$, error$);
+
+    const loading$ = merge(
+      start$.pipe(map((v) => true)),
+      end$.pipe(map((v) => false))
+    ).pipe(shareReplay(1));
+
+    loading$.subscribe((value) => {
+      if (value) {
+        console.log('start');
+      } else {
+        console.log('end');
+      }
+    });
+  }
 
   saveForm() {
-    if (this.formGroup.valid) {
-      console.log(this.formGroup.value);
-    }
+    this.submit.next(this.formGroup.value);
   }
 }
