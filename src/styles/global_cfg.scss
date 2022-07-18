@@ -207,14 +207,16 @@ $table-border: #d7d7d7;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
   }
   .mat-dialog-actions {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: 1rem;
+    .mat-button-base {
+      margin-left: 0px !important;
+    }
   }
 }
 

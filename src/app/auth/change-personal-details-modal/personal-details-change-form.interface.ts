@@ -5,6 +5,7 @@ export interface PersonalDetailsChangeForm {
   last_name: FormControl;
   address: FormControl;
   apt_number: FormControl;
+  city: FormControl;
   state: FormControl;
   zip_code: FormControl;
 }
