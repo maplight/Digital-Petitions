@@ -10,13 +10,10 @@ import { state, states } from '../../core/states';
 import { AccountService } from '../account-service/account.service';
 import {
   BehaviorSubject,
-  delay,
   exhaustMap,
   filter,
   map,
-  mapTo,
   merge,
-  Observable,
   partition,
   shareReplay,
 } from 'rxjs';
@@ -29,6 +26,8 @@ export class SignUpComponent implements OnInit {
   protected local_states: state[] = states;
 
   protected hide_password = true;
+  protected response_error$: BehaviorSubject<string | null> =
+    new BehaviorSubject<string | null>(null);
 
   public formGroup: FormGroup;
   public form_data: SignUpForm = {
@@ -68,6 +67,7 @@ export class SignUpComponent implements OnInit {
 
     error$.pipe(map((value) => value.error)).subscribe((data) => {
       console.log('error ' + data);
+      this.response_error$.next(data);
     });
 
     const end$ = merge(success$, error$);
