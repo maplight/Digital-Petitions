@@ -12,7 +12,7 @@ export class AccountService {
 
   public signUp(data: SignUpForm): Observable<any> {
     //return of({ result: ':)' }).pipe(delay(3000));
-    return of({ error: ":'(" }).pipe(delay(3000));
+    return of({ error: "An error has occurred :'(" }).pipe(delay(3000));
   }
 
   public signOut() {}
