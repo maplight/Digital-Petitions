@@ -8,7 +8,7 @@ import {
 import { SignUpForm } from './sign-up-form.interface';
 import { state, states } from '../../core/states';
 import { SignUpService } from 'src/app/core/application/sign-up.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'dp-sign-up',
@@ -18,8 +18,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   protected local_states: state[] = states;
 
   protected hide_password = true;
-  protected error$ = this.SignUpService.error$;
-  protected success$ = this.SignUpService.success$;
+  protected result$;
   protected loading$ = this.SignUpService.loading$;
   private _unsubscribeAll: Subject<null> = new Subject();
 
@@ -40,16 +39,24 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private SignUpService: SignUpService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
+    this.result$ = this.SignUpService.result$.pipe(
+      tap((result) => {
+        if (!!result.result) {
+          /*redirect*/
+        }
+      })
+    );
+    this.loading$ = this.SignUpService.loading$;
   }
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
-    this.SignUpService.unsuscribe();
+    //this.SignUpService.unsuscribe();
   }
 
   ngOnInit(): void {
-    this.success$.subscribe(() => console.log('redirect'));
-    this.loading$.pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    //this.result$.subscribe(() => console.log('redirect'));
+    //this.loading$.pipe(takeUntil(this._unsubscribeAll)).subscribe();
   }
 
   saveForm() {

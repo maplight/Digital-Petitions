@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
   exhaustMap,
@@ -13,15 +13,16 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
+import { Result } from './Result';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SignUpService {
-  public error$: Observable<string>;
-  public success$: Observable<string>;
+export class SignUpService implements OnDestroy {
+  public error$: Observable<Result<string>>;
+  public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
-  public result$: Observable<any>;
+  public result$: Observable<Result<string>>;
   private submit$: Subject<FormGroup> = new Subject();
 
   constructor(private AccountService: AccountService) {
@@ -33,17 +34,19 @@ export class SignUpService {
       exhaustMap((data) => this.AccountService.signUp(data.value)),
       shareReplay(1)
     );
-    const [success$, error$] = partition(this.result$, (value) => value.result);
+    const [success$, error$] = partition(this.result$, (value) =>
+      value.result ? true : false
+    );
 
     this.success$ = success$.pipe(
       //redirect
-      map((value) => value.result),
+      //map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      map((value) => value.error),
+      //map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
@@ -61,12 +64,11 @@ export class SignUpService {
       )
     ).pipe(shareReplay(1));
   }
+  ngOnDestroy(): void {
+    this.submit$.complete();
+  }
 
   set formGroupValue(formGroup: FormGroup) {
     this.submit$.next(formGroup);
-  }
-
-  public unsuscribe(): void {
-    this.submit$.complete();
   }
 }
