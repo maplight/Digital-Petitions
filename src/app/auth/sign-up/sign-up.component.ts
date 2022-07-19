@@ -59,8 +59,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
     //this.loading$.pipe(takeUntil(this._unsubscribeAll)).subscribe();
   }
 
-  saveForm() {
-    this.SignUpService.formGroupValue = this.formGroup;
+  submit() {
+    if (this.formGroup.valid) {
+      this.SignUpService.formGroupValue = this.formGroup.value;
+    }
+
     //this.submit.next(this.formGroup.value);
   }
 }

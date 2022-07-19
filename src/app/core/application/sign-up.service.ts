@@ -13,6 +13,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
+import { SignUpForm } from 'src/app/auth/sign-up/sign-up-form.interface';
 import { Result } from './Result';
 
 @Injectable({
@@ -23,15 +24,11 @@ export class SignUpService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<FormGroup> = new Subject();
+  private submit$: Subject<SignUpForm> = new Subject();
 
   constructor(private AccountService: AccountService) {
-    const start$ = this.submit$.pipe(
-      filter((formGroup) => formGroup.valid),
-      shareReplay(1)
-    );
-    this.result$ = start$.pipe(
-      exhaustMap((data) => this.AccountService.signUp(data.value)),
+    this.result$ = this.submit$.pipe(
+      exhaustMap((data) => this.AccountService.signUp(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -54,7 +51,7 @@ export class SignUpService implements OnDestroy {
     const end$ = merge(this.success$, this.error$);
 
     this.loading$ = merge(
-      start$.pipe(
+      this.submit$.pipe(
         map((v) => true),
         tap(() => console.log('start'))
       ),
@@ -68,7 +65,7 @@ export class SignUpService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(formGroup: FormGroup) {
-    this.submit$.next(formGroup);
+  set formGroupValue(value: SignUpForm) {
+    this.submit$.next(value);
   }
 }
