@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,27 +7,21 @@ import {
 } from '@angular/forms';
 import { SignUpForm } from './sign-up-form.interface';
 import { state, states } from '../../core/states';
-import { AccountService } from '../account-service/account.service';
-import {
-  BehaviorSubject,
-  exhaustMap,
-  filter,
-  map,
-  merge,
-  partition,
-  shareReplay,
-} from 'rxjs';
+import { SignUpService } from 'src/app/core/application/sign-up.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'dp-sign-up',
   templateUrl: './sign-up.component.html',
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
   protected local_states: state[] = states;
 
   protected hide_password = true;
-  protected response_error$: BehaviorSubject<string | null> =
-    new BehaviorSubject<string | null>(null);
+  protected error$ = this.SignUpService.error$;
+  protected success$ = this.SignUpService.success$;
+  protected loading$ = this.SignUpService.loading$;
+  private _unsubscribeAll: Subject<null> = new Subject();
 
   public formGroup: FormGroup;
   public form_data: SignUpForm = {
@@ -41,52 +35,25 @@ export class SignUpComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   };
 
-  private submit = new BehaviorSubject<any>(null);
-
   constructor(
     private formBuilder: FormBuilder,
-    private account_service: AccountService
+    private SignUpService: SignUpService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
   }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+    this.SignUpService.unsuscribe();
+  }
 
   ngOnInit(): void {
-    const start$ = this.submit.pipe(
-      filter((_) => this.formGroup.valid),
-      shareReplay(1)
-    );
-    const result$ = start$.pipe(
-      exhaustMap((data) => this.account_service.signUp(data)),
-      shareReplay(1)
-    );
-    const [success$, error$] = partition(result$, (value) => value.result);
-
-    success$.pipe(map((value) => value.result)).subscribe((data) => {
-      console.log('success ' + data);
-    });
-
-    error$.pipe(map((value) => value.error)).subscribe((data) => {
-      console.log('error ' + data);
-      this.response_error$.next(data);
-    });
-
-    const end$ = merge(success$, error$);
-
-    const loading$ = merge(
-      start$.pipe(map((v) => true)),
-      end$.pipe(map((v) => false))
-    ).pipe(shareReplay(1));
-
-    loading$.subscribe((value) => {
-      if (value) {
-        console.log('start');
-      } else {
-        console.log('end');
-      }
-    });
+    this.success$.subscribe(() => console.log('redirect'));
+    this.loading$.pipe(takeUntil(this._unsubscribeAll)).subscribe();
   }
 
   saveForm() {
-    this.submit.next(this.formGroup.value);
+    this.SignUpService.formGroupValue = this.formGroup;
+    //this.submit.next(this.formGroup.value);
   }
 }

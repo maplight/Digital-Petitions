@@ -6,15 +6,18 @@
         <div class="w-full flex justify-start">
           <h4 class="font-bold text-lg">Create an account</h4>
         </div>
-        <div *ngIf="response_error$ | async" class="flex flex-row items-center">
+        <div *ngIf="error$ | async" class="flex flex-row items-center">
           <mat-icon
             class="w-[14px] h-[14px]"
             [svgIcon]="'custom_icons:c_close'"
           ></mat-icon>
-          <span class="ml-[9px] text-[#FF3030]">{{
-            response_error$ | async
-          }}</span>
+          <span class="ml-[9px] text-[#FF3030]">{{ error$ | async }}</span>
         </div>
+        <mat-progress-bar
+          mode="indeterminate"
+          color="primary"
+          *ngIf="loading$ | async"
+        ></mat-progress-bar>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
           <mat-form-field>
             <mat-label>First Name</mat-label>
@@ -173,6 +176,7 @@
             mat-flat-button
             class="h-10 md:max-w-[157px] w-full"
             color="primary"
+            [disabled]="loading$ | async"
           >
             Create Account
           </button>
