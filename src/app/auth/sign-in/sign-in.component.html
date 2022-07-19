@@ -5,6 +5,20 @@
       <div class="w-full flex justify-start">
         <h4 class="font-bold text-lg">Create an account</h4>
       </div>
+      <ng-container *ngIf="result$ | async as result">
+        <div *ngIf="result.error as error" class="flex flex-row items-center">
+          <mat-icon
+            class="w-[14px] h-[14px]"
+            [svgIcon]="'custom_icons:c_close'"
+          ></mat-icon>
+          <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+        </div>
+      </ng-container>
+      <mat-progress-bar
+        mode="indeterminate"
+        color="primary"
+        *ngIf="loading$ | async"
+      ></mat-progress-bar>
       <form [formGroup]="formGroup" class="grid grid-cols-1 gap-[16px]">
         <mat-form-field>
           <mat-label>Email</mat-label>
@@ -43,10 +57,10 @@
         </span>
       </form>
       <button
+        (click)="submit()"
         mat-flat-button
         class="h-10 w-full mt-2"
         color="primary"
-        (click)="saveForm()"
       >
         Log In
       </button>
