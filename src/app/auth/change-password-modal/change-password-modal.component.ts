@@ -6,6 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subject, takeUntil, tap } from 'rxjs';
+import { ChangePasswordService } from 'src/app/core/application/change-password.service';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
 import { DialogResultComponent } from '../../shared/dialog-result/dialog-result.component';
 import { ChangePasswordForm } from './change-password-form.interface';
@@ -17,7 +19,9 @@ import { ChangePasswordForm } from './change-password-form.interface';
 export class ChangePasswordModalComponent implements OnInit {
   protected hide_new_password = true;
   protected hide_old_password = true;
-  protected id_form = 'dp-change-password-form';
+  protected result$;
+  protected loading$;
+  private _unsubscribeAll: Subject<void> = new Subject();
 
   public formGroup: FormGroup;
   public form_data: ChangePasswordForm = {
@@ -26,23 +30,42 @@ export class ChangePasswordModalComponent implements OnInit {
   };
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<BasicModalComponent>,
-    public dialog: MatDialog
+    private dialogRef: MatDialogRef<BasicModalComponent>,
+    private dialog: MatDialog,
+    private ChangePasswordService: ChangePasswordService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
+    this.result$ = this.ChangePasswordService.result$
+      .pipe(
+        tap((result) => {
+          if (!!result.result) {
+            this.dialogRef.close();
+            this.openDialog('Password Successfully Changed!', '', true);
+          } else {
+            //I'm not sure this is the best way to handle errors here
+            this.dialogRef.close();
+            this.openDialog(
+              'An error has occurred',
+              result.error ? result.error : '',
+              false
+            );
+          }
+        }),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe();
+    this.loading$ = this.ChangePasswordService.loading$;
   }
 
   ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
-  onOk() {
+  submit() {
     if (this.formGroup.valid) {
-      console.log(this.formGroup.value);
-      this.dialogRef.close();
-      this.openDialog(
-        'This is the title',
-        'This is a long example text',
-        false
-      );
+      this.ChangePasswordService.formGroupValue = this.formGroup.value;
     } else {
       this.formGroup.markAllAsTouched();
     }

@@ -8,9 +8,8 @@ describe('CommitteeAccountSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommitteeAccountSettingsComponent ]
-    })
-    .compileComponents();
+      declarations: [CommitteeAccountSettingsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommitteeAccountSettingsComponent);
     component = fixture.componentInstance;

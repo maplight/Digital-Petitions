@@ -8,9 +8,8 @@ describe('ReturnLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReturnLinkComponent ]
-    })
-    .compileComponents();
+      declarations: [ReturnLinkComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ReturnLinkComponent);
     component = fixture.componentInstance;

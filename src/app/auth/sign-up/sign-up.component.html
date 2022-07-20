@@ -1,12 +1,25 @@
 <div class="w-full flex justify-center">
   <div class="flex flex-col max-w-[824px] w-full">
     <h1 class="p-6 font-extrabold">Petition Portal</h1>
-    <form [formGroup]="formGroup" (ngSubmit)="saveForm()">
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <dp-basic-card class="w-full">
         <div class="w-full flex justify-start">
           <h4 class="font-bold text-lg">Create an account</h4>
         </div>
-
+        <ng-container *ngIf="result$ | async as result">
+          <div *ngIf="result.error as error" class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+          </div>
+        </ng-container>
+        <mat-progress-bar
+          mode="indeterminate"
+          color="primary"
+          *ngIf="loading$ | async"
+        ></mat-progress-bar>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
           <mat-form-field>
             <mat-label>First Name</mat-label>
@@ -165,6 +178,7 @@
             mat-flat-button
             class="h-10 md:max-w-[157px] w-full"
             color="primary"
+            [disabled]="loading$ | async"
           >
             Create Account
           </button>

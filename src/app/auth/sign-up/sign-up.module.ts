@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { SignUpRoutingModule } from './sign-up-routing.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [SignUpComponent],
@@ -23,6 +24,7 @@ import { SignUpRoutingModule } from './sign-up-routing.module';
     MatButtonModule,
     RouterModule,
     BasicCardModule,
+    MatProgressBarModule,
   ],
 })
 export class SignUpModule {}
