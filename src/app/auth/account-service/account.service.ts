@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { API, Auth } from 'aws-amplify';
+
 import { delay, Observable, of } from 'rxjs';
 import { Result } from 'src/app/core/application/Result';
+
 import { ChangePasswordForm } from '../change-password-modal/change-password-form.interface';
 import { PersonalDetailsChangeForm } from '../change-personal-details-modal/personal-details-change-form.interface';
+import { EmailChangeForm } from '../email-change-modal/email-change-form.interface';
 import { SignInForm } from '../sign-in/sign-in-form.interface';
+
+import { ConfirmEmailChangeForm } from '../confirm-email-change-modal/confirm-email-change-form.interface';
+
 import { SignUpForm } from '../sign-up/sign-up-form.interface';
 
 @Injectable({
@@ -31,6 +36,15 @@ export class AccountService {
     return of({ result: ":')" }).pipe(delay(3000));
   }
 
+  public changeEmail(data: EmailChangeForm): Observable<Result<string>> {
+    return of({ result: ':)' }).pipe(delay(3000));
+  }
+
+  public confirmEmailChange(
+    data: ConfirmEmailChangeForm
+  ): Observable<Result<string>> {
+    return of({ result: ':)' }).pipe(delay(3000));
+  }
+
   public signOut() {}
-  public changeEmail() {}
 }

@@ -1,4 +1,4 @@
-<dp-basic-modal (event)="onOk()">
+<dp-basic-modal (event)="submit()">
   <span modal-title>Confirm Email Change</span>
   <span modal-body class="w-full flex flex-col gap-6">
     <p class="w-full flex justify-center text-left">
@@ -6,6 +6,11 @@
       confirm your new email
     </p>
     <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+      <mat-progress-bar
+        mode="indeterminate"
+        color="primary"
+        *ngIf="loading$ | async"
+      ></mat-progress-bar>
       <mat-form-field>
         <mat-label>Confirmation Code</mat-label>
         <input type="text" matInput formControlName="code" />
