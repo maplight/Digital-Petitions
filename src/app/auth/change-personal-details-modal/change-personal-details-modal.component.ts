@@ -6,6 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subject, takeUntil, tap } from 'rxjs';
+import { ChangePersonalDetailsService } from 'src/app/core/application/change-personal-details.service';
 import { state, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { PersonalDetailsChangeForm } from './personal-details-change-form.interface';
@@ -16,6 +18,11 @@ import { PersonalDetailsChangeForm } from './personal-details-change-form.interf
   styleUrls: ['./change-personal-details-modal.component.scss'],
 })
 export class ChangePersonalDetailsModalComponent implements OnInit {
+  protected hide_new_password = true;
+  protected hide_old_password = true;
+  protected result$;
+  protected loading$;
+  private _unsubscribeAll: Subject<void> = new Subject();
   protected formGroup: FormGroup;
   protected local_states: state[] = states;
 
@@ -31,18 +38,44 @@ export class ChangePersonalDetailsModalComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ChangePersonalDetailsModalComponent>,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private ChangePersonalDetailsService: ChangePersonalDetailsService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
+    this.result$ = this.ChangePersonalDetailsService.result$
+      .pipe(
+        tap((result) => {
+          if (!!result.result) {
+            this.dialogRef.close();
+            this.openDialog(
+              'Personal Details Are Successfully Changed!',
+              '',
+              true
+            );
+          } else {
+            //I'm not sure this is the best way to handle errors here
+            this.dialogRef.close();
+            this.openDialog(
+              'An error has occurred',
+              result.error ? result.error : '',
+              false
+            );
+          }
+        }),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe();
+    this.loading$ = this.ChangePersonalDetailsService.loading$;
   }
 
   ngOnInit(): void {}
-
-  onOk() {
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+  submit() {
     if (this.formGroup.valid) {
-      console.log(this.formGroup.value);
-      this.dialogRef.close();
-      this.openDialog('Title', 'This is a long example text', true);
+      this.ChangePersonalDetailsService.formGroupValue = this.formGroup.value;
     } else {
       this.formGroup.markAllAsTouched();
     }
