@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogResultModule } from '../../shared/dialog-result/dialog-result.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [ChangePasswordModalComponent],
@@ -19,6 +20,7 @@ import { DialogResultModule } from '../../shared/dialog-result/dialog-result.mod
     MatInputModule,
     MatButtonModule,
     DialogResultModule,
+    MatProgressBarModule,
   ],
 })
 export class ChangePasswordModalModule {}
