@@ -1,4 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subject, takeUntil, tap } from 'rxjs';
+import { AccountService } from 'src/app/auth/account-service/account.service';
+import { User } from 'src/app/auth/User';
+import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
+import { SignOutService } from '../../application/sign-out.service';
 
 @Component({
   selector: 'dp-avatar',
@@ -6,21 +12,34 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent implements OnInit {
-  @Input()
-  public first_name: string = 'Map';
-  @Input()
-  public last_name: string = 'Ligth';
-  @Input()
-  public url: string = '';
-  protected l_avatar: string =
-    this.first_name[0].toUpperCase() + this.last_name[0].toUpperCase();
-  constructor() {}
+  private _unsubscribeAll: Subject<void> = new Subject();
+  private $currentUser;
 
-  ngOnInit(): void {
-    this.update_avatar();
+  protected l_avatar: string = '';
+  protected url = '';
+  constructor(private AccountService: AccountService) {
+    this.$currentUser = AccountService.currentUser$
+      .pipe(
+        tap((data) => {
+          if (!!data) {
+            this.l_avatar =
+              data.firstName[0].toUpperCase() + data.lastName[0].toUpperCase();
+            this.url = data.url;
+          }
+        }),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe();
   }
-  private update_avatar() {
+
+  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+
+  private update_avatar(user: User) {
     this.l_avatar =
-      this.first_name[0].toUpperCase() + this.last_name[0].toUpperCase();
+      user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase();
   }
 }
