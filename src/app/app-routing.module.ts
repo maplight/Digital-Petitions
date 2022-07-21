@@ -30,6 +30,13 @@ const routes: Routes = [
             (m) => m.ForgotPasswordModule
           ),
       },
+      {
+        path: 'set-new-password/:token',
+        loadChildren: () =>
+          import('./auth/set-new-password/set-new-password.module').then(
+            (m) => m.SetNewPasswordModule
+          ),
+      },
     ],
   },
   {
