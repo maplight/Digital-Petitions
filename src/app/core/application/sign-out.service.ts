@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   exhaustMap,
   map,
@@ -15,7 +15,7 @@ import { Result } from './Result';
 @Injectable({
   providedIn: 'root',
 })
-export class SignOutService {
+export class SignOutService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
