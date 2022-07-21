@@ -22,7 +22,7 @@ export class SignOutService implements OnDestroy {
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.signOut()),
+      exhaustMap(() => this.AccountService.signOut()),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
