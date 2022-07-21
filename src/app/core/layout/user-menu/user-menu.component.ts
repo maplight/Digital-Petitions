@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
@@ -10,7 +10,7 @@ import { SignOutService } from '../../application/sign-out.service';
   templateUrl: './user-menu.component.html',
   styleUrls: ['./user-menu.component.scss'],
 })
-export class UserMenuComponent implements OnInit {
+export class UserMenuComponent implements OnInit, OnDestroy {
   private result$;
   private _unsubscribeAll: Subject<void> = new Subject();
   protected currentUser$;

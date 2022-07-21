@@ -12,9 +12,7 @@ import {
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SignOutService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;

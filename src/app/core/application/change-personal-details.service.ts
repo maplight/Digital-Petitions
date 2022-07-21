@@ -13,9 +13,7 @@ import { AccountService } from 'src/app/auth/account-service/account.service';
 import { PersonalDetailsChangeForm } from 'src/app/auth/change-personal-details-modal/personal-details-change-form.interface';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ChangePersonalDetailsService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;

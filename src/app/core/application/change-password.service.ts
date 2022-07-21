@@ -13,9 +13,7 @@ import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ChangePasswordForm } from 'src/app/auth/change-password-modal/change-password-form.interface';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ChangePasswordService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;

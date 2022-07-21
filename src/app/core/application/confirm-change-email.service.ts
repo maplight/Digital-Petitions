@@ -13,9 +13,7 @@ import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ConfirmChangeEmailService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
