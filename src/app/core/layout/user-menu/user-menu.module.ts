@@ -5,6 +5,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { AvatarModule } from '../avatar/avatar.module';
+import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogModule } from '@angular/cdk/dialog';
 
 @NgModule({
   declarations: [UserMenuComponent],
@@ -14,6 +17,9 @@ import { AvatarModule } from '../avatar/avatar.module';
     MatButtonModule,
     RouterModule,
     AvatarModule,
+    DialogResultModule,
+    DialogModule,
+    MatDialogModule,
   ],
   exports: [UserMenuComponent],
 })

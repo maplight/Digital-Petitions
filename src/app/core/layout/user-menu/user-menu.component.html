@@ -1,10 +1,6 @@
-<div *ngIf="is_logged" class="h-14 w-14">
+<div *ngIf="currentUser$ | async" class="h-14 w-14">
   <button mat-button class="menu-button" [matMenuTriggerFor]="user_menu">
-    <dp-avatar
-      [first_name]="first_name"
-      [last_name]="last_name"
-      [url]="img_url"
-    ></dp-avatar>
+    <dp-avatar></dp-avatar>
   </button>
 </div>
 
