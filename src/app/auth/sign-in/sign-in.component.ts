@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Subject, tap } from 'rxjs';
 import { SignInService } from 'src/app/core/application/sign-in.service';
 import { AccountService } from '../account-service/account.service';
@@ -18,8 +23,8 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
   public form_data: SignInForm = {
-    email: '',
-    password: '',
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   };
   constructor(
     private formBuilder: FormBuilder,
