@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SetNewPasswordForm } from 'src/app/auth/set-new-password/set-new-password-form.interface';
-import { ChangePasswordData } from '../models/models';
+import { ChangePasswordData } from '../../shared/models/models';
 import { Result } from './Result';
 
 @Injectable({

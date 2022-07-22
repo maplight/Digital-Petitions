@@ -14,7 +14,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SignUpForm } from 'src/app/auth/sign-up/sign-up-form.interface';
-import { SignUpCredentials } from '../models/models';
+import { SignUpCredentials } from '../../shared/models/models';
 import { Result } from './Result';
 
 @Injectable()

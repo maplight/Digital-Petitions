@@ -10,7 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { SignInCredentials } from '../models/models';
+import { SignInCredentials } from '../../shared/models/models';
 import { Result } from './Result';
 
 @Injectable()

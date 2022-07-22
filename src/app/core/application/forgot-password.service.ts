@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ForgotPasswordForm } from 'src/app/auth/forgot-password/forgot-password-form.interface';
-import { RecoverPasswordData } from '../models/models';
+import { RecoverPasswordData } from '../../shared/models/models';
 import { Result } from './Result';
 
 @Injectable({

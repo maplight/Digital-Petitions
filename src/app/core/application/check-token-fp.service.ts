@@ -10,7 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ConfirmationCode } from '../models/models';
+import { ConfirmationCode } from '../../shared/models/models';
 import { Result } from './Result';
 
 @Injectable({

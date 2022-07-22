@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { EmailChangeForm } from 'src/app/auth/email-change-modal/email-change-form.interface';
-import { ChangeEmailData } from '../models/models';
+import { ChangeEmailData } from '../../shared/models/models';
 import { Result } from './Result';
 
 @Injectable()

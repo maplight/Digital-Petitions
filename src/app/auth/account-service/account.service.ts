@@ -12,7 +12,7 @@ import {
   RecoverPasswordData,
   SignInCredentials,
   SignUpCredentials,
-} from 'src/app/core/models/models';
+} from 'src/app/shared/models/models';
 
 @Injectable({
   providedIn: 'root',
