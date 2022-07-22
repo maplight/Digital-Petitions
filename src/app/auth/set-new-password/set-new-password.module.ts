@@ -5,6 +5,7 @@ import { SetNewPasswordRoutingModule } from './set-new-password-routing.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { FormModule } from './form/form.module';
 import { ConfirmModule } from './confirm/confirm.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [SetNewPasswordComponent],
@@ -14,6 +15,7 @@ import { ConfirmModule } from './confirm/confirm.module';
     ReturnLinkModule,
     FormModule,
     ConfirmModule,
+    MatProgressBarModule,
   ],
 })
 export class SetNewPasswordModule {}
