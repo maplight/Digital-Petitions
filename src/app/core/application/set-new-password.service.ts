@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SetNewPasswordForm } from 'src/app/auth/set-new-password/set-new-password-form.interface';
+import { ChangePasswordData } from '../models/models';
 import { Result } from './Result';
 
 @Injectable({
@@ -21,7 +22,7 @@ export class SetNewPasswordService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<SetNewPasswordForm> = new Subject();
+  private submit$: Subject<ChangePasswordData> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -62,7 +63,7 @@ export class SetNewPasswordService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: SetNewPasswordForm) {
+  set formGroupValue(value: ChangePasswordData) {
     this.submit$.next(value);
   }
 }

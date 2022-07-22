@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { EmailChangeForm } from 'src/app/auth/email-change-modal/email-change-form.interface';
+import { ChangeEmailData } from '../models/models';
 import { Result } from './Result';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ChangeEmailService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<EmailChangeForm> = new Subject();
+  private submit$: Subject<ChangeEmailData> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -57,7 +58,7 @@ export class ChangeEmailService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: EmailChangeForm) {
+  set formGroupValue(value: ChangeEmailData) {
     this.submit$.next(value);
   }
 }

@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SignInForm } from 'src/app/auth/sign-in/sign-in-form.interface';
+import { SignInCredentials } from '../models/models';
 import { Result } from './Result';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class SignInService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<SignInForm> = new Subject();
+  private submit$: Subject<SignInCredentials> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -60,7 +61,7 @@ export class SignInService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: SignInForm) {
+  set formGroupValue(value: SignInCredentials) {
     this.submit$.next(value);
   }
 }

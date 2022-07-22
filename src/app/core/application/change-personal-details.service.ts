@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { PersonalDetailsChangeForm } from 'src/app/auth/change-personal-details-modal/personal-details-change-form.interface';
+import { PersonalDetailsToUpdate } from '../models/models';
 import { Result } from './Result';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ChangePersonalDetailsService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<PersonalDetailsChangeForm> = new Subject();
+  private submit$: Subject<PersonalDetailsToUpdate> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -57,7 +58,7 @@ export class ChangePersonalDetailsService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: PersonalDetailsChangeForm) {
+  set formGroupValue(value: PersonalDetailsToUpdate) {
     this.submit$.next(value);
   }
 }

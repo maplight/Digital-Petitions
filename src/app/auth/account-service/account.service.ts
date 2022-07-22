@@ -13,7 +13,7 @@ import { ConfirmEmailChangeForm } from '../confirm-email-change-modal/confirm-em
 import { User } from '../user';
 import { SetNewPasswordForm } from '../set-new-password/set-new-password-form.interface';
 import { ForgotPasswordForm } from '../forgot-password/forgot-password-form.interface';
-import { SignUpCredentials } from 'src/app/core/models/models';
+import { ChangeEmailData, ChangePasswordData, ConfirmationCode, PersonalDetailsToUpdate, RecoverPasswordData, SignInCredentials, SignUpCredentials } from 'src/app/core/models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -30,26 +30,26 @@ export class AccountService {
     return of({ error: ":'(" }).pipe(delay(3000));
   }
 
-  public signIn(data: SignInForm): Observable<Result<string>> {
+  public signIn(data: SignInCredentials): Observable<Result<string>> {
     return of({ error: ":'(" }).pipe(delay(3000));
   }
 
-  public changePassword(data: ChangePasswordForm): Observable<Result<string>> {
+  public changePassword(data: ChangePasswordData): Observable<Result<string>> {
     return of({ result: ":')" }).pipe(delay(3000));
   }
 
   public changePersonalDetails(
-    data: PersonalDetailsChangeForm
+    data: PersonalDetailsToUpdate
   ): Observable<Result<string>> {
     return of({ result: ":')" }).pipe(delay(3000));
   }
 
-  public changeEmail(data: EmailChangeForm): Observable<Result<string>> {
+  public changeEmail(data: ChangeEmailData): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
   public confirmEmailChange(
-    data: ConfirmEmailChangeForm
+    data: ConfirmationCode
   ): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
@@ -58,15 +58,15 @@ export class AccountService {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
-  public setNewPassword(data: SetNewPasswordForm): Observable<Result<string>> {
+  public setNewPassword(data: ChangePasswordData): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
-  public forgotPassword(data: ForgotPasswordForm): Observable<Result<string>> {
+  public forgotPassword(data: RecoverPasswordData): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
-  public checkTokenFP(data: string): Observable<Result<string>> {
+  public checkTokenFP(data: ConfirmationCode): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 

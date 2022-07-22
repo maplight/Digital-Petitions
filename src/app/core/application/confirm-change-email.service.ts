@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
+import { ConfirmationCode } from '../models/models';
 import { Result } from './Result';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ConfirmChangeEmailService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<ConfirmEmailChangeForm> = new Subject();
+  private submit$: Subject<ConfirmationCode> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -57,7 +58,7 @@ export class ConfirmChangeEmailService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ConfirmEmailChangeForm) {
+  set formGroupValue(value: ConfirmationCode) {
     this.submit$.next(value);
   }
 }

@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ForgotPasswordForm } from 'src/app/auth/forgot-password/forgot-password-form.interface';
+import { RecoverPasswordData } from '../models/models';
 import { Result } from './Result';
 
 @Injectable({
@@ -21,7 +22,7 @@ export class ForgotPasswordService {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<ForgotPasswordForm> = new Subject();
+  private submit$: Subject<RecoverPasswordData> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -62,7 +63,7 @@ export class ForgotPasswordService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ForgotPasswordForm) {
+  set formGroupValue(value: RecoverPasswordData) {
     this.submit$.next(value);
   }
 }
