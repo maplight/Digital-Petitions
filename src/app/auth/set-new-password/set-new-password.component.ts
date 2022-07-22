@@ -12,24 +12,10 @@ import { SetNewPasswordForm } from './set-new-password-form.interface';
   templateUrl: './set-new-password.component.html',
 })
 export class SetNewPasswordComponent implements OnInit, OnDestroy {
-  protected hideConfirmPassword = true;
-  protected password = true;
-
-  public formGroup: FormGroup;
-  public form_data: SetNewPasswordForm = {
-    newPassword: new FormControl('', [Validators.required]),
-    confirmPassword: new FormControl('', [Validators.required]),
-  };
-  constructor(private formBuilder: FormBuilder) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-  }
+  constructor() {}
 
   ngOnInit(): void {}
   ngOnDestroy(): void {}
 
-  submit() {
-    if (this.formGroup.valid) {
-      //call service
-    }
-  }
+  submit(formData: SetNewPasswordForm) {}
 }
