@@ -23,6 +23,20 @@ const routes: Routes = [
         loadChildren: () =>
           import('./auth/sign-in/sign-in.module').then((m) => m.SignInModule),
       },
+      {
+        path: 'forgot-password',
+        loadChildren: () =>
+          import('./auth/forgot-password/forgot-password.module').then(
+            (m) => m.ForgotPasswordModule
+          ),
+      },
+      {
+        path: 'set-new-password/:token',
+        loadChildren: () =>
+          import('./auth/set-new-password/set-new-password.module').then(
+            (m) => m.SetNewPasswordModule
+          ),
+      },
     ],
   },
   {

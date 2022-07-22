@@ -12,6 +12,8 @@ import { ConfirmEmailChangeForm } from '../confirm-email-change-modal/confirm-em
 
 import { SignUpForm } from '../sign-up/sign-up-form.interface';
 import { User } from '../User';
+import { SetNewPasswordForm } from '../set-new-password/set-new-password-form.interface';
+import { ForgotPasswordForm } from '../forgot-password/forgot-password-form.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -53,6 +55,18 @@ export class AccountService {
   }
 
   public signOut(): Observable<Result<string>> {
+    return of({ result: ':)' }).pipe(delay(3000));
+  }
+
+  public setNewPassword(data: SetNewPasswordForm): Observable<Result<string>> {
+    return of({ result: ':)' }).pipe(delay(3000));
+  }
+
+  public forgotPassword(data: ForgotPasswordForm): Observable<Result<string>> {
+    return of({ result: ':)' }).pipe(delay(3000));
+  }
+
+  public checkTokenFP(data: string): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
