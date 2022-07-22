@@ -10,10 +10,10 @@ import { SignInForm } from '../sign-in/sign-in-form.interface';
 
 import { ConfirmEmailChangeForm } from '../confirm-email-change-modal/confirm-email-change-form.interface';
 
-import { SignUpForm } from '../sign-up/sign-up-form.interface';
-import { User } from '../User';
+import { User } from '../user';
 import { SetNewPasswordForm } from '../set-new-password/set-new-password-form.interface';
 import { ForgotPasswordForm } from '../forgot-password/forgot-password-form.interface';
+import { SignUpCredentials } from 'src/app/core/models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class AccountService {
 
   constructor() {}
 
-  public signUp(data: SignUpForm): Observable<Result<string>> {
+  public signUp(data: SignUpCredentials): Observable<Result<string>> {
     return of({ error: ":'(" }).pipe(delay(3000));
   }
 
