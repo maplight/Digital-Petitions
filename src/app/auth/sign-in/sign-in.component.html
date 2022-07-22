@@ -50,7 +50,7 @@
               <mat-label>Password</mat-label>
               <input
                 matInput
-                [type]="hide_password ? 'password' : 'text'"
+                [type]="hidePassword ? 'password' : 'text'"
                 formControlName="password"
               />
               <mat-error
@@ -65,11 +65,11 @@
                 type="button"
                 matSuffix
                 mat-icon-button
-                (click)="hide_password = !hide_password"
+                (click)="hidePassword = !hidePassword"
               >
                 <mat-icon
                   [svgIcon]="
-                    hide_password ? 'custom_icons:edge' : 'custom_icons:no-edge'
+                    hidePassword ? 'custom_icons:edge' : 'custom_icons:no-edge'
                   "
                 ></mat-icon>
               </button>

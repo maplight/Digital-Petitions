@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { Subject, tap } from 'rxjs';
 import { ForgotPasswordService } from 'src/app/core/application/forgot-password.service';
-import { SignInService } from 'src/app/core/application/sign-in.service';
 import { AccountService } from '../account-service/account.service';
 import { ForgotPasswordForm } from './forgot-password-form.interface';
 
