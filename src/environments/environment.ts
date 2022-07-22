@@ -3,7 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  awsExports: {
+    aws_appsync_graphqlEndpoint: '',
+    aws_appsync_region: '',
+    aws_appsync_authenticationType: '',
+    aws_appsync_apiKey: '',
+    Auth: {
+      region: '',
+      userPoolId: '',
+      userPoolWebClientId: '',
+    },
+  },
 };
 
 /*
