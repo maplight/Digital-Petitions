@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { shareReplay, Subject, tap } from 'rxjs';
-import { SignInService } from 'src/app/application/sign-in.service';
+import { SignInService } from 'src/app/logic/sign-in.service';
 import { AccountService } from '../account-service/account.service';
 import { SignInForm } from './sign-in-form.interface';
 

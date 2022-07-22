@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { ChangePersonalDetailsService } from 'src/app/application/change-personal-details.service';
+import { ChangePersonalDetailsService } from 'src/app/logic/change-personal-details.service';
 import { state, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { AccountService } from '../account-service/account.service';

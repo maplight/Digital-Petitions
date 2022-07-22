@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subject, tap } from 'rxjs';
-import { ForgotPasswordService } from 'src/app/application/forgot-password.service';
+import { ForgotPasswordService } from 'src/app/logic/forgot-password.service';
 import { AccountService } from '../account-service/account.service';
 import { ForgotPasswordForm } from './forgot-password-form.interface';
 
