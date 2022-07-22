@@ -14,7 +14,7 @@ export const environment = {
       userPoolId: '',
       userPoolWebClientId: '',
     },
-  }
+  },
 };
 
 /*
