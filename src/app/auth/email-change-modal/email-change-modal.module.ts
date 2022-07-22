@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ConfirmEmailChangeModalModule } from '../confirm-email-change-modal/confirm-email-change-modal.module';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ChangeEmailService } from 'src/app/logic/change-email.service';
+import { ChangeEmailService } from 'src/app/logic/auth/exports';
 
 @NgModule({
   declarations: [EmailChangeModalComponent],
