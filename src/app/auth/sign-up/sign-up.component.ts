@@ -9,6 +9,7 @@ import { SignUpForm } from './sign-up-form.interface';
 import { state, states } from '../../core/states';
 import { SignUpService } from 'src/app/core/application/sign-up.service';
 import { Subject, takeUntil, tap } from 'rxjs';
+import { AccountService } from '../account-service/account.service';
 
 @Component({
   selector: 'dp-sign-up',
@@ -36,13 +37,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private SignUpService: SignUpService
+    private SignUpService: SignUpService,
+    private AccountService: AccountService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
     this.result$ = this.SignUpService.result$.pipe(
       tap((result) => {
         if (!!result.result) {
           /*redirect*/
+          AccountService.updateUser(true);
         }
       })
     );
@@ -51,13 +54,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
-    //this.SignUpService.unsuscribe();
   }
 
-  ngOnInit(): void {
-    //this.result$.subscribe(() => console.log('redirect'));
-    //this.loading$.pipe(takeUntil(this._unsubscribeAll)).subscribe();
-  }
+  ngOnInit(): void {}
 
   submit() {
     if (this.formGroup.valid) {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   exhaustMap,
   map,
@@ -13,10 +13,8 @@ import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SignInForm } from 'src/app/auth/sign-in/sign-in-form.interface';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class SignInService {
+@Injectable()
+export class SignInService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;

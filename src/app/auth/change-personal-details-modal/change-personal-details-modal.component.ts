@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -10,6 +10,7 @@ import { Subject, takeUntil, tap } from 'rxjs';
 import { ChangePersonalDetailsService } from 'src/app/core/application/change-personal-details.service';
 import { state, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
+import { AccountService } from '../account-service/account.service';
 import { PersonalDetailsChangeForm } from './personal-details-change-form.interface';
 
 @Component({
@@ -17,7 +18,7 @@ import { PersonalDetailsChangeForm } from './personal-details-change-form.interf
   templateUrl: './change-personal-details-modal.component.html',
   styleUrls: ['./change-personal-details-modal.component.scss'],
 })
-export class ChangePersonalDetailsModalComponent implements OnInit {
+export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
   protected hide_new_password = true;
   protected hide_old_password = true;
   protected result$;
@@ -39,13 +40,15 @@ export class ChangePersonalDetailsModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ChangePersonalDetailsModalComponent>,
     public dialog: MatDialog,
-    private ChangePersonalDetailsService: ChangePersonalDetailsService
+    private ChangePersonalDetailsService: ChangePersonalDetailsService,
+    private AccountService: AccountService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
     this.result$ = this.ChangePersonalDetailsService.result$
       .pipe(
         tap((result) => {
           if (!!result.result) {
+            AccountService.updateUser(true);
             this.dialogRef.close();
             this.openDialog(
               'Personal Details Are Successfully Changed!',

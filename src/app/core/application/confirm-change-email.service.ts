@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   exhaustMap,
   map,
@@ -13,10 +13,8 @@ import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ConfirmChangeEmailService {
+@Injectable()
+export class ConfirmChangeEmailService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;

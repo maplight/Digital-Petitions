@@ -1,7 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Subject, tap } from 'rxjs';
 import { SignInService } from 'src/app/core/application/sign-in.service';
+import { AccountService } from '../account-service/account.service';
 import { SignInForm } from './sign-in-form.interface';
 
 @Component({
@@ -17,18 +23,20 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
   public form_data: SignInForm = {
-    email: '',
-    password: '',
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   };
   constructor(
     private formBuilder: FormBuilder,
-    private SignInService: SignInService
+    private SignInService: SignInService,
+    private AccountService: AccountService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
     this.result$ = this.SignInService.result$.pipe(
       tap((result) => {
         if (!!result.result) {
           /*redirect*/
+          AccountService.updateUser(true);
         }
       })
     );

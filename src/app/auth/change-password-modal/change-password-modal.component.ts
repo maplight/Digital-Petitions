@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -10,13 +10,14 @@ import { Subject, takeUntil, tap } from 'rxjs';
 import { ChangePasswordService } from 'src/app/core/application/change-password.service';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
 import { DialogResultComponent } from '../../shared/dialog-result/dialog-result.component';
+import { AccountService } from '../account-service/account.service';
 import { ChangePasswordForm } from './change-password-form.interface';
 
 @Component({
   selector: 'dp-change-password-modal',
   templateUrl: './change-password-modal.component.html',
 })
-export class ChangePasswordModalComponent implements OnInit {
+export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   protected hide_new_password = true;
   protected hide_old_password = true;
   protected result$;
@@ -32,7 +33,8 @@ export class ChangePasswordModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<BasicModalComponent>,
     private dialog: MatDialog,
-    private ChangePasswordService: ChangePasswordService
+    private ChangePasswordService: ChangePasswordService,
+    private AccountService: AccountService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
     this.result$ = this.ChangePasswordService.result$
@@ -41,6 +43,7 @@ export class ChangePasswordModalComponent implements OnInit {
           if (!!result.result) {
             this.dialogRef.close();
             this.openDialog('Password Successfully Changed!', '', true);
+            AccountService.updateUser(true);
           } else {
             //I'm not sure this is the best way to handle errors here
             this.dialogRef.close();

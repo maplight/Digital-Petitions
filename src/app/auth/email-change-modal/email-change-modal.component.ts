@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,7 +17,7 @@ import { EmailChangeForm } from './email-change-form.interface';
   templateUrl: './email-change-modal.component.html',
   styleUrls: ['./email-change-modal.component.scss'],
 })
-export class EmailChangeModalComponent implements OnInit {
+export class EmailChangeModalComponent implements OnInit, OnDestroy {
   protected result$;
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
@@ -27,8 +27,8 @@ export class EmailChangeModalComponent implements OnInit {
   };
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<EmailChangeModalComponent>,
-    public dialog: MatDialog,
+    private dialogRef: MatDialogRef<EmailChangeModalComponent>,
+    private dialog: MatDialog,
     private ChangeEmailService: ChangeEmailService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);

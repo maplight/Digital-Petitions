@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,13 +9,14 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { ConfirmChangeEmailService } from 'src/app/core/application/confirm-change-email.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
+import { AccountService } from '../account-service/account.service';
 import { ConfirmEmailChangeForm } from './confirm-email-change-form.interface';
 
 @Component({
   selector: 'dp-confirm-email-change-modal',
   templateUrl: './confirm-email-change-modal.component.html',
 })
-export class ConfirmEmailChangeModalComponent implements OnInit {
+export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
   protected result$;
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
@@ -25,9 +26,10 @@ export class ConfirmEmailChangeModalComponent implements OnInit {
   };
   constructor(
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<ConfirmEmailChangeModalComponent>,
-    public dialog: MatDialog,
-    private ConfirmChangeEmailService: ConfirmChangeEmailService
+    private dialogRef: MatDialogRef<ConfirmEmailChangeModalComponent>,
+    private dialog: MatDialog,
+    private ConfirmChangeEmailService: ConfirmChangeEmailService,
+    private AccountService: AccountService
   ) {
     this.formGroup = this.formBuilder.group(this.form_data);
     this.result$ = this.ConfirmChangeEmailService.result$
@@ -36,6 +38,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit {
           if (!!result.result) {
             this.dialogRef.close();
             this.openDialog('Email Successfully Changed!', '', true);
+            AccountService.updateUser(true);
           } else {
             //I'm not sure this is the best way to handle errors here
             this.dialogRef.close();

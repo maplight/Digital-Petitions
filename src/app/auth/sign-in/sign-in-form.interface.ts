@@ -1,4 +1,6 @@
+import { FormControl } from '@angular/forms';
+
 export interface SignInForm {
-  email: string;
-  password: string;
+  email: FormControl;
+  password: FormControl;
 }

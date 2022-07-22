@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ChangePersonalDetailsService } from 'src/app/core/application/change-personal-details.service';
 
 @NgModule({
   declarations: [ChangePersonalDetailsModalComponent],
@@ -24,5 +25,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSelectModule,
     MatProgressBarModule,
   ],
+  providers: [ChangePersonalDetailsService],
 })
 export class ChangePersonalDetailsModalModule {}

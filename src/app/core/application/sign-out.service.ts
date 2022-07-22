@@ -1,32 +1,28 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import {
   exhaustMap,
-  filter,
   map,
   merge,
   Observable,
-  of,
   partition,
   shareReplay,
   Subject,
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { SignUpForm } from 'src/app/auth/sign-up/sign-up-form.interface';
 import { Result } from './Result';
 
 @Injectable()
-export class SignUpService implements OnDestroy {
+export class SignOutService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<SignUpForm> = new Subject();
+  private submit$: Subject<void> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.signUp(data)),
+      exhaustMap(() => this.AccountService.signOut()),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -63,7 +59,7 @@ export class SignUpService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: SignUpForm) {
-    this.submit$.next(value);
+  signOut() {
+    this.submit$.next();
   }
 }

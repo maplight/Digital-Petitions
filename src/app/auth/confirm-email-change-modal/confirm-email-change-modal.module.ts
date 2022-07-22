@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ConfirmChangeEmailService } from 'src/app/core/application/confirm-change-email.service';
 
 @NgModule({
   declarations: [ConfirmEmailChangeModalComponent],
@@ -22,5 +23,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatIconModule,
     MatProgressBarModule,
   ],
+  providers: [ConfirmChangeEmailService],
 })
 export class ConfirmEmailChangeModalModule {}

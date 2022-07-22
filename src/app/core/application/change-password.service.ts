@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   exhaustMap,
   map,
@@ -13,10 +13,8 @@ import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ChangePasswordForm } from 'src/app/auth/change-password-modal/change-password-form.interface';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ChangePasswordService {
+@Injectable()
+export class ChangePasswordService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
