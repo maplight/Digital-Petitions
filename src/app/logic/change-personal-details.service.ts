@@ -12,7 +12,7 @@ import {
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { PersonalDetailsChangeForm } from 'src/app/auth/change-personal-details-modal/personal-details-change-form.interface';
 import { PersonalDetailsToUpdate } from '../shared/models/models';
-import { Result } from './Result';
+import { Result } from '../shared/models/common/result';
 
 @Injectable()
 export class ChangePersonalDetailsService implements OnDestroy {

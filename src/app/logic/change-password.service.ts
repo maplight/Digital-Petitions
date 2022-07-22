@@ -12,7 +12,7 @@ import {
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ChangePasswordForm } from 'src/app/auth/change-password-modal/change-password-form.interface';
 import { ChangePasswordData } from '../shared/models/models';
-import { Result } from './Result';
+import { Result } from '../shared/models/common/result';
 
 @Injectable()
 export class ChangePasswordService implements OnDestroy {

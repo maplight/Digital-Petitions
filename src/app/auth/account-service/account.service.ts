@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, delay, Observable, of } from 'rxjs';
-import { Result } from 'src/app/logic/Result';
 
 import { User } from '../user';
 import {
@@ -10,6 +9,7 @@ import {
   ConfirmationCode,
   PersonalDetailsToUpdate,
   RecoverPasswordData,
+  Result,
   SignInCredentials,
   SignUpCredentials,
 } from 'src/app/shared/models/models';

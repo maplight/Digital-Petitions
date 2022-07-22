@@ -5,3 +5,4 @@ export * from './auth/personal-details';
 export * from './auth/change-email-data';
 export * from './auth/confirmation-code';
 export * from './auth/recover-password-data';
+export * from './common/result';

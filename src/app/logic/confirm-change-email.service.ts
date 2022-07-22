@@ -12,7 +12,7 @@ import {
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
 import { ConfirmationCode } from '../shared/models/models';
-import { Result } from './Result';
+import { Result } from '../shared/models/common/result';
 
 @Injectable()
 export class ConfirmChangeEmailService implements OnDestroy {

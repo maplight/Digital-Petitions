@@ -12,7 +12,7 @@ import {
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { EmailChangeForm } from 'src/app/auth/email-change-modal/email-change-form.interface';
 import { ChangeEmailData } from '../shared/models/models';
-import { Result } from './Result';
+import { Result } from '../shared/models/common/result';
 
 @Injectable()
 export class ChangeEmailService implements OnDestroy {

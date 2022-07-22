@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmationCode } from '../shared/models/models';
-import { Result } from './Result';
+import { Result } from '../shared/models/common/result';
 
 @Injectable({
   providedIn: 'root',
