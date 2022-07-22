@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { ChangePasswordService } from 'src/app/core/application/change-password.service';
+import { ChangePasswordService } from 'src/app/application/change-password.service';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
 import { DialogResultComponent } from '../../shared/dialog-result/dialog-result.component';
 import { AccountService } from '../account-service/account.service';

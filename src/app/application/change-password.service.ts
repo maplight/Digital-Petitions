@@ -10,21 +10,21 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { PersonalDetailsChangeForm } from 'src/app/auth/change-personal-details-modal/personal-details-change-form.interface';
-import { PersonalDetailsToUpdate } from '../../shared/models/models';
+import { ChangePasswordForm } from 'src/app/auth/change-password-modal/change-password-form.interface';
+import { ChangePasswordData } from '../shared/models/models';
 import { Result } from './Result';
 
 @Injectable()
-export class ChangePersonalDetailsService implements OnDestroy {
+export class ChangePasswordService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<PersonalDetailsToUpdate> = new Subject();
+  private submit$: Subject<ChangePasswordData> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.changePersonalDetails(data)),
+      exhaustMap((data) => this.AccountService.changePassword(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -58,7 +58,7 @@ export class ChangePersonalDetailsService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: PersonalDetailsToUpdate) {
+  set formGroupValue(value: ChangePasswordData) {
     this.submit$.next(value);
   }
 }

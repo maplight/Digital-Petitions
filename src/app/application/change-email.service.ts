@@ -10,35 +10,33 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { SignInCredentials } from '../../shared/models/models';
+import { EmailChangeForm } from 'src/app/auth/email-change-modal/email-change-form.interface';
+import { ChangeEmailData } from '../shared/models/models';
 import { Result } from './Result';
 
 @Injectable()
-export class SignInService implements OnDestroy {
+export class ChangeEmailService implements OnDestroy {
   public error$: Observable<Result<string>>;
+  public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private _submit: Subject<SignInCredentials> = new Subject();
-  public success$: Observable<Result<string>>;
+  private submit$: Subject<ChangeEmailData> = new Subject();
 
-  constructor(private _accountService: AccountService) {
-    this.result$ = this._submit.pipe(
-      exhaustMap((data) => this._accountService.signIn(data)),
+  constructor(private AccountService: AccountService) {
+    this.result$ = this.submit$.pipe(
+      exhaustMap((data) => this.AccountService.changeEmail(data)),
       shareReplay(1)
     );
-
     const [success$, error$] = partition(this.result$, (value) =>
-      !!value.result
+      value.result ? true : false
     );
 
     this.success$ = success$.pipe(
-      //redirect
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      //map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
@@ -46,7 +44,7 @@ export class SignInService implements OnDestroy {
     const end$ = merge(this.success$, this.error$);
 
     this.loading$ = merge(
-      this._submit.pipe(
+      this.submit$.pipe(
         map((v) => true),
         tap(() => console.log('start'))
       ),
@@ -56,12 +54,11 @@ export class SignInService implements OnDestroy {
       )
     ).pipe(shareReplay(1));
   }
-
   ngOnDestroy(): void {
-    this._submit.complete();
+    this.submit$.complete();
   }
 
-  requestSignIn(value: SignInCredentials) {
-    this._submit.next(value);
+  set formGroupValue(value: ChangeEmailData) {
+    this.submit$.next(value);
   }
 }

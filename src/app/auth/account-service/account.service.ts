@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, delay, Observable, of } from 'rxjs';
-import { Result } from 'src/app/core/application/Result';
+import { Result } from 'src/app/application/Result';
 
 import { User } from '../user';
 import {

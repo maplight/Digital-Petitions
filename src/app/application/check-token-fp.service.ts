@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   exhaustMap,
   map,
@@ -10,12 +10,13 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
-import { ConfirmationCode } from '../../shared/models/models';
+import { ConfirmationCode } from '../shared/models/models';
 import { Result } from './Result';
 
-@Injectable()
-export class ConfirmChangeEmailService implements OnDestroy {
+@Injectable({
+  providedIn: 'root',
+})
+export class CheckTokenFpService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
@@ -24,19 +25,23 @@ export class ConfirmChangeEmailService implements OnDestroy {
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.confirmEmailChange(data)),
+      exhaustMap((data) => this.AccountService.checkTokenFP(data)),
       shareReplay(1)
     );
+
     const [success$, error$] = partition(this.result$, (value) =>
       value.result ? true : false
     );
 
     this.success$ = success$.pipe(
+      //redirect
+      //map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
+      //map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
@@ -58,7 +63,7 @@ export class ConfirmChangeEmailService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ConfirmationCode) {
+  sendToken(value: ConfirmationCode) {
     this.submit$.next(value);
   }
 }

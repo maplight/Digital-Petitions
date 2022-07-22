@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogResultModule } from '../../shared/dialog-result/dialog-result.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ChangePasswordService } from 'src/app/core/application/change-password.service';
+import { ChangePasswordService } from 'src/app/application/change-password.service';
 
 @NgModule({
   declarations: [ChangePasswordModalComponent],

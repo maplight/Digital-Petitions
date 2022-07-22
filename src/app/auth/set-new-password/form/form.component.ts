@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subject, tap } from 'rxjs';
-import { SetNewPasswordService } from 'src/app/core/application/set-new-password.service';
+import { SetNewPasswordService } from 'src/app/application/set-new-password.service';
 import { AccountService } from '../../account-service/account.service';
 import { SetNewPasswordForm } from '../set-new-password-form.interface';
 

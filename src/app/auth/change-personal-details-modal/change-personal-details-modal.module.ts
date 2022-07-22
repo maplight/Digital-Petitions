@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ChangePersonalDetailsService } from 'src/app/core/application/change-personal-details.service';
+import { ChangePersonalDetailsService } from 'src/app/application/change-personal-details.service';
 
 @NgModule({
   declarations: [ChangePersonalDetailsModalComponent],

@@ -10,23 +10,21 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { SetNewPasswordForm } from 'src/app/auth/set-new-password/set-new-password-form.interface';
-import { ChangePasswordData } from '../../shared/models/models';
+import { PersonalDetailsChangeForm } from 'src/app/auth/change-personal-details-modal/personal-details-change-form.interface';
+import { PersonalDetailsToUpdate } from '../shared/models/models';
 import { Result } from './Result';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class SetNewPasswordService implements OnDestroy {
+@Injectable()
+export class ChangePersonalDetailsService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<ChangePasswordData> = new Subject();
+  private submit$: Subject<PersonalDetailsToUpdate> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.setNewPassword(data)),
+      exhaustMap((data) => this.AccountService.changePersonalDetails(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -34,14 +32,11 @@ export class SetNewPasswordService implements OnDestroy {
     );
 
     this.success$ = success$.pipe(
-      //redirect
-      //map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      //map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
@@ -63,7 +58,7 @@ export class SetNewPasswordService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ChangePasswordData) {
+  set formGroupValue(value: PersonalDetailsToUpdate) {
     this.submit$.next(value);
   }
 }
