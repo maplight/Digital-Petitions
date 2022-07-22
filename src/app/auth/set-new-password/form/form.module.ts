@@ -7,6 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
+import {
+  MatProgressBar,
+  MatProgressBarModule,
+} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [FormComponent],
@@ -18,6 +22,7 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
   ],
   exports: [FormComponent],
 })
