@@ -14,8 +14,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SignUpForm } from 'src/app/auth/sign-up/sign-up-form.interface';
-import { SignUpCredentials } from '../shared/models/models';
-import { Result } from '../shared/models/common/result';
+import { Result, SignUpCredentials } from 'src/app/shared/models/models';
 
 @Injectable()
 export class SignUpService implements OnDestroy {
