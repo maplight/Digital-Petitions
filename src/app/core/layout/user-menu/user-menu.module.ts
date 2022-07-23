@@ -8,7 +8,7 @@ import { AvatarModule } from '../avatar/avatar.module';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogModule } from '@angular/cdk/dialog';
-import { SignOutService } from '../../application/sign-out.service';
+import { SignOutService } from 'src/app/logic/auth/exports';
 
 @NgModule({
   declarations: [UserMenuComponent],

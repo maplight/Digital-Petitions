@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   exhaustMap,
   map,
@@ -10,24 +10,22 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { Result } from './Result';
+import { SetNewPasswordForm } from 'src/app/auth/set-new-password/set-new-password-form.interface';
+import { ChangePasswordData, Result } from 'src/app/shared/models/exports';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class CheckTokenFpService {
+@Injectable()
+export class SetNewPasswordService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<string> = new Subject();
+  private submit$: Subject<ChangePasswordData> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.checkTokenFP(data)),
+      exhaustMap((data) => this.AccountService.setNewPassword(data)),
       shareReplay(1)
     );
-
     const [success$, error$] = partition(this.result$, (value) =>
       value.result ? true : false
     );
@@ -62,7 +60,7 @@ export class CheckTokenFpService {
     this.submit$.complete();
   }
 
-  sendToken(value: string) {
+  set formGroupValue(value: ChangePasswordData) {
     this.submit$.next(value);
   }
 }

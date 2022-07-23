@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { SingInRoutingModule } from './sign-in-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { SignInService } from 'src/app/core/application/sign-in.service';
+import { SignInService } from 'src/app/logic/auth/exports';
 
 @NgModule({
   declarations: [SignInComponent],

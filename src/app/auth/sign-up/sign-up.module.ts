@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { SignUpRoutingModule } from './sign-up-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { SignUpService } from 'src/app/core/application/sign-up.service';
+import { SignUpService } from 'src/app/logic/auth/exports';
 
 @NgModule({
   declarations: [SignUpComponent],

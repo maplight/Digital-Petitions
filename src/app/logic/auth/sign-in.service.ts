@@ -10,31 +10,31 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { SetNewPasswordForm } from 'src/app/auth/set-new-password/set-new-password-form.interface';
-import { Result } from './Result';
+import { Result, SignInCredentials } from 'src/app/shared/models/exports';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class SetNewPasswordService implements OnDestroy {
+@Injectable()
+export class SignInService implements OnDestroy {
   public error$: Observable<Result<string>>;
-  public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<SetNewPasswordForm> = new Subject();
+  private _submit: Subject<SignInCredentials> = new Subject();
+  public success$: Observable<Result<string>>;
 
-  constructor(private AccountService: AccountService) {
-    this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.setNewPassword(data)),
+  constructor(private _accountService: AccountService) {
+    this.result$ = this._submit.pipe(
+      exhaustMap((data) => this._accountService.signIn(data)),
       shareReplay(1)
     );
-    const [success$, error$] = partition(this.result$, (value) =>
-      value.result ? true : false
+
+    const [success$, error$] = partition(
+      this.result$,
+      (value) => !!value.result
     );
 
     this.success$ = success$.pipe(
-      //redirect
-      //map((value) => value.result),
+      // probably there is no need to redirect here as the consumer can always
+      // pipe from the result observable ask for the success result and take
+      // the appropiate action
       tap((value) => console.log(value)),
       shareReplay(1)
     );
@@ -48,7 +48,7 @@ export class SetNewPasswordService implements OnDestroy {
     const end$ = merge(this.success$, this.error$);
 
     this.loading$ = merge(
-      this.submit$.pipe(
+      this._submit.pipe(
         map((v) => true),
         tap(() => console.log('start'))
       ),
@@ -58,11 +58,12 @@ export class SetNewPasswordService implements OnDestroy {
       )
     ).pipe(shareReplay(1));
   }
+
   ngOnDestroy(): void {
-    this.submit$.complete();
+    this._submit.complete();
   }
 
-  set formGroupValue(value: SetNewPasswordForm) {
-    this.submit$.next(value);
+  requestSignIn(value: SignInCredentials) {
+    this._submit.next(value);
   }
 }

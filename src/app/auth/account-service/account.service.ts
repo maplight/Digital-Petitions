@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, delay, Observable, of } from 'rxjs';
-import { Result } from 'src/app/core/application/Result';
 
-import { ChangePasswordForm } from '../change-password-modal/change-password-form.interface';
-import { PersonalDetailsChangeForm } from '../change-personal-details-modal/personal-details-change-form.interface';
-import { EmailChangeForm } from '../email-change-modal/email-change-form.interface';
-import { SignInForm } from '../sign-in/sign-in-form.interface';
-
-import { ConfirmEmailChangeForm } from '../confirm-email-change-modal/confirm-email-change-form.interface';
-
-import { SignUpForm } from '../sign-up/sign-up-form.interface';
-import { User } from '../User';
-import { SetNewPasswordForm } from '../set-new-password/set-new-password-form.interface';
-import { ForgotPasswordForm } from '../forgot-password/forgot-password-form.interface';
+import { User } from '../user';
+import {
+  ChangeEmailData,
+  ChangePasswordData,
+  ConfirmationCode,
+  PersonalDetailsToUpdate,
+  RecoverPasswordData,
+  Result,
+  SignInCredentials,
+  SignUpCredentials,
+} from 'src/app/shared/models/exports';
 
 @Injectable({
   providedIn: 'root',
@@ -26,30 +25,30 @@ export class AccountService {
 
   constructor() {}
 
-  public signUp(data: SignUpForm): Observable<Result<string>> {
+  public signUp(data: SignUpCredentials): Observable<Result<string>> {
     return of({ error: ":'(" }).pipe(delay(3000));
   }
 
-  public signIn(data: SignInForm): Observable<Result<string>> {
+  public signIn(data: SignInCredentials): Observable<Result<string>> {
     return of({ error: ":'(" }).pipe(delay(3000));
   }
 
-  public changePassword(data: ChangePasswordForm): Observable<Result<string>> {
+  public changePassword(data: ChangePasswordData): Observable<Result<string>> {
     return of({ result: ":')" }).pipe(delay(3000));
   }
 
   public changePersonalDetails(
-    data: PersonalDetailsChangeForm
+    data: PersonalDetailsToUpdate
   ): Observable<Result<string>> {
     return of({ result: ":')" }).pipe(delay(3000));
   }
 
-  public changeEmail(data: EmailChangeForm): Observable<Result<string>> {
+  public changeEmail(data: ChangeEmailData): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
   public confirmEmailChange(
-    data: ConfirmEmailChangeForm
+    data: ConfirmationCode
   ): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
@@ -58,15 +57,15 @@ export class AccountService {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
-  public setNewPassword(data: SetNewPasswordForm): Observable<Result<string>> {
+  public setNewPassword(data: ChangePasswordData): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
-  public forgotPassword(data: ForgotPasswordForm): Observable<Result<string>> {
+  public forgotPassword(data: RecoverPasswordData): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
-  public checkTokenFP(data: string): Observable<Result<string>> {
+  public checkTokenFP(data: ConfirmationCode): Observable<Result<string>> {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 

@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ChangePasswordForm } from 'src/app/auth/change-password-modal/change-password-form.interface';
-import { Result } from './Result';
+import { ChangePasswordData, Result } from 'src/app/shared/models/exports';
 
 @Injectable()
 export class ChangePasswordService implements OnDestroy {
@@ -19,7 +19,7 @@ export class ChangePasswordService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<ChangePasswordForm> = new Subject();
+  private submit$: Subject<ChangePasswordData> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -57,7 +57,7 @@ export class ChangePasswordService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ChangePasswordForm) {
+  set formGroupValue(value: ChangePasswordData) {
     this.submit$.next(value);
   }
 }

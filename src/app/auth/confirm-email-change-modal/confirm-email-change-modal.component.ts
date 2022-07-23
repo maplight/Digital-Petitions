@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { ConfirmChangeEmailService } from 'src/app/core/application/confirm-change-email.service';
+import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { AccountService } from '../account-service/account.service';
 import { ConfirmEmailChangeForm } from './confirm-email-change-form.interface';

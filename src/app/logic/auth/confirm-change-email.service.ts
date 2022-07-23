@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   exhaustMap,
   map,
@@ -10,22 +10,21 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ForgotPasswordForm } from 'src/app/auth/forgot-password/forgot-password-form.interface';
-import { Result } from './Result';
+import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
+import { ConfirmationCode, Result } from 'src/app/shared/models/exports';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ForgotPasswordService {
+
+@Injectable()
+export class ConfirmChangeEmailService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<ForgotPasswordForm> = new Subject();
+  private submit$: Subject<ConfirmationCode> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.forgotPassword(data)),
+      exhaustMap((data) => this.AccountService.confirmEmailChange(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -33,14 +32,11 @@ export class ForgotPasswordService {
     );
 
     this.success$ = success$.pipe(
-      //redirect
-      //map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      //map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
@@ -62,7 +58,7 @@ export class ForgotPasswordService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ForgotPasswordForm) {
+  set formGroupValue(value: ConfirmationCode) {
     this.submit$.next(value);
   }
 }

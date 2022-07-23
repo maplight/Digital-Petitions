@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { SignUpForm } from './sign-up-form.interface';
 import { state, states } from '../../core/states';
-import { SignUpService } from 'src/app/core/application/sign-up.service';
+import { SignUpService } from 'src/app/logic/auth/exports';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from '../account-service/account.service';
 

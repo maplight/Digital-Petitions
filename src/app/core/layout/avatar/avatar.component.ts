@@ -2,9 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { User } from 'src/app/auth/User';
+import { User } from 'src/app/auth/user';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
-import { SignOutService } from '../../application/sign-out.service';
 
 @Component({
   selector: 'dp-avatar',

@@ -7,10 +7,10 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { ChangeEmailService } from 'src/app/core/application/change-email.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ConfirmEmailChangeModalComponent } from '../confirm-email-change-modal/confirm-email-change-modal.component';
 import { EmailChangeForm } from './email-change-form.interface';
+import { ChangeEmailService } from 'src/app/logic/auth/exports';
 
 @Component({
   selector: 'dp-email-change-modal',

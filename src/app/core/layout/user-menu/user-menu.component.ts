@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
+import { SignOutService } from 'src/app/logic/auth/exports';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
-import { SignOutService } from '../../application/sign-out.service';
 
 @Component({
   selector: 'dp-user-menu',

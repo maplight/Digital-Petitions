@@ -7,8 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge, Subject, tap } from 'rxjs';
-import { CheckTokenFpService } from 'src/app/core/application/check-token-fp.service';
-import { SetNewPasswordService } from 'src/app/core/application/set-new-password.service';
+import { CheckTokenFpService } from 'src/app/logic/auth/exports';
 import { AccountService } from '../account-service/account.service';
 import { SetNewPasswordForm } from './set-new-password-form.interface';
 
