@@ -10,7 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ConfirmationCode, Result } from 'src/app/shared/models/models';
+import { ConfirmationCode, Result } from 'src/app/shared/models/exports';
 
 @Injectable()
 export class CheckTokenFpService {

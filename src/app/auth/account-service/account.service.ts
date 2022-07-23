@@ -12,7 +12,7 @@ import {
   Result,
   SignInCredentials,
   SignUpCredentials,
-} from 'src/app/shared/models/models';
+} from 'src/app/shared/models/exports';
 
 @Injectable({
   providedIn: 'root',

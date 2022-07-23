@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
-import { ConfirmationCode, Result } from 'src/app/shared/models/models';
+import { ConfirmationCode, Result } from 'src/app/shared/models/exports';
 
 
 @Injectable()

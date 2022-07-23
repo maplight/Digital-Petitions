@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { PersonalDetailsChangeForm } from 'src/app/auth/change-personal-details-modal/personal-details-change-form.interface';
-import { PersonalDetailsToUpdate, Result } from 'src/app/shared/models/models';
+import { PersonalDetailsToUpdate, Result } from 'src/app/shared/models/exports';
 
 @Injectable()
 export class ChangePersonalDetailsService implements OnDestroy {
