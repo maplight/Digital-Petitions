@@ -1,9 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { shareReplay, Subject, tap } from 'rxjs';
 import { SignInService } from 'src/app/logic/auth/exports';
@@ -30,7 +26,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   ) {
     this.formGroup = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     });
 
     this.result$ = this._signInLogic.result$.pipe(

@@ -26,8 +26,9 @@ export class SignInService implements OnDestroy {
       shareReplay(1)
     );
 
-    const [success$, error$] = partition(this.result$, (value) =>
-      !!value.result
+    const [success$, error$] = partition(
+      this.result$,
+      (value) => !!value.result
     );
 
     this.success$ = success$.pipe(
