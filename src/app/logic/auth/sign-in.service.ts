@@ -10,8 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { SignInCredentials } from '../shared/models/models';
-import { Result } from '../shared/models/common/result';
+import { Result, SignInCredentials } from 'src/app/shared/models/models';
 
 @Injectable()
 export class SignInService implements OnDestroy {
