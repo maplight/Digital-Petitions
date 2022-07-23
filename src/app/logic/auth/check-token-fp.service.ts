@@ -10,8 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ConfirmationCode } from '../shared/models/models';
-import { Result } from '../shared/models/common/result';
+import { ConfirmationCode, Result } from 'src/app/shared/models/models';
 
 @Injectable({
   providedIn: 'root',
