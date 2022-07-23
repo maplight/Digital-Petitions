@@ -11,12 +11,9 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ForgotPasswordForm } from 'src/app/auth/forgot-password/forgot-password-form.interface';
-import { RecoverPasswordData } from '../shared/models/models';
-import { Result } from '../shared/models/common/result';
+import { RecoverPasswordData, Result } from 'src/app/shared/models/models';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ForgotPasswordService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
