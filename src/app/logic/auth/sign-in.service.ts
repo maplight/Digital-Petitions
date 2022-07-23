@@ -31,7 +31,9 @@ export class SignInService implements OnDestroy {
     );
 
     this.success$ = success$.pipe(
-      //redirect
+      // probably there is no need to redirect here as the consumer can always
+      // pipe from the result observable ask for the success result and take
+      // the appropiate action
       tap((value) => console.log(value)),
       shareReplay(1)
     );
