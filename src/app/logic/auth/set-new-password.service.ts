@@ -11,12 +11,9 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SetNewPasswordForm } from 'src/app/auth/set-new-password/set-new-password-form.interface';
-import { ChangePasswordData } from '../shared/models/models';
-import { Result } from '../shared/models/common/result';
+import { ChangePasswordData, Result } from 'src/app/shared/models/models';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SetNewPasswordService implements OnDestroy {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;

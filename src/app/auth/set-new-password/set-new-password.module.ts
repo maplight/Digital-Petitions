@@ -6,7 +6,7 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
 import { FormModule } from './form/form.module';
 import { ConfirmModule } from './confirm/confirm.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CheckTokenFpService } from 'src/app/logic/auth/exports';
+import { CheckTokenFpService, SetNewPasswordService } from 'src/app/logic/auth/exports';
 
 @NgModule({
   declarations: [SetNewPasswordComponent],
@@ -18,6 +18,6 @@ import { CheckTokenFpService } from 'src/app/logic/auth/exports';
     ConfirmModule,
     MatProgressBarModule,
   ],
-  providers: [CheckTokenFpService]
+  providers: [CheckTokenFpService, SetNewPasswordService]
 })
 export class SetNewPasswordModule {}
