@@ -11,8 +11,8 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmEmailChangeForm } from 'src/app/auth/confirm-email-change-modal/confirm-email-change-form.interface';
-import { ConfirmationCode } from '../shared/models/models';
-import { Result } from '../shared/models/common/result';
+import { ConfirmationCode, Result } from 'src/app/shared/models/models';
+
 
 @Injectable()
 export class ConfirmChangeEmailService implements OnDestroy {
