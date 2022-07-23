@@ -4,7 +4,6 @@ import { Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { User } from 'src/app/auth/user';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
-import { SignOutService } from '../../../logic/sign-out.service';
 
 @Component({
   selector: 'dp-avatar',

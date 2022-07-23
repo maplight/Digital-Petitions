@@ -6,3 +6,4 @@ export * from './confirm-change-email.service';
 export * from './forgot-password.service';
 export * from './set-new-password.service';
 export * from './sign-in.service';
+export * from './sign-out.service';
