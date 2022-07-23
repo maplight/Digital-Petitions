@@ -12,9 +12,7 @@ import {
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { ConfirmationCode, Result } from 'src/app/shared/models/models';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CheckTokenFpService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
