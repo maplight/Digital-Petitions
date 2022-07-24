@@ -17,13 +17,14 @@
     >
   </mat-menu>
 </div>
-
-<mat-drawer-container>
+<mat-drawer-container
+  class="absolute top-25 h-[calc(100vh-100px)] w-full overflow-y-auto"
+>
   <mat-drawer #drawer class="w-64" mode="side" [opened]="showMenu">
     <dp-side-menu></dp-side-menu>
   </mat-drawer>
 
-  <div class="pt-6 px-6 lg:px-30 content-height">
+  <mat-drawer-content class="pt-6 px-6 lg:px-30 content-height">
     <router-outlet></router-outlet>
-  </div>
+  </mat-drawer-content>
 </mat-drawer-container>
