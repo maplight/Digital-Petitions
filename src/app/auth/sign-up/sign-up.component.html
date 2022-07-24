@@ -6,14 +6,19 @@
         <div class="w-full flex justify-start">
           <h4 class="font-bold text-lg">Create an account</h4>
         </div>
-        <ng-container *ngIf="result$ | async as result">
-          <div *ngIf="result.error as error" class="flex flex-row items-center">
-            <mat-icon
-              class="w-[14px] h-[14px]"
-              [svgIcon]="'custom_icons:c_close'"
-            ></mat-icon>
-            <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
-          </div>
+        <ng-container *ngIf="!(loading$ | async)">
+          <ng-container *ngIf="result$ | async as result">
+            <div
+              *ngIf="result.error as error"
+              class="flex flex-row items-center"
+            >
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+            </div>
+          </ng-container>
         </ng-container>
         <mat-progress-bar
           mode="indeterminate"
@@ -85,7 +90,7 @@
             <mat-label>State</mat-label>
             <mat-select formControlName="state">
               <mat-option>--</mat-option>
-              <mat-option *ngFor="let state of local_states" [value]="state">{{
+              <mat-option *ngFor="let state of localStates" [value]="state">{{
                 state.name
               }}</mat-option>
             </mat-select>
@@ -145,7 +150,7 @@
             <mat-label>Password</mat-label>
             <input
               matInput
-              [type]="hide_password ? 'password' : 'text'"
+              [type]="hidePassword ? 'password' : 'text'"
               formControlName="password"
             />
 
@@ -161,12 +166,12 @@
               type="button"
               matSuffix
               mat-icon-button
-              (click)="hide_password = !hide_password"
+              (click)="hidePassword = !hidePassword"
             >
               <mat-icon
                 class="w-[16px] h-[16px]"
                 [svgIcon]="
-                  hide_password ? 'custom_icons:edge' : 'custom_icons:no-edge'
+                  hidePassword ? 'custom_icons:edge' : 'custom_icons:no-edge'
                 "
               ></mat-icon>
             </button>

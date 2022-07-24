@@ -6,11 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
-import { AccountService } from '../account-service/account.service';
-import { ConfirmEmailChangeForm } from './confirm-email-change-form.interface';
 
 @Component({
   selector: 'dp-confirm-email-change-modal',
@@ -21,24 +20,24 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
   public formGroup: FormGroup;
-  public form_data: ConfirmEmailChangeForm = {
-    code: new FormControl('', [Validators.required]),
-  };
+
   constructor(
-    private formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private dialogRef: MatDialogRef<ConfirmEmailChangeModalComponent>,
     private dialog: MatDialog,
-    private ConfirmChangeEmailService: ConfirmChangeEmailService,
-    private AccountService: AccountService
+    private _confirmChangeEmailLogic: ConfirmChangeEmailService,
+    private _router: Router
   ) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.result$ = this.ConfirmChangeEmailService.result$
+    this.formGroup = this._fb.group({
+      code: new FormControl('', [Validators.required]),
+    });
+    this.result$ = this._confirmChangeEmailLogic.result$
       .pipe(
         tap((result) => {
           if (!!result.result) {
             this.dialogRef.close();
             this.openDialog('Email Successfully Changed!', '', true);
-            AccountService.updateUser(true);
+            this._router.navigate([]);
           } else {
             //I'm not sure this is the best way to handle errors here
             this.dialogRef.close();
@@ -52,7 +51,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.loading$ = this.ConfirmChangeEmailService.loading$;
+    this.loading$ = this._confirmChangeEmailLogic.loading$;
   }
 
   ngOnInit(): void {}
@@ -63,7 +62,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this.ConfirmChangeEmailService.formGroupValue = this.formGroup.value;
+      this._confirmChangeEmailLogic.formGroupValue = this.formGroup.value;
     } else {
       this.formGroup.markAllAsTouched();
     }

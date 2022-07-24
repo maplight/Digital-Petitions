@@ -6,44 +6,43 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { ChangePasswordService } from 'src/app/logic/auth/exports';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
 import { DialogResultComponent } from '../../shared/dialog-result/dialog-result.component';
-import { AccountService } from '../account-service/account.service';
-import { ChangePasswordForm } from './change-password-form.interface';
 
 @Component({
   selector: 'dp-change-password-modal',
   templateUrl: './change-password-modal.component.html',
 })
 export class ChangePasswordModalComponent implements OnInit, OnDestroy {
-  protected hide_new_password = true;
-  protected hide_old_password = true;
+  protected hideNewPassword = true;
+  protected hideOldPassword = true;
   protected result$;
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
 
   public formGroup: FormGroup;
-  public form_data: ChangePasswordForm = {
-    old_password: new FormControl('', [Validators.required]),
-    new_password: new FormControl('', [Validators.required]),
-  };
+
   constructor(
-    private formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private dialogRef: MatDialogRef<BasicModalComponent>,
     private dialog: MatDialog,
-    private ChangePasswordService: ChangePasswordService,
-    private AccountService: AccountService
+    private _changePasswordLogic: ChangePasswordService,
+    private _router: Router
   ) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.result$ = this.ChangePasswordService.result$
+    this.formGroup = this._fb.group({
+      old_password: new FormControl('', [Validators.required]),
+      new_password: new FormControl('', [Validators.required]),
+    });
+    this.result$ = this._changePasswordLogic.result$
       .pipe(
         tap((result) => {
           if (!!result.result) {
             this.dialogRef.close();
             this.openDialog('Password Successfully Changed!', '', true);
-            AccountService.updateUser(true);
+            this._router.navigate([]);
           } else {
             //I'm not sure this is the best way to handle errors here
             this.dialogRef.close();
@@ -57,7 +56,7 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.loading$ = this.ChangePasswordService.loading$;
+    this.loading$ = this._changePasswordLogic.loading$;
   }
 
   ngOnInit(): void {}
@@ -68,7 +67,7 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this.ChangePasswordService.formGroupValue = this.formGroup.value;
+      this._changePasswordLogic.formGroupValue = this.formGroup.value;
     } else {
       this.formGroup.markAllAsTouched();
     }

@@ -10,8 +10,8 @@ import { Subject, takeUntil, tap } from 'rxjs';
 import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
 import { state, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
-import { AccountService } from '../account-service/account.service';
-import { PersonalDetailsChangeForm } from './personal-details-change-form.interface';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dp-change-personal-details-modal',
@@ -19,42 +19,39 @@ import { PersonalDetailsChangeForm } from './personal-details-change-form.interf
   styleUrls: ['./change-personal-details-modal.component.scss'],
 })
 export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
-  protected hide_new_password = true;
-  protected hide_old_password = true;
   protected result$;
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
   protected formGroup: FormGroup;
-  protected local_states: state[] = states;
+  protected localStates: state[] = states;
 
-  public form_data: PersonalDetailsChangeForm = {
-    first_name: new FormControl('', [Validators.required]),
-    last_name: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
-    apt_number: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    state: new FormControl<state | null>(null, [Validators.required]),
-    zip_code: new FormControl('', [Validators.required]),
-  };
   constructor(
-    private formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     public dialogRef: MatDialogRef<ChangePersonalDetailsModalComponent>,
     public dialog: MatDialog,
-    private ChangePersonalDetailsService: ChangePersonalDetailsService,
-    private AccountService: AccountService
+    private _changePersonalDetailsLogic: ChangePersonalDetailsService,
+    private _router: Router
   ) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.result$ = this.ChangePersonalDetailsService.result$
+    this.formGroup = this._fb.group({
+      first_name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      apt_number: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
+      state: new FormControl<state | null>(null, [Validators.required]),
+      zip_code: new FormControl('', [Validators.required]),
+    });
+    this.result$ = this._changePersonalDetailsLogic.result$
       .pipe(
         tap((result) => {
           if (!!result.result) {
-            AccountService.updateUser(true);
             this.dialogRef.close();
             this.openDialog(
               'Personal Details Are Successfully Changed!',
               '',
               true
             );
+            this._router.navigate([]);
           } else {
             //I'm not sure this is the best way to handle errors here
             this.dialogRef.close();
@@ -68,7 +65,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.loading$ = this.ChangePersonalDetailsService.loading$;
+    this.loading$ = this._changePersonalDetailsLogic.loading$;
   }
 
   ngOnInit(): void {}
@@ -78,7 +75,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
   }
   submit() {
     if (this.formGroup.valid) {
-      this.ChangePersonalDetailsService.formGroupValue = this.formGroup.value;
+      this._changePersonalDetailsLogic.formGroupValue = this.formGroup.value;
     } else {
       this.formGroup.markAllAsTouched();
     }

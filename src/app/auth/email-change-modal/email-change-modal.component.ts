@@ -9,7 +9,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ConfirmEmailChangeModalComponent } from '../confirm-email-change-modal/confirm-email-change-modal.component';
-import { EmailChangeForm } from './email-change-form.interface';
 import { ChangeEmailService } from 'src/app/logic/auth/exports';
 
 @Component({
@@ -22,17 +21,17 @@ export class EmailChangeModalComponent implements OnInit, OnDestroy {
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
   public formGroup: FormGroup;
-  public form_data: EmailChangeForm = {
-    email: new FormControl('', [Validators.required, Validators.email]),
-  };
+
   constructor(
-    private formBuilder: FormBuilder,
+    private _fb: FormBuilder,
     private dialogRef: MatDialogRef<EmailChangeModalComponent>,
     private dialog: MatDialog,
-    private ChangeEmailService: ChangeEmailService
+    private _changeEmailLogic: ChangeEmailService
   ) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.result$ = this.ChangeEmailService.result$
+    this.formGroup = this._fb.group({
+      email: new FormControl('', [Validators.required, Validators.email]),
+    });
+    this.result$ = this._changeEmailLogic.result$
       .pipe(
         tap((result) => {
           if (!!result.result) {
@@ -51,7 +50,7 @@ export class EmailChangeModalComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.loading$ = this.ChangeEmailService.loading$;
+    this.loading$ = this._changeEmailLogic.loading$;
   }
 
   ngOnInit(): void {}
@@ -62,7 +61,7 @@ export class EmailChangeModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this.ChangeEmailService.formGroupValue = this.formGroup.value;
+      this._changeEmailLogic.formGroupValue = this.formGroup.value;
     } else {
       this.formGroup.markAllAsTouched();
     }

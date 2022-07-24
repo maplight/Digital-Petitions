@@ -85,7 +85,7 @@
           <mat-label>State</mat-label>
           <mat-select formControlName="state">
             <mat-option>--</mat-option>
-            <mat-option *ngFor="let state of local_states" [value]="state">{{
+            <mat-option *ngFor="let state of localStates" [value]="state">{{
               state.name
             }}</mat-option>
           </mat-select>
