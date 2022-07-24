@@ -8,7 +8,6 @@ import {
 import { Router } from '@angular/router';
 import { Subject, tap } from 'rxjs';
 import { ForgotPasswordService } from 'src/app/logic/auth/exports';
-import { ForgotPasswordForm } from './forgot-password-form.interface';
 
 @Component({
   selector: 'dp-forgot-password',
@@ -22,9 +21,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<void> = new Subject();
 
   public formGroup: FormGroup;
-  public form_data: ForgotPasswordForm = {
-    email: new FormControl('', [Validators.required, Validators.email]),
-  };
   constructor(
     private _fb: FormBuilder,
     private _forgotPasswordLogic: ForgotPasswordService,
