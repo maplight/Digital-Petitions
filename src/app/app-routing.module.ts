@@ -37,6 +37,13 @@ const routes: Routes = [
             (m) => m.SetNewPasswordModule
           ),
       },
+      {
+        path: 'new-petition',
+        loadChildren: () =>
+          import('./features/new-petition/new-petition.module').then(
+            (m) => m.NewPetitionModule
+          ),
+      },
     ],
   },
   {
