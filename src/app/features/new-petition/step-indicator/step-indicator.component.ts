@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil, tap } from 'rxjs';
+import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 
 @Component({
   selector: 'dp-step-indicator',
   templateUrl: './step-indicator.component.html',
 })
-export class StepIndicatorComponent implements OnInit {
-  @Input() step: '1' | '21' | '22' | '3' = '1';
-
+export class StepIndicatorComponent implements OnInit, OnDestroy {
   private basicStyleElement: string =
     'bg-[#EFEFEF] w-6 h-6 rounded-full flex justify-center items-center font-roboto text-[#8A8A8A] text-sm leading-[14px] font-normal border border-[#EFEFEF]';
   private basicStyleLine: string = 'bg-[#EFEFEF] w-[122px] h-[2px]';
@@ -20,29 +20,42 @@ export class StepIndicatorComponent implements OnInit {
   protected styleLine1: string = this.basicStyleLine;
   protected styleLine2: string = this.basicStyleLine;
 
-  constructor() {}
+  private _unsubscribeAll: Subject<void> = new Subject();
 
-  ngOnInit(): void {
-    switch (this.step) {
-      case '1':
-        this.styleElement1 = this.accentStyleElement;
-        break;
-      case '21':
-        this.styleElement1 = this.accentStyleElement;
-        this.styleLine1 = this.accentStyleLine;
-        this.styleElement2 = this.accentStyleElement;
-        break;
-      case '22':
-        this.styleElement1 = this.accentStyleElement;
-        this.styleLine1 = this.accentStyleLine;
-        this.styleElement2 = this.accentStyleElement;
-        break;
-      case '3':
-        this.styleElement1 = this.accentStyleElement;
-        this.styleLine1 = this.accentStyleLine;
-        this.styleElement2 = this.accentStyleElement;
-        this.styleLine2 = this.accentStyleLine;
-        this.styleElement3 = this.accentStyleElement;
-    }
+  constructor(private _stepLogic: StepIndicatorService) {
+    this._stepLogic._publicCurrentStep$
+      .pipe(
+        tap((step) => {
+          switch (step) {
+            case '1':
+              this.styleElement1 = this.accentStyleElement;
+              break;
+            case '21':
+              this.styleElement1 = this.accentStyleElement;
+              this.styleLine1 = this.accentStyleLine;
+              this.styleElement2 = this.accentStyleElement;
+              break;
+            case '22':
+              this.styleElement1 = this.accentStyleElement;
+              this.styleLine1 = this.accentStyleLine;
+              this.styleElement2 = this.accentStyleElement;
+              break;
+            case '3':
+              this.styleElement1 = this.accentStyleElement;
+              this.styleLine1 = this.accentStyleLine;
+              this.styleElement2 = this.accentStyleElement;
+              this.styleLine2 = this.accentStyleLine;
+              this.styleElement3 = this.accentStyleElement;
+          }
+        }),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe();
   }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+
+  ngOnInit(): void {}
 }
