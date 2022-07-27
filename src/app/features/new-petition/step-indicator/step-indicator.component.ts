@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './step-indicator.component.html',
 })
 export class StepIndicatorComponent implements OnInit {
-  @Input() step: '1' | '2' | '3' = '1';
+  @Input() step: '1' | '21' | '22' | '3' = '1';
 
   private basicStyleElement: string =
     'bg-[#EFEFEF] w-6 h-6 rounded-full flex justify-center items-center font-roboto text-[#8A8A8A] text-sm leading-[14px] font-normal border border-[#EFEFEF]';
@@ -27,7 +27,12 @@ export class StepIndicatorComponent implements OnInit {
       case '1':
         this.styleElement1 = this.accentStyleElement;
         break;
-      case '2':
+      case '21':
+        this.styleElement1 = this.accentStyleElement;
+        this.styleLine1 = this.accentStyleLine;
+        this.styleElement2 = this.accentStyleElement;
+        break;
+      case '22':
         this.styleElement1 = this.accentStyleElement;
         this.styleLine1 = this.accentStyleLine;
         this.styleElement2 = this.accentStyleElement;
