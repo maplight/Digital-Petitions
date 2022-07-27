@@ -24,5 +24,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatIconModule,
     MatProgressBarModule,
   ],
+  exports: [NewPetitionIssueComponent],
 })
 export class NewPetitionIssueModule {}
