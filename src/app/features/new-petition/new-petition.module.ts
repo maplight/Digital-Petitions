@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { StepIndicatorModule } from './step-indicator/step-indicator.module';
 import { SelectTypePetitionModule } from './select-type-petition/select-type-petition.module';
 import { ResultPetitionModule } from './result-petition/result-petition.module';
+import { NewPetitionCandidateModule } from './new-petition-candidate/new-petition-candidate.module';
 
 @NgModule({
   declarations: [NewPetitionComponent],
@@ -26,6 +27,7 @@ import { ResultPetitionModule } from './result-petition/result-petition.module';
     StepIndicatorModule,
     SelectTypePetitionModule,
     ResultPetitionModule,
+    NewPetitionCandidateModule,
   ],
 })
 export class NewPetitionModule {}
