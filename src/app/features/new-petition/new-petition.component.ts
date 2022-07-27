@@ -1,16 +1,35 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
 import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
-import { IssuePetitionData } from 'src/app/shared/models/exports';
+import {
+  CandidatePetitionData,
+  IssuePetitionData,
+} from 'src/app/shared/models/exports';
+import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-new-petition',
   templateUrl: './new-petition.component.html',
 })
 export class NewPetitionComponent implements OnInit, AfterViewInit {
+  protected dataResponse: ResponsePetition = {};
   protected dataResponseIssue: IssuePetitionData = { title: '', text: '' };
+  protected dataResponseCandidate: CandidatePetitionData = {
+    fullName: '',
+    office: '',
+    party: '',
+    address: '',
+    aptNumber: '',
+    city: '',
+    state: { name: '', value: '' },
+    zipCode: '',
+  };
   protected currentStep$: Observable<'1' | '21' | '22' | '3'>;
-  constructor(private _stepLogic: StepIndicatorService) {
+  constructor(
+    private _stepLogic: StepIndicatorService,
+    private _router: Router
+  ) {
     this.currentStep$ = this._stepLogic._publicCurrentStep$;
   }
   ngAfterViewInit(): void {
@@ -19,7 +38,9 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  cancel() {}
+  cancel(step?: '1' | '21' | '22' | '3') {
+    step ? (this._stepLogic.currentStep = step) : this._router.navigate([]);
+  }
 
   submit1(data: string) {
     if (data === 'Issue') {
@@ -30,7 +51,12 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
   }
 
   submit21(data: IssuePetitionData) {
-    this.dataResponseIssue = data;
+    this.dataResponse.dataIssue = data;
+    this._stepLogic.currentStep = '3';
+  }
+
+  submit22(data: CandidatePetitionData) {
+    this.dataResponse.dataCandidate = data;
     this._stepLogic.currentStep = '3';
   }
 }

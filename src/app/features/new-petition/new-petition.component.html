@@ -14,18 +14,18 @@
         *ngSwitchCase="1"
       ></dp-select-type-petition>
       <dp-new-petition-issue
-        (_cancelEvent)="cancel()"
+        (_cancelEvent)="cancel($event)"
         (_submitEvent)="submit21($event)"
         *ngSwitchCase="21"
       ></dp-new-petition-issue>
       <dp-new-petition-candidate
-        (_cancelEvent)="cancel()"
-        (_submitEvent)="submit21($event)"
+        (_cancelEvent)="cancel($event)"
+        (_submitEvent)="submit22($event)"
         *ngSwitchCase="22"
       >
       </dp-new-petition-candidate>
       <dp-result-petition
-        [data]="dataResponseIssue"
+        [data]="dataResponse"
         *ngSwitchCase="3"
       ></dp-result-petition>
       <!--
