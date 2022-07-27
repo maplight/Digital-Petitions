@@ -1,4 +1,12 @@
+import { state } from 'src/app/core/states';
+
 export interface CandidatePetitionData {
-  title: string;
-  text: string;
+  fullName: string;
+  office: string;
+  party: string;
+  address: string;
+  aptNumber: string;
+  city: string;
+  state: state;
+  zipCode: string;
 }
