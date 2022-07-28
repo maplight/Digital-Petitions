@@ -33,8 +33,8 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
     private _router: Router
   ) {
     this.formGroup = this._fb.group({
-      old_password: new FormControl('', [Validators.required]),
-      new_password: new FormControl('', [Validators.required]),
+      oldPassword: ['', [Validators.required]],
+      newPassword: ['', [Validators.required]],
     });
     this.result$ = this._changePasswordLogic.result$
       .pipe(
