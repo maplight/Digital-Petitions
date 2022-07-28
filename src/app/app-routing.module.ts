@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
+import { AuthGuard, CityStaffGuard, CommitteeGuard } from './guards/exports';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   {
-    path: '',
+    path: 'example',
+    loadChildren: () =>
+      import('./example/example.module').then((m) => m.ExampleModule),
+  },
+  {
+    path: 'auth',
+    canActivate: [AuthGuard],
     component: LayoutComponent,
     data: { showMenu: false, showDemo: true },
     children: [
-      {
-        path: 'example',
-        loadChildren: () =>
-          import('./example/example.module').then((m) => m.ExampleModule),
-      },
       {
         path: 'sign-up',
         loadChildren: () =>
@@ -44,17 +47,11 @@ const routes: Routes = [
             (m) => m.SetNewPasswordModule
           ),
       },
-      {
-        path: 'new-petition',
-        loadChildren: () =>
-          import('./features/new-petition/new-petition.module').then(
-            (m) => m.NewPetitionModule
-          ),
-      },
     ],
   },
   {
     path: 'committee',
+    canActivate: [CommitteeGuard],
     component: LayoutComponent,
     data: { showMenu: false, showDemo: true },
     children: [
@@ -65,10 +62,18 @@ const routes: Routes = [
             './features/committee-account-settings/committee-account-settings.module'
           ).then((m) => m.CommitteeAccountSettingsModule),
       },
+      {
+        path: 'new-petition',
+        loadChildren: () =>
+          import('./features/new-petition/new-petition.module').then(
+            (m) => m.NewPetitionModule
+          ),
+      },
     ],
   },
   {
     path: 'city-staff',
+    canActivate: [CityStaffGuard],
     component: LayoutComponent,
     data: { showMenu: true, showDemo: true },
     children: [
@@ -89,5 +94,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [CommitteeGuard],
 })
 export class AppRoutingModule {}

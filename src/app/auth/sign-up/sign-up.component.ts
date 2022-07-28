@@ -44,7 +44,7 @@ export class SignUpComponent {
     this.result$ = this._signUpLogic.result$.pipe(
       tap((result) => {
         if (!!result.result) {
-          this._router.navigate(['sign-up', this.formGroup.value.email]);
+          this._router.navigate(['/auth/sign-up', this.formGroup.value.email]);
         }
       }),
       shareReplay(1)

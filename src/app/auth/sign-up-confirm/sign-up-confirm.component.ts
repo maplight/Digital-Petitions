@@ -29,7 +29,7 @@ export class SignUpConfirmComponent {
     this.result$ = this._signUpConfirmLogic.result$.pipe(
       tap((result) => {
         if (!!result.result) {
-          this._router.navigate([]);
+          this._router.navigate(['/committee/account-settings']);
         }
       }),
       shareReplay(1)

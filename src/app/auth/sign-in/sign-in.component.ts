@@ -32,7 +32,7 @@ export class SignInComponent {
         if (!!result.result) {
           // on success redirect the user to the home page
           // TODO - create a landing route that later redirects based on the user's role
-          this._router.navigate([]);
+          this._router.navigate(['/committee/account-settings']);
         }
       }),
       shareReplay(1)
