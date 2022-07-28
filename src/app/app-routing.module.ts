@@ -19,6 +19,13 @@ const routes: Routes = [
           import('./auth/sign-up/sign-up.module').then((m) => m.SignUpModule),
       },
       {
+        path: 'sign-up/:email',
+        loadChildren: () =>
+          import('./auth/sign-up-confirm/sign-up-confirm.module').then(
+            (m) => m.SignUpConfirmModule
+          ),
+      },
+      {
         path: 'login',
         loadChildren: () =>
           import('./auth/sign-in/sign-in.module').then((m) => m.SignInModule),
