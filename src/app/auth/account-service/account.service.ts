@@ -23,8 +23,11 @@ export class AccountService {
   private privateCurrentUser: BehaviorSubject<any | null> = new BehaviorSubject<
     any | null
   >(null);
+  private privateisLoged: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
   public currentUser$: Observable<any | null> =
     this.privateCurrentUser.asObservable();
+  public isLoged$: Observable<boolean> = this.privateisLoged.asObservable();
 
   constructor() {}
 
@@ -198,5 +201,20 @@ export class AccountService {
       .catch((error) => {
         this.privateCurrentUser.next(null);
       });
+  }
+
+  public isLoged(): Observable<boolean> {
+    return from(
+      Auth.currentSession()
+        .then(() => {
+          this.privateisLoged.next(true);
+          this.updateUser();
+          return true;
+        })
+        .catch(() => {
+          this.privateisLoged.next(false);
+          return false;
+        })
+    );
   }
 }
