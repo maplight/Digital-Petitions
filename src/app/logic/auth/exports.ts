@@ -8,3 +8,4 @@ export * from './set-new-password.service';
 export * from './sign-in.service';
 export * from './sign-out.service';
 export * from './sign-up.service';
+export * from './sign-up-confirm.service';
