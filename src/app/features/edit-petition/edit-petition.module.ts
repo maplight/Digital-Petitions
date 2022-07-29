@@ -7,6 +7,8 @@ import { EditPetitionRoutingModule } from './edit-petition-routing.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
+import { EditResultPetitionModule } from './edit-result-petition/edit-result-petition.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [EditPetitionComponent],
@@ -18,6 +20,8 @@ import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module'
     ReturnLinkModule,
     MatDialogModule,
     BasicModalModule,
+    EditResultPetitionModule,
+    MatIconModule,
   ],
 })
 export class EditPetitionModule {}

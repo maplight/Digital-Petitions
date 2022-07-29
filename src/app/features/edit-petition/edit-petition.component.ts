@@ -9,7 +9,7 @@ export class EditPetitionComponent implements OnInit {
   protected currentStep$: BehaviorSubject<
     'loading' | 'candidate' | 'issue' | 'result'
   > = new BehaviorSubject<'loading' | 'candidate' | 'issue' | 'result'>(
-    'candidate'
+    'result'
   );
   constructor() {}
   ngOnInit(): void {}

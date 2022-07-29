@@ -1,12 +1,38 @@
 <div class="flex w-full justify-center">
   <div class="flex flex-col w-[550px]">
     <div class="w-full flex flex-col py-12 gap-6">
-      <dp-return-link
-        [route]="'/example'"
-        [text]="'Back to Petition'"
-      ></dp-return-link>
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <ng-container *ngSwitchCase="'candidate'">
+          <dp-return-link
+            [route]="'/example'"
+            [text]="'Back to Petition'"
+          ></dp-return-link>
+          <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
+        </ng-container>
+        <ng-container *ngSwitchCase="'issue'">
+          <dp-return-link
+            [route]="'/example'"
+            [text]="'Back to Petition'"
+          ></dp-return-link>
+          <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
+        </ng-container>
+        <ng-container *ngSwitchCase="'result'">
+          <div class="w-full flex flex-col">
+            <div class="flex justify-center w-full">
+              <h3 class="leading-7 font-extrabold">
+                Your petition has been successfully resubmitted!
+              </h3>
+            </div>
+            <div class="flex justify-center w-full">
+              <mat-icon
+                class="text-green-500 w-[26.67px] h-[26.67px]"
+                [svgIcon]="'custom_icons:like'"
+              ></mat-icon>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
 
-      <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
       <div class="flex justify-center w-full"></div>
 
       <div class="flex justify-center w-full">
@@ -17,6 +43,10 @@
             *ngSwitchCase="'candidate'"
           >
           </dp-edit-petition-candidate>
+        </ng-container>
+        <ng-container [ngSwitch]="currentStep$ | async">
+          <dp-edit-result-petition *ngSwitchCase="'result'">
+          </dp-edit-result-petition>
         </ng-container>
       </div>
     </div>
