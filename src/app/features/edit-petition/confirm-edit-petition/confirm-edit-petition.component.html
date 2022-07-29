@@ -8,11 +8,17 @@
         type="button"
         class="h-10 w-full mt-2"
         color="primary"
-        (click)="submit()"
+        [mat-dialog-close]="true"
       >
         Submit changes
       </button>
-      <button mat-button type="button" class="h-10 w-full mt-2" color="primary">
+      <button
+        mat-button
+        type="button"
+        class="h-10 w-full mt-2"
+        color="primary"
+        [mat-dialog-close]="false"
+      >
         Cancel
       </button>
     </div>

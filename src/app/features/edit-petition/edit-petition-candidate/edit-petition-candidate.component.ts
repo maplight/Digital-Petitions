@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { state, states } from 'src/app/core/states';
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-edit-petition.component';
@@ -52,6 +52,16 @@ export class EditPetitionCandidateComponent implements OnInit {
       const dialogRef = this._dialog.open(ConfirmEditPetitionComponent, {
         width: '480px',
       });
+      dialogRef
+        .afterClosed()
+        .pipe(
+          tap((response) => {
+            if (response) {
+              console.log('send form here');
+            }
+          })
+        )
+        .subscribe();
     }
   }
   cancel() {
