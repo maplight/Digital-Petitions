@@ -9,10 +9,11 @@ export class EditPetitionComponent implements OnInit {
   protected currentStep$: BehaviorSubject<
     'loading' | 'candidate' | 'issue' | 'result'
   > = new BehaviorSubject<'loading' | 'candidate' | 'issue' | 'result'>(
-    'result'
+    'issue'
   );
   constructor() {}
   ngOnInit(): void {}
   cancel() {}
   submitCandidate(data: any) {}
+  submitIssue(data: any) {}
 }

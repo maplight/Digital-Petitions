@@ -43,6 +43,12 @@
             *ngSwitchCase="'candidate'"
           >
           </dp-edit-petition-candidate>
+          <dp-edit-petition-issue
+            (_cancelEvent)="cancel()"
+            (_submitEvent)="submitIssue($event)"
+            *ngSwitchCase="'issue'"
+          >
+          </dp-edit-petition-issue>
         </ng-container>
         <ng-container [ngSwitch]="currentStep$ | async">
           <dp-edit-result-petition *ngSwitchCase="'result'">
