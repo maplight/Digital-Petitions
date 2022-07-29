@@ -14,7 +14,9 @@ export class EditResultPetitionComponent implements OnInit {
     : false;
   constructor(private _router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.characters + ' ' + this.showMoreOption);
+  }
 
   submit() {
     this._router.navigate([]);

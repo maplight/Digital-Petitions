@@ -10,6 +10,7 @@ import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module'
 import { EditResultPetitionModule } from './edit-result-petition/edit-result-petition.module';
 import { MatIconModule } from '@angular/material/icon';
 import { EditPetitionIssueModule } from './edit-petition-issue/edit-petition-issue.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [EditPetitionComponent],
@@ -24,6 +25,7 @@ import { EditPetitionIssueModule } from './edit-petition-issue/edit-petition-iss
     BasicModalModule,
     EditResultPetitionModule,
     MatIconModule,
+    MatProgressBarModule,
   ],
 })
 export class EditPetitionModule {}
