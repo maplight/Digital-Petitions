@@ -6,6 +6,7 @@ import {
   ChangeEmailData,
   ChangePasswordData,
   ConfirmationCode,
+  NewPasswordData,
   PersonalDetailsToUpdate,
   RecoverPasswordData,
   Result,
@@ -37,10 +38,8 @@ export class AccountService {
         username: data.email.replace(/[^a-zA-Z0-9]/g, ''),
         password: data.password,
         attributes: {
-          name: JSON.stringify({
-            firstName: data.firstName,
-            lastName: data.lastName,
-          }),
+          given_name: data.firstName,
+          family_name: data.lastName,
           email: data.email,
           address: JSON.stringify({
             address: data.address,
@@ -99,10 +98,8 @@ export class AccountService {
     return from(
       Auth.currentAuthenticatedUser().then((user) => {
         return Auth.updateUserAttributes(user, {
-          name: JSON.stringify({
-            firstName: data.firstName,
-            lastName: data.lastName,
-          }),
+          given_name: data.firstName,
+          family_name: data.lastName,
           address: JSON.stringify({
             address: data.address,
             state: data.state,
@@ -181,12 +178,28 @@ export class AccountService {
     );
   }
 
-  public setNewPassword(data: ChangePasswordData): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
+  public setNewPassword(data: NewPasswordData): Observable<Result<string>> {
+    return from(
+      Auth.forgotPasswordSubmit(data.username, data.code, data.newPassword)
+        .then((data) => {
+          return { result: 'SUCCESS' };
+        })
+        .catch(function (error) {
+          return { error: error.message };
+        })
+    );
   }
 
   public forgotPassword(data: RecoverPasswordData): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
+    return from(
+      Auth.forgotPassword(data.email)
+        .then((data) => {
+          return { result: 'SUCCESS' };
+        })
+        .catch(function (error) {
+          return { error: error.message };
+        })
+    );
   }
 
   public checkTokenFP(data: ConfirmationCode): Observable<Result<string>> {
