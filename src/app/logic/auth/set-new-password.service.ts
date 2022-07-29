@@ -10,7 +10,11 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ChangePasswordData, Result } from 'src/app/shared/models/exports';
+import {
+  ChangePasswordData,
+  NewPasswordData,
+  Result,
+} from 'src/app/shared/models/exports';
 
 @Injectable()
 export class SetNewPasswordService implements OnDestroy {
@@ -18,7 +22,7 @@ export class SetNewPasswordService implements OnDestroy {
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<ChangePasswordData> = new Subject();
+  private submit$: Subject<NewPasswordData> = new Subject();
 
   constructor(private AccountService: AccountService) {
     this.result$ = this.submit$.pipe(
@@ -59,7 +63,7 @@ export class SetNewPasswordService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ChangePasswordData) {
+  set formGroupValue(value: NewPasswordData) {
     this.submit$.next(value);
   }
 }

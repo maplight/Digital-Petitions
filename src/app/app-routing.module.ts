@@ -41,10 +41,17 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'set-new-password/:token',
+        path: 'set-new-password/:email',
         loadChildren: () =>
           import('./auth/set-new-password/set-new-password.module').then(
             (m) => m.SetNewPasswordModule
+          ),
+      },
+      {
+        path: 'success-change-password',
+        loadChildren: () =>
+          import('./auth/success-change/success-change.module').then(
+            (m) => m.ConfirmModule
           ),
       },
     ],

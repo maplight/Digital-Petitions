@@ -32,8 +32,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.result$ = this._forgotPasswordLogic.result$.pipe(
       tap((result) => {
         if (!!result.result) {
-          /*redirect*/
-          this._router.navigate([]);
+          this._router.navigate([
+            '/auth/set-new-password',
+            this.formGroup.value.email,
+          ]);
         }
       })
     );
