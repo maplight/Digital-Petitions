@@ -5,11 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { merge, Subject, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 import { CheckTokenFpService } from 'src/app/logic/auth/exports';
-import { AccountService } from '../account-service/account.service';
-import { SetNewPasswordForm } from './set-new-password-form.interface';
 
 @Component({
   selector: 'dp-set-new-password',
@@ -23,17 +21,14 @@ export class SetNewPasswordComponent
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
   constructor(
-    private rutaActiva: ActivatedRoute,
-    private CheckTokenFpService: CheckTokenFpService,
-    private AccountService: AccountService
+    private _data: ActivatedRoute,
+    private _checkTokenFpLogic: CheckTokenFpService
   ) {
-    this.result$ = this.CheckTokenFpService.result$;
-    this.loading$ = this.CheckTokenFpService.loading$;
+    this.result$ = this._checkTokenFpLogic.result$;
+    this.loading$ = this._checkTokenFpLogic.loading$;
   }
   ngAfterViewInit(): void {
-    this.CheckTokenFpService.sendToken(
-      this.rutaActiva.snapshot.params['token']
-    );
+    this._checkTokenFpLogic.sendToken(this._data.snapshot.params['token']);
   }
 
   ngOnInit(): void {}

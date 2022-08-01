@@ -1,14 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject, tap } from 'rxjs';
 import { SetNewPasswordService } from 'src/app/logic/auth/exports';
-import { AccountService } from '../../account-service/account.service';
-import { SetNewPasswordForm } from '../set-new-password-form.interface';
 
 @Component({
   selector: 'dp-form',
@@ -23,27 +22,25 @@ export class FormComponent {
   private _unsubscribeAll: Subject<void> = new Subject();
   @Output() event = new EventEmitter<boolean>();
   public formGroup: FormGroup;
-  public form_data: SetNewPasswordForm = {
-    newPassword: new FormControl('', [Validators.required]),
-    confirmPassword: new FormControl('', [Validators.required]),
-  };
 
   constructor(
-    private formBuilder: FormBuilder,
-    private SetNewPasswordService: SetNewPasswordService,
-    private AccountService: AccountService
+    private _fb: FormBuilder,
+    private _setNewPasswordLogic: SetNewPasswordService,
+    private _router: Router
   ) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.result$ = this.SetNewPasswordService.result$.pipe(
+    this.formGroup = this._fb.group({
+      newPassword: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    });
+    this.result$ = this._setNewPasswordLogic.result$.pipe(
       tap((result) => {
         if (!!result.result) {
           this.event.emit(true);
-          AccountService.updateUser(true);
+          this._router.navigate([]);
         }
       })
     );
-    this.loading$ = this.SetNewPasswordService.loading$;
+    this.loading$ = this._setNewPasswordLogic.loading$;
   }
 
   ngOnInit(): void {}
@@ -54,7 +51,7 @@ export class FormComponent {
 
   submit() {
     if (this.formGroup.valid) {
-      this.SetNewPasswordService.formGroupValue = this.formGroup.value;
+      this._setNewPasswordLogic.formGroupValue = this.formGroup.value;
     }
   }
 }

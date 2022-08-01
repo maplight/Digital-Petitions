@@ -5,10 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject, tap } from 'rxjs';
 import { ForgotPasswordService } from 'src/app/logic/auth/exports';
-import { AccountService } from '../account-service/account.service';
-import { ForgotPasswordForm } from './forgot-password-form.interface';
 
 @Component({
   selector: 'dp-forgot-password',
@@ -22,24 +21,23 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<void> = new Subject();
 
   public formGroup: FormGroup;
-  public form_data: ForgotPasswordForm = {
-    email: new FormControl('', [Validators.required, Validators.email]),
-  };
   constructor(
-    private formBuilder: FormBuilder,
-    private ForgotPasswordService: ForgotPasswordService,
-    private AccountService: AccountService
+    private _fb: FormBuilder,
+    private _forgotPasswordLogic: ForgotPasswordService,
+    private _router: Router
   ) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.result$ = this.ForgotPasswordService.result$.pipe(
+    this.formGroup = this._fb.group({
+      email: new FormControl('', [Validators.required, Validators.email]),
+    });
+    this.result$ = this._forgotPasswordLogic.result$.pipe(
       tap((result) => {
         if (!!result.result) {
           /*redirect*/
-          AccountService.updateUser(true);
+          this._router.navigate([]);
         }
       })
     );
-    this.loading$ = this.ForgotPasswordService.loading$;
+    this.loading$ = this._forgotPasswordLogic.loading$;
   }
 
   ngOnInit(): void {}
@@ -50,7 +48,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this.ForgotPasswordService.formGroupValue = this.formGroup.value;
+      this._forgotPasswordLogic.formGroupValue = this.formGroup.value;
     }
   }
 }

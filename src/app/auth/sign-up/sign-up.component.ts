@@ -1,68 +1,61 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { SignUpForm } from './sign-up-form.interface';
+
 import { state, states } from '../../core/states';
 import { SignUpService } from 'src/app/logic/auth/exports';
-import { Subject, takeUntil, tap } from 'rxjs';
-import { AccountService } from '../account-service/account.service';
+import { shareReplay, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dp-sign-up',
   templateUrl: './sign-up.component.html',
 })
-export class SignUpComponent implements OnInit, OnDestroy {
-  protected local_states: state[] = states;
+export class SignUpComponent {
+  protected localStates: state[] = states;
 
-  protected hide_password = true;
+  protected hidePassword = true;
+
   protected result$;
-  protected loading$ = this.SignUpService.loading$;
-  private _unsubscribeAll: Subject<null> = new Subject();
+
+  protected loading$;
 
   public formGroup: FormGroup;
-  public form_data: SignUpForm = {
-    first_name: new FormControl('', [Validators.required]),
-    last_name: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
-    apt_number: new FormControl('', [Validators.required]),
-    state: new FormControl<state | null>(null, [Validators.required]),
-    zip_code: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
-  };
 
   constructor(
-    private formBuilder: FormBuilder,
-    private SignUpService: SignUpService,
-    private AccountService: AccountService
+    private _fb: FormBuilder,
+    private _signUpLogic: SignUpService,
+    private _router: Router
   ) {
-    this.formGroup = this.formBuilder.group(this.form_data);
-    this.result$ = this.SignUpService.result$.pipe(
+    this.formGroup = this._fb.group({
+      first_name: new FormControl('', [Validators.required]),
+      last_name: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      apt_number: new FormControl('', [Validators.required]),
+      state: new FormControl<state | null>(null, [Validators.required]),
+      zip_code: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+    });
+    this.result$ = this._signUpLogic.result$.pipe(
       tap((result) => {
         if (!!result.result) {
           /*redirect*/
-          AccountService.updateUser(true);
+          this._router.navigate([]);
         }
-      })
+      }),
+      shareReplay(1)
     );
-    this.loading$ = this.SignUpService.loading$;
+    this.loading$ = this._signUpLogic.loading$;
   }
-  ngOnDestroy(): void {
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  ngOnInit(): void {}
 
   submit() {
     if (this.formGroup.valid) {
-      this.SignUpService.formGroupValue = this.formGroup.value;
+      this._signUpLogic.formGroupValue = this.formGroup.value;
     }
-
-    //this.submit.next(this.formGroup.value);
   }
 }

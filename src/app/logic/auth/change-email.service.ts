@@ -10,7 +10,6 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { EmailChangeForm } from 'src/app/auth/email-change-modal/email-change-form.interface';
 import { ChangeEmailData, Result } from 'src/app/shared/models/exports';
 
 @Injectable()

@@ -10,7 +10,6 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ChangePasswordForm } from 'src/app/auth/change-password-modal/change-password-form.interface';
 import { ChangePasswordData, Result } from 'src/app/shared/models/exports';
 
 @Injectable()

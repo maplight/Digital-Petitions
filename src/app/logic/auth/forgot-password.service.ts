@@ -10,7 +10,6 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
-import { ForgotPasswordForm } from 'src/app/auth/forgot-password/forgot-password-form.interface';
 import { RecoverPasswordData, Result } from 'src/app/shared/models/exports';
 
 @Injectable()

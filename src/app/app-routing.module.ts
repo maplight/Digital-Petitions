@@ -54,16 +54,19 @@ const routes: Routes = [
     ],
   },
   {
-    path: '',
+    path: 'city-staff',
     component: LayoutComponent,
     data: { showMenu: true, showDemo: true },
     children: [
       {
-        path: 'city-staff',
+        path: 'home',
         loadChildren: () =>
-          import('./city-staff/city-staff.module').then(
-            (m) => m.CityStaffModule
-          ),
+          import('./city-staff/home/home.module').then((m) => m.HomeModule),
+      },
+      {
+        path: 'admin',
+        loadChildren: () =>
+          import('./city-staff/admin/admin.module').then((m) => m.AdminModule),
       },
     ],
   },
