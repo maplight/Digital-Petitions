@@ -6,12 +6,16 @@ import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.serv
   selector: 'dp-step-indicator',
   templateUrl: './step-indicator.component.html',
 })
+
 export class StepIndicatorComponent implements OnInit, OnDestroy {
+
+  @Input() step: 'type' | 'issue' | 'candidate' | 'result' = 'type';
+
   private basicStyleElement: string =
-    'bg-[#EFEFEF] w-6 h-6 rounded-full flex justify-center items-center font-roboto text-[#8A8A8A] text-sm leading-[14px] font-normal border border-[#EFEFEF]';
+    'bg-[#EFEFEF] w-6 h-6 rounded-full flex justify-center items-center font-roboto text-[#8A8A8A] text-sm leading-[14px] font-normal border border-[#EFEFEF] cursor-default';
   private basicStyleLine: string = 'bg-[#EFEFEF] w-[122px] h-[2px]';
   private accentStyleElement: string =
-    'bg-[#ECF0FF] w-6 h-6 rounded-full flex justify-center items-center font-roboto text-[#2D5BFF] text-sm leading-[14px] font-normal border border-[#ECF0FF]';
+    'bg-[#ECF0FF] w-6 h-6 rounded-full flex justify-center items-center font-roboto text-[#2D5BFF] text-sm leading-[14px] font-normal border border-[#ECF0FF] cursor-default';
   private accentStyleLine: string = 'bg-[#ECF0FF] w-[122px] h-[2px]';
 
   protected styleElement1: string = this.basicStyleElement;
@@ -21,6 +25,7 @@ export class StepIndicatorComponent implements OnInit, OnDestroy {
   protected styleLine2: string = this.basicStyleLine;
 
   private _unsubscribeAll: Subject<void> = new Subject();
+
 
   constructor(private _stepLogic: StepIndicatorService) {
     this._stepLogic._publicCurrentStep$

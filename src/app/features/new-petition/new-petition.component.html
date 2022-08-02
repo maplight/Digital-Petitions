@@ -9,13 +9,15 @@
   <div class="flex justify-center w-full">
     <ng-container [ngSwitch]="currentStep$ | async">
       <dp-select-type-petition
-        (_cancelEvent)="cancel()"
-        (_submitEvent)="submit1($event)"
+
+        (cancelEvent)="cancel()"
+        (submitEvent)="submitType($event)"
         *ngSwitchCase="'type'"
       ></dp-select-type-petition>
       <dp-new-petition-issue
-        (_cancelEvent)="cancel($event)"
-        (_submitEvent)="submit21($event)"
+        (cancelEvent)="cancel()"
+        (submitEvent)="submitIssue($event)"
+
         *ngSwitchCase="'issue'"
       ></dp-new-petition-issue>
       <dp-new-petition-candidate
@@ -25,7 +27,9 @@
       >
       </dp-new-petition-candidate>
       <dp-result-petition
+
         [data]="dataResponse"
+
         *ngSwitchCase="'result'"
       ></dp-result-petition>
       <!--

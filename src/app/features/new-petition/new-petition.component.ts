@@ -12,8 +12,12 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   selector: 'dp-new-petition',
   templateUrl: './new-petition.component.html',
 })
+
 export class NewPetitionComponent implements OnInit, AfterViewInit {
   protected dataResponse: ResponsePetition = {};
+
+  protected currentStep: 'type' | 'issue' | 'candidate' | 'result' = 'type';
+
   protected dataResponseIssue: IssuePetitionData = { title: '', text: '' };
   protected dataResponseCandidate: CandidatePetitionData = {
     fullName: '',
@@ -44,15 +48,16 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
       : this._router.navigate(['asd']);
   }
 
-  submit1(data: string) {
+  submitType(data: string) {
     if (data === 'Issue') {
+
       this._stepLogic.currentStep = 'issue';
     } else if (data === 'Candidate') {
       this._stepLogic.currentStep = 'candidate';
     }
   }
 
-  submit21(data: IssuePetitionData) {
+  submitIssue(data: IssuePetitionData) {
     this.dataResponse.dataIssue = data;
     this._stepLogic.currentStep = 'result';
   }
@@ -60,5 +65,6 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
   submitCandidate(data: CandidatePetitionData) {
     this.dataResponse.dataCandidate = data;
     this._stepLogic.currentStep = 'result';
+
   }
 }

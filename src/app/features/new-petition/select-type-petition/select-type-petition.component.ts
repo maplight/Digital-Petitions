@@ -7,8 +7,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class SelectTypePetitionComponent implements OnInit {
   typePetition: string = '';
 
-  @Output() _cancelEvent: EventEmitter<void> = new EventEmitter();
-  @Output() _submitEvent: EventEmitter<string> = new EventEmitter();
+  @Output() cancelEvent: EventEmitter<void> = new EventEmitter();
+  @Output() submitEvent: EventEmitter<string> = new EventEmitter();
 
   types: string[] = ['Candidate', 'Issue'];
   constructor() {}
@@ -16,10 +16,10 @@ export class SelectTypePetitionComponent implements OnInit {
   ngOnInit(): void {}
 
   submit() {
-    this._submitEvent.emit(this.typePetition);
+    this.submitEvent.emit(this.typePetition);
   }
 
   cancel() {
-    this._cancelEvent.emit();
+    this.cancelEvent.emit();
   }
 }

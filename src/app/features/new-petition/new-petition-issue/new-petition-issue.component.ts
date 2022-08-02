@@ -14,10 +14,12 @@ export class NewPetitionIssueComponent implements OnInit {
   protected result$;
   protected loading$;
 
-  @Output() _cancelEvent: EventEmitter<
+
+  @Output() cancelEvent: EventEmitter<
     'type' | 'issue' | 'candidate' | 'result'
   > = new EventEmitter();
-  @Output() _submitEvent: EventEmitter<IssuePetitionData> = new EventEmitter();
+  @Output() submitEvent: EventEmitter<IssuePetitionData> = new EventEmitter();
+
 
   constructor(
     private _router: Router,
@@ -30,7 +32,7 @@ export class NewPetitionIssueComponent implements OnInit {
     });
     this.result$ = this._newPetitionIssueLogic.result$.pipe(
       tap((result) => {
-        result.result ? this._submitEvent.emit(result.result) : null;
+        result.result ? this.submitEvent.emit(result.result) : null;
       }),
       shareReplay(1)
     );
