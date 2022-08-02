@@ -9,12 +9,14 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 export class EditResultPetitionComponent implements OnInit {
   @Input() data: ResponsePetition = {};
   protected characters: number = 500;
-  protected showMoreOption: boolean = this.data.dataIssue
-    ? this.data.dataIssue.text.length > 500
-    : false;
+  protected showMoreOption: boolean = false;
   constructor(private _router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.data.dataIssue) {
+      this.showMoreOption = this.data.dataIssue.text.length > 500;
+    }
+  }
 
   submit() {
     this._router.navigate([]);
