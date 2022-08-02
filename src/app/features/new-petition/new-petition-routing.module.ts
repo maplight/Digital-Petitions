@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: NewPetitionComponent,
   },
-  {
-    path: 'issue',
-    component: NewPetitionIssueComponent,
-  },
 ];
 
 @NgModule({

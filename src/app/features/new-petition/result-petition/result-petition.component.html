@@ -5,20 +5,60 @@
         Your petition has been submitted to the city for review. A confirmation
         email has been sent to you.
       </h4>
-      <div class="flex flex-col gap-4">
-        <div class="flex gap-4">
-          <p class="text-sm leading-[18px] font-bold min-w-[88px]">
-            Petition Title:
-          </p>
-          <p class="text-sm leading-[18px] font-normal">{{ data.title }}</p>
+      <ng-container *ngIf="data.dataIssue as dataIssue">
+        <div class="flex flex-col gap-4">
+          <div class="flex gap-4">
+            <p class="text-sm leading-[18px] font-bold min-w-[88px]">
+              Petition Title:
+            </p>
+            <p class="text-sm leading-[18px] font-normal">
+              {{ dataIssue.title }}
+            </p>
+          </div>
+          <div class="flex gap-4">
+            <p class="text-sm leading-[18px] font-bold min-w-[88px]">
+              Petition Text:
+            </p>
+            <p class="text-sm leading-[18px] font-normal">
+              {{ dataIssue.text }}
+            </p>
+          </div>
         </div>
-        <div class="flex gap-4">
-          <p class="text-sm leading-[18px] font-bold min-w-[88px]">
-            Petition Text:
-          </p>
-          <p class="text-sm leading-[18px] font-normal">{{ data.text }}</p>
+      </ng-container>
+      <ng-container *ngIf="data.dataCandidate as dataCandidate">
+        <div class="flex flex-col gap-4">
+          <div class="flex gap-4">
+            <p class="text-sm leading-[18px] font-bold min-w-[88px]">
+              Candidate:
+            </p>
+            <p class="text-sm leading-[18px] font-normal">
+              {{ dataCandidate.fullName }}
+            </p>
+          </div>
+          <div class="flex gap-4">
+            <p class="text-sm leading-[18px] font-bold min-w-[88px]">Office:</p>
+            <p class="text-sm leading-[18px] font-normal">
+              {{ dataCandidate.office }}
+            </p>
+          </div>
+          <div class="flex gap-4">
+            <p class="text-sm leading-[18px] font-bold min-w-[88px]">Party:</p>
+            <p class="text-sm leading-[18px] font-normal">
+              {{ dataCandidate.party }}
+            </p>
+          </div>
+          <div class="flex gap-4">
+            <p class="text-sm leading-[18px] font-bold min-w-[88px]">
+              Address:
+            </p>
+            <p class="text-sm leading-[18px] font-normal">
+              {{ dataCandidate.aptNumber }}, {{ dataCandidate.address }},
+              {{ dataCandidate.city }}, {{ dataCandidate.state.name }},
+              {{ dataCandidate.zipCode }}
+            </p>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </dp-basic-card>
   <div class="flex justify-center w-full gap-[15px]">

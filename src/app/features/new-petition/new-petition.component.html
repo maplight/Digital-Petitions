@@ -3,11 +3,11 @@
     <h2 class="font-extrabold leading-[30px]">Create a petition</h2>
   </div>
   <div class="flex justify-center w-full">
-    <dp-step-indicator [step]="currentStep"></dp-step-indicator>
+    <dp-step-indicator></dp-step-indicator>
   </div>
 
   <div class="flex justify-center w-full">
-    <ng-container [ngSwitch]="currentStep">
+    <ng-container [ngSwitch]="currentStep$ | async">
       <dp-select-type-petition
         (cancelEvent)="cancel()"
         (submitEvent)="submitType($event)"
@@ -18,8 +18,14 @@
         (submitEvent)="submitIssue($event)"
         *ngSwitchCase="'issue'"
       ></dp-new-petition-issue>
+      <dp-new-petition-candidate
+        (cancelEvent)="cancel($event)"
+        (submitEvent)="submitCandidate($event)"
+        *ngSwitchCase="'candidate'"
+      >
+      </dp-new-petition-candidate>
       <dp-result-petition
-        [data]="dataResponseIssue"
+        [data]="dataResponse"
         *ngSwitchCase="'result'"
       ></dp-result-petition>
       <!--

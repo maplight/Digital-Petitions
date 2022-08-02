@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil, tap } from 'rxjs';
+import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 
 @Component({
   selector: 'dp-step-indicator',
   templateUrl: './step-indicator.component.html',
 })
-export class StepIndicatorComponent implements OnInit {
+export class StepIndicatorComponent implements OnInit, OnDestroy {
   @Input() step: 'type' | 'issue' | 'candidate' | 'result' = 'type';
 
   private basicStyleElement: string =
@@ -20,29 +22,50 @@ export class StepIndicatorComponent implements OnInit {
   protected styleLine1: string = this.basicStyleLine;
   protected styleLine2: string = this.basicStyleLine;
 
-  constructor() {}
+  private _unsubscribeAll: Subject<void> = new Subject();
 
-  ngOnInit(): void {
-    switch (this.step) {
-      case 'type':
-        this.styleElement1 = this.accentStyleElement;
-        break;
-      case 'issue':
-        this.styleElement1 = this.accentStyleElement;
-        this.styleLine1 = this.accentStyleLine;
-        this.styleElement2 = this.accentStyleElement;
-        break;
-      case 'candidate':
-        this.styleElement1 = this.accentStyleElement;
-        this.styleLine1 = this.accentStyleLine;
-        this.styleElement2 = this.accentStyleElement;
-        break;
-      case 'result':
-        this.styleElement1 = this.accentStyleElement;
-        this.styleLine1 = this.accentStyleLine;
-        this.styleElement2 = this.accentStyleElement;
-        this.styleLine2 = this.accentStyleLine;
-        this.styleElement3 = this.accentStyleElement;
-    }
+  constructor(private _stepLogic: StepIndicatorService) {
+    this._stepLogic._publicCurrentStep$
+      .pipe(
+        tap((step) => {
+          this.setDefaultStyle();
+          switch (step) {
+            case 'type':
+              this.styleElement1 = this.accentStyleElement;
+              break;
+            case 'issue':
+              this.styleElement1 = this.accentStyleElement;
+              this.styleLine1 = this.accentStyleLine;
+              this.styleElement2 = this.accentStyleElement;
+              break;
+            case 'candidate':
+              this.styleElement1 = this.accentStyleElement;
+              this.styleLine1 = this.accentStyleLine;
+              this.styleElement2 = this.accentStyleElement;
+              break;
+            case 'result':
+              this.styleElement1 = this.accentStyleElement;
+              this.styleLine1 = this.accentStyleLine;
+              this.styleElement2 = this.accentStyleElement;
+              this.styleLine2 = this.accentStyleLine;
+              this.styleElement3 = this.accentStyleElement;
+          }
+        }),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe();
   }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+  private setDefaultStyle() {
+    this.styleElement1 = this.basicStyleElement;
+    this.styleElement2 = this.basicStyleElement;
+    this.styleElement3 = this.basicStyleElement;
+    this.styleLine1 = this.basicStyleLine;
+    this.styleLine2 = this.basicStyleLine;
+  }
+
+  ngOnInit(): void {}
 }
