@@ -11,6 +11,7 @@ import { EditResultPetitionModule } from './edit-result-petition/edit-result-pet
 import { MatIconModule } from '@angular/material/icon';
 import { EditPetitionIssueModule } from './edit-petition-issue/edit-petition-issue.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [EditPetitionComponent],
@@ -26,6 +27,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     EditResultPetitionModule,
     MatIconModule,
     MatProgressBarModule,
+    MatButtonModule,
   ],
 })
 export class EditPetitionModule {}
