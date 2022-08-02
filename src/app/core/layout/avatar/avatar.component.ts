@@ -17,11 +17,9 @@ export class AvatarComponent implements OnInit {
       .pipe(
         tap((data) => {
           if (!!data) {
-            const name: { firstName: string; lastName: string } = JSON.parse(
-              data.attributes.name
-            );
             this.l_avatar =
-              name.firstName[0].toUpperCase() + name.lastName[0].toUpperCase();
+              data.attributes.given_name[0].toUpperCase() +
+              data.attributes.family_name[0].toUpperCase();
           }
         }),
         takeUntil(this._unsubscribeAll)

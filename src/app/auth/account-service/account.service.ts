@@ -34,10 +34,8 @@ export class AccountService {
         username: data.email.replace(/[^a-zA-Z0-9]/g, ''),
         password: data.password,
         attributes: {
-          name: JSON.stringify({
-            firstName: data.firstName,
-            lastName: data.lastName,
-          }),
+          given_name: data.firstName,
+          family_name: data.lastName,
           email: data.email,
           address: JSON.stringify({
             address: data.address,
@@ -48,7 +46,6 @@ export class AccountService {
         },
       })
         .then(function (data) {
-          console.log(data);
           return { result: 'SUCCESS' };
         })
         .catch(function (error) {
@@ -61,7 +58,6 @@ export class AccountService {
     return from(
       Auth.signIn(data.email, data.password)
         .then((data) => {
-          console.log(data);
           this.updateUser();
           return { result: 'SUCCESS' };
         })
