@@ -6,9 +6,7 @@ import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.serv
   selector: 'dp-step-indicator',
   templateUrl: './step-indicator.component.html',
 })
-
 export class StepIndicatorComponent implements OnInit, OnDestroy {
-
   @Input() step: 'type' | 'issue' | 'candidate' | 'result' = 'type';
 
   private basicStyleElement: string =
@@ -25,7 +23,6 @@ export class StepIndicatorComponent implements OnInit, OnDestroy {
   protected styleLine2: string = this.basicStyleLine;
 
   private _unsubscribeAll: Subject<void> = new Subject();
-
 
   constructor(private _stepLogic: StepIndicatorService) {
     this._stepLogic._publicCurrentStep$
