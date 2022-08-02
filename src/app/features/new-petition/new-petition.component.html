@@ -9,7 +9,6 @@
   <div class="flex justify-center w-full">
     <ng-container [ngSwitch]="currentStep$ | async">
       <dp-select-type-petition
-
         (cancelEvent)="cancel()"
         (submitEvent)="submitType($event)"
         *ngSwitchCase="'type'"
@@ -17,7 +16,6 @@
       <dp-new-petition-issue
         (cancelEvent)="cancel()"
         (submitEvent)="submitIssue($event)"
-
         *ngSwitchCase="'issue'"
       ></dp-new-petition-issue>
       <dp-new-petition-candidate
@@ -27,9 +25,7 @@
       >
       </dp-new-petition-candidate>
       <dp-result-petition
-
         [data]="dataResponse"
-
         *ngSwitchCase="'result'"
       ></dp-result-petition>
       <!--

@@ -12,7 +12,6 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   selector: 'dp-new-petition',
   templateUrl: './new-petition.component.html',
 })
-
 export class NewPetitionComponent implements OnInit, AfterViewInit {
   protected dataResponse: ResponsePetition = {};
 
@@ -50,7 +49,6 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
 
   submitType(data: string) {
     if (data === 'Issue') {
-
       this._stepLogic.currentStep = 'issue';
     } else if (data === 'Candidate') {
       this._stepLogic.currentStep = 'candidate';
@@ -65,6 +63,5 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
   submitCandidate(data: CandidatePetitionData) {
     this.dataResponse.dataCandidate = data;
     this._stepLogic.currentStep = 'result';
-
   }
 }
