@@ -7,7 +7,7 @@ import { IssuePetitionData } from 'src/app/shared/models/exports';
   templateUrl: './new-petition.component.html',
 })
 export class NewPetitionComponent implements OnInit {
-  protected currentStep: '1' | '21' | '22' | '3' = '1';
+  protected currentStep: 'type' | 'issue' | 'candidate' | 'result' = 'type';
   protected dataResponseIssue: IssuePetitionData = { title: '', text: '' };
   constructor() {}
 
@@ -15,16 +15,16 @@ export class NewPetitionComponent implements OnInit {
 
   cancel() {}
 
-  submit1(data: string) {
+  submitType(data: string) {
     if (data === 'Issue') {
-      this.currentStep = '21';
+      this.currentStep = 'issue';
     } else if (data === 'Candidate') {
-      this.currentStep = '22';
+      this.currentStep = 'candidate';
     }
   }
 
-  submit21(data: IssuePetitionData) {
+  submitIssue(data: IssuePetitionData) {
     this.dataResponseIssue = data;
-    this.currentStep = '3';
+    this.currentStep = 'result';
   }
 }

@@ -9,18 +9,18 @@
   <div class="flex justify-center w-full">
     <ng-container [ngSwitch]="currentStep">
       <dp-select-type-petition
-        (_cancelEvent)="cancel()"
-        (_submitEvent)="submit1($event)"
-        *ngSwitchCase="1"
+        (cancelEvent)="cancel()"
+        (submitEvent)="submitType($event)"
+        *ngSwitchCase="'type'"
       ></dp-select-type-petition>
       <dp-new-petition-issue
-        (_cancelEvent)="cancel()"
-        (_submitEvent)="submit21($event)"
-        *ngSwitchCase="21"
+        (cancelEvent)="cancel()"
+        (submitEvent)="submitIssue($event)"
+        *ngSwitchCase="'issue'"
       ></dp-new-petition-issue>
       <dp-result-petition
         [data]="dataResponseIssue"
-        *ngSwitchCase="3"
+        *ngSwitchCase="'result'"
       ></dp-result-petition>
       <!--
     <app-shared-step-1 (back)="doBack(currentStep)" (next)="doNext(currentStep, $event)" *ngSwitchCase="1" />
