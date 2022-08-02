@@ -5,7 +5,6 @@ import { AccountService } from 'src/app/auth/account-service/account.service';
 @Component({
   selector: 'dp-avatar',
   templateUrl: './avatar.component.html',
-  styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent implements OnInit {
   private _unsubscribeAll: Subject<void> = new Subject();

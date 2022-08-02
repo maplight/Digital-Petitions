@@ -1,0 +1,23 @@
+<div class="w-full flex justify-center">
+  <div class="flex flex-col max-w-[424px] w-full gap-4">
+    <h1 class="px-6 py-2 font-extrabold">Petition Creators</h1>
+
+    <dp-basic-card class="w-full">
+      <div class="w-full flex flex-col">
+        <h4 class="font-bold text-lg leading-6">Password Reset</h4>
+        <p>
+          Your password has been successfully reset. Click continue to login.
+        </p>
+      </div>
+
+      <a
+        [routerLink]="'/auth/login'"
+        mat-flat-button
+        class="h-10 w-full mt-2"
+        color="primary"
+      >
+        Continue
+      </a>
+    </dp-basic-card>
+  </div>
+</div>

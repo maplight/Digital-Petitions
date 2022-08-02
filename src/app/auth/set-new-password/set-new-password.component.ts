@@ -1,34 +1,41 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { CheckTokenFpService } from 'src/app/logic/auth/exports';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Subject, tap } from 'rxjs';
+import { SetNewPasswordService } from 'src/app/logic/auth/exports';
 
 @Component({
   selector: 'dp-set-new-password',
   templateUrl: './set-new-password.component.html',
 })
-export class SetNewPasswordComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class SetNewPasswordComponent implements OnInit, OnDestroy {
+  protected hideConfirmPassword = true;
+  protected password = true;
   protected result$;
-  public trueResponseForm = false;
   protected loading$;
   private _unsubscribeAll: Subject<void> = new Subject();
+  public formGroup: FormGroup;
+
   constructor(
+    private _router: Router,
     private _data: ActivatedRoute,
-    private _checkTokenFpLogic: CheckTokenFpService
+    private _fb: FormBuilder,
+    private _setNewPasswordLogic: SetNewPasswordService
   ) {
-    this.result$ = this._checkTokenFpLogic.result$;
-    this.loading$ = this._checkTokenFpLogic.loading$;
-  }
-  ngAfterViewInit(): void {
-    this._checkTokenFpLogic.sendToken(this._data.snapshot.params['token']);
+    this.formGroup = this._fb.group({
+      username: [this._data.snapshot.params['email']],
+      code: ['', [Validators.required]],
+      newPassword: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
+    });
+    this.result$ = this._setNewPasswordLogic.result$.pipe(
+      tap((result) => {
+        if (!!result.result) {
+          this._router.navigate(['/auth/success-change-password']);
+        }
+      })
+    );
+    this.loading$ = this._setNewPasswordLogic.loading$;
   }
 
   ngOnInit(): void {}
@@ -36,7 +43,10 @@ export class SetNewPasswordComponent
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-  setResponseForm(data: boolean) {
-    this.trueResponseForm = data;
+
+  submit() {
+    if (this.formGroup.valid) {
+      this._setNewPasswordLogic.formGroupValue = this.formGroup.value;
+    }
   }
 }

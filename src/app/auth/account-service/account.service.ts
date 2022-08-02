@@ -6,6 +6,7 @@ import {
   ChangeEmailData,
   ChangePasswordData,
   ConfirmationCode,
+  NewPasswordData,
   PersonalDetailsToUpdate,
   RecoverPasswordData,
   Result,
@@ -23,8 +24,11 @@ export class AccountService {
   private privateCurrentUser: BehaviorSubject<any | null> = new BehaviorSubject<
     any | null
   >(null);
+  private privateisLoged: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
   public currentUser$: Observable<any | null> =
     this.privateCurrentUser.asObservable();
+  public isLoged$: Observable<boolean> = this.privateisLoged.asObservable();
 
   constructor() {}
 
@@ -92,10 +96,8 @@ export class AccountService {
     return from(
       Auth.currentAuthenticatedUser().then((user) => {
         return Auth.updateUserAttributes(user, {
-          name: JSON.stringify({
-            firstName: data.firstName,
-            lastName: data.lastName,
-          }),
+          given_name: data.firstName,
+          family_name: data.lastName,
           address: JSON.stringify({
             address: data.address,
             state: data.state,
@@ -174,12 +176,28 @@ export class AccountService {
     );
   }
 
-  public setNewPassword(data: ChangePasswordData): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
+  public setNewPassword(data: NewPasswordData): Observable<Result<string>> {
+    return from(
+      Auth.forgotPasswordSubmit(data.username, data.code, data.newPassword)
+        .then((data) => {
+          return { result: 'SUCCESS' };
+        })
+        .catch(function (error) {
+          return { error: error.message };
+        })
+    );
   }
 
   public forgotPassword(data: RecoverPasswordData): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
+    return from(
+      Auth.forgotPassword(data.email)
+        .then((data) => {
+          return { result: 'SUCCESS' };
+        })
+        .catch(function (error) {
+          return { error: error.message };
+        })
+    );
   }
 
   public checkTokenFP(data: ConfirmationCode): Observable<Result<string>> {
@@ -194,5 +212,20 @@ export class AccountService {
       .catch((error) => {
         this.privateCurrentUser.next(null);
       });
+  }
+
+  public isLoged(): Observable<boolean> {
+    return from(
+      Auth.currentSession()
+        .then(() => {
+          this.privateisLoged.next(true);
+          this.updateUser();
+          return true;
+        })
+        .catch(() => {
+          this.privateisLoged.next(false);
+          return false;
+        })
+    );
   }
 }

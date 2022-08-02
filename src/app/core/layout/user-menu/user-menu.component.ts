@@ -14,6 +14,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   private result$;
   private _unsubscribeAll: Subject<void> = new Subject();
   protected currentUser$;
+  protected isLoged$;
 
   constructor(
     private AccountService: AccountService,
@@ -25,10 +26,9 @@ export class UserMenuComponent implements OnInit, OnDestroy {
       .pipe(
         tap((result) => {
           if (!!result.result) {
-            this._router.navigate(['login']);
-            console.log('aqui');
+            this._router.navigate(['/auth/login']);
+            this.AccountService.isLoged();
           } else {
-            console.log('aquix2');
             //I'm not sure this is the best way to handle errors here
             this.openDialog(
               'An error has occurred',
@@ -41,6 +41,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
       )
       .subscribe();
     this.currentUser$ = this.AccountService.currentUser$;
+    this.isLoged$ = this.AccountService.isLoged$;
   }
 
   ngOnInit(): void {}

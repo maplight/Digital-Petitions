@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
+import { AuthGuard, CityStaffGuard, CommitteeGuard } from './guards/exports';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   {
-    path: '',
+    path: 'example',
+    loadChildren: () =>
+      import('./example/example.module').then((m) => m.ExampleModule),
+  },
+  {
+    path: 'auth',
+    canActivate: [AuthGuard],
     component: LayoutComponent,
     data: { showMenu: false, showDemo: true },
     children: [
-      {
-        path: 'example',
-        loadChildren: () =>
-          import('./example/example.module').then((m) => m.ExampleModule),
-      },
       {
         path: 'sign-up',
         loadChildren: () =>
@@ -38,11 +41,33 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'set-new-password/:token',
+        path: 'set-new-password/:email',
         loadChildren: () =>
           import('./auth/set-new-password/set-new-password.module').then(
             (m) => m.SetNewPasswordModule
           ),
+      },
+      {
+        path: 'success-change-password',
+        loadChildren: () =>
+          import('./auth/success-change/success-change.module').then(
+            (m) => m.ConfirmModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'committee',
+    canActivate: [CommitteeGuard],
+    component: LayoutComponent,
+    data: { showMenu: false, showDemo: true },
+    children: [
+      {
+        path: 'account-settings',
+        loadChildren: () =>
+          import(
+            './features/committee-account-settings/committee-account-settings.module'
+          ).then((m) => m.CommitteeAccountSettingsModule),
       },
       {
         path: 'new-petition',
@@ -54,21 +79,8 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'committee',
-    component: LayoutComponent,
-    data: { showMenu: false, showDemo: true },
-    children: [
-      {
-        path: 'account-settings',
-        loadChildren: () =>
-          import(
-            './features/committee-account-settings/committee-account-settings.module'
-          ).then((m) => m.CommitteeAccountSettingsModule),
-      },
-    ],
-  },
-  {
     path: 'city-staff',
+    canActivate: [CityStaffGuard],
     component: LayoutComponent,
     data: { showMenu: true, showDemo: true },
     children: [
@@ -89,5 +101,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [CommitteeGuard],
 })
 export class AppRoutingModule {}
