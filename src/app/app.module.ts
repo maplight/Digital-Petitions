@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { appearance } from './core/dynamic-theme/default-mat-form-field';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,10 @@ import { appearance } from './core/dynamic-theme/default-mat-form-field';
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: appearance,
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {},
     },
   ],
   bootstrap: [AppComponent],

@@ -76,6 +76,13 @@ const routes: Routes = [
             (m) => m.NewPetitionModule
           ),
       },
+      {
+        path: 'edit-petition/:id',
+        loadChildren: () =>
+          import('./features/edit-petition/edit-petition.module').then(
+            (m) => m.EditPetitionModule
+          ),
+      },
     ],
   },
   {
