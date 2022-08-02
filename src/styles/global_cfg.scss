@@ -61,6 +61,11 @@ p {
   @apply bg-black bg-opacity-[0.12] #{'!important'};
 }
 
+.mat-progress-bar {
+  height: 10px !important;
+  border-radius: 8px !important;
+}
+
 .mat-button,
 .mat-flat-button,
 .mat-raised-button,
