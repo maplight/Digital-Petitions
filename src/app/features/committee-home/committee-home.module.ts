@@ -5,6 +5,8 @@ import { CommitteeHomeRoutingModule } from './committee-home-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { PetitionCardModule } from '../../shared/petition-card/petition-card.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [CommitteeHomeComponent],
@@ -14,6 +16,8 @@ import { PetitionCardModule } from '../../shared/petition-card/petition-card.mod
     MatButtonModule,
     RouterModule,
     PetitionCardModule,
+    MatIconModule,
+    MatProgressBarModule,
   ],
 })
 export class CommitteeHomeModule {}
