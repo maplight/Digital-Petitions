@@ -32,13 +32,13 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
     private _router: Router
   ) {
     this.formGroup = this._fb.group({
-      first_name: new FormControl('', [Validators.required]),
-      last_name: new FormControl('', [Validators.required]),
-      address: new FormControl('', [Validators.required]),
-      apt_number: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      state: new FormControl<state | null>(null, [Validators.required]),
-      zip_code: new FormControl('', [Validators.required]),
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      aptNumber: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      state: [null, [Validators.required]],
+      zipCode: ['', [Validators.required]],
     });
     this.result$ = this._changePersonalDetailsLogic.result$
       .pipe(

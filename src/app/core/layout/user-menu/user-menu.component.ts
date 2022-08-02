@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/auth/account-service/account.service';
 import { SignOutService } from 'src/app/logic/auth/exports';
@@ -8,7 +9,6 @@ import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-resul
 @Component({
   selector: 'dp-user-menu',
   templateUrl: './user-menu.component.html',
-  styleUrls: ['./user-menu.component.scss'],
 })
 export class UserMenuComponent implements OnInit, OnDestroy {
   private result$;
@@ -17,6 +17,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private AccountService: AccountService,
+    private _router: Router,
     private SignOutService: SignOutService,
     public dialog: MatDialog
   ) {
@@ -24,9 +25,10 @@ export class UserMenuComponent implements OnInit, OnDestroy {
       .pipe(
         tap((result) => {
           if (!!result.result) {
-            //redirect to login
-            AccountService.updateUser(false);
+            this._router.navigate(['login']);
+            console.log('aqui');
           } else {
+            console.log('aquix2');
             //I'm not sure this is the best way to handle errors here
             this.openDialog(
               'An error has occurred',
@@ -38,7 +40,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.currentUser$ = AccountService.currentUser$;
+    this.currentUser$ = this.AccountService.currentUser$;
   }
 
   ngOnInit(): void {}

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, delay, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, delay, from, Observable, of } from 'rxjs';
 
-import { User } from '../user';
 import {
   ChangeEmailData,
   ChangePasswordData,
@@ -14,47 +13,165 @@ import {
   SignUpCredentials,
 } from 'src/app/shared/models/exports';
 
+import { API, Auth } from 'aws-amplify';
+import { SignUpConfirmationCode } from 'src/app/shared/models/auth/sign-up-confirmation-code';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  private privateCurrentUser: BehaviorSubject<User | null> =
-    new BehaviorSubject<User | null>(null);
-  public currentUser$: Observable<User | null> =
+  private privateCurrentUser: BehaviorSubject<any | null> = new BehaviorSubject<
+    any | null
+  >(null);
+  public currentUser$: Observable<any | null> =
     this.privateCurrentUser.asObservable();
 
   constructor() {}
 
   public signUp(data: SignUpCredentials): Observable<Result<string>> {
-    return of({ error: ":'(" }).pipe(delay(3000));
+    return from(
+      Auth.signUp({
+        username: data.email.replace(/[^a-zA-Z0-9]/g, ''),
+        password: data.password,
+        attributes: {
+          given_name: data.firstName,
+          family_name: data.lastName,
+          email: data.email,
+          address: JSON.stringify({
+            address: data.address,
+            state: data.state,
+            aptNumber: data.aptNumber,
+            zipCode: data.zipCode,
+          }),
+        },
+      })
+        .then(function (data) {
+          return { result: 'SUCCESS' };
+        })
+        .catch(function (error) {
+          return { error: error.message };
+        })
+    );
   }
 
   public signIn(data: SignInCredentials): Observable<Result<string>> {
-    return of({ error: ":'(" }).pipe(delay(3000));
+    return from(
+      Auth.signIn(data.email, data.password)
+        .then((data) => {
+          this.updateUser();
+          return { result: 'SUCCESS' };
+        })
+        .catch((error) => {
+          return { error: error.message };
+        })
+    );
   }
 
   public changePassword(data: ChangePasswordData): Observable<Result<string>> {
-    return of({ result: ":')" }).pipe(delay(3000));
+    return from(
+      Auth.currentAuthenticatedUser().then((user) => {
+        return Auth.changePassword(
+          user,
+          '' + data.oldPassword,
+          '' + data.newPassword
+        )
+          .then((result) => {
+            this.updateUser();
+            return { result: 'SUCCESS' };
+          })
+          .catch((error) => {
+            return { error: error.message };
+          });
+      })
+    );
   }
 
   public changePersonalDetails(
     data: PersonalDetailsToUpdate
   ): Observable<Result<string>> {
-    return of({ result: ":')" }).pipe(delay(3000));
+    return from(
+      Auth.currentAuthenticatedUser().then((user) => {
+        return Auth.updateUserAttributes(user, {
+          name: JSON.stringify({
+            firstName: data.firstName,
+            lastName: data.lastName,
+          }),
+          address: JSON.stringify({
+            address: data.address,
+            state: data.state,
+            aptNumber: data.aptNumber,
+            zipCode: data.zipCode,
+          }),
+        })
+          .then((result) => {
+            this.updateUser();
+            return { result: 'SUCCESS' };
+          })
+          .catch((error) => {
+            return { error: error.message };
+          });
+      })
+    );
   }
 
   public changeEmail(data: ChangeEmailData): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
+    return from(
+      Auth.currentAuthenticatedUser().then((user) => {
+        return Auth.updateUserAttributes(user, {
+          email: data.email,
+        })
+          .then((result) => {
+            this.updateUser();
+            return { result: 'SUCCESS' };
+          })
+          .catch((error) => {
+            return { error: error.message };
+          });
+      })
+    );
   }
 
   public confirmEmailChange(
     data: ConfirmationCode
   ): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
+    return from(
+      Auth.verifyCurrentUserAttributeSubmit('email', data.code)
+        .then((result) => {
+          this.updateUser();
+          return { result: 'SUCCESS' };
+        })
+        .catch((error) => {
+          return { error: error.message };
+        })
+    );
+  }
+
+  public signUpConfirm(
+    data: SignUpConfirmationCode
+  ): Observable<Result<string>> {
+    return from(
+      Auth.confirmSignUp(data.username.replace(/[^a-zA-Z0-9]/g, ''), data.code)
+        .then((result) => {
+          this.updateUser();
+          return { result: ':)' };
+        })
+        .catch((error) => {
+          return { error: error.message };
+        })
+    );
   }
 
   public signOut(): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
+    return from(
+      Auth.signOut()
+        .then((data) => {
+          this.privateCurrentUser.next(null);
+          return { result: 'SUCCESS' };
+        })
+        .catch(function (error) {
+          return { error: error.message };
+        })
+    );
   }
 
   public setNewPassword(data: ChangePasswordData): Observable<Result<string>> {
@@ -69,22 +186,13 @@ export class AccountService {
     return of({ result: ':)' }).pipe(delay(3000));
   }
 
-  public updateUser(login: boolean) {
-    //temporarily I use a boolean to mock this service
-    //call to backend
-    login
-      ? this.privateCurrentUser.next({
-          firstName: 'Jon',
-          lastName: 'Smith',
-          email: 'jonsmith@example',
-          url: '',
-          contactData: {
-            address: 'far far away',
-            apt_number: '00',
-            state: 'some state',
-            zip_code: '102030',
-          },
-        })
-      : this.privateCurrentUser.next(null);
+  public updateUser() {
+    Auth.currentUserInfo()
+      .then((data: any) => {
+        this.privateCurrentUser.next(data);
+      })
+      .catch((error) => {
+        this.privateCurrentUser.next(null);
+      });
   }
 }

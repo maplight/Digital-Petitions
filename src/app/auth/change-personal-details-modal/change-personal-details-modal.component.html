@@ -10,9 +10,9 @@
         ></mat-progress-bar>
         <mat-form-field>
           <mat-label>First Name</mat-label>
-          <input type="text" matInput formControlName="first_name" />
+          <input type="text" matInput formControlName="firstName" />
           <mat-error
-            *ngIf="this.formGroup.get('first_name')?.errors?.['required']"
+            *ngIf="this.formGroup.get('firstName')?.errors?.['required']"
           >
             <div class="flex flex-row items-center">
               <mat-icon
@@ -25,9 +25,9 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Last Name</mat-label>
-          <input type="text" matInput formControlName="last_name" />
+          <input type="text" matInput formControlName="lastName" />
           <mat-error
-            *ngIf="this.formGroup.get('last_name')?.errors?.['required']"
+            *ngIf="this.formGroup.get('lastName')?.errors?.['required']"
           >
             <div class="flex flex-row items-center">
               <mat-icon
@@ -55,9 +55,9 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Apt/Number</mat-label>
-          <input type="text" matInput formControlName="apt_number" />
+          <input type="text" matInput formControlName="aptNumber" />
           <mat-error
-            *ngIf="this.formGroup.get('apt_number')?.errors?.['required']"
+            *ngIf="this.formGroup.get('aptNumber')?.errors?.['required']"
           >
             <div class="flex flex-row items-center">
               <mat-icon
@@ -101,9 +101,9 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Zip Code</mat-label>
-          <input type="text" matInput formControlName="zip_code" />
+          <input type="text" matInput formControlName="zipCode" />
           <mat-error
-            *ngIf="this.formGroup.get('zip_code')?.errors?.['required']"
+            *ngIf="this.formGroup.get('zipCode')?.errors?.['required']"
           >
             <div class="flex flex-row items-center">
               <mat-icon

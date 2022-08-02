@@ -32,20 +32,19 @@ export class SignUpComponent {
     private _router: Router
   ) {
     this.formGroup = this._fb.group({
-      first_name: new FormControl('', [Validators.required]),
-      last_name: new FormControl('', [Validators.required]),
-      address: new FormControl('', [Validators.required]),
-      apt_number: new FormControl('', [Validators.required]),
-      state: new FormControl<state | null>(null, [Validators.required]),
-      zip_code: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      aptNumber: ['', [Validators.required]],
+      state: [null, [Validators.required]],
+      zipCode: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
     this.result$ = this._signUpLogic.result$.pipe(
       tap((result) => {
         if (!!result.result) {
-          /*redirect*/
-          this._router.navigate([]);
+          this._router.navigate(['sign-up', this.formGroup.value.email]);
         }
       }),
       shareReplay(1)
