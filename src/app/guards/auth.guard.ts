@@ -25,8 +25,7 @@ export class AuthGuard implements CanActivate {
     return this._auth.isLoged().pipe(
       map((data) => {
         if (data) {
-          this._router.navigate(['/committee/account-settings']);
-          return false;
+          return this._router.parseUrl('/committee/account-settings');
         } else {
           return true;
         }

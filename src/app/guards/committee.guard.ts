@@ -25,8 +25,7 @@ export class CommitteeGuard implements CanActivate {
         if (data) {
           return true;
         } else {
-          this._router.navigate(['/auth/login']);
-          return false;
+          return this._router.parseUrl('/auth/login');
         }
       })
     );
