@@ -83,6 +83,13 @@ const routes: Routes = [
             (m) => m.EditPetitionModule
           ),
       },
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('./features/committee-home/committee-home.module').then(
+            (m) => m.CommitteeHomeModule
+          ),
+      },
     ],
   },
   {
