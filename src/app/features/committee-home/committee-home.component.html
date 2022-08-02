@@ -1,0 +1,28 @@
+<div class="flex justify-center w-full py-12">
+  <div class="flex flex-col max-w-[1197px] w-full gap-4">
+    <h2 class="leading-7 font-extrabold">Welcome</h2>
+    <p class="text-[#5C5C5C]">
+      View your submitted petitions or create a new petition to submit to the
+      city.
+    </p>
+    <div class="flex flex-col-reverse md:flex-row justify-center gap-7 mt-4">
+      <div
+        class="flex flex-col gap-5 rounded-[18px] py-6 px-4 bg-[#EDEDED] max-w-[892px] w-full"
+      >
+        <h3 class="flex leading-7 font-extrabold">Your Petitions</h3>
+        <dp-petition-card></dp-petition-card>
+        <dp-petition-card></dp-petition-card>
+      </div>
+      <div
+        class="flex flex-col gap-4 rounded-xl p-4 bg-[#FFFFFF] border border-[#D7D7D7] shadow-sm max-w-[277px] w-full h-28"
+      >
+        <h4 class="flex justify-center leading-5 font-bold w-full">
+          Create New Petiton
+        </h4>
+        <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
+          Create Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
