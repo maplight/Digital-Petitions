@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { NewPetitionIssueModule } from './new-petition-issue/new-petition-issue.module';
 import { RouterModule } from '@angular/router';
 import { StepIndicatorModule } from './step-indicator/step-indicator.module';
+import { SelectTypePetitionModule } from './select-type-petition/select-type-petition.module';
+import { ResultPetitionModule } from './result-petition/result-petition.module';
 
 @NgModule({
   declarations: [NewPetitionComponent],
@@ -22,6 +24,8 @@ import { StepIndicatorModule } from './step-indicator/step-indicator.module';
     NewPetitionIssueModule,
     RouterModule,
     StepIndicatorModule,
+    SelectTypePetitionModule,
+    ResultPetitionModule,
   ],
 })
 export class NewPetitionModule {}

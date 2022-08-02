@@ -3,39 +3,31 @@
     <h2 class="font-extrabold leading-[30px]">Create a petition</h2>
   </div>
   <div class="flex justify-center w-full">
-    <dp-step-indicator [step]="'1'"></dp-step-indicator>
+    <dp-step-indicator [step]="currentStep"></dp-step-indicator>
   </div>
 
   <div class="flex justify-center w-full">
-    <dp-basic-card class="w-[424px] gap-6">
-      <div class="w-full flex justify-start">
-        <h4 class="font-bold leading-5">
-          Choose the type of petiton you will be submitting
-        </h4>
-      </div>
-      <mat-radio-group
-        class="flex justify-center"
-        [(ngModel)]="typePetition"
-        color="primary"
-      >
-        <div class="w-auto flex flex-col gap-6">
-          <mat-radio-button *ngFor="let type of types" [value]="type">
-            {{ type }}
-          </mat-radio-button>
-        </div>
-      </mat-radio-group>
-    </dp-basic-card>
-  </div>
-  <div class="flex justify-center w-full gap-[15px]">
-    <button mat-button color="primary">Cancel</button>
-    <button
-      type="submit"
-      mat-flat-button
-      color="primary"
-      cdkFocusInitial
-      (click)="submit()"
-    >
-      Continue
-    </button>
+    <ng-container [ngSwitch]="currentStep">
+      <dp-select-type-petition
+        (cancelEvent)="cancel()"
+        (submitEvent)="submitType($event)"
+        *ngSwitchCase="'type'"
+      ></dp-select-type-petition>
+      <dp-new-petition-issue
+        (cancelEvent)="cancel()"
+        (submitEvent)="submitIssue($event)"
+        *ngSwitchCase="'issue'"
+      ></dp-new-petition-issue>
+      <dp-result-petition
+        [data]="dataResponseIssue"
+        *ngSwitchCase="'result'"
+      ></dp-result-petition>
+      <!--
+    <app-shared-step-1 (back)="doBack(currentStep)" (next)="doNext(currentStep, $event)" *ngSwitchCase="1" />
+    <app-issue-step-2 (back)="doBack(currentStep)" (next)="doNext(currentStep, $event)" *ngSwitchCase="21" />
+    <app-candidate-step-2 (back)="doBack(currentStep)" (next)="doNext(currentStep, $event)" *ngSwitchCase="22" />
+    <app-shared-step-3 (back)="doBack(currentStep)" (next)="doNext(currentStep, $event)" *ngSwitchDefault />
+    -->
+    </ng-container>
   </div>
 </div>

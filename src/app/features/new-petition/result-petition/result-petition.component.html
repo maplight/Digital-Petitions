@@ -1,0 +1,35 @@
+<div class="flex flex-col gap-6">
+  <dp-basic-card class="w-[549px] gap-6">
+    <div class="w-full flex flex-col gap-10 max-h-[392px] overflow-y-auto">
+      <h4 class="font-bold leading-5 text-center">
+        Your petition has been submitted to the city for review. A confirmation
+        email has been sent to you.
+      </h4>
+      <div class="flex flex-col gap-4">
+        <div class="flex gap-4">
+          <p class="text-sm leading-[18px] font-bold min-w-[88px]">
+            Petition Title:
+          </p>
+          <p class="text-sm leading-[18px] font-normal">{{ data.title }}</p>
+        </div>
+        <div class="flex gap-4">
+          <p class="text-sm leading-[18px] font-bold min-w-[88px]">
+            Petition Text:
+          </p>
+          <p class="text-sm leading-[18px] font-normal">{{ data.text }}</p>
+        </div>
+      </div>
+    </div>
+  </dp-basic-card>
+  <div class="flex justify-center w-full gap-[15px]">
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      cdkFocusInitial
+      (click)="submit()"
+    >
+      Return Home
+    </button>
+  </div>
+</div>
