@@ -9,4 +9,10 @@ export interface CandidatePetitionData {
   city: string;
   state: state;
   zipCode: string;
+  atributes?: {
+    type: string;
+    status: string;
+    currentSign?: string;
+    totalSign?: string;
+  };
 }
