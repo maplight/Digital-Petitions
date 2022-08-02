@@ -16,9 +16,10 @@ export class NewPetitionCandidateComponent implements OnInit {
   protected loading$;
   protected localStates: state[] = states;
 
-  @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
-    new EventEmitter();
-  @Output() _submitEvent: EventEmitter<CandidatePetitionData> =
+  @Output() cancelEvent: EventEmitter<
+    'type' | 'issue' | 'candidate' | 'result'
+  > = new EventEmitter();
+  @Output() submitEvent: EventEmitter<CandidatePetitionData> =
     new EventEmitter();
 
   constructor(
@@ -38,7 +39,7 @@ export class NewPetitionCandidateComponent implements OnInit {
     });
     this.result$ = this._newPetitionCandidateLogic.result$.pipe(
       tap((result) => {
-        result.result ? this._submitEvent.emit(result.result) : null;
+        result.result ? this.submitEvent.emit(result.result) : null;
       }),
       shareReplay(1)
     );
@@ -53,6 +54,6 @@ export class NewPetitionCandidateComponent implements OnInit {
     }
   }
   cancel() {
-    this._cancelEvent.emit('1');
+    this.cancelEvent.emit('type');
   }
 }

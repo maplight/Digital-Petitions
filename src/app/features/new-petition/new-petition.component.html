@@ -11,22 +11,22 @@
       <dp-select-type-petition
         (_cancelEvent)="cancel()"
         (_submitEvent)="submit1($event)"
-        *ngSwitchCase="1"
+        *ngSwitchCase="'type'"
       ></dp-select-type-petition>
       <dp-new-petition-issue
         (_cancelEvent)="cancel($event)"
         (_submitEvent)="submit21($event)"
-        *ngSwitchCase="21"
+        *ngSwitchCase="'issue'"
       ></dp-new-petition-issue>
       <dp-new-petition-candidate
-        (_cancelEvent)="cancel($event)"
-        (_submitEvent)="submit22($event)"
-        *ngSwitchCase="22"
+        (cancelEvent)="cancel($event)"
+        (submitEvent)="submitCandidate($event)"
+        *ngSwitchCase="'candidate'"
       >
       </dp-new-petition-candidate>
       <dp-result-petition
         [data]="dataResponse"
-        *ngSwitchCase="3"
+        *ngSwitchCase="'result'"
       ></dp-result-petition>
       <!--
     <app-shared-step-1 (back)="doBack(currentStep)" (next)="doNext(currentStep, $event)" *ngSwitchCase="1" />

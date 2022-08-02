@@ -25,7 +25,7 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
     state: { name: '', value: '' },
     zipCode: '',
   };
-  protected currentStep$: Observable<'1' | '21' | '22' | '3'>;
+  protected currentStep$: Observable<'type' | 'issue' | 'candidate' | 'result'>;
   constructor(
     private _stepLogic: StepIndicatorService,
     private _router: Router
@@ -33,30 +33,32 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
     this.currentStep$ = this._stepLogic._publicCurrentStep$;
   }
   ngAfterViewInit(): void {
-    this._stepLogic.currentStep = '1';
+    this._stepLogic.currentStep = 'type';
   }
 
   ngOnInit(): void {}
 
-  cancel(step?: '1' | '21' | '22' | '3') {
-    step ? (this._stepLogic.currentStep = step) : this._router.navigate([]);
+  cancel(step?: 'type' | 'issue' | 'candidate' | 'result') {
+    step
+      ? (this._stepLogic.currentStep = step)
+      : this._router.navigate(['asd']);
   }
 
   submit1(data: string) {
     if (data === 'Issue') {
-      this._stepLogic.currentStep = '21';
+      this._stepLogic.currentStep = 'issue';
     } else if (data === 'Candidate') {
-      this._stepLogic.currentStep = '22';
+      this._stepLogic.currentStep = 'candidate';
     }
   }
 
   submit21(data: IssuePetitionData) {
     this.dataResponse.dataIssue = data;
-    this._stepLogic.currentStep = '3';
+    this._stepLogic.currentStep = 'result';
   }
 
-  submit22(data: CandidatePetitionData) {
+  submitCandidate(data: CandidatePetitionData) {
     this.dataResponse.dataCandidate = data;
-    this._stepLogic.currentStep = '3';
+    this._stepLogic.currentStep = 'result';
   }
 }

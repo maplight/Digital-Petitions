@@ -26,21 +26,22 @@ export class StepIndicatorComponent implements OnInit, OnDestroy {
     this._stepLogic._publicCurrentStep$
       .pipe(
         tap((step) => {
+          this.setDefaultStyle();
           switch (step) {
-            case '1':
+            case 'type':
               this.styleElement1 = this.accentStyleElement;
               break;
-            case '21':
-              this.styleElement1 = this.accentStyleElement;
-              this.styleLine1 = this.accentStyleLine;
-              this.styleElement2 = this.accentStyleElement;
-              break;
-            case '22':
+            case 'issue':
               this.styleElement1 = this.accentStyleElement;
               this.styleLine1 = this.accentStyleLine;
               this.styleElement2 = this.accentStyleElement;
               break;
-            case '3':
+            case 'candidate':
+              this.styleElement1 = this.accentStyleElement;
+              this.styleLine1 = this.accentStyleLine;
+              this.styleElement2 = this.accentStyleElement;
+              break;
+            case 'result':
               this.styleElement1 = this.accentStyleElement;
               this.styleLine1 = this.accentStyleLine;
               this.styleElement2 = this.accentStyleElement;
@@ -55,6 +56,13 @@ export class StepIndicatorComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+  private setDefaultStyle() {
+    this.styleElement1 = this.basicStyleElement;
+    this.styleElement2 = this.basicStyleElement;
+    this.styleElement3 = this.basicStyleElement;
+    this.styleLine1 = this.basicStyleLine;
+    this.styleLine2 = this.basicStyleLine;
   }
 
   ngOnInit(): void {}

@@ -14,8 +14,9 @@ export class NewPetitionIssueComponent implements OnInit {
   protected result$;
   protected loading$;
 
-  @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
-    new EventEmitter();
+  @Output() _cancelEvent: EventEmitter<
+    'type' | 'issue' | 'candidate' | 'result'
+  > = new EventEmitter();
   @Output() _submitEvent: EventEmitter<IssuePetitionData> = new EventEmitter();
 
   constructor(
@@ -44,6 +45,6 @@ export class NewPetitionIssueComponent implements OnInit {
     }
   }
   cancel() {
-    this._cancelEvent.emit('1');
+    this._cancelEvent.emit('type');
   }
 }
