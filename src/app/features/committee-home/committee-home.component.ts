@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { CommitteeService } from 'src/app/logic/committee/committee.service';
+import { GetPetitionsService } from 'src/app/logic/committee/getPetitionsService.service';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -19,7 +19,7 @@ export class CommitteeHomeComponent implements OnInit, AfterViewInit {
     'loading'
   );
 
-  constructor(private _committeeLogic: CommitteeService) {}
+  constructor(private _committeeLogic: GetPetitionsService) {}
   ngAfterViewInit(): void {
     this._committeeLogic.getPetitions();
   }
