@@ -11,6 +11,11 @@ const routes: Routes = [
       import('./example/example.module').then((m) => m.ExampleModule),
   },
   {
+    path: 'home',
+    loadChildren: () =>
+      import('./features/home/home.module').then((m) => m.HomeModule),
+  },
+  {
     path: 'auth',
     canActivate: [AuthGuard],
     component: LayoutComponent,
