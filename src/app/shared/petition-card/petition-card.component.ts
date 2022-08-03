@@ -23,6 +23,8 @@ export class PetitionCardComponent implements OnInit, OnChanges {
   protected percent: number = 0;
   protected characters: number = 500;
   protected showMoreOption: boolean = false;
+  @Input() buttonText: string | boolean = 'View Petition';
+  @Input() linkText: string = 'View More';
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (!!this.data.dataCandidate) {

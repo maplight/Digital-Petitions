@@ -1,0 +1,29 @@
+<div class="flex justify-center w-full">
+  <div class="flex justify-center max-w-[1192px] w-full">
+    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div class="flex flex-col max-w-[792px] w-full gap-6">
+      <div class="flex flex-row gap-4 justify-start">
+        <dp-return-link
+          [route]="'/home'"
+          [text]="'Back to Home'"
+        ></dp-return-link>
+      </div>
+    </div>
+    <div class="flex justify-center max-w-[200px] w-full"></div>
+  </div>
+</div>
+<div class="flex justify-center py-[65px] w-full">
+  <div class="flex justify-center max-w-[1192px] w-full">
+    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div class="flex flex-col max-w-[792px] w-full gap-6">
+      <h1 class="font-extrabold">Inactive Petitions</h1>
+      <dp-petition-card
+        [buttonText]="false"
+        [linkText]="'Read More'"
+        *ngFor="let item of resultData"
+        [data]="item"
+      ></dp-petition-card>
+    </div>
+    <div class="flex justify-center max-w-[200px] w-full"></div>
+  </div>
+</div>

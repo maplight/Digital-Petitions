@@ -24,7 +24,7 @@
         *ngIf="showMoreOption"
         class="block font-bold text-primary-500 cursor-pointer"
         (click)="showMore()"
-        >View More</span
+        >{{ linkText }}</span
       >
     </p>
     <div class="flex flex-col w-full gap-2" *ngIf="totalSign">
@@ -37,9 +37,9 @@
         23,000 / 25,000 Signatures Subminted
       </p>
     </div>
-    <div class="flex flex-row justify-end">
+    <div *ngIf="buttonText" class="flex flex-row justify-end">
       <button type="submit" mat-flat-button color="primary">
-        View Petition
+        {{ buttonText }}
       </button>
     </div>
   </div>

@@ -1,0 +1,27 @@
+<div class="flex flex-row gap-4 justify-end">
+  <p class="font-bold leading-5">Returning User?</p>
+  <a class="font-bold leading-5 text-primary-500">Enter Code</a>
+</div>
+<div class="flex justify-center py-6 w-full">
+  <div class="flex justify-center max-w-[1192px] w-full">
+    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div class="flex flex-col max-w-[792px] w-full gap-6">
+      <h1 class="font-extrabold">Sign A Petition</h1>
+      <dp-petition-card
+        [buttonText]="'Endorse Now'"
+        [linkText]="'Read More'"
+        *ngFor="let item of resultData"
+        [data]="item"
+      ></dp-petition-card>
+      <button mat-button color="primary">See More</button>
+      <div class="flex flex-row justify-end">
+        <a
+          [routerLink]="'/inactive-petitions'"
+          class="text-primary-500 font-extrabold text-sm leading-4"
+          >View Inactive Petitions</a
+        >
+      </div>
+    </div>
+    <div class="flex justify-center max-w-[200px] w-full"></div>
+  </div>
+</div>
