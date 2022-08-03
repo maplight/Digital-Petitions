@@ -17,6 +17,14 @@ const routes: Routes = [
       import('./features/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'inactive-petitions',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./features/inactive-petitions/inactive-petitions.module').then(
+        (m) => m.InactivePetitionsModule
+      ),
+  },
+  {
     path: 'auth',
     canActivate: [AuthGuard],
     component: LayoutComponent,
