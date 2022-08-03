@@ -12,6 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
+    component: LayoutComponent,
     loadChildren: () =>
       import('./features/home/home.module').then((m) => m.HomeModule),
   },
