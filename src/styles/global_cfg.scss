@@ -66,6 +66,23 @@ p {
   border-radius: 8px !important;
 }
 
+.mat-standard-chip {
+  border: 1px;
+  border-color: #6284fd;
+}
+
+.mat-chip.mat-standard-chip::after {
+  background: none;
+}
+.mat-chip-list-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: end;
+  margin: -4px;
+}
+
 .mat-button,
 .mat-flat-button,
 .mat-raised-button,
