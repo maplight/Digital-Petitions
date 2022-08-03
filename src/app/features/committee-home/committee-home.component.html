@@ -10,8 +10,44 @@
         class="flex flex-col gap-5 rounded-[18px] py-6 px-4 bg-[#EDEDED] max-w-[892px] w-full"
       >
         <h3 class="flex leading-7 font-extrabold">Your Petitions</h3>
-        <dp-petition-card></dp-petition-card>
-        <dp-petition-card></dp-petition-card>
+        <ng-container [ngSwitch]="currentStep$ | async">
+          <ng-container *ngSwitchCase="'loading'">
+            <div class="flex justify-center w-full">
+              <h3 class="leading-7 font-extrabold">Loading</h3>
+            </div>
+
+            <mat-progress-bar
+              mode="indeterminate"
+              color="primary"
+            ></mat-progress-bar>
+          </ng-container>
+          <ng-container class="flex" *ngSwitchCase="'error'">
+            <div class="flex justify-center w-full">
+              <h3 class="leading-7 font-extrabold">An error has occurred</h3>
+            </div>
+
+            <div class="flex flex-row items-center justify-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+            </div>
+          </ng-container>
+          <ng-container class="flex" *ngSwitchCase="'empty'">
+            <div class="flex justify-center w-full">
+              <h3 class="leading-7 font-extrabold">
+                You still have no petitions
+              </h3>
+            </div>
+          </ng-container>
+          <ng-container class="flex" *ngSwitchCase="'contents'">
+            <dp-petition-card
+              *ngFor="let item of resultData"
+              [data]="item"
+            ></dp-petition-card>
+          </ng-container>
+        </ng-container>
       </div>
       <div
         class="flex flex-col gap-4 rounded-xl p-4 bg-[#FFFFFF] border border-[#D7D7D7] shadow-sm max-w-[277px] w-full h-28"
