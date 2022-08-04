@@ -12,6 +12,7 @@ import { StepIndicatorModule } from './step-indicator/step-indicator.module';
 import { SelectTypePetitionModule } from './select-type-petition/select-type-petition.module';
 import { ResultPetitionModule } from './result-petition/result-petition.module';
 import { NewPetitionCandidateModule } from './new-petition-candidate/new-petition-candidate.module';
+import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 
 @NgModule({
   declarations: [NewPetitionComponent],
@@ -29,5 +30,6 @@ import { NewPetitionCandidateModule } from './new-petition-candidate/new-petitio
     ResultPetitionModule,
     NewPetitionCandidateModule,
   ],
+  providers: [StepIndicatorService],
 })
 export class NewPetitionModule {}

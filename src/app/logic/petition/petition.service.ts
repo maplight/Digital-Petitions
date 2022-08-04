@@ -8,9 +8,7 @@ import {
 } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PetitionService {
   constructor() {}
 

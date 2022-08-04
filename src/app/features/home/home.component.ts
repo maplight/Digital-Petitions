@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
-import { GetPetitionsCandidateService } from 'src/app/logic/committee/getPetitionsCandidateService.service';
+import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
 import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 

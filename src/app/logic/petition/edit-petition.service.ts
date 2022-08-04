@@ -14,9 +14,7 @@ import { Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { PetitionService } from './exports';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class EditPetitionService {
   public error$: Observable<Result<ResponsePetition>>;
   public success$: Observable<Result<ResponsePetition>>;

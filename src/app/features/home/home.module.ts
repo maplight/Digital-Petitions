@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -21,5 +22,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressBarModule,
     MatIconModule,
   ],
+  providers: [GetPetitionsActiveService],
 })
 export class HomeModule {}

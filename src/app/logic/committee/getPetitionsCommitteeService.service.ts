@@ -14,10 +14,8 @@ import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { PetitionService } from '../petition/exports';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GetPetitionsCandidateService {
+@Injectable()
+export class GetPetitionsCommitteeService {
   public error$: Observable<Result<ResponsePetition[]>>;
   public success$: Observable<Result<ResponsePetition[]>>;
   public loading$: Observable<boolean>;

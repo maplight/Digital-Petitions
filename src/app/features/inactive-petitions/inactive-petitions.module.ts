@@ -8,6 +8,7 @@ import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.modu
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
 
 @NgModule({
   declarations: [InactivePetitionsComponent],
@@ -21,5 +22,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressBarModule,
     MatButtonModule,
   ],
+  providers: [GetPetitionsInactiveService],
 })
 export class InactivePetitionsModule {}

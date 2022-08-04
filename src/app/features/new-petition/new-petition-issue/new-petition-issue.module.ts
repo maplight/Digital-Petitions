@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NewPetitionIssueService } from 'src/app/logic/petition/new-petition-issue.service';
 
 @NgModule({
   declarations: [NewPetitionIssueComponent],
@@ -25,5 +26,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressBarModule,
   ],
   exports: [NewPetitionIssueComponent],
+  providers: [NewPetitionIssueService],
 })
 export class NewPetitionIssueModule {}

@@ -13,9 +13,7 @@ import {
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class NewPetitionCandidateService {
   public error$: Observable<Result<CandidatePetitionData>>;
   public success$: Observable<Result<CandidatePetitionData>>;
