@@ -1,53 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
+import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
+import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-inactive-petitions',
   templateUrl: './inactive-petitions.component.html',
 })
-export class InactivePetitionsComponent implements OnInit {
-  protected resultData: ResponsePetition[] = [
+export class InactivePetitionsComponent implements OnInit, AfterViewInit {
+  protected resultData: ResponsePetition[] = [];
+  protected result$!: Subscription;
+  protected error: string | undefined;
+  protected loading$!: Observable<boolean>;
+  protected currentStep$: BehaviorSubject<
+    'loading' | 'empty' | 'contents' | 'error'
+  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
+    'loading'
+  );
+  protected disabledFilter: boolean = true;
+  protected disabledSeeMore: boolean = true;
+  private currentFilter: FilterData[] = [
     {
-      dataIssue: {
-        title: 'Title1',
-        text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-        atributes: {
-          type: 'Issue',
-          status: '',
-          currentSign: 10000,
-          totalSign: 30000,
-        },
-      },
+      property: 'Category',
+      value: 'All',
+      page: 0,
     },
     {
-      dataIssue: {
-        title: 'Title2',
-        text: 'Text2',
-        atributes: {
-          type: 'Issue',
-          status: '',
-          currentSign: 20000,
-          totalSign: 30000,
-        },
-      },
-    },
-    {
-      dataCandidate: {
-        address: 'Address',
-        aptNumber: '14',
-        city: 'City',
-        fullName: 'Denismay Concepcion Rosa',
-        office: 'Office',
-        party: 'Party',
-        state: { name: 'Alaska', value: 'AL' },
-        zipCode: '00000',
-        atributes: {
-          type: 'Candidate',
-          status: '',
-          currentSign: 20000,
-          totalSign: 30000,
-        },
-      },
+      property: 'Status',
+      value: 'All',
+      page: 0,
     },
   ];
   protected filterByCategory: {
@@ -68,10 +51,47 @@ export class InactivePetitionsComponent implements OnInit {
     { name: 'Pased', value: 'pased', active: false },
     { name: 'Failed', value: 'failed', active: false },
   ];
-  constructor() {}
+  constructor(private _committeeLogic: GetPetitionsInactiveService) {}
+  ngAfterViewInit(): void {
+    this._committeeLogic.getPetitions(this.currentFilter);
+  }
+  ngOnInit(): void {
+    this.result$ = this._committeeLogic.result$.subscribe((result) => {
+      this.disabledFilter = false;
+      this.disabledSeeMore = false;
+      if (!!result.result) {
+        this.resultData = this.resultData.concat(result.result);
+        this.currentStep$.next('contents');
+      } else {
+        this.error = result.error;
+        this.currentStep$.next('error');
+      }
+    });
+    this.loading$ = this._committeeLogic.loading$;
+  }
+  filterCategory(value: string) {
+    this.disabledFilter = true;
+    this.disabledSeeMore = true;
+    this.currentFilter[0].value = value;
+    this.resultData = [];
+    this.currentStep$.next('loading');
+    this._committeeLogic.getPetitions(this.currentFilter);
+  }
 
-  ngOnInit(): void {}
-  filterCategory(value: string) {}
-
-  filterStatus(value: string) {}
+  filterStatus(value: string) {
+    this.disabledFilter = true;
+    this.disabledSeeMore = true;
+    this.currentFilter[1].value = value;
+    this.resultData = [];
+    this.currentStep$.next('loading');
+    this._committeeLogic.getPetitions(this.currentFilter);
+  }
+  pageNumber() {
+    this.disabledFilter = true;
+    this.disabledSeeMore = true;
+    this.currentStep$.next('loading');
+    this.currentFilter[0].page += 1;
+    this.currentFilter[1].page += 1;
+    this._committeeLogic.getPetitions(this.currentFilter);
+  }
 }

@@ -23,16 +23,58 @@
         *ngFor="let item of resultData"
         [data]="item"
       ></dp-petition-card>
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <ng-container *ngSwitchCase="'loading'">
+          <div class="flex justify-center w-full">
+            <h3 class="leading-7 font-extrabold">Loading</h3>
+          </div>
+
+          <mat-progress-bar
+            mode="indeterminate"
+            color="primary"
+          ></mat-progress-bar>
+        </ng-container>
+        <ng-container class="flex" *ngSwitchCase="'error'">
+          <div class="flex justify-center w-full">
+            <h3 class="leading-7 font-extrabold">An error has occurred</h3>
+          </div>
+
+          <div class="flex flex-row items-center justify-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+          </div>
+        </ng-container>
+        <ng-container class="flex" *ngSwitchCase="'empty'">
+          <div class="flex justify-center w-full">
+            <h3 class="leading-7 font-extrabold">
+              You still have no petitions
+            </h3>
+          </div>
+        </ng-container>
+      </ng-container>
+      <button
+        mat-button
+        color="primary"
+        (click)="pageNumber()"
+        [disabled]="disabledSeeMore"
+      >
+        See More
+      </button>
     </div>
     <div class="flex flex-col max-w-[200px] w-full pt-[64px] gap-8">
       <dp-basic-filter
         [filterName]="'Filter by Category'"
         [elements]="filterByCategory"
+        [disabled]="disabledFilter"
         (event)="filterCategory($event)"
       ></dp-basic-filter>
       <dp-basic-filter
         [filterName]="'Filter by Status'"
         [elements]="filterByStatus"
+        [disabled]="disabledFilter"
         (event)="filterStatus($event)"
       ></dp-basic-filter>
     </div>
