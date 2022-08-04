@@ -26,11 +26,11 @@ export class PetitionCardComponent implements OnInit, OnChanges {
 
   protected StatusStyleCurrent: string = '';
   protected StatusStyleWhite: string =
-    'h-[26px] bg-[#F8F8F8] px-4 py-1 text-[#5C5C5C]';
+    'h-[26px] bg-[#F8F8F8] px-4 py-1 text-[#5C5C5C]  rounded';
   protected StatusStyleGreen: string =
-    'h-[26px] bg-[#3AC922] px-4 py-1 text-black';
+    'h-[26px] bg-[#3AC922] px-4 py-1 text-black  rounded';
   protected StatusStyleRed: string =
-    'h-[26px] bg-[#FF3030] px-4 py-1 text-black';
+    'h-[26px] bg-[#FF3030] px-4 py-1 text-black  rounded';
 
   @Input() buttonText: string | boolean = 'View Petition';
   @Input() linkText: string = 'View More';
