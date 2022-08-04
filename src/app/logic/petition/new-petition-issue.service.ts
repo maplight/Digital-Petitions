@@ -9,8 +9,9 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { PetitionService } from 'src/app/features/new-petition/petition-service/petition.service';
+
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
+import { PetitionService } from './exports';
 
 @Injectable({
   providedIn: 'root',
