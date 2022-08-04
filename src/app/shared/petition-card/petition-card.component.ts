@@ -23,6 +23,15 @@ export class PetitionCardComponent implements OnInit, OnChanges {
   protected percent: number = 0;
   protected characters: number = 500;
   protected showMoreOption: boolean = false;
+
+  protected StatusStyleCurrent: string = '';
+  protected StatusStyleWhite: string =
+    'h-[26px] bg-[#F8F8F8] px-4 py-1 text-[#5C5C5C]';
+  protected StatusStyleGreen: string =
+    'h-[26px] bg-[#3AC922] px-4 py-1 text-black';
+  protected StatusStyleRed: string =
+    'h-[26px] bg-[#FF3030] px-4 py-1 text-black';
+
   @Input() buttonText: string | boolean = 'View Petition';
   @Input() linkText: string = 'View More';
   constructor() {}
@@ -46,6 +55,26 @@ export class PetitionCardComponent implements OnInit, OnChanges {
     }
     if (!!this.currentSign && !!this.totalSign) {
       this.percent = (this.currentSign / this.totalSign) * 100;
+    }
+    if (this.status) {
+      switch (this.status) {
+        case 'new':
+          this.status = 'Awaiting Approval';
+          this.StatusStyleCurrent = this.StatusStyleWhite;
+          break;
+        case 'pased':
+          this.status = 'Qualified';
+          this.StatusStyleCurrent = this.StatusStyleGreen;
+          break;
+        case 'failed':
+          this.status = 'Did Not Qualify';
+          this.StatusStyleCurrent = this.StatusStyleRed;
+          break;
+        case 'open':
+          this.status = '';
+          this.StatusStyleCurrent = '';
+          break;
+      }
     }
   }
   protected showMore() {
