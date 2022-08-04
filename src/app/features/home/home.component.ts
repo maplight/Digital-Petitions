@@ -50,7 +50,18 @@ export class HomeComponent implements OnInit {
       },
     },
   ];
-  constructor() {}
 
+  protected filterByCategory: {
+    name: string;
+    value: string;
+    active: boolean;
+  }[] = [
+    { name: 'All types', value: 'all', active: true },
+    { name: 'Ballot', value: 'issue', active: false },
+    { name: 'Candidate', value: 'candidate', active: false },
+  ];
+
+  constructor() {}
+  protected filter(value: string) {}
   ngOnInit(): void {}
 }

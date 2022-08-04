@@ -22,6 +22,12 @@
         >
       </div>
     </div>
-    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div class="flex justify-center max-w-[200px] w-full">
+      <dp-basic-filter
+        [filterName]="'Filter by Category'"
+        [elements]="filterByCategory"
+        (event)="filter($event)"
+      ></dp-basic-filter>
+    </div>
   </div>
 </div>

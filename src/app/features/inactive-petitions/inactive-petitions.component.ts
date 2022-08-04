@@ -50,7 +50,28 @@ export class InactivePetitionsComponent implements OnInit {
       },
     },
   ];
+  protected filterByCategory: {
+    name: string;
+    value: string;
+    active: boolean;
+  }[] = [
+    { name: 'All types', value: 'all', active: true },
+    { name: 'Ballot', value: 'issue', active: false },
+    { name: 'Candidate', value: 'candidate', active: false },
+  ];
+  protected filterByStatus: {
+    name: string;
+    value: string;
+    active: boolean;
+  }[] = [
+    { name: 'All types', value: 'all', active: true },
+    { name: 'Pased', value: 'pased', active: false },
+    { name: 'Failed', value: 'failed', active: false },
+  ];
   constructor() {}
 
   ngOnInit(): void {}
+  filterCategory(value: string) {}
+
+  filterStatus(value: string) {}
 }
