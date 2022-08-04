@@ -6,6 +6,8 @@ import { PetitionCardModule } from 'src/app/shared/petition-card/petition-card.m
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -16,6 +18,8 @@ import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.modu
     MatButtonModule,
     RouterModule,
     BasicFilterModule,
+    MatProgressBarModule,
+    MatIconModule,
   ],
 })
 export class HomeModule {}
