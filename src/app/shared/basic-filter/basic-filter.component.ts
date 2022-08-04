@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './basic-filter.component.html',
 })
 export class BasicFilterComponent implements OnInit {
+  @Input() disabled: boolean = false;
   @Input() filterName: string = '';
   @Input() elements: { name: string; value: string; active: boolean }[] = [];
   @Output() event: EventEmitter<string> = new EventEmitter();
