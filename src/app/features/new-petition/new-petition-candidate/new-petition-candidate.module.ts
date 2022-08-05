@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { NewPetitionCandidateService } from 'src/app/logic/petition/new-petition-candidate.service';
 
 @NgModule({
   declarations: [NewPetitionCandidateComponent],
@@ -23,5 +24,6 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
   ],
   exports: [NewPetitionCandidateComponent],
+  providers: [NewPetitionCandidateService],
 })
 export class NewPetitionCandidateModule {}

@@ -10,20 +10,21 @@ import {
   tap,
 } from 'rxjs';
 
-import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
-import { PetitionService } from './exports';
+import { FilterData, Result } from 'src/app/shared/models/exports';
+import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
+import { PetitionService } from '../petition/exports';
 
 @Injectable()
-export class NewPetitionIssueService {
-  public error$: Observable<Result<IssuePetitionData>>;
-  public success$: Observable<Result<IssuePetitionData>>;
+export class GetPetitionsInactiveService {
+  public error$: Observable<Result<ResponsePetition[]>>;
+  public success$: Observable<Result<ResponsePetition[]>>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<IssuePetitionData>>;
-  private submit$: Subject<IssuePetitionData> = new Subject();
+  public result$: Observable<Result<ResponsePetition[]>>;
+  private submit$: Subject<FilterData[]> = new Subject();
 
-  constructor(private _petitionService: PetitionService) {
+  constructor(private _petitionLogic: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.newPetitionIssue(data)),
+      exhaustMap((data) => this._petitionLogic.getInactivePetitions(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -57,7 +58,7 @@ export class NewPetitionIssueService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: IssuePetitionData) {
+  getPetitions(value: FilterData[]) {
     this.submit$.next(value);
   }
 }

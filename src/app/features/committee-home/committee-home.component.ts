@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { GetPetitionsService } from 'src/app/logic/committee/getPetitionsService.service';
+import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
+import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -18,10 +19,17 @@ export class CommitteeHomeComponent implements OnInit, AfterViewInit {
   > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
     'loading'
   );
+  private currentFilter: FilterData[] = [
+    {
+      property: '',
+      value: '',
+      page: 0,
+    },
+  ];
 
-  constructor(private _committeeLogic: GetPetitionsService) {}
+  constructor(private _committeeLogic: GetPetitionsCommitteeService) {}
   ngAfterViewInit(): void {
-    this._committeeLogic.getPetitions();
+    this._committeeLogic.getPetitions(this.currentFilter);
   }
   ngOnInit(): void {
     this.result$ = this._committeeLogic.result$.subscribe((result) => {

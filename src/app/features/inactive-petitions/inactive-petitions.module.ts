@@ -5,6 +5,10 @@ import { PetitionCardModule } from 'src/app/shared/petition-card/petition-card.m
 import { InactivePetitionsRoutingModule } from './inactive-petitions-routing.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
 
 @NgModule({
   declarations: [InactivePetitionsComponent],
@@ -14,6 +18,10 @@ import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.modu
     PetitionCardModule,
     ReturnLinkModule,
     BasicFilterModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatButtonModule,
   ],
+  providers: [GetPetitionsInactiveService],
 })
 export class InactivePetitionsModule {}

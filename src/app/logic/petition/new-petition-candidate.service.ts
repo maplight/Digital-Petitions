@@ -9,12 +9,11 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { PetitionService } from 'src/app/features/new-petition/petition-service/petition.service';
-import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 
-@Injectable({
-  providedIn: 'root',
-})
+import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
+import { PetitionService } from './exports';
+
+@Injectable()
 export class NewPetitionCandidateService {
   public error$: Observable<Result<CandidatePetitionData>>;
   public success$: Observable<Result<CandidatePetitionData>>;

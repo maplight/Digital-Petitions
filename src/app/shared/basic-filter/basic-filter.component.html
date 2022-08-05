@@ -3,7 +3,7 @@
     <p class="font-bold leading-5">{{ filterName }}</p>
   </div>
   <div class="flex w-full pt-[11px]">
-    <mat-chip-list>
+    <mat-chip-list [disabled]="disabled">
       <mat-chip
         *ngFor="let item of elements"
         [class]="

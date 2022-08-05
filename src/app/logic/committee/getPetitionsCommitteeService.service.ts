@@ -9,23 +9,22 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { PetitionService } from 'src/app/features/new-petition/petition-service/petition.service';
-import { Result } from 'src/app/shared/models/exports';
-import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GetPetitionsService {
+import { FilterData, Result } from 'src/app/shared/models/exports';
+import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
+import { PetitionService } from '../petition/exports';
+
+@Injectable()
+export class GetPetitionsCommitteeService {
   public error$: Observable<Result<ResponsePetition[]>>;
   public success$: Observable<Result<ResponsePetition[]>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<ResponsePetition[]>>;
-  private submit$: Subject<void> = new Subject();
+  private submit$: Subject<FilterData[]> = new Subject();
 
   constructor(private _petitionLogic: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionLogic.getPetitions()),
+      exhaustMap((data) => this._petitionLogic.getCandidatePetitions(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -59,7 +58,7 @@ export class GetPetitionsService {
     this.submit$.complete();
   }
 
-  getPetitions() {
-    this.submit$.next();
+  getPetitions(value: FilterData[]) {
+    this.submit$.next(value);
   }
 }

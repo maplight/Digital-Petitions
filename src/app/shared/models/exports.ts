@@ -9,3 +9,4 @@ export * from './auth/recover-password-data';
 export * from './common/result';
 export * from './petition/issue-petition-data';
 export * from './petition/candidate-petition-data';
+export * from './petition/filter-data';
