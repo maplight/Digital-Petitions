@@ -7,7 +7,7 @@ import {
   Subscription,
   tap,
 } from 'rxjs';
-import { EditPetitionService } from 'src/app/logic/petition/exports';
+import { GetPetitionService } from 'src/app/logic/petition/exports';
 import {
   CandidatePetitionData,
   IssuePetitionData,
@@ -31,7 +31,7 @@ export class EditPetitionComponent implements OnInit, AfterViewInit {
   protected resultData: ResponsePetition = {};
 
   constructor(
-    private _editPetitionLogic: EditPetitionService,
+    private _editPetitionLogic: GetPetitionService,
     private _activatedRoute: ActivatedRoute
   ) {}
   ngAfterViewInit(): void {

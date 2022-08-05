@@ -15,7 +15,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 import { PetitionService } from './exports';
 
 @Injectable()
-export class EditPetitionService {
+export class GetPetitionService {
   public error$: Observable<Result<ResponsePetition>>;
   public success$: Observable<Result<ResponsePetition>>;
   public loading$: Observable<boolean>;
