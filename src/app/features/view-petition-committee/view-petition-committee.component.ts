@@ -1,9 +1,13 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
 import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
+import { AlertWithdrawlPetitionComponent } from './alert-withdrawl-petition/alert-withdrawl-petition.component';
+import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/confirm-withdrawl-petition.component';
 
 @Component({
   selector: 'dp-view-petition-committee',
@@ -29,7 +33,11 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
     'flex bg-[#FF3030] px-4 py-1 rounded-full items-center';
   constructor(
     private _committeeLogic: GetPetitionService,
-    private _activatedRoute: ActivatedRoute
+
+    private _activatedRoute: ActivatedRoute,
+    public _alertDialogRef: MatDialogRef<AlertWithdrawlPetitionComponent>,
+    public _confirmDalogRef: MatDialogRef<ConfirmWithdrawlPetitionComponent>,
+    public _dialog: MatDialog
   ) {}
   ngAfterViewInit(): void {
     this._committeeLogic.petitionId =
@@ -74,5 +82,25 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
           break;
       }
     }
+  }
+  submit() {
+    const dialogRef = this._dialog.open(AlertWithdrawlPetitionComponent, {
+      width: '480px',
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        tap((response) => {
+          if (response) {
+            this._dialog.open(ConfirmWithdrawlPetitionComponent, {
+              width: '480px',
+              data: {
+                id: this._activatedRoute.snapshot.params['id'],
+              },
+            });
+          }
+        })
+      )
+      .subscribe();
   }
 }

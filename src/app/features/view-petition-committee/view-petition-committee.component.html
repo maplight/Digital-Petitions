@@ -23,7 +23,9 @@
         >
           Edit
         </button>
-        <button mat-flat-button color="primary">Withdrawl</button>
+        <button mat-flat-button color="primary" (click)="submit()">
+          Withdrawl
+        </button>
       </div>
     </div>
     <ng-container [ngSwitch]="currentStep$ | async">
