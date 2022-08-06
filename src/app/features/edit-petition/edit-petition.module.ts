@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { EditPetitionIssueModule } from './edit-petition-issue/edit-petition-issue.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
 
 @NgModule({
   declarations: [EditPetitionComponent],
@@ -29,5 +30,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressBarModule,
     MatButtonModule,
   ],
+  providers: [GetPetitionService],
 })
 export class EditPetitionModule {}

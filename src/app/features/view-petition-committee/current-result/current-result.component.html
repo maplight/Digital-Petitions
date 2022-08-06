@@ -1,0 +1,38 @@
+<div
+  class="flex flex-col gap-4 rounded-xl p-4 bg-[#FFFFFF] border border-[#D7D7D7] shadow-sm"
+>
+  <div class="flex flex-row justify-between">
+    <p class="font-extrabold text-xl leading-7">Current Results</p>
+  </div>
+  <div class="flex flex-col w-full gap-6" *ngIf="totalSign">
+    <mat-progress-bar
+      color="primary"
+      [value]="percent"
+      [bufferValue]="totalSign"
+    ></mat-progress-bar>
+    <div class="flex flex-row w-full justify-between gap-4">
+      <p class="text-base leading-5 font-bold">Signatures Submitted</p>
+      <p class="text-base leading- font-normal">
+        {{ status === "Awaiting Approval" ? "Pending" : currentSign }}
+      </p>
+    </div>
+    <div class="flex flex-row w-full justify-between">
+      <p class="text-base leading-5 font-bold">Signatures Verified</p>
+      <p class="text-base leading- font-normal">
+        {{ status === "Awaiting Approval" ? "Pending" : verifiedSign }}
+      </p>
+    </div>
+    <div class="flex flex-row w-full justify-between">
+      <p class="text-base leading-5 font-bold">Signatures Required</p>
+      <p class="text-base leading- font-normal">
+        {{ status === "Awaiting Approval" ? "Pending" : totalSign }}
+      </p>
+    </div>
+    <div class="flex flex-row w-full justify-between">
+      <p class="text-base leading-5 font-bold">Petition Deadline</p>
+      <p class="text-base leading- font-normal">
+        {{ status === "Awaiting Approval" ? "Pending" : deadline }}
+      </p>
+    </div>
+  </div>
+</div>

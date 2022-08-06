@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmEditPetitionModule } from '../confirm-edit-petition/confirm-edit-petition.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
+import { EditPetitionCandidateService } from 'src/app/logic/petition/edit-petition-candidate.service';
 
 @NgModule({
   declarations: [EditPetitionCandidateComponent],
@@ -29,5 +30,6 @@ import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module'
     BasicModalModule,
   ],
   exports: [EditPetitionCandidateComponent],
+  providers: [EditPetitionCandidateService],
 })
 export class EditPetitionCandidateModule {}

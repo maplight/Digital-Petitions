@@ -25,6 +25,14 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'inactive-petitions/:id',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import(
+        './features/view-petition-inactive/view-petition-inactive.module'
+      ).then((m) => m.ViewPetitionInactiveModule),
+  },
+  {
     path: 'auth',
     canActivate: [AuthGuard],
     component: LayoutComponent,
@@ -103,6 +111,13 @@ const routes: Routes = [
           import('./features/committee-home/committee-home.module').then(
             (m) => m.CommitteeHomeModule
           ),
+      },
+      {
+        path: 'home/:id',
+        loadChildren: () =>
+          import(
+            './features/view-petition-committee/view-petition-committee.module'
+          ).then((m) => m.ViewPetitionCommitteeModule),
       },
     ],
   },

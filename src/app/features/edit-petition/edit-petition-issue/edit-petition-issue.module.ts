@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { EditPetitionIssueService } from 'src/app/logic/petition/edit-petition-issue.service';
 
 @NgModule({
   declarations: [EditPetitionIssueComponent],
@@ -21,5 +22,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
   exports: [EditPetitionIssueComponent],
+  providers: [EditPetitionIssueService],
 })
 export class EditPetitionIssueModule {}

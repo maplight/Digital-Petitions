@@ -14,5 +14,7 @@ export interface CandidatePetitionData {
     status: string;
     currentSign?: number;
     totalSign?: number;
+    verifiedSign?: number;
+    deadline?: string;
   };
 }
