@@ -7,7 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
-import { AccountService } from '../auth/account-service/account.service';
+import { AccountService } from '../core/account-service/account.service';
 
 @Injectable()
 export class CommitteeGuard implements CanActivate {

@@ -7,12 +7,12 @@ import {
   UrlTree,
 } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { AccountService } from '../auth/account-service/account.service';
+import { AccountService } from '../core/account-service/account.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class NoAuthGuard implements CanActivate {
   constructor(private _auth: AccountService, private _router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
