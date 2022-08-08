@@ -1,0 +1,77 @@
+<dp-basic-alert (event)="submit()">
+  <span modal-title
+    >To confirm your withdraw, please type YES in the text box below.</span
+  >
+  <span modal-body class="w-full flex flex-col gap-6">
+    <p>Once this has been withdrawn it can not be undone</p>
+    <ng-container [ngSwitch]="currentStep$ | async">
+      <ng-container *ngSwitchCase="'loading'">
+        <div class="flex justify-center w-full">
+          <h3 class="leading-7 font-extrabold">Loading</h3>
+        </div>
+
+        <mat-progress-bar
+          mode="indeterminate"
+          color="primary"
+        ></mat-progress-bar>
+      </ng-container>
+      <ng-container class="flex" *ngSwitchCase="'error'">
+        <div class="flex justify-center w-full">
+          <h3 class="leading-7 font-extrabold">An error has occurred</h3>
+        </div>
+
+        <div class="flex flex-row items-center justify-center">
+          <mat-icon
+            class="w-[14px] h-[14px]"
+            [svgIcon]="'custom_icons:c_close'"
+          ></mat-icon>
+          <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+        </div>
+      </ng-container>
+
+      <ng-container class="flex" *ngSwitchCase="'contents'">
+        <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+          <mat-form-field>
+            <mat-label>Type "YES" to confirm</mat-label>
+            <input type="text" matInput formControlName="code" />
+            <mat-error *ngIf="this.formGroup.get('code')?.errors?.['required']">
+              <div class="flex flex-row items-center">
+                <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
+                <span class="ml-[9px]">This field is required</span>
+              </div>
+            </mat-error>
+            <mat-error *ngIf="this.formGroup.get('code')?.errors?.['pattern']">
+              <div class="flex flex-row items-center">
+                <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
+                <span class="ml-[9px]">type "YES" to confirm</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </ng-container>
+    </ng-container>
+
+    <div class="flex flex-col w-full gap-4">
+      <button
+        [disabled]="!formGroup.valid"
+        mat-flat-button
+        type="button"
+        class="h-10 w-full mt-2"
+        color="warn"
+        (click)="submit()"
+      >
+        Confirm
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="h-10 w-full mt-2"
+        color="primary"
+        cdkFocusInitial
+        [mat-dialog-close]="false"
+      >
+        Cancel
+      </button>
+    </div>
+  </span>
+</dp-basic-alert>
