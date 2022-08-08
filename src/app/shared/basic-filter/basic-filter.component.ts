@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'dp-basic-filter',
@@ -10,6 +9,9 @@ export class BasicFilterComponent implements OnInit {
   @Input() filterName: string = '';
   @Input() elements: { name: string; value: string; active: boolean }[] = [];
   @Output() event: EventEmitter<string> = new EventEmitter();
+  protected cursor: string = this.disabled ? 'cursor-auto' : 'cursor-pointer';
+  protected activeStyle: string = `border-solid border border-primary-500  bg-primany-100 font-extrabold text-primary-500 ${this.cursor}`;
+  protected inActiveStyle: string = `border-solid border border-gray-400 bg-white  font-bold  text-gray-500 ${this.cursor}`;
   constructor() {}
 
   protected sendFilter(value: {
@@ -17,16 +19,17 @@ export class BasicFilterComponent implements OnInit {
     value: string;
     active: boolean;
   }) {
-    this.elements.forEach((item) => {
-      if (item === value) {
-        item.active = true;
-      } else {
-        item.active = false;
-      }
-    });
-    this.event.emit(value.value);
+    if (!this.disabled) {
+      this.elements.forEach((item) => {
+        if (item === value) {
+          item.active = true;
+        } else {
+          item.active = false;
+        }
+      });
+      this.event.emit(value.value);
+    }
   }
 
   ngOnInit(): void {}
-  //class="border-solid border focus:border-blue-500 border-gray-400 bg-white focus:bg-blue-100 focus:font-extrabold font-bold focus:text-blue-600 text-gray-500"
 }

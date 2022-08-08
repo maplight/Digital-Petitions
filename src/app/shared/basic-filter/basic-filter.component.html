@@ -6,11 +6,7 @@
     <mat-chip-list [disabled]="disabled">
       <mat-chip
         *ngFor="let item of elements"
-        [class]="
-          item.active
-            ? 'border-solid border border-primary-500  bg-primany-100 font-extrabold text-primary-500'
-            : 'border-solid border border-gray-400 bg-white  font-bold  text-gray-500'
-        "
+        [class]="item.active ? activeStyle : inActiveStyle"
         (click)="sendFilter(item)"
         >{{ item.name }}</mat-chip
       >
