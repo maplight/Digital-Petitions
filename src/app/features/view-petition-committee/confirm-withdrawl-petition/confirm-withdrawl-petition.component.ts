@@ -39,7 +39,6 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
       ]),
     });
   }
-
   ngOnInit(): void {
     this.result$ = this._withdrawlLogic.result$.subscribe((result) => {
       if (!!result.result) {
@@ -57,4 +56,9 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
     this.currentStep$.next('loading');
     this._withdrawlLogic.petitionId = this.data.id;
   }
+
+  ngOnInit(): void {}
+
+  submit() {}
+
 }
