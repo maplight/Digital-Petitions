@@ -60,5 +60,4 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
   ngOnInit(): void {}
 
   submit() {}
-
 }
