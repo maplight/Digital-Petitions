@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { shareReplay, tap } from 'rxjs';
@@ -15,6 +15,8 @@ export class NewPetitionCandidateComponent implements OnInit {
   protected result$;
   protected loading$;
   protected localStates: state[] = states;
+  @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
+  @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
 
   @Output() cancelEvent: EventEmitter<
     'type' | 'issue' | 'candidate' | 'result'
@@ -23,7 +25,6 @@ export class NewPetitionCandidateComponent implements OnInit {
     new EventEmitter();
 
   constructor(
-    private _router: Router,
     private _fb: FormBuilder,
     private _newPetitionCandidateLogic: NewPetitionCandidateService
   ) {

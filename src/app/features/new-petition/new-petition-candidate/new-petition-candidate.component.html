@@ -50,23 +50,33 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-label>Office</mat-label>
-          <input type="text" matInput formControlName="office" />
+          <mat-select formControlName="office">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let office of offices" [value]="office">{{
+              office
+            }}</mat-option>
+          </mat-select>
           <mat-error *ngIf="this.formGroup.get('office')?.errors?.['required']">
             <div class="flex flex-row items-center">
               <mat-icon
                 class="w-[14px] h-[14px]"
                 [svgIcon]="'custom_icons:c_close'"
               ></mat-icon>
-              <span class="ml-[9px]">Office is required</span>
+              <span class="ml-[9px]">Office required</span>
             </div>
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-label>Political Party</mat-label>
-          <input type="text" matInput formControlName="party" />
+          <mat-select formControlName="party">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let party of parties" [value]="party">{{
+              party
+            }}</mat-option>
+          </mat-select>
           <mat-error *ngIf="this.formGroup.get('party')?.errors?.['required']">
             <div class="flex flex-row items-center">
               <mat-icon
@@ -164,7 +174,7 @@
     </dp-basic-card>
     <div class="flex justify-center w-full gap-[15px]">
       <button type="button" mat-button color="primary" (click)="cancel()">
-        Cancel
+        Back
       </button>
       <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
         Continue
