@@ -4,9 +4,18 @@
 </div>
 <div class="flex justify-center py-6 w-full">
   <div class="flex justify-center max-w-[1192px] w-full">
-    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div
+      class="hidden md:flex md:justify-center md:max-w-[200px] md:w-full"
+    ></div>
     <div class="flex flex-col max-w-[792px] w-full gap-6">
       <h1 class="font-extrabold">Sign A Petition</h1>
+      <dp-basic-filter
+        class="md:hidden flex"
+        [filterName]="'Filter by Category'"
+        [elements]="filterByCategory"
+        [disabled]="disabledFilter"
+        (event)="filter($event)"
+      ></dp-basic-filter>
       <dp-petition-card
         [buttonText]="'Endorse Now'"
         [linkText]="'Read More'"
@@ -61,7 +70,7 @@
         >
       </div>
     </div>
-    <div class="flex justify-center max-w-[200px] w-full">
+    <div class="hidden md:flex md:justify-center md:max-w-[200px] md:w-full">
       <dp-basic-filter
         [filterName]="'Filter by Category'"
         [elements]="filterByCategory"

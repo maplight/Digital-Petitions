@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { AccountService } from 'src/app/auth/account-service/account.service';
+import { AccountService } from 'src/app/core/account-service/account.service';
 
 @Component({
   selector: 'dp-avatar',

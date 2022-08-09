@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
-import { AuthGuard, CityStaffGuard, CommitteeGuard } from './guards/exports';
+import { NoAuthGuard, CityStaffGuard, CommitteeGuard } from './guards/exports';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
@@ -34,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    canActivate: [AuthGuard],
+    canActivate: [NoAuthGuard],
     component: LayoutComponent,
     data: { showMenu: false, showDemo: true },
     children: [

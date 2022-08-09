@@ -9,7 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { AccountService } from 'src/app/auth/account-service/account.service';
+import { AccountService } from 'src/app/core/account-service/account.service';
 import { RecoverPasswordData, Result } from 'src/app/shared/models/exports';
 
 @Injectable()
