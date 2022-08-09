@@ -14,7 +14,7 @@
         *ngSwitchCase="'type'"
       ></dp-select-type-petition>
       <dp-new-petition-issue
-        (cancelEvent)="cancel()"
+        (cancelEvent)="cancel($event)"
         (submitEvent)="submitIssue($event)"
         *ngSwitchCase="'issue'"
       ></dp-new-petition-issue>

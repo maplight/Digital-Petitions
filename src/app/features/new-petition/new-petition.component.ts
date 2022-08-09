@@ -44,7 +44,7 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
   cancel(step?: 'type' | 'issue' | 'candidate' | 'result') {
     step
       ? (this._stepLogic.currentStep = step)
-      : this._router.navigate(['asd']);
+      : this._router.navigate(['/committee/home']);
   }
 
   submitType(data: string) {
