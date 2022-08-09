@@ -27,7 +27,7 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
   public formGroup: FormGroup;
   constructor(
     private _fb: FormBuilder,
-
+    private _withdrawlLogic: WithdrawPetitionService,
     @Inject(MAT_DIALOG_DATA) public data: { id: number },
     private _dialog: MatDialog,
     private _router: Router
@@ -39,8 +39,21 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
       ]),
     });
   }
+  ngOnInit(): void {
+    this.result$ = this._withdrawlLogic.result$.subscribe((result) => {
+      if (!!result.result) {
+        this._router.navigate(['/committee/home', this.data.id, result.result]);
+        this._dialog.closeAll();
+      } else {
+        this.error = result.error;
+        this.currentStep$.next('error');
+      }
+    });
+    this.loading$ = this._withdrawlLogic.loading$;
+  }
 
-  ngOnInit(): void {}
-
-  submit() {}
+  submit() {
+    this.currentStep$.next('loading');
+    this._withdrawlLogic.petitionId = this.data.id;
+  }
 }

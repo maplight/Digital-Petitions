@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
 
 @NgModule({
   declarations: [ConfirmWithdrawlPetitionComponent],
@@ -23,5 +24,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressBarModule,
   ],
   exports: [ConfirmWithdrawlPetitionComponent],
+  providers: [WithdrawPetitionService],
 })
 export class ConfirmWithdrawlPetitionModule {}
