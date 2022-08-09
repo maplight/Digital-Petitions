@@ -56,8 +56,4 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
     this.currentStep$.next('loading');
     this._withdrawlLogic.petitionId = this.data.id;
   }
-
-  ngOnInit(): void {}
-
-  submit() {}
 }

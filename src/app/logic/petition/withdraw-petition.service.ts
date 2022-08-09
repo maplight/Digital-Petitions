@@ -12,9 +12,7 @@ import {
 import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class WithdrawPetitionService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
