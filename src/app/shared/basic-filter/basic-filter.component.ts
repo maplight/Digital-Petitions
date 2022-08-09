@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'dp-basic-filter',
@@ -12,6 +13,9 @@ export class BasicFilterComponent implements OnInit {
   protected cursor: string = this.disabled ? 'cursor-auto' : 'cursor-pointer';
   protected activeStyle: string = `border-solid border border-primary-500  bg-primany-100 font-extrabold text-primary-500 ${this.cursor}`;
   protected inActiveStyle: string = `border-solid border border-gray-400 bg-white  font-bold  text-gray-500 ${this.cursor}`;
+  protected itemActive$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
   constructor() {}
 
   protected sendFilter(value: {
@@ -23,6 +27,7 @@ export class BasicFilterComponent implements OnInit {
       this.elements.forEach((item) => {
         if (item === value) {
           item.active = true;
+          this.itemActive$.next(item.value);
         } else {
           item.active = false;
         }
@@ -31,5 +36,11 @@ export class BasicFilterComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.elements.forEach((item) => {
+      if (item.active) {
+        this.itemActive$.next(item.value);
+      }
+    });
+  }
 }

@@ -1,4 +1,4 @@
-<div class="flex w-full flex-col">
+<div class="hidden md:flex md:w-full md:flex-col">
   <div class="flex w-full justify-end">
     <p class="font-bold leading-5">{{ filterName }}</p>
   </div>
@@ -12,4 +12,18 @@
       >
     </mat-chip-list>
   </div>
+</div>
+
+<div class="md:hidden flex w-full flex-col">
+  <mat-form-field appearance="fill" class="border border-[#D7D7D7] rounded-lg">
+    <mat-label>{{ filterName }}</mat-label>
+    <mat-select [value]="itemActive$ | async" [disabled]="disabled">
+      <mat-option
+        *ngFor="let item of elements"
+        [value]="item.value"
+        (click)="sendFilter(item)"
+        >{{ item.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
 </div>
