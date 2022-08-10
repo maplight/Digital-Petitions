@@ -45,6 +45,7 @@
             <dp-petition-card
               *ngFor="let item of resultData"
               [data]="item"
+              [basicRoute]="'/committee/home/'"
             ></dp-petition-card>
           </ng-container>
         </ng-container>
@@ -55,7 +56,13 @@
         <h4 class="flex justify-center leading-5 font-bold w-full">
           Create New Petiton
         </h4>
-        <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
+        <button
+          type="submit"
+          mat-flat-button
+          color="primary"
+          cdkFocusInitial
+          [routerLink]="'/committee/new-petition'"
+        >
           Create Now
         </button>
       </div>

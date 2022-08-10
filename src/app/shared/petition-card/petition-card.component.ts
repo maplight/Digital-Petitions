@@ -13,6 +13,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 })
 export class PetitionCardComponent implements OnInit, OnChanges {
   @Input() data: ResponsePetition = {};
+  protected id: number | undefined;
   protected title: string | undefined;
   protected subtitle: string | undefined;
   protected text: string = '';
@@ -34,10 +35,13 @@ export class PetitionCardComponent implements OnInit, OnChanges {
 
   @Input() buttonText: string | boolean = 'View Petition';
   @Input() linkText: string = 'View More';
+  @Input() basicRoute: string = '';
+  @Input() disabled: boolean = false;
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (!!this.data.dataCandidate) {
       this.title = this.data.dataCandidate.fullName;
+      this.id = this.data.dataCandidate.id;
       this.subtitle =
         this.data.dataCandidate.office + ' - ' + this.data.dataCandidate.party;
       this.text = this.data.dataCandidate.address;
@@ -46,6 +50,7 @@ export class PetitionCardComponent implements OnInit, OnChanges {
       this.currentSign = this.data.dataCandidate.atributes?.currentSign;
       this.totalSign = this.data.dataCandidate.atributes?.totalSign;
     } else if (!!this.data.dataIssue) {
+      this.id = this.data.dataIssue.id;
       this.title = this.data.dataIssue.title;
       this.text = this.data.dataIssue.text;
       this.type = this.data.dataIssue.atributes?.type;
@@ -78,10 +83,12 @@ export class PetitionCardComponent implements OnInit, OnChanges {
     }
   }
   protected showMore() {
-    this.characters = this.data.dataIssue
-      ? this.data.dataIssue.text.length
-      : 500;
-    this.showMoreOption = false;
+    if (!this.disabled) {
+      this.characters = this.data.dataIssue
+        ? this.data.dataIssue.text.length
+        : 500;
+      this.showMoreOption = false;
+    }
   }
   ngOnInit(): void {
     if (this.data.dataIssue) {

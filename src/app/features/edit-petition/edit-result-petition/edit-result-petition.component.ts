@@ -19,7 +19,7 @@ export class EditResultPetitionComponent implements OnInit {
   }
 
   submit() {
-    this._router.navigate([]);
+    this._router.navigate(['/committee/home']);
   }
   protected showMore() {
     this.characters = this.data.dataIssue

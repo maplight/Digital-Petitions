@@ -23,6 +23,7 @@ import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-e
 export class EditPetitionCandidateComponent implements OnInit, OnChanges {
   @Input() formData: ResponsePetition = {
     dataCandidate: {
+      id: 0,
       address: '',
       aptNumber: '',
       city: '',
@@ -32,7 +33,7 @@ export class EditPetitionCandidateComponent implements OnInit, OnChanges {
       state: { name: '', value: '' },
       zipCode: '',
     },
-    dataIssue: { text: '', title: '' },
+    dataIssue: { id: 0, text: '', title: '' },
   };
   @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
     new EventEmitter();

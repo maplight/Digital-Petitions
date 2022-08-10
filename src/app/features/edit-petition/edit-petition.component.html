@@ -1,5 +1,5 @@
 <div class="flex w-full justify-center">
-  <div class="flex flex-col w-[550px]">
+  <div class="flex flex-col max-w-[550px] w-full">
     <div class="w-full flex flex-col py-12 gap-6">
       <ng-container [ngSwitch]="currentStep$ | async">
         <ng-container *ngSwitchCase="'loading'">
@@ -33,14 +33,14 @@
         </ng-container>
         <ng-container *ngSwitchCase="'candidate'">
           <dp-return-link
-            [route]="'/example'"
+            [route]="'/committee/home/' + id"
             [text]="'Back to Petition'"
           ></dp-return-link>
           <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
         </ng-container>
         <ng-container *ngSwitchCase="'issue'">
           <dp-return-link
-            [route]="'/example'"
+            [route]="'/committee/home/' + id"
             [text]="'Back to Petition'"
           ></dp-return-link>
           <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
@@ -67,6 +67,7 @@
       <div class="flex justify-center w-full">
         <ng-container [ngSwitch]="currentStep$ | async">
           <dp-edit-petition-candidate
+            class="w-full"
             [formData]="resultData"
             (_cancelEvent)="cancel()"
             (_submitEvent)="submitCandidate($event)"
@@ -74,6 +75,7 @@
           >
           </dp-edit-petition-candidate>
           <dp-edit-petition-issue
+            class="w-full"
             [formData]="resultData"
             (_cancelEvent)="cancel()"
             (_submitEvent)="submitIssue($event)"
@@ -82,7 +84,11 @@
           </dp-edit-petition-issue>
         </ng-container>
         <ng-container [ngSwitch]="currentStep$ | async">
-          <dp-edit-result-petition [data]="resultData" *ngSwitchCase="'result'">
+          <dp-edit-result-petition
+            class="w-full"
+            [data]="resultData"
+            *ngSwitchCase="'result'"
+          >
           </dp-edit-result-petition>
         </ng-container>
       </div>

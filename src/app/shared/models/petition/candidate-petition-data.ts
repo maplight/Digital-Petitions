@@ -1,6 +1,7 @@
 import { state } from 'src/app/core/states';
 
 export interface CandidatePetitionData {
+  id: number;
   fullName: string;
   office: string;
   party: string;

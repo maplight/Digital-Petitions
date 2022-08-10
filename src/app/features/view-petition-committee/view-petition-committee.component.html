@@ -1,32 +1,35 @@
 <div class="flex justify-center w-full py-12">
   <div class="flex flex-col max-w-[1197px] w-full gap-4">
-    <div class="flex flex-row justify-between w-full max-w-[791px]">
+    <div class="flex flex-col md:flex-row justify-between w-full max-w-[791px]">
       <dp-return-link
         [route]="'/committee/home'"
         [text]="'Back to Home'"
       ></dp-return-link>
-      <div
-        class="flex flex-row justify-center gap-4"
-        *ngIf="!(loading$ | async)"
-      >
-        <div [class]="StatusStyleCurrent">
-          <p
-            class="text-[14px] leading-[18px] font-bold text-[#FFFFFF] cursor-default"
-          >
-            {{ status }}
-          </p>
-        </div>
-        <button
-          mat-button
-          color="primary"
-          [disabled]="!(status === 'Awaiting Approval')"
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <div
+          class="flex flex-col md:flex-row justify-center gap-4"
+          *ngSwitchCase="'contents'"
         >
-          Edit
-        </button>
-        <button mat-flat-button color="primary" (click)="submit()">
-          Withdrawl
-        </button>
-      </div>
+          <div [class]="StatusStyleCurrent">
+            <p
+              class="text-[14px] leading-[18px] font-bold text-[#FFFFFF] cursor-default"
+            >
+              {{ status }}
+            </p>
+          </div>
+          <button
+            mat-button
+            color="primary"
+            [disabled]="!(status === 'Awaiting Approval')"
+            [routerLink]="'/committee/edit-petition/' + id"
+          >
+            Edit
+          </button>
+          <button mat-flat-button color="primary" (click)="submit()">
+            Withdrawl
+          </button>
+        </div>
+      </ng-container>
     </div>
     <ng-container [ngSwitch]="currentStep$ | async">
       <ng-container *ngSwitchCase="'loading'">

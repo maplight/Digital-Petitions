@@ -14,6 +14,7 @@ import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/
   templateUrl: './view-petition-committee.component.html',
 })
 export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
+  protected id: string = '0';
   protected resultData: ResponsePetition = {};
   protected result$!: Subscription;
   protected error: string | undefined;
@@ -26,11 +27,11 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
   protected status: string | undefined;
   protected StatusStyleCurrent: string = '';
   protected StatusStyleWhite: string =
-    'flex bg-[#F6D523] px-4 py-2 rounded-full items-center';
+    'flex bg-[#F6D523] px-4 py-2 rounded-full items-center justify-center';
   protected StatusStyleGreen: string =
-    'flex bg-[#3AC922] px-4 py-1 rounded-full items-center';
+    'flex bg-[#3AC922] px-4 py-1 rounded-full items-center justify-center';
   protected StatusStyleRed: string =
-    'flex bg-[#FF3030] px-4 py-1 rounded-full items-center';
+    'flex bg-[#FF3030] px-4 py-1 rounded-full items-center justify-center';
   constructor(
     private _committeeLogic: GetPetitionService,
 
@@ -40,6 +41,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
     public _dialog: MatDialog
   ) {}
   ngAfterViewInit(): void {
+    this.id = this._activatedRoute.snapshot.params['id'];
     this._committeeLogic.petitionId =
       this._activatedRoute.snapshot.params['id'];
   }

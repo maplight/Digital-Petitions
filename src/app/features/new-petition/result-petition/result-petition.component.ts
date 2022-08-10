@@ -15,6 +15,6 @@ export class ResultPetitionComponent implements OnInit {
   ngOnInit(): void {}
 
   submit() {
-    this._router.navigate([]);
+    this._router.navigate(['/committee/home']);
   }
 }

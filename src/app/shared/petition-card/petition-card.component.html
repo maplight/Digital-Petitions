@@ -16,7 +16,12 @@
         </p>
       </div>
     </div>
-    <h3 class="flex leading-7 font-extrabold">{{ title }}</h3>
+    <h3
+      class="flex leading-7 font-extrabold"
+      [routerLink]="disabled ? null : basicRoute + id"
+    >
+      {{ title }}
+    </h3>
     <h4 class="leading-5 font-bold" *ngIf="subtitle">{{ subtitle }}</h4>
     <p>
       {{ text | cut: characters }}
@@ -38,7 +43,14 @@
       </p>
     </div>
     <div *ngIf="buttonText" class="flex flex-row justify-end">
-      <button type="submit" mat-flat-button color="primary">
+      <button
+        class="w-full md:w-auto"
+        type="submit"
+        mat-flat-button
+        color="primary"
+        [routerLink]="basicRoute + id"
+        [disabled]="disabled"
+      >
         {{ buttonText }}
       </button>
     </div>

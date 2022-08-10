@@ -148,6 +148,19 @@ export class AccountService {
     );
   }
 
+  public resendSignUp(email: string): Observable<Result<string>> {
+    return from(
+      Auth.resendSignUp(email)
+        .then((result) => {
+          this.updateUser();
+          return { result: 'SUCCESS' };
+        })
+        .catch((error) => {
+          return { error: error.message };
+        })
+    );
+  }
+
   public signUpConfirm(
     data: SignUpConfirmationCode
   ): Observable<Result<string>> {

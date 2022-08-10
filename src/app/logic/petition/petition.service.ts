@@ -39,6 +39,7 @@ export class PetitionService {
     return of({
       result: {
         dataIssue: {
+          id: 0,
           title: 'Title1',
           text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
           atributes: {
@@ -65,6 +66,7 @@ export class PetitionService {
       result: [
         {
           dataIssue: {
+            id: 0,
             title: 'Title1',
             text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
             atributes: {
@@ -77,6 +79,7 @@ export class PetitionService {
         },
         {
           dataIssue: {
+            id: 0,
             title: 'Title2',
             text: 'Text2',
             atributes: {
@@ -89,6 +92,7 @@ export class PetitionService {
         },
         {
           dataCandidate: {
+            id: 0,
             address: 'Address',
             aptNumber: '14',
             city: 'City',
@@ -116,6 +120,7 @@ export class PetitionService {
       result: [
         {
           dataIssue: {
+            id: 0,
             title: 'Title1',
             text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
             atributes: {
@@ -128,6 +133,7 @@ export class PetitionService {
         },
         {
           dataIssue: {
+            id: 0,
             title: 'Title2',
             text: 'Text2',
             atributes: {
@@ -140,6 +146,7 @@ export class PetitionService {
         },
         {
           dataCandidate: {
+            id: 0,
             address: 'Address',
             aptNumber: '14',
             city: 'City',
@@ -166,6 +173,7 @@ export class PetitionService {
       result: [
         {
           dataIssue: {
+            id: 0,
             title: 'Title1',
             text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
             atributes: {
@@ -178,6 +186,7 @@ export class PetitionService {
         },
         {
           dataIssue: {
+            id: 0,
             title: 'Title2',
             text: 'Text2',
             atributes: {
@@ -190,6 +199,7 @@ export class PetitionService {
         },
         {
           dataCandidate: {
+            id: 0,
             address: 'Address',
             aptNumber: '14',
             city: 'City',
