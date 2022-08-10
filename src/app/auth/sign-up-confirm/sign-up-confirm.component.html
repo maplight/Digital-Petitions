@@ -19,6 +19,18 @@
               <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
             </div>
           </ng-container>
+          <ng-container *ngIf="resultResend$ | async as result">
+            <div
+              *ngIf="result.error as error"
+              class="flex flex-row items-center"
+            >
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+            </div>
+          </ng-container>
         </ng-container>
         <mat-progress-bar
           mode="indeterminate"
@@ -26,8 +38,11 @@
           *ngIf="loading$ | async"
         ></mat-progress-bar>
         <div class="grid grid-cols-1 gap-[16px]">
+          <p *ngIf="!(loading$ | async)">
+            {{ message }}
+          </p>
           <mat-form-field>
-            <mat-label>Code</mat-label>
+            <mat-label>Enter Code</mat-label>
             <input type="text" matInput formControlName="code" />
             <mat-error *ngIf="this.formGroup.get('code')?.errors?.['required']">
               <div class="flex flex-row items-center">
@@ -39,6 +54,12 @@
               </div>
             </mat-error>
           </mat-form-field>
+          <p
+            class="text-[#2D5BFF] font-bold text-xs cursor-pointer"
+            (click)="resendCode()"
+          >
+            Resend Code
+          </p>
         </div>
         <div class="md:col-span-2 w-full flex justify-end">
           <button
@@ -53,5 +74,21 @@
         </div>
       </dp-basic-card>
     </form>
+    <div class="my-6 w-full flex flex-col md:flex-row justify-center">
+      <div class="w-full md:w-auto flex justify-center">
+        <h4 class="font-extrabold text-base tracking-wide">
+          Already have an account?
+        </h4>
+      </div>
+      <div class="w-full md:w-auto flex justify-center">
+        <a [routerLink]="'/auth/login'"
+          ><h4
+            class="font-extrabold text-base tracking-wide mx-3 text-primary-500"
+          >
+            Log In
+          </h4></a
+        >
+      </div>
+    </div>
   </div>
 </div>
