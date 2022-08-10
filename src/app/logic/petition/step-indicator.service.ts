@@ -1,12 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StepIndicatorService implements OnDestroy {
-  private _currentStep$: Subject<'type' | 'issue' | 'candidate' | 'result'> =
-    new Subject();
+  private _currentStep$: BehaviorSubject<
+    'type' | 'issue' | 'candidate' | 'result'
+  > = new BehaviorSubject<'type' | 'issue' | 'candidate' | 'result'>('type');
   public _publicCurrentStep$: Observable<
     'type' | 'issue' | 'candidate' | 'result'
   > = this._currentStep$.asObservable();

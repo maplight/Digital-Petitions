@@ -67,6 +67,7 @@
       <div class="flex justify-center w-full">
         <ng-container [ngSwitch]="currentStep$ | async">
           <dp-edit-petition-candidate
+            class="w-full"
             [formData]="resultData"
             (_cancelEvent)="cancel()"
             (_submitEvent)="submitCandidate($event)"
@@ -74,6 +75,7 @@
           >
           </dp-edit-petition-candidate>
           <dp-edit-petition-issue
+            class="w-full"
             [formData]="resultData"
             (_cancelEvent)="cancel()"
             (_submitEvent)="submitIssue($event)"
@@ -82,7 +84,11 @@
           </dp-edit-petition-issue>
         </ng-container>
         <ng-container [ngSwitch]="currentStep$ | async">
-          <dp-edit-result-petition [data]="resultData" *ngSwitchCase="'result'">
+          <dp-edit-result-petition
+            class="w-full"
+            [data]="resultData"
+            *ngSwitchCase="'result'"
+          >
           </dp-edit-result-petition>
         </ng-container>
       </div>

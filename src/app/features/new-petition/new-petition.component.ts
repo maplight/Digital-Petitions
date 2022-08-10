@@ -12,7 +12,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   selector: 'dp-new-petition',
   templateUrl: './new-petition.component.html',
 })
-export class NewPetitionComponent implements OnInit, AfterViewInit {
+export class NewPetitionComponent implements OnInit {
   protected dataResponse: ResponsePetition = {};
 
   protected currentStep: 'type' | 'issue' | 'candidate' | 'result' = 'type';
@@ -39,8 +39,6 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
     private _router: Router
   ) {
     this.currentStep$ = this._stepLogic._publicCurrentStep$;
-  }
-  ngAfterViewInit(): void {
     this._stepLogic.currentStep = 'type';
   }
 
