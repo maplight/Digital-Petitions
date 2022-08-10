@@ -16,7 +16,10 @@
         </p>
       </div>
     </div>
-    <h3 class="flex leading-7 font-extrabold" [routerLink]="basicRoute + id">
+    <h3
+      class="flex leading-7 font-extrabold"
+      [routerLink]="disabled ? null : basicRoute + id"
+    >
       {{ title }}
     </h3>
     <h4 class="leading-5 font-bold" *ngIf="subtitle">{{ subtitle }}</h4>
@@ -46,6 +49,7 @@
         mat-flat-button
         color="primary"
         [routerLink]="basicRoute + id"
+        [disabled]="disabled"
       >
         {{ buttonText }}
       </button>

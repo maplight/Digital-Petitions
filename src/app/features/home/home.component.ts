@@ -15,10 +15,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   protected error: string | undefined;
   protected loading$!: Observable<boolean>;
   protected currentStep$: BehaviorSubject<
-    'loading' | 'empty' | 'contents' | 'error'
-  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
-    'loading'
-  );
+    'loadingUp' | 'loading' | 'empty' | 'contents' | 'error'
+  > = new BehaviorSubject<
+    'loadingUp' | 'loading' | 'empty' | 'contents' | 'error'
+  >('loading');
   protected disabledFilter: boolean = true;
   protected disabledSeeMore: boolean = true;
   private currentFilter: FilterData[] = [
@@ -60,8 +60,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.disabledFilter = true;
     this.disabledSeeMore = true;
     this.currentFilter[0].value = value;
-    this.resultData = [];
-    this.currentStep$.next('loading');
+    this.currentStep$.next('loadingUp');
     this._committeeLogic.getPetitions(this.currentFilter);
   }
   pageNumber() {

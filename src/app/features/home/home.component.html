@@ -16,11 +16,24 @@
         [disabled]="disabledFilter"
         (event)="filter($event)"
       ></dp-basic-filter>
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <ng-container *ngSwitchCase="'loadingUp'">
+          <div class="flex justify-center w-full">
+            <h3 class="leading-7 font-extrabold">Loading</h3>
+          </div>
+
+          <mat-progress-bar
+            mode="indeterminate"
+            color="primary"
+          ></mat-progress-bar>
+        </ng-container>
+      </ng-container>
       <dp-petition-card
         [buttonText]="'Endorse Now'"
         [linkText]="'Read More'"
         *ngFor="let item of resultData"
         [data]="item"
+        [disabled]="disabledFilter"
       ></dp-petition-card>
       <ng-container [ngSwitch]="currentStep$ | async">
         <ng-container *ngSwitchCase="'loading'">

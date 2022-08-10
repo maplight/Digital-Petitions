@@ -36,6 +36,7 @@ export class PetitionCardComponent implements OnInit, OnChanges {
   @Input() buttonText: string | boolean = 'View Petition';
   @Input() linkText: string = 'View More';
   @Input() basicRoute: string = '';
+  @Input() disabled: boolean = false;
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (!!this.data.dataCandidate) {
@@ -82,10 +83,12 @@ export class PetitionCardComponent implements OnInit, OnChanges {
     }
   }
   protected showMore() {
-    this.characters = this.data.dataIssue
-      ? this.data.dataIssue.text.length
-      : 500;
-    this.showMoreOption = false;
+    if (!this.disabled) {
+      this.characters = this.data.dataIssue
+        ? this.data.dataIssue.text.length
+        : 500;
+      this.showMoreOption = false;
+    }
   }
   ngOnInit(): void {
     if (this.data.dataIssue) {
