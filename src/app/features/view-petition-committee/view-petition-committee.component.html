@@ -20,6 +20,7 @@
           mat-button
           color="primary"
           [disabled]="!(status === 'Awaiting Approval')"
+          [routerLink]="'/committee/edit-petition/' + id"
         >
           Edit
         </button>

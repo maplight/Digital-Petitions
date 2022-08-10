@@ -14,6 +14,7 @@ import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/
   templateUrl: './view-petition-committee.component.html',
 })
 export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
+  protected id: string = '0';
   protected resultData: ResponsePetition = {};
   protected result$!: Subscription;
   protected error: string | undefined;
@@ -40,6 +41,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
     public _dialog: MatDialog
   ) {}
   ngAfterViewInit(): void {
+    this.id = this._activatedRoute.snapshot.params['id'];
     this._committeeLogic.petitionId =
       this._activatedRoute.snapshot.params['id'];
   }

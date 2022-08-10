@@ -33,14 +33,14 @@
         </ng-container>
         <ng-container *ngSwitchCase="'candidate'">
           <dp-return-link
-            [route]="'/example'"
+            [route]="'/committee/home/' + id"
             [text]="'Back to Petition'"
           ></dp-return-link>
           <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
         </ng-container>
         <ng-container *ngSwitchCase="'issue'">
           <dp-return-link
-            [route]="'/example'"
+            [route]="'/committee/home/' + id"
             [text]="'Back to Petition'"
           ></dp-return-link>
           <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>

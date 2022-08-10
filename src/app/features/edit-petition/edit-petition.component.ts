@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   BehaviorSubject,
   Observable,
@@ -20,6 +20,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   templateUrl: './edit-petition.component.html',
 })
 export class EditPetitionComponent implements OnInit, AfterViewInit {
+  protected id: string = '0';
   protected result$!: Subscription;
   protected error: string | undefined;
   protected loading$!: Observable<boolean>;
@@ -32,9 +33,11 @@ export class EditPetitionComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _editPetitionLogic: GetPetitionService,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router
   ) {}
   ngAfterViewInit(): void {
+    this.id = this._activatedRoute.snapshot.params['id'];
     this._editPetitionLogic.petitionId =
       this._activatedRoute.snapshot.params['id'];
   }
@@ -54,7 +57,9 @@ export class EditPetitionComponent implements OnInit, AfterViewInit {
     });
     this.loading$ = this._editPetitionLogic.loading$;
   }
-  cancel() {}
+  cancel() {
+    this._router.navigate(['/committee/home/' + this.id]);
+  }
   submitCandidate(data: CandidatePetitionData) {
     this.resultData.dataCandidate = data;
     this.currentStep$.next('result');

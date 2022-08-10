@@ -17,8 +17,13 @@ export class NewPetitionComponent implements OnInit, AfterViewInit {
 
   protected currentStep: 'type' | 'issue' | 'candidate' | 'result' = 'type';
 
-  protected dataResponseIssue: IssuePetitionData = { title: '', text: '' };
+  protected dataResponseIssue: IssuePetitionData = {
+    id: 0,
+    title: '',
+    text: '',
+  };
   protected dataResponseCandidate: CandidatePetitionData = {
+    id: 0,
     fullName: '',
     office: '',
     party: '',

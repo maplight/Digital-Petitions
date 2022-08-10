@@ -1,4 +1,5 @@
 export interface IssuePetitionData {
+  id: number;
   title: string;
   text: string;
   atributes?: {

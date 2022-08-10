@@ -7,7 +7,6 @@ import { EmailChangeModalComponent } from 'src/app/auth/email-change-modal/email
 @Component({
   selector: 'dp-committee-account-settings',
   templateUrl: './committee-account-settings.component.html',
-  styleUrls: ['./committee-account-settings.component.scss'],
 })
 export class CommitteeAccountSettingsComponent implements OnInit {
   protected email: string = 'james@email.com';
