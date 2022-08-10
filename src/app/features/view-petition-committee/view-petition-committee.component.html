@@ -1,12 +1,12 @@
 <div class="flex justify-center w-full py-12">
   <div class="flex flex-col max-w-[1197px] w-full gap-4">
-    <div class="flex flex-row justify-between w-full max-w-[791px]">
+    <div class="flex flex-col md:flex-row justify-between w-full max-w-[791px]">
       <dp-return-link
         [route]="'/committee/home'"
         [text]="'Back to Home'"
       ></dp-return-link>
       <div
-        class="flex flex-row justify-center gap-4"
+        class="flex flex-col md:flex-row justify-center gap-4"
         *ngIf="!(loading$ | async)"
       >
         <div [class]="StatusStyleCurrent">

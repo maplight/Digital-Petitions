@@ -27,11 +27,11 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
   protected status: string | undefined;
   protected StatusStyleCurrent: string = '';
   protected StatusStyleWhite: string =
-    'flex bg-[#F6D523] px-4 py-2 rounded-full items-center';
+    'flex bg-[#F6D523] px-4 py-2 rounded-full items-center justify-center';
   protected StatusStyleGreen: string =
-    'flex bg-[#3AC922] px-4 py-1 rounded-full items-center';
+    'flex bg-[#3AC922] px-4 py-1 rounded-full items-center justify-center';
   protected StatusStyleRed: string =
-    'flex bg-[#FF3030] px-4 py-1 rounded-full items-center';
+    'flex bg-[#FF3030] px-4 py-1 rounded-full items-center justify-center';
   constructor(
     private _committeeLogic: GetPetitionService,
 

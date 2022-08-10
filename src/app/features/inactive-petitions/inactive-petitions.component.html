@@ -1,6 +1,8 @@
 <div class="flex justify-center w-full">
   <div class="flex justify-center max-w-[1192px] w-full">
-    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div
+      class="hidden md:flex md:justify-center md:max-w-[200px] md:w-full"
+    ></div>
     <div class="flex flex-col max-w-[792px] w-full gap-6">
       <div class="flex flex-row gap-4 justify-start">
         <dp-return-link
@@ -9,14 +11,34 @@
         ></dp-return-link>
       </div>
     </div>
-    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div
+      class="hidden md:flex md:justify-center md:max-w-[200px] md:w-full"
+    ></div>
   </div>
 </div>
 <div class="flex justify-center py-[65px] w-full">
   <div class="flex justify-center max-w-[1192px] w-full">
-    <div class="flex justify-center max-w-[200px] w-full"></div>
+    <div
+      class="hidden md:flex md:justify-center md:max-w-[200px] md:w-full"
+    ></div>
     <div class="flex flex-col max-w-[792px] w-full gap-6">
       <h1 class="font-extrabold">Inactive Petitions</h1>
+      <div class="flex flex-col w-full gap-4 md:hidden">
+        <dp-basic-filter
+          class="w-full"
+          [filterName]="'Filter by Category'"
+          [elements]="filterByCategory"
+          [disabled]="disabledFilter"
+          (event)="filterCategory($event)"
+        ></dp-basic-filter>
+        <dp-basic-filter
+          class="w-full"
+          [filterName]="'Filter by Status'"
+          [elements]="filterByStatus"
+          [disabled]="disabledFilter"
+          (event)="filterStatus($event)"
+        ></dp-basic-filter>
+      </div>
       <dp-petition-card
         [buttonText]="false"
         [linkText]="'Read More'"
@@ -26,14 +48,16 @@
       ></dp-petition-card>
       <ng-container [ngSwitch]="currentStep$ | async">
         <ng-container *ngSwitchCase="'loading'">
-          <div class="flex justify-center w-full">
-            <h3 class="leading-7 font-extrabold">Loading</h3>
-          </div>
+          <div class="flex flex-col">
+            <div class="flex justify-center w-full">
+              <h3 class="leading-7 font-extrabold">Loading</h3>
+            </div>
 
-          <mat-progress-bar
-            mode="indeterminate"
-            color="primary"
-          ></mat-progress-bar>
+            <mat-progress-bar
+              mode="indeterminate"
+              color="primary"
+            ></mat-progress-bar>
+          </div>
         </ng-container>
         <ng-container class="flex" *ngSwitchCase="'error'">
           <div class="flex justify-center w-full">
@@ -65,7 +89,7 @@
         See More
       </button>
     </div>
-    <div class="flex flex-col max-w-[200px] w-full pt-[64px] gap-8">
+    <div class="hidden md:flex md:flex-col md:max-w-[200px] md:w-full md:gap-8">
       <dp-basic-filter
         [filterName]="'Filter by Category'"
         [elements]="filterByCategory"
