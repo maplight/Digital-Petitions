@@ -1,0 +1,98 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+interface Petition {
+  PK: ID!
+  createdAt: AWSDateTime!
+  detail: String!
+  owner: ID!
+  signatureSummary: SignatureSummary
+  status: PetitionStatus!
+  title: String!
+  type: PetitionType!
+}
+
+type AddressData {
+  address: String!
+  city: String
+  number: String
+  state: String!
+  zipCode: String
+}
+
+type CandidatePetition implements Petition {
+  PK: ID!
+  address: AddressData!
+  createdAt: AWSDateTime!
+  detail: String!
+  office: ID!
+  owner: ID!
+  party: ID!
+  signatureSummary: SignatureSummary
+  status: PetitionStatus!
+  title: String!
+  type: PetitionType!
+}
+
+type IssuePetition implements Petition {
+  PK: ID!
+  createdAt: AWSDateTime!
+  detail: String!
+  owner: ID!
+  signatureSummary: SignatureSummary
+  status: PetitionStatus!
+  title: String!
+  type: PetitionType!
+}
+
+type Mutation {
+  submitCandidatePetition(data: CandidatePetitionInput!): CandidatePetition! @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
+  submitIssuePetition(data: IssuePetitionInput!): IssuePetition! @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
+}
+
+type Query {
+  publicEcho(ping: String!): String!
+}
+
+type SignatureSummary {
+  approved: Int!
+  deadline: AWSDateTime
+  required: Int!
+  submitted: Int! @aws_cognito_user_pools(cognito_groups : ["AdminGroup", "CityStaffGroup"])
+}
+
+enum PetitionStatus {
+  ACTIVE
+  CANCELED
+  NEW
+  QUALIFIED
+  REJECTED
+  WITHDRAWN
+}
+
+enum PetitionType {
+  CANDIDATE
+  ISSUE
+}
+
+input AddressInput {
+  address: String!
+  city: String
+  number: String
+  state: String!
+  zipCode: String
+}
+
+input CandidatePetitionInput {
+  address: AddressInput!
+  name: String!
+  office: ID!
+  party: ID!
+}
+
+input IssuePetitionInput {
+  detail: String!
+  title: String!
+}
