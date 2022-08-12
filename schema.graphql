@@ -36,7 +36,7 @@ type CandidatePetition implements Petition {
   type: PetitionType!
 }
 
-type IssuePetition implements Petition {
+type IssuePetition implements Petition @aws_iam @aws_cognito_user_pools {
   PK: ID!
   createdAt: AWSDateTime!
   detail: String!
@@ -48,8 +48,10 @@ type IssuePetition implements Petition {
 }
 
 type Mutation {
-  submitCandidatePetition(data: CandidatePetitionInput!): CandidatePetition! @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
-  submitIssuePetition(data: IssuePetitionInput!): IssuePetition! @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
+  submitCandidatePetition(data: CandidatePetitionInput!): CandidatePetition!
+    @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
+  submitIssuePetition(data: IssuePetitionInput!): IssuePetition!
+    @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
 }
 
 type Query {
@@ -60,7 +62,8 @@ type SignatureSummary {
   approved: Int!
   deadline: AWSDateTime
   required: Int!
-  submitted: Int! @aws_cognito_user_pools(cognito_groups : ["AdminGroup", "CityStaffGroup"])
+  submitted: Int!
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup", "CityStaffGroup"])
 }
 
 enum PetitionStatus {
