@@ -33,7 +33,7 @@ export class EditPetitionCandidateComponent implements OnInit, OnChanges {
       state: { name: '', value: '' },
       zipCode: '',
     },
-    dataIssue: { id: 0, text: '', title: '' },
+    dataIssue: { id: 0, detail: '', title: '' },
   };
   @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
     new EventEmitter();

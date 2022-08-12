@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { shareReplay, tap } from 'rxjs';
 import { NewPetitionIssueService } from 'src/app/logic/petition/exports';
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
@@ -20,20 +19,21 @@ export class NewPetitionIssueComponent implements OnInit {
   @Output() submitEvent: EventEmitter<IssuePetitionData> = new EventEmitter();
 
   constructor(
-    private _router: Router,
     private _fb: FormBuilder,
     private _newPetitionIssueLogic: NewPetitionIssueService
   ) {
     this.formGroup = this._fb.group({
       title: ['', [Validators.required]],
-      text: ['', [Validators.required]],
+      detail: ['', [Validators.required]],
     });
+
     this.result$ = this._newPetitionIssueLogic.result$.pipe(
       tap((result) => {
         result.result ? this.submitEvent.emit(result.result) : null;
       }),
       shareReplay(1)
     );
+
     this.loading$ = this._newPetitionIssueLogic.loading$;
   }
 
@@ -41,9 +41,10 @@ export class NewPetitionIssueComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-      this._newPetitionIssueLogic.formGroupValue = this.formGroup.value;
+      this._newPetitionIssueLogic.submit(this.formGroup.value);
     }
   }
+
   cancel() {
     this.cancelEvent.emit('type');
   }

@@ -52,7 +52,7 @@ export class PetitionCardComponent implements OnInit, OnChanges {
     } else if (!!this.data.dataIssue) {
       this.id = this.data.dataIssue.id;
       this.title = this.data.dataIssue.title;
-      this.text = this.data.dataIssue.text;
+      this.text = this.data.dataIssue.detail;
       this.type = this.data.dataIssue.atributes?.type;
       this.status = this.data.dataIssue.atributes?.status;
       this.currentSign = this.data.dataIssue.atributes?.currentSign;
@@ -85,14 +85,14 @@ export class PetitionCardComponent implements OnInit, OnChanges {
   protected showMore() {
     if (!this.disabled) {
       this.characters = this.data.dataIssue
-        ? this.data.dataIssue.text.length
+        ? this.data.dataIssue.detail.length
         : 500;
       this.showMoreOption = false;
     }
   }
   ngOnInit(): void {
     if (this.data.dataIssue) {
-      this.showMoreOption = this.data.dataIssue.text.length > 500;
+      this.showMoreOption = this.data.dataIssue.detail.length > 500;
     }
   }
 }
