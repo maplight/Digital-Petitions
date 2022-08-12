@@ -1,0 +1,142 @@
+<form
+  [formGroup]="formGroup"
+  class="flex flex-col w-full max-w-[632px] gap-6"
+  (submit)="submit()"
+>
+  <dp-return-link
+    class="md:hidden flex"
+    [text]="'Back To Signing'"
+    (click)="cancel('sign')"
+  ></dp-return-link>
+  <div class="flex flex-col gap-2 md:px-6">
+    <p class="font-bold text-lg leading-6">Verify Your Signataure</p>
+    <p>Choose how you want to verify your signature</p>
+  </div>
+  <mat-radio-group
+    class="flex flex-col w-full gap-4"
+    formControlName="verifyType"
+    color="primary"
+  >
+    <dp-basic-card class="flex flex-col w-full">
+      <mat-radio-button value="license"
+        ><p class="font-bold text-base leading-5">
+          Divers License / State ID
+        </p></mat-radio-button
+      >
+      <form
+        *ngIf="formGroup.value.verifyType === 'license'"
+        [formGroup]="formGroupLicense"
+        class="flex md:flex-row flex-col w-full gap-[26px]"
+      >
+        <mat-form-field class="md:max-w-[385px] w-full">
+          <mat-label>License Number</mat-label>
+          <input type="text" matInput formControlName="licenseNumber" />
+          <mat-error
+            *ngIf="this.formGroup.get('licenseNumber')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">License Number is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="md:max-w-[170px] w-full">
+          <mat-label>Date Of Birth</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="dateOfBirth"
+          />
+          <mat-datepicker-toggle
+            matPrefix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="this.formGroup.get('dateOfBirth')?.errors?.['required']"
+          >
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Date Of Birth is required</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </dp-basic-card>
+    <dp-basic-card class="flex flex-col w-full">
+      <mat-radio-button value="Email"
+        ><p class="font-bold text-base leading-5">Email</p></mat-radio-button
+      >
+      <p>
+        A confirmation code will be sent to the email address on file with your
+        voter registration.
+      </p>
+    </dp-basic-card>
+    <dp-basic-card class="flex flex-col w-full">
+      <mat-radio-button value="Text"
+        ><p class="font-bold text-base leading-5">Text</p></mat-radio-button
+      >
+      <p>
+        A confirmation code will be sent to the mobile number registered on file
+        with your voter registration.
+      </p>
+    </dp-basic-card>
+    <dp-basic-card class="flex flex-col w-full">
+      <mat-radio-button value="Call"
+        ><p class="font-bold text-base leading-5">Call</p></mat-radio-button
+      >
+      <p>
+        You will receive a phone call to the number that is on file with your
+        voter registration.
+      </p>
+    </dp-basic-card>
+    <dp-basic-card class="flex flex-col w-full">
+      <mat-radio-button value="USMail"
+        ><p class="font-bold text-base leading-5">
+          U.S. Mail
+        </p></mat-radio-button
+      >
+      <p>
+        A confirmation code will be mailed to the address on file with your
+        voter registration.
+      </p>
+    </dp-basic-card>
+  </mat-radio-group>
+  <div class="hidden md:flex md:flex-row md:w-full md:justify-end md:gap-4">
+    <button
+      class="hidden md:flex"
+      type="button"
+      mat-button
+      color="primary"
+      (click)="cancel('view')"
+    >
+      Back
+    </button>
+    <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
+      Continue
+    </button>
+  </div>
+  <div
+    [class]="
+      formGroup.valid
+        ? 'fixed bottom-0 right-0 left-0 justify-center items-center z-50 py-3 px-6 bg-white md:hidden'
+        : 'hidden bottom-0 right-0 left-0 justify-center items-center z-50 py-3 px-6 bg-white md:hidden'
+    "
+  >
+    <button
+      class="w-full"
+      type="submit"
+      mat-flat-button
+      color="primary"
+      cdkFocusInitial
+    >
+      Continue
+    </button>
+  </div>
+</form>
