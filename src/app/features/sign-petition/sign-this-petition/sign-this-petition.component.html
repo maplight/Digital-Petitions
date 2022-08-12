@@ -1,0 +1,120 @@
+<div
+  class="flex flex-col gap-4 rounded-xl py-8 px-4 md:px-6 bg-[#FFFFFF] border border-[#D7D7D7] shadow-sm"
+>
+  <div class="hidden md:flex md:flex-col md:w-full md:gap-2" *ngIf="totalSign">
+    <mat-progress-bar
+      color="primary"
+      [value]="percent"
+      [bufferValue]="totalSign"
+    ></mat-progress-bar>
+    <p class="text-[14px] leading-[18px] font-normal">
+      {{ currentSign }} / {{ totalSign }} Signatures Subminted
+    </p>
+  </div>
+  <p class="font-bold text-lg leading-6">Sign This Petition</p>
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="submit()"
+    class="flex flex-col gap-6"
+  >
+    <div class="w-full flex flex-col gap-6">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="fullName" />
+        <mat-error *ngIf="this.formGroup.get('fullName')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">Name is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input type="text" matInput formControlName="address" />
+        <mat-error *ngIf="this.formGroup.get('address')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">Address is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>City</mat-label>
+        <input type="text" matInput formControlName="city" />
+        <mat-error *ngIf="this.formGroup.get('city')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">City is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>State</mat-label>
+        <mat-select formControlName="state">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let state of localStates" [value]="state">{{
+            state.name
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.formGroup.get('state')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">State is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Zip Code</mat-label>
+        <input type="text" matInput formControlName="zipCode" />
+        <mat-error *ngIf="this.formGroup.get('zipCode')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">Zip Code is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+      <p class="text-xs text-[#5C5C5C] italic">
+        Please use the address where you are registered to vote.
+      </p>
+      <div class="flex flex-col justify-center w-full gap-[15px]">
+        <button
+          class="w-full"
+          type="submit"
+          mat-flat-button
+          color="primary"
+          cdkFocusInitial
+        >
+          Continue
+        </button>
+        <button
+          class="w-full"
+          type="button"
+          mat-button
+          color="primary"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
