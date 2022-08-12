@@ -17,6 +17,14 @@ const routes: Routes = [
       import('./features/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'home/:id',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./features/sign-petition/sign-petition.module').then(
+        (m) => m.SignPetitionModule
+      ),
+  },
+  {
     path: 'inactive-petitions',
     component: LayoutComponent,
     loadChildren: () =>
