@@ -9,22 +9,22 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { IssuePetitionInput } from 'src/app/core/api/API';
+import { IssuePetition, IssuePetitionInput } from 'src/app/core/api/API';
 
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
 
 @Injectable()
 export class NewPetitionIssueService {
-  public error$: Observable<Result<IssuePetitionData>>;
-  public success$: Observable<Result<IssuePetitionData>>;
+  public error$: Observable<Result<IssuePetition>>;
+  public success$: Observable<Result<IssuePetition>>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<IssuePetitionData>>;
+  public result$: Observable<Result<IssuePetition>>;
   private submit$: Subject<IssuePetitionInput> = new Subject();
 
   constructor(private _petitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.newPetitionIssue(data)),
+      exhaustMap((data) => this._petitionService.newIssuePetition(data)),
       shareReplay(1)
     );
 

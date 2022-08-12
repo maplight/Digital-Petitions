@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { API } from 'aws-amplify';
-import { delay, from, Observable, of, tap } from 'rxjs';
+import API, { GraphQLResult } from '@aws-amplify/api';
+import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import { IssuePetition, IssuePetitionInput } from 'src/app/core/api/API';
 import {
   CandidatePetitionData,
@@ -15,19 +15,19 @@ import { submitIssuePetition } from 'src/graphql/mutations';
 export class PetitionService {
   constructor() {}
 
-  newPetitionIssue(
+  newIssuePetition(
     data: IssuePetitionInput
-  ): Observable<Result<IssuePetitionData>> {
-    // returns GraphQLResult<any>
+  ): Observable<Result<IssuePetition>> {
     return from(
-      <Promise<any>>API.graphql({
-        // query: publicEcho,
-        // variables: { ping: 'Hello World!' },
+      API.graphql({
         query: submitIssuePetition,
-        variables: { data },
+        variables: { data: { ...data, id: 'pasta' } },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
-      })
-    ).pipe(tap((response) => console.log('in the service')));
+      }) as Promise<GraphQLResult<IssuePetition>>
+    ).pipe(
+      map(({ data }) => ({ result: data })),
+      catchError((error) => of({ error: error?.[0]?.message }))
+    );
   }
 
   newPetitionCandidate(

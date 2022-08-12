@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { shareReplay, tap } from 'rxjs';
+import { IssuePetition } from 'src/app/core/api/API';
 import { NewPetitionIssueService } from 'src/app/logic/petition/exports';
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 
@@ -16,7 +17,7 @@ export class NewPetitionIssueComponent implements OnInit {
   @Output() cancelEvent: EventEmitter<
     'type' | 'issue' | 'candidate' | 'result'
   > = new EventEmitter();
-  @Output() submitEvent: EventEmitter<IssuePetitionData> = new EventEmitter();
+  @Output() submitEvent: EventEmitter<IssuePetition> = new EventEmitter();
 
   constructor(
     private _fb: FormBuilder,
