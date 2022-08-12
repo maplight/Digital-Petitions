@@ -49,7 +49,10 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
       fullName: [this.dataSignature.fullName, [Validators.required]],
       address: [this.dataSignature.address, [Validators.required]],
       city: [this.dataSignature.city, [Validators.required]],
-      state: [this.dataSignature.state, [Validators.required]],
+      state: [
+        this.dataSignature.state.name === '' ? null : this.dataSignature.state,
+        [Validators.required],
+      ],
       zipCode: [this.dataSignature.zipCode, [Validators.required]],
     });
   }
@@ -64,6 +67,7 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (!!this.data.dataCandidate) {
       this.currentSign = this.data.dataCandidate.atributes?.currentSign;
