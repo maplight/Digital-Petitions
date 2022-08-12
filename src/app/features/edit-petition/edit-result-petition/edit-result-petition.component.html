@@ -19,7 +19,7 @@
               Petition Text:
             </p>
             <p class="text-sm leading-[18px] font-normal">
-              {{ dataIssue.text | cut: characters }}
+              {{ dataIssue.detail | cut: characters }}
               <span
                 *ngIf="showMoreOption"
                 class="block font-bold text-primary-500 cursor-pointer"

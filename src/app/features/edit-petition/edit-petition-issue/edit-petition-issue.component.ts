@@ -45,7 +45,7 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.formGroup = this._fb.group({
       title: [this.formData.dataIssue?.title, [Validators.required]],
-      text: [this.formData.dataIssue?.text, [Validators.required]],
+      text: [this.formData.dataIssue?.detail, [Validators.required]],
     });
   }
 

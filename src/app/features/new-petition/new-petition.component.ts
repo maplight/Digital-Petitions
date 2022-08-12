@@ -20,7 +20,7 @@ export class NewPetitionComponent implements OnInit {
   protected dataResponseIssue: IssuePetitionData = {
     id: 0,
     title: '',
-    text: '',
+    detail: '',
   };
   protected dataResponseCandidate: CandidatePetitionData = {
     id: 0,

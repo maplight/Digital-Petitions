@@ -31,7 +31,7 @@
         <mat-form-field>
           <mat-label>Petition Title</mat-label>
           <input type="text" matInput formControlName="title" />
-          <mat-error *ngIf="this.formGroup.get('title')?.errors?.['required']">
+          <mat-error>
             <div class="flex flex-row items-center">
               <mat-icon
                 class="w-[14px] h-[14px]"
@@ -43,8 +43,8 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Petition Text</mat-label>
-          <textarea matInput formControlName="text"></textarea>
-          <mat-error *ngIf="this.formGroup.get('text')?.errors?.['required']">
+          <textarea matInput formControlName="detail"></textarea>
+          <mat-error>
             <div class="flex flex-row items-center">
               <mat-icon
                 class="w-[14px] h-[14px]"

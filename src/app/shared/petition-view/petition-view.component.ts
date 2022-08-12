@@ -47,7 +47,7 @@ export class PetitionViewComponent implements OnInit, OnChanges {
       this.totalSign = this.data.dataCandidate.atributes?.totalSign;
     } else if (!!this.data.dataIssue) {
       this.title = this.data.dataIssue.title;
-      this.text = this.data.dataIssue.text;
+      this.text = this.data.dataIssue.detail;
       this.type = this.data.dataIssue.atributes?.type;
       this.status = this.data.dataIssue.atributes?.status;
       this.currentSign = this.data.dataIssue.atributes?.currentSign;
@@ -79,13 +79,13 @@ export class PetitionViewComponent implements OnInit, OnChanges {
   }
   protected showMore() {
     this.characters = this.data.dataIssue
-      ? this.data.dataIssue.text.length
+      ? this.data.dataIssue.detail.length
       : 500;
     this.showMoreOption = false;
   }
   ngOnInit(): void {
     if (this.data.dataIssue) {
-      this.showMoreOption = this.data.dataIssue.text.length > 500;
+      this.showMoreOption = this.data.dataIssue.detail.length > 500;
     }
   }
 }

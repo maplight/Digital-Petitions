@@ -9,6 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { IssuePetitionInput } from 'src/app/core/api/API';
 
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
@@ -19,15 +20,17 @@ export class NewPetitionIssueService {
   public success$: Observable<Result<IssuePetitionData>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<IssuePetitionData>>;
-  private submit$: Subject<IssuePetitionData> = new Subject();
+  private submit$: Subject<IssuePetitionInput> = new Subject();
 
   constructor(private _petitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._petitionService.newPetitionIssue(data)),
       shareReplay(1)
     );
-    const [success$, error$] = partition(this.result$, (value) =>
-      value.result ? true : false
+
+    const [success$, error$] = partition(
+      this.result$,
+      (value) => !!value.result
     );
 
     this.success$ = success$.pipe(
@@ -53,11 +56,12 @@ export class NewPetitionIssueService {
       )
     ).pipe(shareReplay(1));
   }
+
   ngOnDestroy(): void {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: IssuePetitionData) {
+  submit(value: IssuePetitionInput): void {
     this.submit$.next(value);
   }
 }
