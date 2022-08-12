@@ -124,7 +124,7 @@
   </div>
   <div
     [class]="
-      formGroup.valid
+      (isContinue$ | async)
         ? 'fixed bottom-0 right-0 left-0 justify-center items-center z-50 py-3 px-6 bg-white md:hidden'
         : 'hidden bottom-0 right-0 left-0 justify-center items-center z-50 py-3 px-6 bg-white md:hidden'
     "
