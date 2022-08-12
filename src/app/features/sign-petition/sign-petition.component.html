@@ -58,6 +58,7 @@
             <dp-sign-this-petition
               [data]="resultData"
               (submitEvent)="submitPersonalData($event)"
+              (cancelEvent)="cancel($event)"
             ></dp-sign-this-petition>
           </div>
         </ng-container>
@@ -75,13 +76,14 @@
               [data]="resultData"
               [dataSignature]="signatureData"
               (submitEvent)="submitPersonalData($event)"
+              (cancelEvent)="cancel($event)"
             ></dp-sign-this-petition>
           </div>
         </ng-container>
         <ng-container class="flex w-full" *ngSwitchCase="'verify'">
           <dp-verify-sign
             (submitEvent)="submitVerifyData($event)"
-            (cancelEvent)="cancelVerifyData($event)"
+            (cancelEvent)="cancel($event)"
           ></dp-verify-sign>
         </ng-container>
       </ng-container>

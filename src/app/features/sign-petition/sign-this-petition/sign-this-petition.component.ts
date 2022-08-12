@@ -36,7 +36,11 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
   @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
   @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
 
-  @Output() cancelEvent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() cancelEvent: EventEmitter<
+    'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error'
+  > = new EventEmitter<
+    'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error'
+  >();
   @Output() submitEvent: EventEmitter<SignaturePetitionData> =
     new EventEmitter<SignaturePetitionData>();
 
@@ -55,8 +59,8 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
       this.submitEvent.emit(this.formGroup.value);
     }
   }
-  cancel() {
-    this.cancelEvent.emit();
+  cancel(value: 'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error') {
+    this.cancelEvent.emit(value);
   }
 
   ngOnInit(): void {}

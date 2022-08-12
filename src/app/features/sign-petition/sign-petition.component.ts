@@ -62,10 +62,12 @@ export class SignPetitionComponent implements OnInit {
     console.log(this.signatureData);
   }
 
-  protected cancelVerifyData(
+  protected cancel(
     value: 'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error'
   ) {
-    this.signatureData.verify = { verifyType: '' };
+    if (value === 'sign') {
+      this.signatureData.verify = { verifyType: '' };
+    }
 
     this.currentStep$.next(value);
   }

@@ -106,11 +106,20 @@
           Continue
         </button>
         <button
-          class="w-full"
+          class="hidden md:flex md:w-full md:justify-center"
           type="button"
           mat-button
           color="primary"
-          (click)="cancel()"
+          [routerLink]="'/home'"
+        >
+          Cancel
+        </button>
+        <button
+          class="md:hidden flex w-full justify-center"
+          type="button"
+          mat-button
+          color="primary"
+          (click)="cancel('view')"
         >
           Cancel
         </button>
