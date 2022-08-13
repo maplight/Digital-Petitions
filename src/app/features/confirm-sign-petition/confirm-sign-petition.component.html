@@ -1,0 +1,72 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div class="flex w-full justify-center">
+    <div class="flex flex-col w-full max-w-[544px] gap-6">
+      <dp-return-link
+        class="md:hidden flex"
+        [text]="'Back To Home'"
+        (click)="cancel()"
+      ></dp-return-link>
+      <p class="text-lg leading-6 font-bold md:px-6">
+        Enter your verication code.
+      </p>
+      <dp-basic-card>
+        <div class="w-full flex flex-col gap-[10px]">
+          <p>Enter the code that was sent to you.</p>
+          <mat-form-field>
+            <mat-label>Confirmation Code</mat-label>
+            <input type="text" matInput formControlName="code" />
+            <mat-error *ngIf="this.formGroup.get('code')?.errors?.['required']">
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">Confirmation Code is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="flex flex-row gap-4">
+            <p class="text-sm leading-5">Didn’t receive code?</p>
+            <p
+              class="text-sm leading-[18px] font-bold text-primary-500 cursor-pointer"
+            >
+              Re-send
+            </p>
+          </div>
+        </div>
+      </dp-basic-card>
+      <div class="hidden md:flex md:flex-row md:w-full md:justify-end md:gap-4">
+        <button
+          class="hidden md:flex"
+          type="button"
+          mat-button
+          color="primary"
+          (click)="cancel()"
+        >
+          Back
+        </button>
+        <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
+          Continue
+        </button>
+      </div>
+      <div
+        [class]="
+          formGroup.valid
+            ? 'fixed bottom-0 right-0 left-0 justify-center items-center z-50 py-3 px-6 bg-white md:hidden'
+            : 'hidden bottom-0 right-0 left-0 justify-center items-center z-50 py-3 px-6 bg-white md:hidden'
+        "
+      >
+        <button
+          class="w-full"
+          type="submit"
+          mat-flat-button
+          color="primary"
+          cdkFocusInitial
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
