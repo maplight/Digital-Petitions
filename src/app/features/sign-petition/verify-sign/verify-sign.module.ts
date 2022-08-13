@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [VerifySignComponent],
@@ -25,6 +27,8 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
     MatDatepickerModule,
     MatNativeDateModule,
     ReturnLinkModule,
+    MatProgressBarModule,
+    RouterModule,
   ],
   exports: [VerifySignComponent],
 })

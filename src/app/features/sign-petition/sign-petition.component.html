@@ -82,7 +82,7 @@
         </ng-container>
         <ng-container class="flex w-full" *ngSwitchCase="'verify'">
           <dp-verify-sign
-            (submitEvent)="submitVerifyData($event)"
+            [dataSignature]="signatureData"
             (cancelEvent)="cancel($event)"
           ></dp-verify-sign>
         </ng-container>
