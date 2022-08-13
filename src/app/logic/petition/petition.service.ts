@@ -7,6 +7,7 @@ import {
   Result,
 } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
+import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
@@ -16,6 +17,10 @@ export class PetitionService {
     data: IssuePetitionData
   ): Observable<Result<IssuePetitionData>> {
     return of({ result: data }).pipe(delay(3000));
+  }
+
+  signaturePetition(data: SignaturePetitionData): Observable<Result<string>> {
+    return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
   newPetitionCandidate(
