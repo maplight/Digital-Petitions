@@ -9,17 +9,18 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { CandidatePetition } from 'src/app/core/api/API';
 
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
 
 @Injectable()
 export class EditPetitionCandidateService {
-  public error$: Observable<Result<CandidatePetitionData>>;
-  public success$: Observable<Result<CandidatePetitionData>>;
+  public error$: Observable<Result<CandidatePetition>>;
+  public success$: Observable<Result<CandidatePetition>>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<CandidatePetitionData>>;
-  private submit$: Subject<CandidatePetitionData> = new Subject();
+  public result$: Observable<Result<CandidatePetition>>;
+  private submit$: Subject<CandidatePetition> = new Subject();
 
   constructor(private _editPetitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
@@ -59,7 +60,7 @@ export class EditPetitionCandidateService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: CandidatePetitionData) {
+  set formGroupValue(value: CandidatePetition) {
     this.submit$.next(value);
   }
 }

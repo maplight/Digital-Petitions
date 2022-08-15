@@ -1,14 +1,18 @@
 <div
   class="flex flex-col gap-4 rounded-xl py-8 px-4 md:px-6 bg-[#FFFFFF] border border-[#D7D7D7] shadow-sm"
 >
-  <div class="hidden md:flex md:flex-col md:w-full md:gap-2" *ngIf="totalSign">
+  <div
+    class="hidden md:flex md:flex-col md:w-full md:gap-2"
+    *ngIf="signatureSummary"
+  >
     <mat-progress-bar
       color="primary"
-      [value]="percent"
-      [bufferValue]="totalSign"
+      [value]="(signatureSummary.approved / signatureSummary.required) * 100"
+      [bufferValue]="signatureSummary.required"
     ></mat-progress-bar>
     <p class="text-[14px] leading-[18px] font-normal">
-      {{ currentSign }} / {{ totalSign }} Signatures Subminted
+      {{ signatureSummary.approved }} /
+      {{ signatureSummary.required }} Signatures Subminted
     </p>
   </div>
   <p class="font-bold text-lg leading-6">Sign This Petition</p>

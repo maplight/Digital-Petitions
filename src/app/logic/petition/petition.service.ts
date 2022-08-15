@@ -1,19 +1,33 @@
 import { Injectable } from '@angular/core';
 import API, { GraphQLResult } from '@aws-amplify/api';
 import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
-import { IssuePetition, IssuePetitionInput } from 'src/app/core/api/API';
+import {
+  CandidatePetition,
+  CandidatePetitionInput,
+  IssuePetition,
+  IssuePetitionInput,
+  PetitionStatus,
+  PetitionType,
+} from 'src/app/core/api/API';
 import {
   CandidatePetitionData,
   FilterData,
-  IssuePetitionData,
   Result,
 } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
+import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
-import { submitIssuePetition } from 'src/graphql/mutations';
+import {
+  submitCandidatePetition,
+  submitIssuePetition,
+} from 'src/graphql/mutations';
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
+  private IssuePetition: 'IssuePetition' = 'IssuePetition';
+  private CandidatePetition: 'CandidatePetition' = 'CandidatePetition';
+  private AddressData: 'AddressData' = 'AddressData';
+  private SignatureSummary: 'SignatureSummary' = 'SignatureSummary';
   constructor() {}
 
   newIssuePetition(
@@ -22,7 +36,7 @@ export class PetitionService {
     return from(
       API.graphql({
         query: submitIssuePetition,
-        variables: { data: { ...data, id: 'pasta' } },
+        variables: { data },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<IssuePetition>>
     ).pipe(
@@ -31,46 +45,107 @@ export class PetitionService {
     );
   }
 
+  newCandidatePetition(
+    data: CandidatePetitionInput
+  ): Observable<Result<CandidatePetition>> {
+    return of({
+      result: {
+        __typename: this.CandidatePetition,
+        PK: '0',
+        address: {
+          __typename: this.AddressData,
+          address: 'address',
+          city: 'city',
+          number: '22',
+          state: 'Alaska',
+          zipCode: '1200',
+        },
+        createdAt: '00/00/0000',
+        detail: '',
+        office: 'My Office',
+        owner: 'CommitteUser-1',
+        party: 'Green',
+        signatureSummary: {
+          __typename: this.SignatureSummary,
+          approved: 15000,
+          deadline: '00/00/0000',
+          required: 24000,
+          submitted: 20000,
+        },
+        status: PetitionStatus.ACTIVE,
+        title: 'First name and last name',
+        type: PetitionType.ISSUE,
+      },
+    }).pipe(delay(3000));
+  }
+
   signaturePetition(data: SignaturePetitionData): Observable<Result<string>> {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
+
   confirmSignaturePetition(data: string): Observable<Result<string>> {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
-  newPetitionCandidate(
-    data: CandidatePetitionData
-  ): Observable<Result<CandidatePetitionData>> {
-    return of({ result: data }).pipe(delay(3000));
-  }
-  editPetitionIssue(
-    data: IssuePetitionData
-  ): Observable<Result<IssuePetitionData>> {
+  editPetitionIssue(data: IssuePetition): Observable<Result<IssuePetition>> {
     return of({ result: data }).pipe(delay(3000));
   }
 
   editPetitionCandidate(
-    data: CandidatePetitionData
-  ): Observable<Result<CandidatePetitionData>> {
+    data: CandidatePetition
+  ): Observable<Result<CandidatePetition>> {
     return of({ result: data }).pipe(delay(3000));
   }
 
   getPetition(data: number): Observable<Result<ResponsePetition>> {
     return of({
       result: {
-        dataIssue: {
-          id: 0,
-          title: 'Title1',
-          detail:
-            'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-          atributes: {
-            type: 'Issue',
-            status: 'passed',
-            currentSign: 10000,
-            verifiedSign: 1000,
-            totalSign: 30000,
-            deadline: '01/01/2023',
+        /**
+          dataIssue: {
+            __typename: this.IssuePetition,
+            PK: '0',
+            createdAt: '00/00/0000',
+            detail:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+            owner: 'CommitteUser-1',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
+            },
+            status: PetitionStatus.ACTIVE,
+            title: 'Title1',
+            type: PetitionType.ISSUE,
           },
+        */
+        dataCandidate: {
+          __typename: this.CandidatePetition,
+          PK: '0',
+          address: {
+            __typename: this.AddressData,
+            address: 'address',
+            city: 'city',
+            number: '22',
+            state: 'Alaska',
+            zipCode: '1200',
+          },
+          createdAt: '00/00/0000',
+          detail: '',
+          office: 'My Office',
+          owner: 'CommitteUser-1',
+          party: 'Green',
+          signatureSummary: {
+            __typename: this.SignatureSummary,
+            approved: 15000,
+            deadline: '00/00/0000',
+            required: 24000,
+            submitted: 20000,
+          },
+          status: PetitionStatus.ACTIVE,
+          title: 'First name and last name',
+          type: PetitionType.ISSUE,
         },
       },
     }).pipe(delay(3000));
@@ -80,55 +155,66 @@ export class PetitionService {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
-  getCandidatePetitions(
+  getCommitteePetitions(
     filter: FilterData[]
   ): Observable<Result<ResponsePetition[]>> {
     return of({
       result: [
         {
           dataIssue: {
-            id: 0,
-            title: 'Title1',
+            __typename: this.IssuePetition,
+            PK: '0',
+            createdAt: '00/00/0000',
             detail:
               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-            atributes: {
-              type: 'Issue',
-              status: 'new',
-              currentSign: 10000,
-              totalSign: 30000,
+            owner: 'CommitteUser-1',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
             },
+            status: PetitionStatus.NEW,
+            title: 'Title1',
+            type: PetitionType.ISSUE,
           },
         },
         {
           dataIssue: {
-            id: 0,
-            title: 'Title2',
-            detail: 'Text2',
-            atributes: {
-              type: 'Issue',
-              status: 'new',
-              currentSign: 20000,
-              totalSign: 30000,
-            },
+            __typename: this.IssuePetition,
+            PK: '0',
+            createdAt: '00/00/0000',
+            detail:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+            owner: 'CommitteUser-1',
+
+            status: PetitionStatus.NEW,
+            title: 'Title1',
+            type: PetitionType.ISSUE,
           },
         },
         {
           dataCandidate: {
-            id: 0,
-            address: 'Address',
-            aptNumber: '14',
-            city: 'City',
-            fullName: 'Denismay Concepcion Rosa',
-            office: 'Office',
-            party: 'Party',
-            state: { name: 'Alaska', value: 'AL' },
-            zipCode: '00000',
-            atributes: {
-              type: 'Candidate',
-              status: 'new',
-              currentSign: 20000,
-              totalSign: 30000,
+            __typename: this.CandidatePetition,
+            PK: '0',
+            address: {
+              __typename: this.AddressData,
+              address: 'address',
+              city: 'city',
+              number: '22',
+              state: 'Alaska',
+              zipCode: '1200',
             },
+            createdAt: '00/00/0000',
+            detail:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+            office: '',
+            owner: 'CommitteUser-1',
+            party: 'Green',
+            status: PetitionStatus.NEW,
+            title: 'First name and last name',
+            type: PetitionType.ISSUE,
           },
         },
       ],
@@ -142,53 +228,78 @@ export class PetitionService {
       result: [
         {
           dataIssue: {
-            id: 0,
-            title: 'Title1',
+            __typename: this.IssuePetition,
+            PK: '0',
+            createdAt: '00/00/0000',
             detail:
               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-            atributes: {
-              type: 'Issue',
-              status: 'pased',
-              currentSign: 10000,
-              totalSign: 30000,
+            owner: 'CommitteUser-1',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
             },
+            status: PetitionStatus.NEW,
+            title: 'Title1',
+            type: PetitionType.ISSUE,
           },
         },
         {
           dataIssue: {
-            id: 0,
-            title: 'Title2',
-            detail: 'Text2',
-            atributes: {
-              type: 'Issue',
-              status: 'failed',
-              currentSign: 20000,
-              totalSign: 30000,
+            __typename: this.IssuePetition,
+            PK: '0',
+            createdAt: '00/00/0000',
+            detail:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+            owner: 'CommitteUser-1',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
             },
+            status: PetitionStatus.NEW,
+            title: 'Title1',
+            type: PetitionType.ISSUE,
           },
         },
         {
           dataCandidate: {
-            id: 0,
-            address: 'Address',
-            aptNumber: '14',
-            city: 'City',
-            fullName: 'Denismay Concepcion Rosa',
-            office: 'Office',
-            party: 'Party',
-            state: { name: 'Alaska', value: 'AL' },
-            zipCode: '00000',
-            atributes: {
-              type: 'Candidate',
-              status: 'pased',
-              currentSign: 20000,
-              totalSign: 30000,
+            __typename: this.CandidatePetition,
+            PK: '0',
+            address: {
+              __typename: this.AddressData,
+              address: 'address',
+              city: 'city',
+              number: '22',
+              state: 'Alaska',
+              zipCode: '1200',
             },
+            createdAt: '00/00/0000',
+            detail:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+            office: 'My Office',
+            owner: 'CommitteUser-1',
+            party: 'Green',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
+            },
+            status: PetitionStatus.NEW,
+            title: 'First name and last name',
+            type: PetitionType.ISSUE,
           },
         },
       ],
     }).pipe(delay(3000));
   }
+
   getActivePetitions(
     filter: FilterData[]
   ): Observable<Result<ResponsePetition[]>> {
@@ -196,48 +307,72 @@ export class PetitionService {
       result: [
         {
           dataIssue: {
-            id: 0,
-            title: 'Title1',
+            __typename: this.IssuePetition,
+            PK: '0',
+            createdAt: '00/00/0000',
             detail:
               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-            atributes: {
-              type: 'Issue',
-              status: 'open',
-              currentSign: 10000,
-              totalSign: 30000,
+            owner: 'CommitteUser-1',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
             },
+            status: PetitionStatus.NEW,
+            title: 'Title1',
+            type: PetitionType.ISSUE,
           },
         },
         {
           dataIssue: {
-            id: 0,
-            title: 'Title2',
-            detail: 'Text2',
-            atributes: {
-              type: 'Issue',
-              status: 'open',
-              currentSign: 20000,
-              totalSign: 30000,
+            __typename: this.IssuePetition,
+            PK: '0',
+            createdAt: '00/00/0000',
+            detail:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+            owner: 'CommitteUser-1',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
             },
+            status: PetitionStatus.NEW,
+            title: 'Title1',
+            type: PetitionType.ISSUE,
           },
         },
         {
           dataCandidate: {
-            id: 0,
-            address: 'Address',
-            aptNumber: '14',
-            city: 'City',
-            fullName: 'Denismay Concepcion Rosa',
-            office: 'Office',
-            party: 'Party',
-            state: { name: 'Alaska', value: 'AL' },
-            zipCode: '00000',
-            atributes: {
-              type: 'Candidate',
-              status: 'open',
-              currentSign: 20000,
-              totalSign: 30000,
+            __typename: this.CandidatePetition,
+            PK: '0',
+            address: {
+              __typename: this.AddressData,
+              address: 'address',
+              city: 'city',
+              number: '22',
+              state: 'Alaska',
+              zipCode: '1200',
             },
+            createdAt: '00/00/0000',
+            detail:
+              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+            office: 'My Office',
+            owner: 'CommitteUser-1',
+            signatureSummary: {
+              __typename: this.SignatureSummary,
+              approved: 15000,
+              deadline: '00/00/0000',
+              required: 24000,
+              submitted: 20000,
+            },
+            party: 'Green',
+            status: PetitionStatus.NEW,
+            title: 'First name and last name',
+            type: PetitionType.ISSUE,
           },
         },
       ],

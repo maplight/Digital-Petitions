@@ -1,7 +1,6 @@
-import { IssuePetition } from 'src/app/core/api/API';
-import { CandidatePetitionData } from '../exports';
+import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
 
 export interface ResponsePetition {
   dataIssue?: IssuePetition;
-  dataCandidate?: CandidatePetitionData;
+  dataCandidate?: CandidatePetition;
 }

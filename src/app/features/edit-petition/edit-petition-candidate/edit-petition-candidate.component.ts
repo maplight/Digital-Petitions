@@ -10,6 +10,11 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, shareReplay, tap } from 'rxjs';
+import {
+  CandidatePetition,
+  PetitionStatus,
+  PetitionType,
+} from 'src/app/core/api/API';
 import { state, states } from 'src/app/core/states';
 import { EditPetitionCandidateService } from 'src/app/logic/petition/edit-petition-candidate.service';
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
@@ -21,24 +26,10 @@ import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-e
   templateUrl: './edit-petition-candidate.component.html',
 })
 export class EditPetitionCandidateComponent implements OnInit, OnChanges {
-  @Input() formData: ResponsePetition = {
-    dataCandidate: {
-      id: 0,
-      address: '',
-      aptNumber: '',
-      city: '',
-      fullName: '',
-      office: '',
-      party: '',
-      state: { name: '', value: '' },
-      zipCode: '',
-    },
-    dataIssue: { id: 0, detail: '', title: '' },
-  };
+  @Input() formData: ResponsePetition = {};
   @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
     new EventEmitter();
-  @Output() _submitEvent: EventEmitter<CandidatePetitionData> =
-    new EventEmitter();
+  @Output() _submitEvent: EventEmitter<CandidatePetition> = new EventEmitter();
   protected localStates: state[] = states;
   protected result$;
   protected loading$;
@@ -59,17 +50,23 @@ export class EditPetitionCandidateComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.formGroup = this._fb.group({
-      fullName: [this.formData.dataCandidate?.fullName, [Validators.required]],
+      fullName: [this.formData.dataCandidate?.title, [Validators.required]],
       office: [this.formData.dataCandidate?.office, [Validators.required]],
       party: [this.formData.dataCandidate?.party, [Validators.required]],
       address: [this.formData.dataCandidate?.address, [Validators.required]],
       aptNumber: [
-        this.formData.dataCandidate?.aptNumber,
+        this.formData.dataCandidate?.address.number,
         [Validators.required],
       ],
-      city: [this.formData.dataCandidate?.city, [Validators.required]],
-      state: [this.formData.dataCandidate?.state, [Validators.required]],
-      zipCode: [this.formData.dataCandidate?.zipCode, [Validators.required]],
+      city: [this.formData.dataCandidate?.address.city, [Validators.required]],
+      state: [
+        this.formData.dataCandidate?.address.state,
+        [Validators.required],
+      ],
+      zipCode: [
+        this.formData.dataCandidate?.address.zipCode,
+        [Validators.required],
+      ],
     });
   }
 

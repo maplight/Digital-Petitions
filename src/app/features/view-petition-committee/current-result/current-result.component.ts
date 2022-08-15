@@ -5,6 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { PetitionStatus, SignatureSummary } from 'src/app/core/api/API';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -13,12 +14,9 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 })
 export class CurrentResultComponent implements OnInit, OnChanges {
   @Input() data: ResponsePetition = {};
-  protected status: string | undefined;
-  protected currentSign: number | undefined = 0;
-  protected verifiedSign: number | undefined = 0;
-  protected deadline: string | undefined = '';
-  protected totalSign: number | undefined = 0;
-  protected percent: number = 0;
+
+  protected status: PetitionStatus | undefined;
+  protected signatureSummary: SignatureSummary | null | undefined;
 
   protected StatusStyleCurrent: string = '';
   protected StatusStyleWhite: string =
@@ -30,38 +28,32 @@ export class CurrentResultComponent implements OnInit, OnChanges {
 
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (!!this.data.dataCandidate) {
-      this.status = this.data.dataCandidate.atributes?.status;
-      this.currentSign = this.data.dataCandidate.atributes?.currentSign;
-      this.totalSign = this.data.dataCandidate.atributes?.totalSign;
-      this.verifiedSign = this.data.dataCandidate.atributes?.verifiedSign;
-      this.deadline = this.data.dataCandidate.atributes?.deadline;
-    } else if (!!this.data.dataIssue) {
-      this.status = this.data.dataIssue.atributes?.status;
-      this.currentSign = this.data.dataIssue.atributes?.currentSign;
-      this.totalSign = this.data.dataIssue.atributes?.totalSign;
-      this.verifiedSign = this.data.dataIssue.atributes?.verifiedSign;
-      this.deadline = this.data.dataIssue.atributes?.deadline;
-    }
-    if (!!this.currentSign && !!this.totalSign) {
-      this.percent = (this.currentSign / this.totalSign) * 100;
-    }
-    if (this.status) {
-      switch (this.status) {
-        case 'new':
-          this.status = 'Awaiting Approval';
+    let { status } = this.data.dataCandidate
+      ? this.data.dataCandidate
+      : this.data.dataIssue
+      ? this.data.dataIssue
+      : { status: undefined };
+    this.status = status;
+
+    let { signatureSummary } = this.data.dataCandidate
+      ? this.data.dataCandidate
+      : this.data.dataIssue
+      ? this.data.dataIssue
+      : { signatureSummary: undefined };
+    this.signatureSummary = signatureSummary;
+
+    if (status) {
+      switch (status) {
+        case PetitionStatus.NEW:
           this.StatusStyleCurrent = this.StatusStyleWhite;
           break;
-        case 'pased':
-          this.status = 'Passed';
+        case PetitionStatus.QUALIFIED:
           this.StatusStyleCurrent = this.StatusStyleGreen;
           break;
-        case 'failed':
-          this.status = 'Failed';
+        case PetitionStatus.REJECTED:
           this.StatusStyleCurrent = this.StatusStyleRed;
           break;
-        case 'open':
-          this.status = '';
+        case PetitionStatus.ACTIVE:
           this.StatusStyleCurrent = '';
           break;
       }

@@ -5,14 +5,14 @@
         Your petition has been submitted to the city for review. A confirmation
         email has been sent to you.
       </h4>
-      <ng-container *ngIf="data.dataIssue as dataIssue">
+      <ng-container *ngIf="data.dataIssue as issue">
         <div class="flex flex-col gap-4">
           <div class="flex gap-4">
             <p class="text-sm leading-[18px] font-bold min-w-[88px]">
               Petition Title:
             </p>
             <p class="text-sm leading-[18px] font-normal">
-              {{ dataIssue.title }}
+              {{ issue.title }}
             </p>
           </div>
           <div class="flex gap-4">
@@ -20,31 +20,31 @@
               Petition Text:
             </p>
             <p class="text-sm leading-[18px] font-normal">
-              {{ dataIssue.detail }}
+              {{ issue.detail }}
             </p>
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="data.dataCandidate as dataCandidate">
+      <ng-container *ngIf="data.dataCandidate as candidate">
         <div class="flex flex-col gap-4">
           <div class="flex gap-4">
             <p class="text-sm leading-[18px] font-bold min-w-[88px]">
               Candidate:
             </p>
             <p class="text-sm leading-[18px] font-normal">
-              {{ dataCandidate.fullName }}
+              {{ candidate.title }}
             </p>
           </div>
           <div class="flex gap-4">
             <p class="text-sm leading-[18px] font-bold min-w-[88px]">Office:</p>
             <p class="text-sm leading-[18px] font-normal">
-              {{ dataCandidate.office }}
+              {{ candidate.office }}
             </p>
           </div>
           <div class="flex gap-4">
             <p class="text-sm leading-[18px] font-bold min-w-[88px]">Party:</p>
             <p class="text-sm leading-[18px] font-normal">
-              {{ dataCandidate.party }}
+              {{ candidate.party }}
             </p>
           </div>
           <div class="flex gap-4">
@@ -52,9 +52,19 @@
               Address:
             </p>
             <p class="text-sm leading-[18px] font-normal">
-              {{ dataCandidate.aptNumber }}, {{ dataCandidate.address }},
-              {{ dataCandidate.city }}, {{ dataCandidate.state.name }},
-              {{ dataCandidate.zipCode }}
+              <span>Address: {{ candidate.address.address }}</span
+              ><br />
+              <span *ngIf="candidate.address.number as number"
+                >Number: {{ number }}</span
+              ><br />
+              <span *ngIf="candidate.address.city as city"
+                >City: {{ city }}</span
+              ><br />
+              <span>State: {{ candidate.address.state }}</span
+              ><br />
+              <span *ngIf="candidate.address.zipCode as code"
+                >Zip Code: {{ code }}</span
+              ><br />
             </p>
           </div>
         </div>

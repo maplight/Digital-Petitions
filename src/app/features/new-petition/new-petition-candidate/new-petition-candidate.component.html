@@ -32,14 +32,12 @@
 
         <mat-form-field>
           <mat-label>Candidate Name</mat-label>
-          <input type="text" matInput formControlName="fullName" />
+          <input type="text" matInput formControlName="name" />
           <mat-hint
             >Must include first and last name of the person you are wanting to
             submit.</mat-hint
           >
-          <mat-error
-            *ngIf="this.formGroup.get('fullName')?.errors?.['required']"
-          >
+          <mat-error *ngIf="this.formGroup.get('name')?.errors?.['required']">
             <div class="flex flex-row items-center">
               <mat-icon
                 class="w-[14px] h-[14px]"
@@ -87,89 +85,98 @@
             </div>
           </mat-error>
         </mat-form-field>
-        <h4 class="font-bold leading-5">
-          Please provide a full address for the candidate being submitted.
-        </h4>
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input type="text" matInput formControlName="address" />
-          <mat-error
-            *ngIf="this.formGroup.get('address')?.errors?.['required']"
-          >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Address is required</span>
-            </div>
-          </mat-error>
-        </mat-form-field>
+        <ng-container formGroupName="address">
+          <h4 class="font-bold leading-5">
+            Please provide a full address for the candidate being submitted.
+          </h4>
 
-        <mat-form-field>
-          <mat-label>Apt, Suite, Etc.</mat-label>
-          <input type="text" matInput formControlName="aptNumber" />
-          <mat-error
-            *ngIf="this.formGroup.get('aptNumber')?.errors?.['required']"
-          >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Apt, Suite, Etc. is required</span>
-            </div>
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Address</mat-label>
+            <input type="text" matInput formControlName="address" />
+            <mat-error
+              *ngIf="this.formGroup.get('address.address')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">Address is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>City</mat-label>
-          <input type="text" matInput formControlName="city" />
-          <mat-error *ngIf="this.formGroup.get('city')?.errors?.['required']">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">City is required</span>
-            </div>
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Apt, Suite, Etc.</mat-label>
+            <input type="text" matInput formControlName="number" />
+            <mat-error
+              *ngIf="this.formGroup.get('address.number')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">Apt, Suite, Etc. is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>State</mat-label>
-          <mat-select formControlName="state">
-            <mat-option>--</mat-option>
-            <mat-option *ngFor="let state of localStates" [value]="state">{{
-              state.name
-            }}</mat-option>
-          </mat-select>
-          <mat-error *ngIf="this.formGroup.get('state')?.errors?.['required']">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">State is required</span>
-            </div>
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input type="text" matInput formControlName="city" />
+            <mat-error
+              *ngIf="this.formGroup.get('address.city')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">City is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Zip Code</mat-label>
-          <input type="text" matInput formControlName="zipCode" />
-          <mat-error
-            *ngIf="this.formGroup.get('zipCode')?.errors?.['required']"
-          >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Zip Code is required</span>
-            </div>
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>State</mat-label>
+            <mat-select formControlName="state">
+              <mat-option>--</mat-option>
+              <mat-option
+                *ngFor="let state of localStates"
+                [value]="state.value"
+                >{{ state.name }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="this.formGroup.get('address.state')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">State is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Zip Code</mat-label>
+            <input type="text" matInput formControlName="zipCode" />
+            <mat-error
+              *ngIf="this.formGroup.get('address.zipCode')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">Zip Code is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </ng-container>
       </div>
     </dp-basic-card>
     <div class="flex justify-center w-full gap-[15px]">

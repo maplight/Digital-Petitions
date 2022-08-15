@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { IssuePetition } from 'src/app/core/api/API';
+import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
 import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 import {
   CandidatePetitionData,
@@ -61,11 +61,13 @@ export class NewPetitionComponent implements OnInit {
 
   submitIssue(data: IssuePetition) {
     this.dataResponse.dataIssue = data;
+    console.log(this.dataResponse);
     this._stepLogic.currentStep = 'result';
   }
 
-  submitCandidate(data: CandidatePetitionData) {
+  submitCandidate(data: CandidatePetition) {
     this.dataResponse.dataCandidate = data;
+    console.log(this.dataResponse);
     this._stepLogic.currentStep = 'result';
   }
 }

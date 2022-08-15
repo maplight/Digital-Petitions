@@ -1,30 +1,35 @@
-<dp-basic-card>
+<!--ISSUE-->
+<dp-basic-card *ngIf="data.dataIssue as issue">
   <div class="flex flex-col gap-6">
     <div class="flex flex-row justify-between">
-      <div class="flex flex-row gap-[3px] items-center" *ngIf="type">
+      <div class="flex flex-row gap-[3px] items-center" *ngIf="showType">
         <mat-icon
           class="w-[16px] h-[16px]"
           [svgIcon]="'custom_icons:bullet'"
         ></mat-icon>
         <p class="text-[#5C5C5C] font-normal text-sm leading-[14px]">
-          {{ type }}
+          {{ issue.type }}
         </p>
       </div>
-      <div [class]="StatusStyleCurrent" *ngIf="status">
+      <div [class]="StatusStyleCurrent" *ngIf="showStatus">
         <p class="font-normal text-sm leading-[18px]">
-          {{ status }}
+          {{ issue.status }}
         </p>
       </div>
     </div>
-    <h3
-      class="flex leading-7 font-extrabold"
-      [routerLink]="disabled ? null : basicRoute + id"
-    >
-      {{ title }}
+    <h3 *ngIf="disabled; else titleLink" class="flex leading-7 font-extrabold">
+      {{ issue.title }}
     </h3>
-    <h4 class="leading-5 font-bold" *ngIf="subtitle">{{ subtitle }}</h4>
+    <ng-template #titleLink
+      ><h3
+        class="flex leading-7 font-extrabold cursor-pointer"
+        [routerLink]="disabled ? null : basicRoute + issue.PK"
+      >
+        {{ issue.title }}
+      </h3></ng-template
+    >
     <p>
-      {{ text | cut: characters }}
+      {{ issue.detail | cut: characters }}
       <span
         *ngIf="showMoreOption"
         class="block font-bold text-primary-500 cursor-pointer"
@@ -32,23 +37,98 @@
         >{{ linkText }}</span
       >
     </p>
-    <div class="flex flex-col w-full gap-2" *ngIf="totalSign">
-      <mat-progress-bar
-        color="primary"
-        [value]="percent"
-        [bufferValue]="totalSign"
-      ></mat-progress-bar>
-      <p class="text-[14px] leading-[18px] font-bold">
-        23,000 / 25,000 Signatures Subminted
-      </p>
-    </div>
+    <ng-container *ngIf="issue.signatureSummary as signature"
+      ><div class="flex flex-col w-full gap-2" *ngIf="showSignature">
+        <mat-progress-bar
+          color="primary"
+          [value]="(signature.approved / signature.required) * 100"
+          [bufferValue]="signature.required"
+        ></mat-progress-bar>
+        <p class="text-[14px] leading-[18px] font-bold">
+          {{ signature.approved }} / {{ signature.required }} Signatures
+          Subminted
+        </p>
+      </div></ng-container
+    >
+
     <div *ngIf="buttonText" class="flex flex-row justify-end">
       <button
         class="w-full md:w-auto"
         type="submit"
         mat-flat-button
         color="primary"
-        [routerLink]="basicRoute + id"
+        [routerLink]="basicRoute + issue.PK"
+        [disabled]="disabled"
+      >
+        {{ buttonText }}
+      </button>
+    </div>
+  </div>
+</dp-basic-card>
+<!--CANDIDATE-->
+<dp-basic-card *ngIf="data.dataCandidate as candidate">
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-row justify-between">
+      <div class="flex flex-row gap-[3px] items-center" *ngIf="showType">
+        <mat-icon
+          class="w-[16px] h-[16px]"
+          [svgIcon]="'custom_icons:bullet'"
+        ></mat-icon>
+        <p class="text-[#5C5C5C] font-normal text-sm leading-[14px]">
+          {{ candidate.type }}
+        </p>
+      </div>
+      <div [class]="StatusStyleCurrent" *ngIf="showStatus">
+        <p class="font-normal text-sm leading-[18px]">
+          {{ candidate.status }}
+        </p>
+      </div>
+    </div>
+    <h3 *ngIf="disabled; else titleLink" class="flex leading-7 font-extrabold">
+      {{ candidate.title }}
+    </h3>
+    <ng-template #titleLink
+      ><h3
+        class="flex leading-7 font-extrabold cursor-pointer"
+        [routerLink]="disabled ? null : basicRoute + candidate.PK"
+      >
+        {{ candidate.title }}
+      </h3></ng-template
+    >
+    <p>
+      <span>Address: {{ candidate.address.address }}</span
+      ><br />
+      <span *ngIf="candidate.address.number as number"
+        >Number: {{ number }}</span
+      ><br />
+      <span *ngIf="candidate.address.city as city">City: {{ city }}</span
+      ><br />
+      <span>State: {{ candidate.address.state }}</span
+      ><br />
+      <span *ngIf="candidate.address.zipCode as code">Zip Code: {{ code }}</span
+      ><br />
+    </p>
+    <ng-container *ngIf="candidate.signatureSummary as signature"
+      ><div class="flex flex-col w-full gap-2" *ngIf="showSignature">
+        <mat-progress-bar
+          color="primary"
+          [value]="(signature.approved / signature.required) * 100"
+          [bufferValue]="signature.required"
+        ></mat-progress-bar>
+        <p class="text-[14px] leading-[18px] font-bold">
+          {{ signature.approved }} / {{ signature.required }} Signatures
+          Subminted
+        </p>
+      </div></ng-container
+    >
+
+    <div *ngIf="buttonText" class="flex flex-row justify-end">
+      <button
+        class="w-full md:w-auto"
+        type="submit"
+        mat-flat-button
+        color="primary"
+        [routerLink]="basicRoute + candidate.PK"
         [disabled]="disabled"
       >
         {{ buttonText }}

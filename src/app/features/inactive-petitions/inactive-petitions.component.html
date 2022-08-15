@@ -44,6 +44,9 @@
         [linkText]="'Read More'"
         *ngFor="let item of resultData"
         [data]="item"
+        [showStatus]="true"
+        [showType]="true"
+        [showSignature]="true"
         [basicRoute]="'/inactive-petitions/'"
       ></dp-petition-card>
       <ng-container [ngSwitch]="currentStep$ | async">

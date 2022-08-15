@@ -33,15 +33,9 @@ export class NewPetitionIssueService {
       (value) => !!value.result
     );
 
-    this.success$ = success$.pipe(
-      tap((value) => console.log(value)),
-      shareReplay(1)
-    );
+    this.success$ = success$.pipe(shareReplay(1));
 
-    this.error$ = error$.pipe(
-      tap((value) => console.log(value)),
-      shareReplay(1)
-    );
+    this.error$ = error$.pipe(shareReplay(1));
 
     const end$ = merge(this.success$, this.error$);
 
