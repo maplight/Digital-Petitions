@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
+
 import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 import {
   CandidatePetitionData,

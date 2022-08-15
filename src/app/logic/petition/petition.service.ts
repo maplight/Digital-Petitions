@@ -9,6 +9,7 @@ import {
   PetitionStatus,
   PetitionType,
 } from 'src/app/core/api/API';
+
 import {
   CandidatePetitionData,
   FilterData,
@@ -37,6 +38,7 @@ export class PetitionService {
       API.graphql({
         query: submitIssuePetition,
         variables: { data },
+
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<IssuePetition>>
     ).pipe(
