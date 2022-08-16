@@ -13,9 +13,7 @@ import { Result } from 'src/app/shared/models/exports';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 import { PetitionService } from './petition.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SignPetitionService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
@@ -59,7 +57,7 @@ export class SignPetitionService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: SignaturePetitionData) {
+  setSignaturePetiton(value: SignaturePetitionData) {
     this.submit$.next(value);
   }
 }
