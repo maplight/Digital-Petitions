@@ -22,13 +22,12 @@ export type CandidatePetition = {
   PK: string,
   address: AddressData,
   createdAt: string,
-  detail: string,
+  name: string,
   office: string,
   owner: string,
   party: string,
   signatureSummary?: SignatureSummary | null,
   status: PetitionStatus,
-  title: string,
   type: PetitionType,
 };
 
@@ -36,11 +35,9 @@ export type Petition = {
   __typename: "Petition",
   PK: string,
   createdAt: string,
-  detail: string,
   owner: string,
   signatureSummary?: SignatureSummary | null,
   status: PetitionStatus,
-  title: string,
   type: PetitionType,
 };
 
@@ -111,7 +108,7 @@ export type SubmitCandidatePetitionMutation = {
       zipCode?: string | null,
     },
     createdAt: string,
-    detail: string,
+    name: string,
     office: string,
     owner: string,
     party: string,
@@ -123,7 +120,6 @@ export type SubmitCandidatePetitionMutation = {
       submitted: number,
     } | null,
     status: PetitionStatus,
-    title: string,
     type: PetitionType,
   },
 };

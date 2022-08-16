@@ -6,15 +6,13 @@
 interface Petition {
   PK: ID!
   createdAt: AWSDateTime!
-  detail: String!
   owner: ID!
   signatureSummary: SignatureSummary
   status: PetitionStatus!
-  title: String!
   type: PetitionType!
 }
 
-type AddressData {
+type AddressData @aws_cognito_user_pools @aws_iam {
   address: String!
   city: String
   number: String
@@ -22,21 +20,20 @@ type AddressData {
   zipCode: String
 }
 
-type CandidatePetition implements Petition {
+type CandidatePetition implements Petition @aws_cognito_user_pools @aws_iam {
   PK: ID!
   address: AddressData!
   createdAt: AWSDateTime!
-  detail: String!
+  name: String!
   office: ID!
   owner: ID!
   party: ID!
   signatureSummary: SignatureSummary
   status: PetitionStatus!
-  title: String!
   type: PetitionType!
 }
 
-type IssuePetition implements Petition @aws_iam @aws_cognito_user_pools {
+type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
   PK: ID!
   createdAt: AWSDateTime!
   detail: String!
@@ -58,7 +55,7 @@ type Query {
   publicEcho(ping: String!): String!
 }
 
-type SignatureSummary {
+type SignatureSummary @aws_cognito_user_pools @aws_iam {
   approved: Int!
   deadline: AWSDateTime
   required: Int!

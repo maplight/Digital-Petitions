@@ -14,7 +14,7 @@ export const submitCandidatePetition = /* GraphQL */ `
         zipCode
       }
       createdAt
-      detail
+      name
       office
       owner
       party
@@ -25,7 +25,6 @@ export const submitCandidatePetition = /* GraphQL */ `
         submitted
       }
       status
-      title
       type
     }
   }

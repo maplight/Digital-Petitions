@@ -6,15 +6,15 @@ export const environment = {
   production: false,
   awsExports: {
     aws_appsync_graphqlEndpoint:
-      'https://v3kekzedizfebmdb2xsnpuhxpm.appsync-api.us-east-1.amazonaws.com/graphql',
+      'https://neouilttfjcc5ght2tbr7of7mu.appsync-api.us-east-1.amazonaws.com/graphql',
     aws_appsync_region: 'us-east-1',
     aws_appsync_authenticationType: 'AWS_IAM',
     // aws_appsync_apiKey: '',
     Auth: {
       region: 'us-east-1',
-      userPoolId: 'us-east-1_qXaczdgDI',
-      userPoolWebClientId: '2o281gcj1o7jlehien56q1o3b9',
-      identityPoolId: 'us-east-1:0d9eacef-f064-47a8-9202-82365463a569',
+      userPoolId: 'us-east-1_6rF4UWcQq',
+      userPoolWebClientId: '3bsi69d23rrr878fd728vpt6t0',
+      identityPoolId: 'us-east-1:f9e44ee7-da37-42a4-8514-ea66dc4bcb6d',
     },
   },
 };

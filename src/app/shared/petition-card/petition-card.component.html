@@ -85,14 +85,14 @@
       </div>
     </div>
     <h3 *ngIf="disabled; else titleLink" class="flex leading-7 font-extrabold">
-      {{ candidate.title }}
+      {{ candidate.name }}
     </h3>
     <ng-template #titleLink
       ><h3
         class="flex leading-7 font-extrabold cursor-pointer"
         [routerLink]="disabled ? null : basicRoute + candidate.PK"
       >
-        {{ candidate.title }}
+        {{ candidate.name }}
       </h3></ng-template
     >
     <p>

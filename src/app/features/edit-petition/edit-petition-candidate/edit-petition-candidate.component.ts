@@ -50,7 +50,7 @@ export class EditPetitionCandidateComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.formGroup = this._fb.group({
-      fullName: [this.formData.dataCandidate?.title, [Validators.required]],
+      fullName: [this.formData.dataCandidate?.name, [Validators.required]],
       office: [this.formData.dataCandidate?.office, [Validators.required]],
       party: [this.formData.dataCandidate?.party, [Validators.required]],
       address: [this.formData.dataCandidate?.address, [Validators.required]],

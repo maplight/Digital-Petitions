@@ -8,13 +8,11 @@ import {
   IssuePetitionInput,
   PetitionStatus,
   PetitionType,
+  SubmitCandidatePetitionMutation,
+  SubmitIssuePetitionMutation,
 } from 'src/app/core/api/API';
 
-import {
-  CandidatePetitionData,
-  FilterData,
-  Result,
-} from 'src/app/shared/models/exports';
+import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
@@ -40,9 +38,9 @@ export class PetitionService {
         variables: { data },
 
         authMode: 'AMAZON_COGNITO_USER_POOLS',
-      }) as Promise<GraphQLResult<IssuePetition>>
+      }) as Promise<GraphQLResult<SubmitIssuePetitionMutation>>
     ).pipe(
-      map(({ data }) => ({ result: data })),
+      map(({ data }) => ({ result: data?.submitIssuePetition })),
       catchError((error) => of({ error: error?.[0]?.message }))
     );
   }
@@ -50,35 +48,17 @@ export class PetitionService {
   newCandidatePetition(
     data: CandidatePetitionInput
   ): Observable<Result<CandidatePetition>> {
-    return of({
-      result: {
-        __typename: this.CandidatePetition,
-        PK: '0',
-        address: {
-          __typename: this.AddressData,
-          address: 'address',
-          city: 'city',
-          number: '22',
-          state: 'Alaska',
-          zipCode: '1200',
-        },
-        createdAt: '00/00/0000',
-        detail: '',
-        office: 'My Office',
-        owner: 'CommitteUser-1',
-        party: 'Green',
-        signatureSummary: {
-          __typename: this.SignatureSummary,
-          approved: 15000,
-          deadline: '00/00/0000',
-          required: 24000,
-          submitted: 20000,
-        },
-        status: PetitionStatus.ACTIVE,
-        title: 'First name and last name',
-        type: PetitionType.ISSUE,
-      },
-    }).pipe(delay(3000));
+    return from(
+      API.graphql({
+        query: submitCandidatePetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<SubmitCandidatePetitionMutation>>
+    ).pipe(
+      tap((value) => console.log(value)),
+      map(({ data }) => ({ result: data?.submitCandidatePetition })),
+      catchError((error) => of({ error: error?.[0]?.message }))
+    );
   }
 
   signaturePetition(data: SignaturePetitionData): Observable<Result<string>> {
@@ -134,7 +114,6 @@ export class PetitionService {
             zipCode: '1200',
           },
           createdAt: '00/00/0000',
-          detail: '',
           office: 'My Office',
           owner: 'CommitteUser-1',
           party: 'Green',
@@ -146,7 +125,7 @@ export class PetitionService {
             submitted: 20000,
           },
           status: PetitionStatus.ACTIVE,
-          title: 'First name and last name',
+          name: 'First name and last name',
           type: PetitionType.ISSUE,
         },
       },
@@ -209,13 +188,11 @@ export class PetitionService {
               zipCode: '1200',
             },
             createdAt: '00/00/0000',
-            detail:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
             office: '',
             owner: 'CommitteUser-1',
             party: 'Green',
             status: PetitionStatus.NEW,
-            title: 'First name and last name',
+            name: 'First name and last name',
             type: PetitionType.ISSUE,
           },
         },
@@ -281,8 +258,6 @@ export class PetitionService {
               zipCode: '1200',
             },
             createdAt: '00/00/0000',
-            detail:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
             office: 'My Office',
             owner: 'CommitteUser-1',
             party: 'Green',
@@ -294,7 +269,7 @@ export class PetitionService {
               submitted: 20000,
             },
             status: PetitionStatus.NEW,
-            title: 'First name and last name',
+            name: 'First name and last name',
             type: PetitionType.ISSUE,
           },
         },
@@ -360,8 +335,6 @@ export class PetitionService {
               zipCode: '1200',
             },
             createdAt: '00/00/0000',
-            detail:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
             office: 'My Office',
             owner: 'CommitteUser-1',
             signatureSummary: {
@@ -373,7 +346,7 @@ export class PetitionService {
             },
             party: 'Green',
             status: PetitionStatus.NEW,
-            title: 'First name and last name',
+            name: 'First name and last name',
             type: PetitionType.ISSUE,
           },
         },
