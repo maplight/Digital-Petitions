@@ -25,6 +25,22 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'petition/result-confirm-code',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import(
+        './features/result-sign-petition/result-sign-petition.module'
+      ).then((m) => m.ResultSignPetitionModule),
+  },
+  {
+    path: 'petition/confirm-code',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import(
+        './features/confirm-sign-petition/confirm-sign-petition.module'
+      ).then((m) => m.ConfirmSignPetitionModule),
+  },
+  {
     path: 'inactive-petitions',
     component: LayoutComponent,
     loadChildren: () =>
