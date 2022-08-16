@@ -60,11 +60,12 @@ export class SignUpConfirmComponent {
 
   submit() {
     if (this.formGroup.valid) {
-      this._signUpConfirmLogic.formGroupValue = this.formGroup.value;
+      this._signUpConfirmLogic.formGroupValue(this.formGroup.value);
     }
   }
   resendCode() {
-    this._signUpResendCodeLogic.formGroupValue =
-      this._activatedRoute.snapshot.params['email'];
+    this._signUpResendCodeLogic.formGroupValue(
+      this._activatedRoute.snapshot.params['email']
+    );
   }
 }

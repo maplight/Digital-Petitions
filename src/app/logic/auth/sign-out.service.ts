@@ -59,6 +59,8 @@ export class SignOutService implements OnDestroy {
     this.submit$.complete();
   }
 
+  /** This method begins the process of closing session by an authenticated user
+   */
   signOut() {
     this.submit$.next();
   }

@@ -62,7 +62,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._confirmChangeEmailLogic.formGroupValue = this.formGroup.value;
+      this._confirmChangeEmailLogic.formGroupValue(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }

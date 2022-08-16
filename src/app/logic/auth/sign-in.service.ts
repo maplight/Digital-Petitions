@@ -63,6 +63,9 @@ export class SignInService implements OnDestroy {
     this._submit.complete();
   }
 
+  /** This method begins a user's authentication process.
+  @param value: SignInCredentials type object, contains email and password data provided by the user.
+  */
   requestSignIn(value: SignInCredentials) {
     this._submit.next(value);
   }

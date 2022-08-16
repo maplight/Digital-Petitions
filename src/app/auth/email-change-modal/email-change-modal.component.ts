@@ -60,7 +60,7 @@ export class EmailChangeModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._changeEmailLogic.formGroupValue = this.formGroup.value;
+      this._changeEmailLogic.formGroupValue(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }

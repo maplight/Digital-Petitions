@@ -46,7 +46,7 @@ export class SetNewPasswordComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._setNewPasswordLogic.formGroupValue = this.formGroup.value;
+      this._setNewPasswordLogic.formGroupValue(this.formGroup.value);
     }
   }
 }

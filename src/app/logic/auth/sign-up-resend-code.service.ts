@@ -62,7 +62,10 @@ export class SignUpResendCodeService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: string) {
+  /** This method begins the process of forwarding of the confirmation code for the validation of the registration of a committee user.The user receives a new code in the contact email provided
+  @param value: Registration email supplied by the user
+  */
+  formGroupValue(value: string) {
     this.submit$.next(value);
   }
 }
