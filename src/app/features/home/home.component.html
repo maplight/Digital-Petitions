@@ -34,6 +34,7 @@
         *ngFor="let item of resultData"
         [data]="item"
         [disabled]="disabledFilter"
+        [basicRoute]="'/home/'"
       ></dp-petition-card>
       <ng-container [ngSwitch]="currentStep$ | async">
         <ng-container *ngSwitchCase="'loading'">

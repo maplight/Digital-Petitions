@@ -1,0 +1,107 @@
+<div class="flex justify-center w-full py-12">
+  <div class="flex flex-col max-w-[1197px] w-full gap-4">
+    <div class="">
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <ng-container class="flex" *ngSwitchCase="'view'">
+          <dp-return-link
+            [route]="'/home'"
+            [text]="'Back to Home'"
+          ></dp-return-link>
+        </ng-container>
+        <ng-container class="flex" *ngSwitchCase="'sign'">
+          <dp-return-link
+            class="md:hidden flex"
+            [text]="'Back to Petition'"
+            (click)="currentStep$.next('view')"
+          ></dp-return-link>
+          <dp-return-link
+            class="hidden md:flex"
+            [route]="'/home'"
+            [text]="'Back to Home'"
+          ></dp-return-link>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="flex flex-col-reverse md:flex-row justify-center gap-6 mt-4">
+      <ng-container [ngSwitch]="currentStep$ | async">
+        <ng-container *ngSwitchCase="'loading'">
+          <div class="flex flex-col items-center w-full">
+            <h3 class="leading-7 font-extrabold">Loading</h3>
+
+            <mat-progress-bar
+              mode="indeterminate"
+              color="primary"
+            ></mat-progress-bar>
+          </div>
+        </ng-container>
+        <ng-container class="flex" *ngSwitchCase="'error'">
+          <div class="flex justify-center w-full">
+            <h3 class="leading-7 font-extrabold">An error has occurred</h3>
+          </div>
+
+          <div class="flex flex-row items-center justify-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+          </div>
+        </ng-container>
+
+        <ng-container class="flex" *ngSwitchCase="'view'">
+          <div class="flex flex-col gap-5 max-w-[791px] w-full">
+            <dp-petition-view [data]="resultData"></dp-petition-view>
+          </div>
+
+          <div class="hidden md:flex md:max-w-[386px] md:w-full md:h-fit">
+            <dp-sign-this-petition
+              [data]="resultData"
+              (submitEvent)="submitPersonalData($event)"
+              (cancelEvent)="cancel($event)"
+            ></dp-sign-this-petition>
+          </div>
+        </ng-container>
+
+        <ng-container class="flex w-full" *ngSwitchCase="'sign'">
+          <div
+            class="hidden md:flex md:flex-col md:gap-5 md:max-w-[791px] md:w-full"
+          >
+            <dp-petition-view [data]="resultData"></dp-petition-view>
+          </div>
+
+          <div class="flex md:max-w-[386px] w-full h-fit">
+            <dp-sign-this-petition
+              class="w-full"
+              [data]="resultData"
+              [dataSignature]="signatureData"
+              (submitEvent)="submitPersonalData($event)"
+              (cancelEvent)="cancel($event)"
+            ></dp-sign-this-petition>
+          </div>
+        </ng-container>
+        <ng-container class="flex w-full" *ngSwitchCase="'verify'">
+          <dp-verify-sign
+            (submitEvent)="submitVerifyData($event)"
+            (cancelEvent)="cancel($event)"
+          ></dp-verify-sign>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div
+  class="fixed bottom-0 right-0 left-0 justify-center items-center z-50 py-3 px-6 bg-white md:hidden"
+  *ngIf="(currentStep$ | async) == 'view'"
+>
+  <button
+    class="w-full"
+    type="button"
+    mat-flat-button
+    color="primary"
+    cdkFocusInitial
+    (click)="currentStep$.next('sign')"
+  >
+    Sign Petition
+  </button>
+</div>
