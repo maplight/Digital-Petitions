@@ -60,7 +60,7 @@ export class EditPetitionCandidateService {
     this.submit$.complete();
   }
 
-  setCandidatePetition(value: CandidatePetitionData) {
+  setCandidatePetition(value: CandidatePetition) {
     this.submit$.next(value);
   }
 }

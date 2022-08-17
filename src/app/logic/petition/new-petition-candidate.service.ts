@@ -61,7 +61,7 @@ export class NewPetitionCandidateService {
     this.submit$.complete();
   }
 
-  setCandidatePetition(value: CandidatePetitionData) {
+  setCandidatePetition(value: CandidatePetition) {
     this.submit$.next(value);
   }
 }
