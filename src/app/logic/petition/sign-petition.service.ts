@@ -10,19 +10,20 @@ import {
   tap,
 } from 'rxjs';
 import { Result } from 'src/app/shared/models/exports';
+import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 import { PetitionService } from './petition.service';
 
 @Injectable()
-export class WithdrawPetitionService {
+export class SignPetitionService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<number> = new Subject();
+  private submit$: Subject<SignaturePetitionData> = new Subject();
 
   constructor(private _petitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.withdrawPetition(data)),
+      exhaustMap((data) => this._petitionService.signPetition(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -56,7 +57,7 @@ export class WithdrawPetitionService {
     this.submit$.complete();
   }
 
-  withdrawPetition(id: number) {
-    this.submit$.next(id);
+  setSignaturePetiton(value: SignaturePetitionData) {
+    this.submit$.next(value);
   }
 }

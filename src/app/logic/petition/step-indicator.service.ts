@@ -15,7 +15,7 @@ export class StepIndicatorService implements OnDestroy {
   ngOnDestroy(): void {
     this._currentStep$.complete();
   }
-  set currentStep(step: 'type' | 'issue' | 'candidate' | 'result') {
+  setCurrentStep(step: 'type' | 'issue' | 'candidate' | 'result') {
     this._currentStep$.next(step);
   }
 }
