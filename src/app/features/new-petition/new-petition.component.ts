@@ -53,11 +53,13 @@ export class NewPetitionComponent implements OnInit {
 
   submitIssue(data: IssuePetition) {
     this.dataResponse.dataIssue = data;
+
     this._stepLogic.setCurrentStep('result');
   }
 
   submitCandidate(data: CandidatePetition) {
     this.dataResponse.dataCandidate = data;
+
     this._stepLogic.setCurrentStep('result');
   }
 }

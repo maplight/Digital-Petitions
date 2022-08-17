@@ -58,9 +58,11 @@ export class GetPetitionService {
     this.submit$.complete();
   }
 
+
   /** This method begins the process of obtaining a petitions
   @param id: The requested request ID
   */
+
   getPetition(id: number) {
     this.submit$.next(id);
   }

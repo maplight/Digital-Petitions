@@ -60,10 +60,12 @@ export class EditPetitionCandidateService {
     this.submit$.complete();
   }
 
+
   /** This method begins the process of edition of a candidate type petition
   @param value: CandidatePetition type: contains the data of a candidate type petition provided by the user
   */
   editCandidatePetition(value: CandidatePetition) {
+
     this.submit$.next(value);
   }
 }

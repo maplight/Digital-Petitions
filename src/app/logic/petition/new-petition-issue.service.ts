@@ -55,10 +55,12 @@ export class NewPetitionIssueService {
     this.submit$.complete();
   }
 
+
   /** This method begins the process of adding a issue type petition
   @param value: IssuePetitionInput type: Contains the data of a issue type petition provided by the user
   */
   newIssuePetition(value: IssuePetitionInput): void {
+
     this.submit$.next(value);
   }
 }

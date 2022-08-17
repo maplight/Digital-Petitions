@@ -23,7 +23,7 @@ export class SignPetitionService {
 
   constructor(private _petitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.signaturePetition(data)),
+      exhaustMap((data) => this._petitionService.signPetition(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -57,10 +57,12 @@ export class SignPetitionService {
     this.submit$.complete();
   }
 
+
   /** This method begins the signing process of a petition
   @param value: SignaturePetitionData type: It contains the user contact data and the firm verification method
   */
   signPetition(value: SignaturePetitionData) {
+
     this.submit$.next(value);
   }
 }

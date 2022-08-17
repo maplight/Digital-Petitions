@@ -87,7 +87,9 @@ export class VerifySignComponent implements OnInit {
           verifyType: this.formGroup.value.verifyType,
         };
       }
+
       this._signPetitionLogic.signPetition(this.dataSignature);
+
     }
   }
 }
