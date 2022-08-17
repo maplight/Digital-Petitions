@@ -42,9 +42,7 @@ export class NewPetitionIssueComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-
       this._newPetitionIssueLogic.setIssuePetition(this.formGroup.value);
-
     }
   }
 

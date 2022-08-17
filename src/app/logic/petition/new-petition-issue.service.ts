@@ -55,9 +55,7 @@ export class NewPetitionIssueService {
     this.submit$.complete();
   }
 
-
   setIssuePetition(value: IssuePetitionData) {
-
     this.submit$.next(value);
   }
 }
