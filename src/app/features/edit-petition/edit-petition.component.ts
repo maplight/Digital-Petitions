@@ -39,8 +39,9 @@ export class EditPetitionComponent implements OnInit, AfterViewInit {
   ) {}
   ngAfterViewInit(): void {
     this.id = this._activatedRoute.snapshot.params['id'];
-    this._editPetitionLogic.petitionId =
-      this._activatedRoute.snapshot.params['id'];
+    this._editPetitionLogic.getPetition(
+      this._activatedRoute.snapshot.params['id']
+    );
   }
   ngOnInit(): void {
     this.result$ = this._editPetitionLogic.result$.subscribe((result) => {

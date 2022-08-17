@@ -61,8 +61,9 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
         .pipe(
           tap((response) => {
             if (response) {
-              this._editPetitionIssueLogic.formGroupValue =
-                this.formGroup.value;
+              this._editPetitionIssueLogic.editIssuePetition(
+                this.formGroup.value
+              );
             }
           })
         )

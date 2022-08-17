@@ -1,7 +1,12 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
+import {
+  CandidatePetition,
+  CandidatePetitionInput,
+  IssuePetition,
+  IssuePetitionInput,
+} from 'src/app/core/api/API';
 
 import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 import {
@@ -19,56 +24,40 @@ export class NewPetitionComponent implements OnInit {
 
   protected currentStep: 'type' | 'issue' | 'candidate' | 'result' = 'type';
 
-  protected dataResponseIssue: IssuePetitionData = {
-    id: 0,
-    title: '',
-    detail: '',
-  };
-  protected dataResponseCandidate: CandidatePetitionData = {
-    id: 0,
-    fullName: '',
-    office: '',
-    party: '',
-    address: '',
-    aptNumber: '',
-    city: '',
-    state: { name: '', value: '' },
-    zipCode: '',
-  };
+  protected dataResponseIssue!: IssuePetitionInput;
+  protected dataResponseCandidate!: CandidatePetitionInput;
   protected currentStep$: Observable<'type' | 'issue' | 'candidate' | 'result'>;
   constructor(
     private _stepLogic: StepIndicatorService,
     private _router: Router
   ) {
     this.currentStep$ = this._stepLogic._publicCurrentStep$;
-    this._stepLogic.currentStep = 'type';
+    this._stepLogic.setCurrentStep('type');
   }
 
   ngOnInit(): void {}
 
   cancel(step?: 'type' | 'issue' | 'candidate' | 'result') {
     step
-      ? (this._stepLogic.currentStep = step)
+      ? this._stepLogic.setCurrentStep(step)
       : this._router.navigate(['/committee/home']);
   }
 
   submitType(data: string) {
     if (data === 'Issue') {
-      this._stepLogic.currentStep = 'issue';
+      this._stepLogic.setCurrentStep('issue');
     } else if (data === 'Candidate') {
-      this._stepLogic.currentStep = 'candidate';
+      this._stepLogic.setCurrentStep('candidate');
     }
   }
 
   submitIssue(data: IssuePetition) {
     this.dataResponse.dataIssue = data;
-    console.log(this.dataResponse);
-    this._stepLogic.currentStep = 'result';
+    this._stepLogic.setCurrentStep('result');
   }
 
   submitCandidate(data: CandidatePetition) {
     this.dataResponse.dataCandidate = data;
-    console.log(this.dataResponse);
-    this._stepLogic.currentStep = 'result';
+    this._stepLogic.setCurrentStep('result');
   }
 }

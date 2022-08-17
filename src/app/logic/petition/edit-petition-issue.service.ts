@@ -58,7 +58,10 @@ export class EditPetitionIssueService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: IssuePetition) {
+  /** This method begins the process of edition of a issue type petition
+  @param value: CandidatePetition type: contains the data of a issue type petition provided by the user
+  */
+  editIssuePetition(value: IssuePetition) {
     this.submit$.next(value);
   }
 }

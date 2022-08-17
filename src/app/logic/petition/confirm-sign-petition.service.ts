@@ -12,9 +12,7 @@ import {
 import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ConfirmSignPetitionService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
@@ -59,8 +57,10 @@ export class ConfirmSignPetitionService {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
-
-  set formGroupValue(value: string) {
+  /** This method begins the process of verification of a petition signature
+  @param value: User Verification Code
+  */
+  setConfirmationCode(value: string) {
     this.submit$.next(value);
   }
 }

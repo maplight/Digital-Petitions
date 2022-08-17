@@ -45,8 +45,9 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
   ) {}
   ngAfterViewInit(): void {
     this.id = this._activatedRoute.snapshot.params['id'];
-    this._committeeLogic.petitionId =
-      this._activatedRoute.snapshot.params['id'];
+    this._committeeLogic.getPetition(
+      this._activatedRoute.snapshot.params['id']
+    );
   }
   ngOnInit(): void {
     this.result$ = this._committeeLogic.result$.subscribe((result) => {
