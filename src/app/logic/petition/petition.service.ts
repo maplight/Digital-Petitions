@@ -22,6 +22,9 @@ export class PetitionService {
   signPetition(data: SignaturePetitionData): Observable<Result<string>> {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
+  confirmSignaturePetition(data: string): Observable<Result<string>> {
+    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  }
 
   newPetitionCandidate(
     data: CandidatePetitionData

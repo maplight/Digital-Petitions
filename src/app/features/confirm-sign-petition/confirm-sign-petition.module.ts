@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmSignPetitionRoutingModule } from './confirm-sign-petition-routing.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [ConfirmSignPetitionComponent],
@@ -21,6 +22,7 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
     MatIconModule,
     ConfirmSignPetitionRoutingModule,
     ReturnLinkModule,
+    MatProgressBarModule,
   ],
 })
 export class ConfirmSignPetitionModule {}
