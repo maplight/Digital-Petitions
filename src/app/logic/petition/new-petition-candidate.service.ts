@@ -61,12 +61,10 @@ export class NewPetitionCandidateService {
     this.submit$.complete();
   }
 
-
   /** This method begins the process of adding a candidate type petition
   @param value: CandidatePetitionInput type: Contains the data of a candidate type petition provided by the user
   */
   newCandidatePetition(value: CandidatePetitionInput) {
-
     this.submit$.next(value);
   }
 }

@@ -57,7 +57,6 @@ export class WithdrawPetitionService {
     this.submit$.complete();
   }
 
-
   /** This method begins the process of withdrawal of a petition
   @param id: ID of the petition to withdraw
   */

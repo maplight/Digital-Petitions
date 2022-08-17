@@ -89,7 +89,6 @@ export class VerifySignComponent implements OnInit {
       }
 
       this._signPetitionLogic.signPetition(this.dataSignature);
-
     }
   }
 }
