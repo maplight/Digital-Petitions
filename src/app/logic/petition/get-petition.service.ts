@@ -58,7 +58,7 @@ export class GetPetitionService {
     this.submit$.complete();
   }
 
-  set petitionId(value: number) {
-    this.submit$.next(value);
+  getPetition(id: number) {
+    this.submit$.next(id);
   }
 }

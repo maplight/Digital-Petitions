@@ -53,7 +53,9 @@ export class NewPetitionCandidateComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-      this._newPetitionCandidateLogic.formGroupValue = this.formGroup.value;
+      this._newPetitionCandidateLogic.setCandidatePetition(
+        this.formGroup.value
+      );
     }
   }
   cancel() {

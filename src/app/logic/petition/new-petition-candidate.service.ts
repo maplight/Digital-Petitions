@@ -61,7 +61,9 @@ export class NewPetitionCandidateService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: CandidatePetitionInput) {
+
+  setCandidatePetition(value: CandidatePetitionData) {
+
     this.submit$.next(value);
   }
 }

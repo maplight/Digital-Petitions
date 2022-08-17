@@ -56,7 +56,7 @@ export class WithdrawPetitionService {
     this.submit$.complete();
   }
 
-  set petitionId(value: number) {
-    this.submit$.next(value);
+  withdrawPetition(id: number) {
+    this.submit$.next(id);
   }
 }

@@ -58,7 +58,9 @@ export class EditPetitionIssueService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: IssuePetition) {
+
+  setIssuePetition(value: IssuePetitionData) {
+
     this.submit$.next(value);
   }
 }

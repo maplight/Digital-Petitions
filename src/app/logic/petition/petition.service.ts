@@ -61,7 +61,7 @@ export class PetitionService {
     );
   }
 
-  signaturePetition(data: SignaturePetitionData): Observable<Result<string>> {
+  signPetition(data: SignaturePetitionData): Observable<Result<string>> {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 

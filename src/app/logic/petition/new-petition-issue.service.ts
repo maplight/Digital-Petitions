@@ -55,7 +55,9 @@ export class NewPetitionIssueService {
     this.submit$.complete();
   }
 
-  submit(value: IssuePetitionInput): void {
+
+  setIssuePetition(value: IssuePetitionData) {
+
     this.submit$.next(value);
   }
 }

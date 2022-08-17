@@ -41,34 +41,36 @@ export class NewPetitionComponent implements OnInit {
     private _router: Router
   ) {
     this.currentStep$ = this._stepLogic._publicCurrentStep$;
-    this._stepLogic.currentStep = 'type';
+    this._stepLogic.setCurrentStep('type');
   }
 
   ngOnInit(): void {}
 
   cancel(step?: 'type' | 'issue' | 'candidate' | 'result') {
     step
-      ? (this._stepLogic.currentStep = step)
+      ? this._stepLogic.setCurrentStep(step)
       : this._router.navigate(['/committee/home']);
   }
 
   submitType(data: string) {
     if (data === 'Issue') {
-      this._stepLogic.currentStep = 'issue';
+      this._stepLogic.setCurrentStep('issue');
     } else if (data === 'Candidate') {
-      this._stepLogic.currentStep = 'candidate';
+      this._stepLogic.setCurrentStep('candidate');
     }
   }
 
   submitIssue(data: IssuePetition) {
     this.dataResponse.dataIssue = data;
-    console.log(this.dataResponse);
-    this._stepLogic.currentStep = 'result';
+
+    this._stepLogic.setCurrentStep('result');
+
   }
 
   submitCandidate(data: CandidatePetition) {
     this.dataResponse.dataCandidate = data;
-    console.log(this.dataResponse);
-    this._stepLogic.currentStep = 'result';
+
+    this._stepLogic.setCurrentStep('result');
+
   }
 }
