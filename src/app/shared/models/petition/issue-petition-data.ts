@@ -1,7 +1,7 @@
 export interface IssuePetitionData {
   id: number;
   title: string;
-  text: string;
+  detail: string;
   atributes?: {
     type: string;
     status: string;

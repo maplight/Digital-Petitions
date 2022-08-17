@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
+
 import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 import {
   CandidatePetitionData,
@@ -20,7 +22,7 @@ export class NewPetitionComponent implements OnInit {
   protected dataResponseIssue: IssuePetitionData = {
     id: 0,
     title: '',
-    text: '',
+    detail: '',
   };
   protected dataResponseCandidate: CandidatePetitionData = {
     id: 0,
@@ -58,13 +60,15 @@ export class NewPetitionComponent implements OnInit {
     }
   }
 
-  submitIssue(data: IssuePetitionData) {
+  submitIssue(data: IssuePetition) {
     this.dataResponse.dataIssue = data;
+
     this._stepLogic.setCurrentStep('result');
   }
 
-  submitCandidate(data: CandidatePetitionData) {
+  submitCandidate(data: CandidatePetition) {
     this.dataResponse.dataCandidate = data;
+
     this._stepLogic.setCurrentStep('result');
   }
 }

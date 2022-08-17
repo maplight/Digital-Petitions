@@ -5,6 +5,12 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import {
+  CandidatePetition,
+  IssuePetition,
+  PetitionStatus,
+  SignatureSummary,
+} from 'src/app/core/api/API';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -12,12 +18,8 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   templateUrl: './status.component.html',
 })
 export class StatusComponent implements OnInit, OnChanges {
-  @Input() data: ResponsePetition = {};
-  protected status: string | undefined;
-  protected currentSign: number | undefined = 0;
-  protected totalSign: number | undefined;
-  protected percent: number = 0;
-
+  @Input() data!: ResponsePetition;
+  protected petition: IssuePetition | CandidatePetition | undefined;
   protected StatusStyleCurrent: string = '';
   protected StatusStyleWhite: string =
     'h-[26px] bg-[#F8F8F8] px-4 py-1 text-[#5C5C5C]  rounded';
@@ -28,34 +30,24 @@ export class StatusComponent implements OnInit, OnChanges {
 
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (!!this.data.dataCandidate) {
-      this.status = this.data.dataCandidate.atributes?.status;
-      this.currentSign = this.data.dataCandidate.atributes?.currentSign;
-      this.totalSign = this.data.dataCandidate.atributes?.totalSign;
-    } else if (!!this.data.dataIssue) {
-      this.status = this.data.dataIssue.atributes?.status;
-      this.currentSign = this.data.dataIssue.atributes?.currentSign;
-      this.totalSign = this.data.dataIssue.atributes?.totalSign;
-    }
-    if (!!this.currentSign && !!this.totalSign) {
-      this.percent = (this.currentSign / this.totalSign) * 100;
-    }
-    if (this.status) {
-      switch (this.status) {
-        case 'new':
-          this.status = 'Awaiting Approval';
+    this.petition = this.data.dataCandidate
+      ? this.data.dataCandidate
+      : this.data.dataIssue
+      ? this.data.dataIssue
+      : undefined;
+
+    if (this.petition) {
+      switch (this.petition.status) {
+        case PetitionStatus.NEW:
           this.StatusStyleCurrent = this.StatusStyleWhite;
           break;
-        case 'passed':
-          this.status = 'Passed';
+        case PetitionStatus.QUALIFIED:
           this.StatusStyleCurrent = this.StatusStyleGreen;
           break;
-        case 'failed':
-          this.status = 'Failed';
+        case PetitionStatus.REJECTED:
           this.StatusStyleCurrent = this.StatusStyleRed;
           break;
-        case 'open':
-          this.status = '';
+        case PetitionStatus.ACTIVE:
           this.StatusStyleCurrent = '';
           break;
       }

@@ -34,6 +34,8 @@
         *ngFor="let item of resultData"
         [data]="item"
         [disabled]="disabledFilter"
+        [showType]="true"
+        [showSignature]="true"
         [basicRoute]="'/home/'"
       ></dp-petition-card>
       <ng-container [ngSwitch]="currentStep$ | async">

@@ -7,6 +7,7 @@ import {
   Subscription,
   tap,
 } from 'rxjs';
+import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
 import { GetPetitionService } from 'src/app/logic/petition/exports';
 import {
   CandidatePetitionData,
@@ -61,11 +62,11 @@ export class EditPetitionComponent implements OnInit, AfterViewInit {
   cancel() {
     this._router.navigate(['/committee/home/' + this.id]);
   }
-  submitCandidate(data: CandidatePetitionData) {
+  submitCandidate(data: CandidatePetition) {
     this.resultData.dataCandidate = data;
     this.currentStep$.next('result');
   }
-  submitIssue(data: IssuePetitionData) {
+  submitIssue(data: IssuePetition) {
     this.resultData.dataIssue = data;
     this.currentStep$.next('result');
   }

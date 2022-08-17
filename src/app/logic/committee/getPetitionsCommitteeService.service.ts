@@ -24,7 +24,7 @@ export class GetPetitionsCommitteeService {
 
   constructor(private _petitionLogic: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionLogic.getCandidatePetitions(data)),
+      exhaustMap((data) => this._petitionLogic.getCommitteePetitions(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>

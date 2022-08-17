@@ -9,21 +9,25 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import {
+  CandidatePetition,
+  CandidatePetitionInput,
+} from 'src/app/core/api/API';
 
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
 
 @Injectable()
 export class NewPetitionCandidateService {
-  public error$: Observable<Result<CandidatePetitionData>>;
-  public success$: Observable<Result<CandidatePetitionData>>;
+  public error$: Observable<Result<CandidatePetition>>;
+  public success$: Observable<Result<CandidatePetition>>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<CandidatePetitionData>>;
-  private submit$: Subject<CandidatePetitionData> = new Subject();
+  public result$: Observable<Result<CandidatePetition>>;
+  private submit$: Subject<CandidatePetitionInput> = new Subject();
 
   constructor(private _petitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.newPetitionCandidate(data)),
+      exhaustMap((data) => this._petitionService.newCandidatePetition(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -57,7 +61,7 @@ export class NewPetitionCandidateService {
     this.submit$.complete();
   }
 
-  setCandidatePetition(value: CandidatePetitionData) {
+  setCandidatePetition(value: CandidatePetition) {
     this.submit$.next(value);
   }
 }

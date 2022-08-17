@@ -10,6 +10,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, shareReplay, tap } from 'rxjs';
+import { IssuePetition } from 'src/app/core/api/API';
 import { EditPetitionIssueService } from 'src/app/logic/petition/edit-petition-issue.service';
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -23,7 +24,7 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
   @Input() formData: ResponsePetition = {};
   @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
     new EventEmitter();
-  @Output() _submitEvent: EventEmitter<IssuePetitionData> = new EventEmitter();
+  @Output() _submitEvent: EventEmitter<IssuePetition> = new EventEmitter();
   protected result$;
   protected loading$;
   public formGroup!: FormGroup;
@@ -45,7 +46,7 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.formGroup = this._fb.group({
       title: [this.formData.dataIssue?.title, [Validators.required]],
-      text: [this.formData.dataIssue?.text, [Validators.required]],
+      text: [this.formData.dataIssue?.detail, [Validators.required]],
     });
   }
 

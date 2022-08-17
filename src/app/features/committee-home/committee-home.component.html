@@ -45,6 +45,9 @@
             <dp-petition-card
               *ngFor="let item of resultData"
               [data]="item"
+              [showStatus]="true"
+              [showType]="true"
+              [showSignature]="true"
               [basicRoute]="'/committee/home/'"
             ></dp-petition-card>
           </ng-container>

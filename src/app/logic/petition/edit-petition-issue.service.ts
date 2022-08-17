@@ -9,17 +9,18 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { IssuePetition } from 'src/app/core/api/API';
 
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
 
 @Injectable()
 export class EditPetitionIssueService {
-  public error$: Observable<Result<IssuePetitionData>>;
-  public success$: Observable<Result<IssuePetitionData>>;
+  public error$: Observable<Result<IssuePetition>>;
+  public success$: Observable<Result<IssuePetition>>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<IssuePetitionData>>;
-  private submit$: Subject<IssuePetitionData> = new Subject();
+  public result$: Observable<Result<IssuePetition>>;
+  private submit$: Subject<IssuePetition> = new Subject();
 
   constructor(private _editPetitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
@@ -57,7 +58,7 @@ export class EditPetitionIssueService {
     this.submit$.complete();
   }
 
-  setIssuePetition(value: IssuePetitionData) {
+  setIssuePetition(value: IssuePetition) {
     this.submit$.next(value);
   }
 }

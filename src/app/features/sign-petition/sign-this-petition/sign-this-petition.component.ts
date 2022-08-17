@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { SignatureSummary } from 'src/app/core/api/API';
 import { state, states } from 'src/app/core/states';
 import { Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -27,9 +28,6 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
     state: { name: '', value: '' },
     zipCode: '',
   };
-  protected currentSign: number | undefined = 0;
-  protected totalSign: number | undefined;
-  protected percent: number = 0;
 
   public formGroup: FormGroup;
   protected localStates: state[] = states;
@@ -43,7 +41,7 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
   >();
   @Output() submitEvent: EventEmitter<SignaturePetitionData> =
     new EventEmitter<SignaturePetitionData>();
-
+  protected signatureSummary: SignatureSummary | null | undefined;
   constructor(private _fb: FormBuilder) {
     this.formGroup = this._fb.group({
       fullName: [this.dataSignature.fullName, [Validators.required]],
@@ -69,15 +67,10 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!!this.data.dataCandidate) {
-      this.currentSign = this.data.dataCandidate.atributes?.currentSign;
-      this.totalSign = this.data.dataCandidate.atributes?.totalSign;
-    } else if (!!this.data.dataIssue) {
-      this.currentSign = this.data.dataIssue.atributes?.currentSign;
-      this.totalSign = this.data.dataIssue.atributes?.totalSign;
-    }
-    if (!!this.currentSign && !!this.totalSign) {
-      this.percent = (this.currentSign / this.totalSign) * 100;
-    }
+    this.signatureSummary = this.data.dataCandidate
+      ? this.data.dataCandidate.signatureSummary
+      : this.data.dataIssue
+      ? this.data.dataIssue.signatureSummary
+      : undefined;
   }
 }

@@ -14,7 +14,7 @@ export class EditResultPetitionComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.dataIssue) {
-      this.showMoreOption = this.data.dataIssue.text.length > 500;
+      this.showMoreOption = this.data.dataIssue.detail.length > 500;
     }
   }
 
@@ -23,7 +23,7 @@ export class EditResultPetitionComponent implements OnInit {
   }
   protected showMore() {
     this.characters = this.data.dataIssue
-      ? this.data.dataIssue.text.length
+      ? this.data.dataIssue.detail.length
       : 500;
     this.showMoreOption = false;
   }

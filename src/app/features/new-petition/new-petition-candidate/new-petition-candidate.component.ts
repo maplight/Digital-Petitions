@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { shareReplay, tap } from 'rxjs';
+import { CandidatePetition } from 'src/app/core/api/API';
 import { state, states } from 'src/app/core/states';
 import { NewPetitionCandidateService } from 'src/app/logic/petition/exports';
 import { CandidatePetitionData } from 'src/app/shared/models/exports';
@@ -21,22 +22,23 @@ export class NewPetitionCandidateComponent implements OnInit {
   @Output() cancelEvent: EventEmitter<
     'type' | 'issue' | 'candidate' | 'result'
   > = new EventEmitter();
-  @Output() submitEvent: EventEmitter<CandidatePetitionData> =
-    new EventEmitter();
+  @Output() submitEvent: EventEmitter<CandidatePetition> = new EventEmitter();
 
   constructor(
     private _fb: FormBuilder,
     private _newPetitionCandidateLogic: NewPetitionCandidateService
   ) {
     this.formGroup = this._fb.group({
-      fullName: ['', [Validators.required]],
+      name: ['', [Validators.required]],
       office: ['', [Validators.required]],
       party: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      aptNumber: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      zipCode: ['', [Validators.required]],
+      address: this._fb.group({
+        address: ['', [Validators.required]],
+        number: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        state: ['', [Validators.required]],
+        zipCode: ['', [Validators.required]],
+      }),
     });
     this.result$ = this._newPetitionCandidateLogic.result$.pipe(
       tap((result) => {

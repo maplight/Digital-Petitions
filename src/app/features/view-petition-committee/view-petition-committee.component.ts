@@ -2,9 +2,12 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
+import {
+  CandidatePetition,
+  IssuePetition,
+  PetitionStatus,
+} from 'src/app/core/api/API';
 import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
-import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
-import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { AlertWithdrawlPetitionComponent } from './alert-withdrawl-petition/alert-withdrawl-petition.component';
 import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/confirm-withdrawl-petition.component';
@@ -24,7 +27,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
   > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
     'loading'
   );
-  protected status: string | undefined;
+  protected petition: IssuePetition | CandidatePetition | undefined;
   protected StatusStyleCurrent: string = '';
   protected StatusStyleWhite: string =
     'flex bg-[#F6D523] px-4 py-2 rounded-full items-center justify-center';
@@ -60,27 +63,24 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
     this.loading$ = this._committeeLogic.loading$;
   }
   private setState(data: ResponsePetition) {
-    if (!!data.dataCandidate) {
-      this.status = data.dataCandidate.atributes?.status;
-    } else if (!!data.dataIssue) {
-      this.status = data.dataIssue.atributes?.status;
-    }
-    if (this.status) {
-      switch (this.status) {
-        case 'new':
-          this.status = 'Awaiting Approval';
+    this.petition = this.resultData.dataCandidate
+      ? this.resultData.dataCandidate
+      : this.resultData.dataIssue
+      ? this.resultData.dataIssue
+      : undefined;
+
+    if (this.petition) {
+      switch (this.petition.status) {
+        case PetitionStatus.NEW:
           this.StatusStyleCurrent = this.StatusStyleWhite;
           break;
-        case 'passed':
-          this.status = 'Passed';
+        case PetitionStatus.QUALIFIED:
           this.StatusStyleCurrent = this.StatusStyleGreen;
           break;
-        case 'failed':
-          this.status = 'Failed';
+        case PetitionStatus.REJECTED:
           this.StatusStyleCurrent = this.StatusStyleRed;
           break;
-        case 'open':
-          this.status = '';
+        case PetitionStatus.ACTIVE:
           this.StatusStyleCurrent = '';
           break;
       }
