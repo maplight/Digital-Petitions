@@ -55,8 +55,10 @@ export class ChangePasswordService implements OnDestroy {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
-
-  set formGroupValue(value: ChangePasswordData) {
+  /** This method begins the process of password change for the user of the committee currently authenticated
+  @param value: New user password
+  */
+  formGroupValue(value: ChangePasswordData) {
     this.submit$.next(value);
   }
 }

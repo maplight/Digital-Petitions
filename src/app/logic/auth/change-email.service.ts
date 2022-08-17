@@ -56,7 +56,10 @@ export class ChangeEmailService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: ChangeEmailData) {
+  /** This method begins the process of email change for the user of the committee currently authenticated
+  @param value: New user email
+  */
+  formGroupValue(value: ChangeEmailData) {
     this.submit$.next(value);
   }
 }

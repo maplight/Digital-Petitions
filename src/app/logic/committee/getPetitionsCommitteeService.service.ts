@@ -57,7 +57,9 @@ export class GetPetitionsCommitteeService {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
-
+  /** This method begins the process of obtaining a committee's petitions
+  @param value: FilterData type: request filtering criteria
+  */
   getPetitions(value: FilterData[]) {
     this.submit$.next(value);
   }

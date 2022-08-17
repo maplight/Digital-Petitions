@@ -54,7 +54,7 @@ export class SignUpComponent {
 
   submit() {
     if (this.formGroup.valid) {
-      this._signUpLogic.formGroupValue = this.formGroup.value;
+      this._signUpLogic.formGroupValue(this.formGroup.value);
     }
   }
 }

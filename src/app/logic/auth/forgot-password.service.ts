@@ -59,7 +59,10 @@ export class ForgotPasswordService {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: RecoverPasswordData) {
+  /** This method begins the process to recover a forgotten password
+  @param value: Recovery email of the user proportionate
+  */
+  formGroupValue(value: RecoverPasswordData) {
     this.submit$.next(value);
   }
 }

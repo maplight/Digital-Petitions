@@ -38,7 +38,7 @@ export class ConfirmSignPetitionComponent implements OnInit {
   ngOnInit(): void {}
   submit() {
     if (this.formGroup.valid) {
-      this._confirmSignPetitionLogic.formGroupValue = this.formGroup.value;
+      this._confirmSignPetitionLogic.setConfirmationCode(this.formGroup.value);
     }
   }
   cancel() {

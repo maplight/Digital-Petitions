@@ -74,7 +74,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
   }
   submit() {
     if (this.formGroup.valid) {
-      this._changePersonalDetailsLogic.formGroupValue = this.formGroup.value;
+      this._changePersonalDetailsLogic.formGroupValue(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }

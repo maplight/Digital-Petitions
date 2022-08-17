@@ -57,7 +57,10 @@ export class SignPetitionService {
     this.submit$.complete();
   }
 
-  setSignaturePetiton(value: SignaturePetitionData) {
+  /** This method begins the signing process of a petition
+  @param value: SignaturePetitionData type: It contains the user contact data and the firm verification method
+  */
+  signPetition(value: SignaturePetitionData) {
     this.submit$.next(value);
   }
 }

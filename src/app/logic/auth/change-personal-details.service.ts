@@ -56,7 +56,10 @@ export class ChangePersonalDetailsService implements OnDestroy {
     this.submit$.complete();
   }
 
-  set formGroupValue(value: PersonalDetailsToUpdate) {
+  /** This method begins the process of personal details change for the user of the committee currently authenticated
+  @param value: New user personal data
+  */
+  formGroupValue(value: PersonalDetailsToUpdate) {
     this.submit$.next(value);
   }
 }

@@ -57,7 +57,9 @@ export class GetPetitionsInactiveService {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
-
+  /** This method begins the process of obtaining inactive petitions
+  @param value: FilterData type: request filtering criteria
+  */
   getPetitions(value: FilterData[]) {
     this.submit$.next(value);
   }

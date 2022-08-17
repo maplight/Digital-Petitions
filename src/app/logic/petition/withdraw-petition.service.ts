@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   exhaustMap,
+  identity,
   map,
   merge,
   Observable,
@@ -55,6 +56,10 @@ export class WithdrawPetitionService {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
+
+  /** This method begins the process of withdrawal of a petition
+  @param id: ID of the petition to withdraw
+  */
 
   withdrawPetition(id: number) {
     this.submit$.next(id);
