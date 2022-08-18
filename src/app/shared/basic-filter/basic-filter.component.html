@@ -1,29 +1,54 @@
-<div class="hidden md:flex md:w-full md:flex-col">
-  <div class="flex w-full justify-end">
-    <p class="font-bold leading-5">{{ filterName }}</p>
-  </div>
-  <div class="flex w-full pt-[11px]">
-    <mat-chip-list [disabled]="disabled">
-      <mat-chip
-        *ngFor="let item of elements"
-        [class]="item.active ? activeStyle : inActiveStyle"
-        (click)="sendFilter(item)"
-        >{{ item.name }}</mat-chip
-      >
-    </mat-chip-list>
-  </div>
-</div>
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'Both'">
+    <div class="hidden md:flex md:w-full md:flex-col">
+      <div class="flex w-full justify-end">
+        <p class="font-bold leading-5">{{ filterName }}</p>
+      </div>
+      <div class="flex w-full pt-[11px]">
+        <mat-chip-list [disabled]="disabled">
+          <mat-chip
+            *ngFor="let item of elements"
+            [class]="item.active ? activeStyle : inActiveStyle"
+            (click)="sendFilter(item)"
+            >{{ item.name }}</mat-chip
+          >
+        </mat-chip-list>
+      </div>
+    </div>
 
-<div class="md:hidden flex w-full flex-col">
-  <mat-form-field appearance="fill" class="border border-[#D7D7D7] rounded-lg">
-    <mat-label>{{ filterName }}</mat-label>
-    <mat-select [value]="itemActive$ | async" [disabled]="disabled">
-      <mat-option
-        *ngFor="let item of elements"
-        [value]="item.value"
-        (click)="sendFilter(item)"
-        >{{ item.name }}</mat-option
+    <div class="md:hidden flex w-full flex-col">
+      <mat-form-field
+        appearance="fill"
+        class="border border-[#D7D7D7] rounded-lg"
       >
-    </mat-select>
-  </mat-form-field>
-</div>
+        <mat-label>{{ filterName }}</mat-label>
+        <mat-select [value]="itemActive$ | async" [disabled]="disabled">
+          <mat-option
+            *ngFor="let item of elements"
+            [value]="item.value"
+            (click)="sendFilter(item)"
+            >{{ item.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'Select'">
+    <div class="flex w-full flex-col">
+      <mat-form-field
+        appearance="fill"
+        class="border border-[#D7D7D7] rounded-lg"
+      >
+        <mat-label>{{ filterName }}</mat-label>
+        <mat-select [value]="itemActive$ | async" [disabled]="disabled">
+          <mat-option
+            *ngFor="let item of elements"
+            [value]="item.value"
+            (click)="sendFilter(item)"
+            >{{ item.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </ng-container>
+</ng-container>
