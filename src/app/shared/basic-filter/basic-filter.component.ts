@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './basic-filter.component.html',
 })
 export class BasicFilterComponent implements OnInit {
+  @Input() mode: 'Select' | 'Chip' | 'Both' = 'Both';
   @Input() disabled: boolean = false;
   @Input() filterName: string = '';
   @Input() elements: { name: string; value: string; active: boolean }[] = [];
