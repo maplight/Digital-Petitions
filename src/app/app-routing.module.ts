@@ -154,7 +154,9 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('./city-staff/home/home.module').then((m) => m.HomeModule),
+          import('./features/city-staff-home/city-staff-home.module').then(
+            (m) => m.CityStaffHomeModule
+          ),
       },
       {
         path: 'admin',
