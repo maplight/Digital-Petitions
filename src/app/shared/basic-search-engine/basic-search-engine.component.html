@@ -1,7 +1,12 @@
 <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
   <mat-form-field class="border border-[#D7D7D7] rounded-lg">
     <mat-label>Search</mat-label>
-    <input type="text" matInput formControlName="code" [disabled]="disabled" />
+    <input
+      type="text"
+      matInput
+      formControlName="keyword"
+      [disabled]="disabled"
+    />
     <button
       type="button"
       matPrefix

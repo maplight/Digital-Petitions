@@ -12,8 +12,6 @@ import {
 })
 export class BasicSearchEngineComponent implements OnInit {
   @Input() disabled: boolean = false;
-  @Input() filterName: string = '';
-  @Input() elements: { name: string; value: string; active: boolean }[] = [];
   @Output() event: EventEmitter<string> = new EventEmitter();
   public formGroup: FormGroup;
 
