@@ -18,8 +18,7 @@ export class PetitionCardComponent implements OnInit, OnChanges {
   @Input() showType: boolean = false;
   @Input() showStatus: boolean = false;
   @Input() showSignature: boolean = false;
-
-  protected characters: number = 500;
+  @Input() characters: number = 500;
   protected showMoreOption: boolean = false;
 
   protected StatusStyleCurrent: string = '';
@@ -62,13 +61,13 @@ export class PetitionCardComponent implements OnInit, OnChanges {
     if (!this.disabled) {
       this.characters = this.data.dataIssue
         ? this.data.dataIssue.detail.length
-        : 500;
+        : this.characters;
       this.showMoreOption = false;
     }
   }
   ngOnInit(): void {
     if (this.data.dataIssue) {
-      this.showMoreOption = this.data.dataIssue.detail.length > 500;
+      this.showMoreOption = this.data.dataIssue.detail.length > this.characters;
     }
   }
 }
