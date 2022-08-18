@@ -21,7 +21,12 @@
 <mat-drawer-container
   class="absolute top-25 h-[calc(100vh-100px)] w-full overflow-y-auto"
 >
-  <mat-drawer #drawer class="w-64" mode="side" [opened]="showMenu">
+  <mat-drawer
+    #drawer
+    class="max-w-[60px] md:max-w-[256px] w-full"
+    mode="side"
+    [opened]="showMenu"
+  >
     <dp-side-menu></dp-side-menu>
   </mat-drawer>
 
