@@ -1,6 +1,6 @@
 <!--ISSUE-->
 <dp-basic-card *ngIf="data.dataIssue as issue">
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-5">
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-[3px] items-center" *ngIf="showType">
         <mat-icon
@@ -48,8 +48,14 @@
           {{ signature.approved }} / {{ signature.required }} Signatures
           Subminted
         </p>
-      </div></ng-container
-    >
+      </div>
+    </ng-container>
+
+    <div class="flex flex-col w-full gap-2" *ngIf="showExtraDates">
+      <p class="text-sm leading-[18px]">
+        <b>Date Submitted:</b> {{ issue.createdAt }}
+      </p>
+    </div>
 
     <div *ngIf="buttonText" class="flex flex-row justify-end">
       <button
@@ -67,7 +73,7 @@
 </dp-basic-card>
 <!--CANDIDATE-->
 <dp-basic-card *ngIf="data.dataCandidate as candidate">
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-5">
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-[3px] items-center" *ngIf="showType">
         <mat-icon
@@ -95,17 +101,21 @@
         {{ candidate.name }}
       </h3></ng-template
     >
+    <h4 class="flex leading-5 font-bold">
+      {{ candidate.office }} - {{ candidate.party }}
+    </h4>
     <p>
-      <span>Address: {{ candidate.address.address }}</span
+      <span><b>Address:</b> {{ candidate.address.address }}</span
       ><br />
       <span *ngIf="candidate.address.number as number"
-        >Number: {{ number }}</span
+        ><b>Number:</b> {{ number }}</span
       ><br />
-      <span *ngIf="candidate.address.city as city">City: {{ city }}</span
+      <span *ngIf="candidate.address.city as city"><b>City: </b>{{ city }}</span
       ><br />
-      <span>State: {{ candidate.address.state }}</span
+      <span><b>State:</b> {{ candidate.address.state }}</span
       ><br />
-      <span *ngIf="candidate.address.zipCode as code">Zip Code: {{ code }}</span
+      <span *ngIf="candidate.address.zipCode as code"
+        ><b>Zip Code:</b> {{ code }}</span
       ><br />
     </p>
     <ng-container *ngIf="candidate.signatureSummary as signature"
@@ -121,6 +131,11 @@
         </p>
       </div></ng-container
     >
+    <div class="flex flex-col w-full gap-2" *ngIf="showExtraDates">
+      <p class="text-sm leading-[18px]">
+        <b>Date Submitted:</b> {{ candidate.createdAt }}
+      </p>
+    </div>
 
     <div *ngIf="buttonText" class="flex flex-row justify-end">
       <button
