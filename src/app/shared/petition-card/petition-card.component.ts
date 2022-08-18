@@ -18,6 +18,7 @@ export class PetitionCardComponent implements OnInit, OnChanges {
   @Input() showType: boolean = false;
   @Input() showStatus: boolean = false;
   @Input() showSignature: boolean = false;
+  @Input() showExtraDates: boolean = false;
   @Input() characters: number = 500;
   protected showMoreOption: boolean = false;
 

@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  Subscription,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import { AccountService } from 'src/app/core/account-service/account.service';
 import { PetitionStatus, PetitionType } from 'src/app/core/api/API';
+import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
@@ -9,74 +18,17 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   templateUrl: './city-staff-home.component.html',
 })
 export class CityStaffHomeComponent implements OnInit {
-  private IssuePetition: 'IssuePetition' = 'IssuePetition';
-  private CandidatePetition: 'CandidatePetition' = 'CandidatePetition';
-  private AddressData: 'AddressData' = 'AddressData';
-  private SignatureSummary: 'SignatureSummary' = 'SignatureSummary';
+  private _unsubscribeAll: Subject<void> = new Subject();
   protected username: string = '';
-  protected resultData: ResponsePetition[] = [
-    {
-      dataIssue: {
-        __typename: this.IssuePetition,
-        PK: '0',
-        createdAt: '00/00/0000',
-        detail:
-          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-        owner: 'CommitteUser-1',
-        signatureSummary: {
-          __typename: this.SignatureSummary,
-          approved: 15000,
-          deadline: '00/00/0000',
-          required: 24000,
-          submitted: 20000,
-        },
-        status: PetitionStatus.NEW,
-        title: 'Title1',
-        type: PetitionType.ISSUE,
-      },
-    },
-    {
-      dataIssue: {
-        __typename: this.IssuePetition,
-        PK: '0',
-        createdAt: '00/00/0000',
-        detail:
-          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-        owner: 'CommitteUser-1',
-
-        status: PetitionStatus.NEW,
-        title: 'Title1',
-        type: PetitionType.ISSUE,
-      },
-    },
-    {
-      dataCandidate: {
-        __typename: this.CandidatePetition,
-        PK: '0',
-        address: {
-          __typename: this.AddressData,
-          address: 'address',
-          city: 'city',
-          number: '22',
-          state: 'Alaska',
-          zipCode: '1200',
-        },
-        createdAt: '00/00/0000',
-        office: '',
-        owner: 'CommitteUser-1',
-        party: 'Green',
-        status: PetitionStatus.NEW,
-        name: 'First name and last name',
-        type: PetitionType.ISSUE,
-      },
-    },
-  ];
-
+  protected resultData: ResponsePetition[] = [];
+  protected result$!: Subscription;
+  protected error: string | undefined;
+  protected loading$!: Observable<boolean>;
   protected currentStep$: BehaviorSubject<
     'loading' | 'empty' | 'contents' | 'error' | 'loadingUp'
   > = new BehaviorSubject<
     'loading' | 'empty' | 'contents' | 'error' | 'loadingUp'
-  >('contents');
+  >('loading');
   protected disabledFilter: boolean = true;
   protected disabledSeeMore: boolean = true;
   private currentFilter: FilterData[] = [
@@ -114,7 +66,76 @@ export class CityStaffHomeComponent implements OnInit {
     { name: 'Pased', value: 'pased', active: false },
     { name: 'Failed', value: 'failed', active: false },
   ];
-  constructor() {}
+  constructor(
+    private _getPetitionsActiveLogic: GetPetitionsActiveService,
+    private _accountLogic: AccountService
+  ) {}
+  ngAfterViewInit(): void {
+    this._getPetitionsActiveLogic.getPetitions(this.currentFilter);
+  }
+  ngOnInit(): void {
+    this._accountLogic.currentUser$
+      .pipe(
+        tap((data) => {
+          if (!!data) {
+            this.username = data.attributes.given_name;
+          }
+        }),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe();
+    this.result$ = this._getPetitionsActiveLogic.result$.subscribe((result) => {
+      this.disabledFilter = false;
+      this.disabledSeeMore = false;
+      if (!!result.result) {
+        this.resultData = this.resultData.concat(result.result);
+        this.currentStep$.next('contents');
+      } else {
+        this.error = result.error;
+        this.currentStep$.next('error');
+      }
+    });
+    this.loading$ = this._getPetitionsActiveLogic.loading$;
+  }
+  filterCategory(value: string) {
+    this.disabledFilter = true;
+    this.disabledSeeMore = true;
+    this.currentFilter[0].value = value;
 
-  ngOnInit(): void {}
+    this.currentStep$.next('loadingUp');
+    this._getPetitionsActiveLogic.getPetitions(this.currentFilter);
+  }
+
+  filterStatus(value: string) {
+    this.disabledFilter = true;
+    this.disabledSeeMore = true;
+    this.currentFilter[1].value = value;
+
+    this.currentStep$.next('loadingUp');
+    this._getPetitionsActiveLogic.getPetitions(this.currentFilter);
+  }
+  pageNumber() {
+    this.disabledFilter = true;
+    this.disabledSeeMore = true;
+    this.currentStep$.next('loading');
+    this.currentFilter[0].page += 1;
+    this.currentFilter[1].page += 1;
+    this.currentFilter[2].page += 1;
+    this._getPetitionsActiveLogic.getPetitions(this.currentFilter);
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+
+  search(value: string) {
+    if (value.length > 0) {
+      this.disabledFilter = true;
+      this.disabledSeeMore = true;
+      this.currentFilter[2].value = value;
+      this.currentStep$.next('loadingUp');
+      this._getPetitionsActiveLogic.getPetitions(this.currentFilter);
+    }
+  }
 }
