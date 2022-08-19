@@ -11,6 +11,7 @@ import { ViewPetitionCityStaffRoutingModule } from './view-petition-city-staff-r
 import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
 import { NewBoxModule } from './new-box/new-box.module';
 import { CualifiedBoxModule } from './cualified-box/cualified-box.module';
+import { ApproveDialogModule } from './approve-dialog/approve-dialog.module';
 
 @NgModule({
   declarations: [ViewPetitionCityStaffComponent],
@@ -25,6 +26,7 @@ import { CualifiedBoxModule } from './cualified-box/cualified-box.module';
     ViewPetitionCityStaffRoutingModule,
     NewBoxModule,
     CualifiedBoxModule,
+    ApproveDialogModule,
   ],
   providers: [GetPetitionService],
 })
