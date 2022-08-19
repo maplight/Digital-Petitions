@@ -137,6 +137,13 @@ export class PetitionService {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
+  changePetitionStatus(data: {
+    id: string;
+    status: string;
+  }): Observable<Result<string>> {
+    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  }
+
   getCommitteePetitions(
     filter: FilterData[]
   ): Observable<Result<ResponsePetition[]>> {
