@@ -7,29 +7,61 @@
       ></dp-return-link>
     </div>
 
-    <div class="flex flex-col-reverse md:flex-row justify-center gap-6 mt-4">
-      <div class="flex flex-col gap-5 max-w-[791px] w-full">
-        <dp-petition-view
-          [data]="resultData"
-          [showStatus]="true"
-        ></dp-petition-view>
-      </div>
-      <div class="flex flex-col max-w-[386px] w-full h-fit gap-[11px]">
-        <dp-current-result-city-staff
-          [data]="resultData"
-        ></dp-current-result-city-staff>
-        <ng-container [ngSwitch]="petition?.status">
-          <ng-container class="flex" *ngSwitchCase="'NEW'">
-            <dp-new-box></dp-new-box>
-          </ng-container>
-          <ng-container class="flex" *ngSwitchCase="'QUALIFIED'">
-            <dp-cualified-box [showDownloadPacket]="true"></dp-cualified-box>
-          </ng-container>
-          <ng-container class="flex" *ngSwitchCase="'CANCELED'">
-            <dp-cualified-box></dp-cualified-box>
-          </ng-container>
-        </ng-container>
-      </div>
-    </div>
+    <ng-container [ngSwitch]="currentStep$ | async">
+      <ng-container *ngSwitchCase="'loading'">
+        <div class="flex justify-center w-full">
+          <h3 class="leading-7 font-extrabold">Loading</h3>
+        </div>
+
+        <mat-progress-bar
+          mode="indeterminate"
+          color="primary"
+        ></mat-progress-bar>
+      </ng-container>
+      <ng-container class="flex" *ngSwitchCase="'error'">
+        <div class="flex justify-center w-full">
+          <h3 class="leading-7 font-extrabold">An error has occurred</h3>
+        </div>
+
+        <div class="flex flex-row items-center justify-center">
+          <mat-icon
+            class="w-[14px] h-[14px]"
+            [svgIcon]="'custom_icons:c_close'"
+          ></mat-icon>
+          <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
+        </div>
+      </ng-container>
+
+      <ng-container class="flex" *ngSwitchCase="'contents'">
+        <div
+          class="flex flex-col-reverse md:flex-row justify-center gap-6 mt-4"
+        >
+          <div class="flex flex-col gap-5 max-w-[791px] w-full">
+            <dp-petition-view
+              [data]="resultData"
+              [showStatus]="true"
+            ></dp-petition-view>
+          </div>
+          <div class="flex flex-col max-w-[386px] w-full h-fit gap-[11px]">
+            <dp-current-result-city-staff
+              [data]="resultData"
+            ></dp-current-result-city-staff>
+            <ng-container [ngSwitch]="petition?.status">
+              <ng-container class="flex" *ngSwitchCase="'NEW'">
+                <dp-new-box></dp-new-box>
+              </ng-container>
+              <ng-container class="flex" *ngSwitchCase="'QUALIFIED'">
+                <dp-cualified-box
+                  [showDownloadPacket]="true"
+                ></dp-cualified-box>
+              </ng-container>
+              <ng-container class="flex" *ngSwitchCase="'CANCELED'">
+                <dp-cualified-box></dp-cualified-box>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
 </div>

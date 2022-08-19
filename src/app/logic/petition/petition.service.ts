@@ -82,26 +82,26 @@ export class PetitionService {
   getPetition(data: number): Observable<Result<ResponsePetition>> {
     return of({
       result: {
-        /**
-          dataIssue: {
-            __typename: this.IssuePetition,
-            PK: '0',
-            createdAt: '00/00/0000',
-            detail:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-            owner: 'CommitteUser-1',
-            signatureSummary: {
-              __typename: this.SignatureSummary,
-              approved: 15000,
-              deadline: '00/00/0000',
-              required: 24000,
-              submitted: 20000,
-            },
-            status: PetitionStatus.ACTIVE,
-            title: 'Title1',
-            type: PetitionType.ISSUE,
+        dataIssue: {
+          __typename: this.IssuePetition,
+          PK: '0',
+          createdAt: '00/00/0000',
+          detail:
+            'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
+          owner: 'CommitteUser-1',
+          signatureSummary: {
+            __typename: this.SignatureSummary,
+            approved: 15000,
+            deadline: '00/00/0000',
+            required: 24000,
+            submitted: 20000,
           },
-        */
+          status: PetitionStatus.NEW,
+          title: 'Title1',
+          type: PetitionType.ISSUE,
+        },
+
+        /** 
         dataCandidate: {
           __typename: this.CandidatePetition,
           PK: '0',
@@ -126,10 +126,11 @@ export class PetitionService {
           },
           status: PetitionStatus.ACTIVE,
           name: 'First name and last name',
-          type: PetitionType.ISSUE,
+          type: PetitionType.CANDIDATE,
         },
+        */
       },
-    }).pipe(delay(3000));
+    }).pipe(delay(1000));
   }
 
   withdrawPetition(data: number): Observable<Result<string>> {

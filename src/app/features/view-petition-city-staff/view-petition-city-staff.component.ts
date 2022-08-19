@@ -1,51 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import {
   CandidatePetition,
   IssuePetition,
   PetitionStatus,
-  PetitionType,
 } from 'src/app/core/api/API';
-
+import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
+import { AlertWithdrawlPetitionComponent } from '../view-petition-committee/alert-withdrawl-petition/alert-withdrawl-petition.component';
+import { ConfirmWithdrawlPetitionComponent } from '../view-petition-committee/confirm-withdrawl-petition/confirm-withdrawl-petition.component';
 
 @Component({
   selector: 'dp-view-petition-city-staff',
   templateUrl: './view-petition-city-staff.component.html',
 })
 export class ViewPetitionCityStaffComponent implements OnInit {
-  private IssuePetition: 'IssuePetition' = 'IssuePetition';
-  private CandidatePetition: 'CandidatePetition' = 'CandidatePetition';
-  private AddressData: 'AddressData' = 'AddressData';
-  private SignatureSummary: 'SignatureSummary' = 'SignatureSummary';
-  protected resultData: ResponsePetition = {
-    dataIssue: {
-      __typename: this.IssuePetition,
-      PK: '0',
-      createdAt: '00/00/0000',
-      detail:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-      owner: 'CommitteUser-1',
-      signatureSummary: {
-        __typename: this.SignatureSummary,
-        approved: 15000,
-        deadline: '00/00/0000',
-        required: 24000,
-        submitted: 20000,
-      },
-      status: PetitionStatus.NEW,
-      title: 'Title1',
-      type: PetitionType.ISSUE,
-    },
-  };
+  protected id: string = '0';
+  protected resultData: ResponsePetition = {};
+  protected result$!: Subscription;
+  protected error: string | undefined;
+  protected loading$!: Observable<boolean>;
 
+  protected currentStep$: BehaviorSubject<
+    'loading' | 'empty' | 'contents' | 'error'
+  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
+    'loading'
+  );
   protected petition: IssuePetition | CandidatePetition | undefined;
-  constructor() {}
+  constructor(
+    private _committeeLogic: GetPetitionService,
 
-  ngOnInit(): void {
-    this.setState();
+    private _activatedRoute: ActivatedRoute,
+    public _alertDialogRef: MatDialogRef<AlertWithdrawlPetitionComponent>,
+    public _confirmDalogRef: MatDialogRef<ConfirmWithdrawlPetitionComponent>,
+    public _dialog: MatDialog
+  ) {}
+  ngAfterViewInit(): void {
+    this.id = this._activatedRoute.snapshot.params['id'];
+    this._committeeLogic.getPetition(
+      this._activatedRoute.snapshot.params['id']
+    );
   }
-  private setState() {
+  ngOnInit(): void {
+    this.result$ = this._committeeLogic.result$.subscribe((result) => {
+      if (!!result.result) {
+        this.resultData = result.result;
+        this.setState(result.result);
+        this.currentStep$.next('contents');
+      } else {
+        this.error = result.error;
+        this.currentStep$.next('error');
+      }
+    });
+    this.loading$ = this._committeeLogic.loading$;
+  }
+  private setState(data: ResponsePetition) {
     this.petition = this.resultData.dataCandidate
       ? this.resultData.dataCandidate
       : this.resultData.dataIssue
