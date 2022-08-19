@@ -11,7 +11,7 @@
     </h4>
   </div>
 
-  <p class="w-full justify-center text-center">
+  <p *ngIf="data.message != ''" class="w-full justify-center text-center">
     {{ data.message }}
   </p>
   <div class="w-full flex justify-center">
