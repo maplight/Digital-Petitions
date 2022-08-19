@@ -8,12 +8,12 @@
           [svgIcon]="'custom_icons:bullet'"
         ></mat-icon>
         <p class="text-[#5C5C5C] font-normal text-sm leading-[14px]">
-          {{ issue.type }}
+          {{ issue.type | petitionType }}
         </p>
       </div>
       <div [class]="StatusStyleCurrent" *ngIf="showStatus">
         <p class="font-normal text-sm leading-[18px]">
-          {{ issue.status }}
+          {{ issue.status | petitionStatus }}
         </p>
       </div>
     </div>
@@ -81,12 +81,12 @@
           [svgIcon]="'custom_icons:bullet'"
         ></mat-icon>
         <p class="text-[#5C5C5C] font-normal text-sm leading-[14px]">
-          {{ candidate.type }}
+          {{ candidate.type | petitionType }}
         </p>
       </div>
       <div [class]="StatusStyleCurrent" *ngIf="showStatus">
         <p class="font-normal text-sm leading-[18px]">
-          {{ candidate.status }}
+          {{ candidate.status | petitionStatus }}
         </p>
       </div>
     </div>

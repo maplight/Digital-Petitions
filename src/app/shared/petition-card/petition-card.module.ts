@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CutModule } from 'src/app/pipes/cut/cut.module';
 import { RouterModule } from '@angular/router';
+import { PetitionTypeModule } from 'src/app/pipes/petition-type/petition-type.module';
+import { PetitionStatusModule } from 'src/app/pipes/petition-status/petition-status.module';
 
 @NgModule({
   declarations: [PetitionCardComponent],
@@ -18,6 +20,8 @@ import { RouterModule } from '@angular/router';
     MatProgressBarModule,
     CutModule,
     RouterModule,
+    PetitionTypeModule,
+    PetitionStatusModule,
   ],
   exports: [PetitionCardComponent],
 })
