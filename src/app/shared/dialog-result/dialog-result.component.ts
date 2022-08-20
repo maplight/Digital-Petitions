@@ -1,5 +1,9 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'dp-change-password-result',
@@ -7,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogResultComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<DialogResultComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA)
     public data: { title: string; message: string; success: boolean }
   ) {}
@@ -15,6 +19,6 @@ export class DialogResultComponent implements OnInit {
   ngOnInit(): void {}
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialog.closeAll();
   }
 }

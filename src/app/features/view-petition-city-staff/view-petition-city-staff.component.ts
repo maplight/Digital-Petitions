@@ -11,8 +11,6 @@ import { ChangePetitionStatusService } from 'src/app/logic/petition/change-petit
 import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
-import { AlertWithdrawlPetitionComponent } from '../view-petition-committee/alert-withdrawl-petition/alert-withdrawl-petition.component';
-import { ConfirmWithdrawlPetitionComponent } from '../view-petition-committee/confirm-withdrawl-petition/confirm-withdrawl-petition.component';
 import { ApproveDialogComponent } from './approve-dialog/approve-dialog.component';
 import { DenyAlertComponent } from './deny-alert/deny-alert.component';
 
@@ -90,12 +88,12 @@ export class ViewPetitionCityStaffComponent implements OnInit {
   }
 
   approveDialog(): void {
+    console.log('kk');
     const dialogRef = this._dialog.open(ApproveDialogComponent, {
       width: '690px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed ' + result);
+      data: {
+        id: this.id,
+      },
     });
   }
 

@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ChangePetitionStatusService } from 'src/app/logic/petition/change-petition-status.service';
 
 @NgModule({
   declarations: [ApproveDialogComponent],
@@ -27,6 +29,7 @@ import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.m
     MatDatepickerModule,
     MatNativeDateModule,
     DialogResultModule,
+    MatProgressBarModule,
   ],
   exports: [ApproveDialogComponent],
 })
