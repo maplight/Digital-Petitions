@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { ChangePetitionStatusService } from 'src/app/logic/petition/change-petition-status.service';
+import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ApproveAlertComponent } from '../approve-alert/approve-alert.component';
 
@@ -20,7 +20,7 @@ export class ApproveDialogComponent implements OnInit {
   constructor(
     public _dialog: MatDialog,
     private _fb: FormBuilder,
-    private _changePetitionStatusLogic: ChangePetitionStatusService,
+    private _approvePetitionLogic: ApprovePetitionService,
     @Inject(MAT_DIALOG_DATA)
     public data: { id: string }
   ) {
@@ -31,23 +31,21 @@ export class ApproveDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.result$ = this._changePetitionStatusLogic.result$.subscribe(
-      (result) => {
-        if (!!result.result) {
-          this._dialog.open(DialogResultComponent, {
-            width: '520px',
-            data: {
-              title: 'Petition Approved!',
-              message: '',
-              success: true,
-            },
-          });
-        } else {
-          this.error = result.error;
-        }
+    this.result$ = this._approvePetitionLogic.result$.subscribe((result) => {
+      if (!!result.result) {
+        this._dialog.open(DialogResultComponent, {
+          width: '520px',
+          data: {
+            title: 'Petition Approved!',
+            message: '',
+            success: true,
+          },
+        });
+      } else {
+        this.error = result.error;
       }
-    );
-    this.loading$ = this._changePetitionStatusLogic.loading$;
+    });
+    this.loading$ = this._approvePetitionLogic.loading$;
   }
 
   submit() {
@@ -58,9 +56,9 @@ export class ApproveDialogComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this._changePetitionStatusLogic.changePetitionStatus(
-            this.data.id,
-            'approve'
+          this._approvePetitionLogic.approvePetition(
+            this.formGroup.value,
+            this.data.id
           );
         } else {
           this._dialog.closeAll();

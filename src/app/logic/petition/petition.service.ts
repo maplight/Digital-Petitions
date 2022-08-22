@@ -137,10 +137,14 @@ export class PetitionService {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
-  changePetitionStatus(data: {
+  approvePetition(data: {
+    data: { deadline: string; signatures: string };
     id: string;
-    status: string;
   }): Observable<Result<string>> {
+    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  }
+
+  denyPetition(data: { id: string }): Observable<Result<string>> {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 

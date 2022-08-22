@@ -14,7 +14,7 @@ import { CualifiedBoxModule } from './cualified-box/cualified-box.module';
 import { ApproveDialogModule } from './approve-dialog/approve-dialog.module';
 import { DenyAlertModule } from './deny-alert/deny-alert.module';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
-import { ChangePetitionStatusService } from 'src/app/logic/petition/change-petition-status.service';
+import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.service';
 
 @NgModule({
   declarations: [ViewPetitionCityStaffComponent],
@@ -33,6 +33,6 @@ import { ChangePetitionStatusService } from 'src/app/logic/petition/change-petit
     DenyAlertModule,
     DialogResultModule,
   ],
-  providers: [GetPetitionService, ChangePetitionStatusService],
+  providers: [GetPetitionService, DenyPetitionService],
 })
 export class ViewPetitionCityStaffModule {}

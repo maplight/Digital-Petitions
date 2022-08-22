@@ -7,7 +7,8 @@ import {
   IssuePetition,
   PetitionStatus,
 } from 'src/app/core/api/API';
-import { ChangePetitionStatusService } from 'src/app/logic/petition/change-petition-status.service';
+import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
+import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.service';
 import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -38,7 +39,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
   protected petition: IssuePetition | CandidatePetition | undefined;
   constructor(
     private _committeeLogic: GetPetitionService,
-    private _changePetitionStatusLogic: ChangePetitionStatusService,
+    private _denyPetitionLogic: DenyPetitionService,
     private _dialog: MatDialog,
     private _activatedRoute: ActivatedRoute
   ) {}
@@ -61,23 +62,21 @@ export class ViewPetitionCityStaffComponent implements OnInit {
     });
     this.loading$ = this._committeeLogic.loading$;
     //Deny
-    this.resultDeny$ = this._changePetitionStatusLogic.result$.subscribe(
-      (result) => {
-        if (!!result.result) {
-          this._dialog.open(DialogResultComponent, {
-            width: '520px',
-            data: {
-              title: 'Petition Denied!',
-              message: '',
-              success: true,
-            },
-          });
-        } else {
-          this.errorDeny = result.error;
-        }
+    this.resultDeny$ = this._denyPetitionLogic.result$.subscribe((result) => {
+      if (!!result.result) {
+        this._dialog.open(DialogResultComponent, {
+          width: '520px',
+          data: {
+            title: 'Petition Denied!',
+            message: '',
+            success: true,
+          },
+        });
+      } else {
+        this.errorDeny = result.error;
       }
-    );
-    this.loadingDeny$ = this._changePetitionStatusLogic.loading$;
+    });
+    this.loadingDeny$ = this._denyPetitionLogic.loading$;
   }
   private setState(data: ResponsePetition) {
     this.petition = this.resultData.dataCandidate
@@ -104,7 +103,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._changePetitionStatusLogic.changePetitionStatus(this.id, 'deny');
+        this._denyPetitionLogic.denyPetition(this.id);
       } else {
         this._dialog.closeAll();
       }

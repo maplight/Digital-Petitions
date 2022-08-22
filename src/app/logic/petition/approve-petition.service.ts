@@ -13,16 +13,19 @@ import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';
 
 @Injectable()
-export class ChangePetitionStatusService {
+export class ApprovePetitionService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<{ id: string; status: string }> = new Subject();
+  private submit$: Subject<{
+    data: { deadline: string; signatures: string };
+    id: string;
+  }> = new Subject();
 
   constructor(private _petitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.changePetitionStatus(data)),
+      exhaustMap((data) => this._petitionService.approvePetition(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -60,7 +63,7 @@ export class ChangePetitionStatusService {
   @param id: ID of the petition to withdraw
   */
 
-  changePetitionStatus(id: string, status: string) {
-    this.submit$.next({ id: id, status: status });
+  approvePetition(data: { deadline: string; signatures: string }, id: string) {
+    this.submit$.next({ data: data, id: id });
   }
 }
