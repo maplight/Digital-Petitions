@@ -1,0 +1,49 @@
+<div class="flex flex-col w-full gap-6">
+  <dp-view-signatures-alert
+    class="flex w-full justify-center"
+    [type]="'success'"
+    [message]="'1 Signature Successfully Denied!'"
+  ></dp-view-signatures-alert>
+  <div class="flex flex-col w-full gap-[43px]">
+    <dp-return-link
+      [route]="'/city-staff/home'"
+      [text]="'Back to Petition List'"
+    ></dp-return-link>
+    <h3 class="font-bold leading-7">Petition Title</h3>
+  </div>
+  <div class="flex flex-row justify-end">
+    <dp-basic-filter
+      class="w-full md:max-w-[250px] md:min-w-[150px]"
+      [filterName]="'Filter by Status'"
+      [elements]="filterByStatus"
+      [disabled]="disabledFilter"
+      [mode]="'Select'"
+      (event)="filterStatus($event)"
+    ></dp-basic-filter>
+  </div>
+
+  <div class="flex flex-row justify-between">
+    <div
+      class="flex border border-[#D7D7D7] rounded-lg bg-[#FFFFFF] px-2 justify-center items-center"
+    >
+      <mat-checkbox color="primary"
+        ><p class="text-xs font-bold">Showing 100</p></mat-checkbox
+      >
+    </div>
+    <div class="flex flex-row gap-[10px] max-w-[439px] w-full">
+      <dp-basic-search-engine
+        (event)="search($event)"
+        [disabled]="disabledFilter"
+        class="w-full min-w-[100px]"
+      ></dp-basic-search-engine>
+      <dp-basic-filter
+        class="w-full md:max-w-[125px] md:min-w-[100px]"
+        [filterName]="'Sort by'"
+        [elements]="sortBy"
+        [disabled]="disabledFilter"
+        [mode]="'Select'"
+        (event)="sort($event)"
+      ></dp-basic-filter>
+    </div>
+  </div>
+</div>

@@ -166,6 +166,13 @@ const routes: Routes = [
           ).then((m) => m.ViewPetitionCityStaffModule),
       },
       {
+        path: 'home/:id/signatures',
+        loadChildren: () =>
+          import('./features/view-signatures/view-signatures.module').then(
+            (m) => m.ViewSignaturesModule
+          ),
+      },
+      {
         path: 'admin',
         loadChildren: () =>
           import('./city-staff/admin/admin.module').then((m) => m.AdminModule),
