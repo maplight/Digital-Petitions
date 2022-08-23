@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewSignaturesComponent } from './view-signatures.component';
-import { ViewSignaturesTableModule } from './view-signatures-table/view-signatures-table.module';
 import { ViewSignaturesRoutingModule } from './view-signatures-routing.module';
 import { ViewSignaturesAlertModule } from './view-signatures-alert/view-signatures-alert.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
@@ -13,7 +12,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   declarations: [ViewSignaturesComponent],
   imports: [
     CommonModule,
-    ViewSignaturesTableModule,
     ViewSignaturesAlertModule,
     ViewSignaturesRoutingModule,
     ReturnLinkModule,
