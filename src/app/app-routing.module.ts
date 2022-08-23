@@ -159,6 +159,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'home/:id',
+        loadChildren: () =>
+          import(
+            './features/view-petition-city-staff/view-petition-city-staff.module'
+          ).then((m) => m.ViewPetitionCityStaffModule),
+      },
+      {
         path: 'admin',
         loadChildren: () =>
           import('./city-staff/admin/admin.module').then((m) => m.AdminModule),
