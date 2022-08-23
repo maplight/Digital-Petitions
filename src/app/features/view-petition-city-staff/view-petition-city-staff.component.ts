@@ -8,10 +8,12 @@ import {
   PetitionStatus,
 } from 'src/app/core/api/API';
 import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { AlertWithdrawlPetitionComponent } from '../view-petition-committee/alert-withdrawl-petition/alert-withdrawl-petition.component';
 import { ConfirmWithdrawlPetitionComponent } from '../view-petition-committee/confirm-withdrawl-petition/confirm-withdrawl-petition.component';
 import { ApproveDialogComponent } from './approve-dialog/approve-dialog.component';
+import { DenyAlertComponent } from './deny-alert/deny-alert.component';
 
 @Component({
   selector: 'dp-view-petition-city-staff',
@@ -62,13 +64,34 @@ export class ViewPetitionCityStaffComponent implements OnInit {
       : undefined;
   }
 
-  aproveDialog(): void {
+  approveDialog(): void {
     const dialogRef = this._dialog.open(ApproveDialogComponent, {
       width: '690px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed ' + result);
+    });
+  }
+
+  denyAlert() {
+    const dialogRef = this._dialog.open(DenyAlertComponent, {
+      width: '480px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._dialog.open(DialogResultComponent, {
+          width: '520px',
+          data: {
+            title: 'Petition Denied!',
+            message: '',
+            success: true,
+          },
+        });
+      } else {
+        this._dialog.closeAll();
+      }
     });
   }
 }

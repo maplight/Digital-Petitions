@@ -48,7 +48,10 @@
             ></dp-current-result-city-staff>
             <ng-container [ngSwitch]="petition?.status">
               <ng-container class="flex" *ngSwitchCase="'NEW'">
-                <dp-new-box (aproveEvent)="aproveDialog()"></dp-new-box>
+                <dp-new-box
+                  (aproveEvent)="approveDialog()"
+                  (denyEvent)="denyAlert()"
+                ></dp-new-box>
               </ng-container>
               <ng-container class="flex" *ngSwitchCase="'QUALIFIED'">
                 <dp-cualified-box

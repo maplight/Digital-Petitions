@@ -5,9 +5,17 @@
     mat-flat-button
     color="primary"
     cdkFocusInitial
-    (click)="aproveEvent.emit()"
+    (click)="approveEvent.emit()"
   >
     Aprove
   </button>
-  <button class="w-full" type="button" mat-button color="primary">Deny</button>
+  <button
+    class="w-full"
+    type="button"
+    mat-button
+    color="primary"
+    (click)="denyEvent.emit()"
+  >
+    Deny
+  </button>
 </div>

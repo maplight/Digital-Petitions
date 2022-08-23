@@ -1,0 +1,28 @@
+<dp-basic-alert>
+  <ng-container modal-title
+    >Are you sure you want to deny this petition?</ng-container
+  >
+  <ng-container modal-body class="w-full flex flex-col gap-6">
+    <div class="flex flex-col w-full gap-4">
+      <button
+        mat-flat-button
+        type="button"
+        class="h-10 w-full mt-2"
+        color="warn"
+        [mat-dialog-close]="true"
+      >
+        Deny petition
+      </button>
+      <button
+        mat-button
+        type="button"
+        class="h-10 w-full mt-2"
+        color="primary"
+        cdkFocusInitial
+        [mat-dialog-close]="false"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-container>
+</dp-basic-alert>
