@@ -1,0 +1,38 @@
+<dp-basic-modal (event)="submit()">
+  <ng-container modal-title>Set Qualification Requirements</ng-container>
+  <ng-container modal-body class="w-full">
+    <form [formGroup]="formGroup" class="flex flex-col w-full gap-6">
+      <mat-form-field class="w-full">
+        <mat-label>Set Deadline</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="deadline" />
+        <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="this.formGroup.get('deadline')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">Set Deadline is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Enter number of Signatures Required</mat-label>
+        <input type="text" matInput formControlName="signatures" />
+        <mat-error
+          *ngIf="this.formGroup.get('signatures')?.errors?.['required']"
+        >
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">Number of signatures is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </ng-container>
+  <ng-container modal-footer>Continue</ng-container>
+</dp-basic-modal>

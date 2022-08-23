@@ -11,6 +11,7 @@ import { GetPetitionService } from 'src/app/logic/petition/get-petition.service'
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { AlertWithdrawlPetitionComponent } from '../view-petition-committee/alert-withdrawl-petition/alert-withdrawl-petition.component';
 import { ConfirmWithdrawlPetitionComponent } from '../view-petition-committee/confirm-withdrawl-petition/confirm-withdrawl-petition.component';
+import { ApproveDialogComponent } from './approve-dialog/approve-dialog.component';
 
 @Component({
   selector: 'dp-view-petition-city-staff',
@@ -31,11 +32,8 @@ export class ViewPetitionCityStaffComponent implements OnInit {
   protected petition: IssuePetition | CandidatePetition | undefined;
   constructor(
     private _committeeLogic: GetPetitionService,
-
-    private _activatedRoute: ActivatedRoute,
-    public _alertDialogRef: MatDialogRef<AlertWithdrawlPetitionComponent>,
-    public _confirmDalogRef: MatDialogRef<ConfirmWithdrawlPetitionComponent>,
-    public _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _activatedRoute: ActivatedRoute
   ) {}
   ngAfterViewInit(): void {
     this.id = this._activatedRoute.snapshot.params['id'];
@@ -63,5 +61,14 @@ export class ViewPetitionCityStaffComponent implements OnInit {
       ? this.resultData.dataIssue
       : undefined;
   }
-  submit() {}
+
+  aproveDialog(): void {
+    const dialogRef = this._dialog.open(ApproveDialogComponent, {
+      width: '690px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed ' + result);
+    });
+  }
 }
