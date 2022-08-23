@@ -39,7 +39,7 @@ const ELEMENT_DATA: SignaturesData[] = [
   templateUrl: './view-signatures-table.component.html',
 })
 export class ViewSignaturesTableComponent implements OnInit {
-  tableBorderless: boolean = false;
+  tableStyle = 'w-full';
   dataSource = ELEMENT_DATA;
   displayedColumns: string[] = [
     'check',
