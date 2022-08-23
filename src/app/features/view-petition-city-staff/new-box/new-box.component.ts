@@ -5,8 +5,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   templateUrl: './new-box.component.html',
 })
 export class NewBoxComponent implements OnInit {
-  @Output() approveEvent: EventEmitter<void> = new EventEmitter();
-  @Output() denyEvent: EventEmitter<void> = new EventEmitter();
+  @Output() approveEvent = new EventEmitter<void>();
+
+  @Output() denyEvent = new EventEmitter<void>();
 
   constructor() {}
 

@@ -49,7 +49,7 @@
             <ng-container [ngSwitch]="petition?.status">
               <ng-container class="flex" *ngSwitchCase="'NEW'">
                 <dp-new-box
-                  (aproveEvent)="approveDialog()"
+                  (approveEvent)="approveDialog()"
                   (denyEvent)="denyAlert()"
                 ></dp-new-box>
               </ng-container>
@@ -62,6 +62,21 @@
                 <dp-cualified-box></dp-cualified-box>
               </ng-container>
             </ng-container>
+            <mat-progress-bar
+              *ngIf="loadingDeny$ | async"
+              mode="indeterminate"
+              color="primary"
+            ></mat-progress-bar>
+            <div
+              *ngIf="errorDeny"
+              class="flex flex-row items-center justify-center"
+            >
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px] text-[#FF3030]">{{ errorDeny }}</span>
+            </div>
           </div>
         </div>
       </ng-container>
