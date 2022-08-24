@@ -8,6 +8,8 @@ import { BasicSearchEngineModule } from 'src/app/shared/basic-search-engine/basi
 import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ViewSignaturesTableModule } from './view-signatures-table/view-signatures-table.module';
+import { LoadingModule } from 'src/app/shared/loading/loading.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [ViewSignaturesComponent],
@@ -20,6 +22,8 @@ import { ViewSignaturesTableModule } from './view-signatures-table/view-signatur
     BasicSearchEngineModule,
     BasicFilterModule,
     MatCheckboxModule,
+    LoadingModule,
+    MatButtonModule,
   ],
 })
 export class ViewSignaturesModule {}

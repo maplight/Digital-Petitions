@@ -9,7 +9,7 @@
       <mat-checkbox
         color="primary"
         [checked]="element.selected"
-        (change)="element.selected = !element.selected"
+        (change)="event(element)"
       ></mat-checkbox>
     </td>
   </ng-container>

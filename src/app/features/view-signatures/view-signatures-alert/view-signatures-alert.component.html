@@ -1,4 +1,4 @@
-<div [class]="currentStyle" *ngIf="!show">
+<div [class]="currentStyle" *ngIf="show">
   <p class="text-sm leading-[18px]">{{ message }}</p>
   <button class="h-4 w-4" mat-icon-button (click)="show = !show">
     <mat-icon class="h-4 w-4" [svgIcon]="'custom_icons:close'"></mat-icon>
