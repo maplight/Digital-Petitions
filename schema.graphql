@@ -10,6 +10,8 @@ interface Petition {
   signatureSummary: SignatureSummary
   status: PetitionStatus!
   type: PetitionType!
+  updatedAt: AWSDateTime!
+  version: Int!
 }
 
 type AddressData @aws_cognito_user_pools @aws_iam {
@@ -31,6 +33,8 @@ type CandidatePetition implements Petition @aws_cognito_user_pools @aws_iam {
   signatureSummary: SignatureSummary
   status: PetitionStatus!
   type: PetitionType!
+  updatedAt: AWSDateTime!
+  version: Int!
 }
 
 type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
@@ -42,13 +46,15 @@ type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
   status: PetitionStatus!
   title: String!
   type: PetitionType!
+  updatedAt: AWSDateTime!
+  version: Int!
 }
 
 type Mutation {
-  submitCandidatePetition(data: CandidatePetitionInput!): CandidatePetition!
-    @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
-  submitIssuePetition(data: IssuePetitionInput!): IssuePetition!
-    @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
+  editCandidatePetition(data: EditCandidatePetitionInput!): CandidatePetition @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
+  editIssuePetition(data: EditIssuePetitionInput!): IssuePetition @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
+  submitCandidatePetition(data: CandidatePetitionInput!): CandidatePetition! @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
+  submitIssuePetition(data: IssuePetitionInput!): IssuePetition! @aws_cognito_user_pools(cognito_groups : ["PetitionerGroup"])
 }
 
 type Query {
@@ -59,8 +65,7 @@ type SignatureSummary @aws_cognito_user_pools @aws_iam {
   approved: Int!
   deadline: AWSDateTime
   required: Int!
-  submitted: Int!
-    @aws_cognito_user_pools(cognito_groups: ["AdminGroup", "CityStaffGroup"])
+  submitted: Int! @aws_cognito_user_pools(cognito_groups : ["AdminGroup", "CityStaffGroup"])
 }
 
 enum PetitionStatus {
@@ -90,6 +95,21 @@ input CandidatePetitionInput {
   name: String!
   office: ID!
   party: ID!
+}
+
+input EditCandidatePetitionInput {
+  PK: ID!
+  address: AddressInput
+  expectedVersion: Int!
+  office: ID
+  party: ID
+}
+
+input EditIssuePetitionInput {
+  PK: ID!
+  detail: String
+  expectedVersion: Int!
+  title: String
 }
 
 input IssuePetitionInput {
