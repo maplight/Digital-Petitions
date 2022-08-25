@@ -10,6 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ViewSignaturesTableModule } from './view-signatures-table/view-signatures-table.module';
 import { LoadingModule } from 'src/app/shared/loading/loading.module';
 import { MatButtonModule } from '@angular/material/button';
+import { SortSignaturesModule } from './sort-signatures/sort-signatures.module';
 
 @NgModule({
   declarations: [ViewSignaturesComponent],
@@ -24,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatCheckboxModule,
     LoadingModule,
     MatButtonModule,
+    SortSignaturesModule,
   ],
 })
 export class ViewSignaturesModule {}
