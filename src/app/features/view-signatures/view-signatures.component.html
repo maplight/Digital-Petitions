@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full gap-6">
+<div class="flex flex-col w-full gap-[10px] md:gap-6">
   <dp-view-signatures-alert
     class="flex w-full justify-center"
     [type]="'success'"
@@ -6,12 +6,13 @@
   ></dp-view-signatures-alert>
   <div class="flex flex-col w-full gap-[43px]">
     <dp-return-link
+      class="w-fit"
       [route]="'/city-staff/home'"
       [text]="'Back to Petition List'"
     ></dp-return-link>
     <h3 class="font-bold leading-7">Petition Title</h3>
   </div>
-  <div class="flex flex-row justify-end">
+  <div class="flex flex-col md:flex-row md:justify-end w-full">
     <dp-basic-filter
       class="w-full md:max-w-[250px] md:min-w-[150px]"
       [filterName]="'Filter by Status'"
@@ -22,15 +23,17 @@
     ></dp-basic-filter>
   </div>
 
-  <div class="flex flex-row justify-between">
+  <div
+    class="flex flex-col-reverse md:flex-row md:justify-between w-full gap-[10px]"
+  >
     <div
-      class="flex border border-[#D7D7D7] rounded-lg bg-[#FFFFFF] px-2 justify-center items-center"
+      class="flex border border-[#D7D7D7] rounded-lg bg-[#FFFFFF] px-2 justify-center items-center w-fit min-h-[50px]"
     >
-      <mat-checkbox color="primary"
+      <mat-checkbox color="primary" class="flex flex-row items-center"
         ><p class="text-xs font-bold">Showing 100</p></mat-checkbox
       >
     </div>
-    <div class="flex flex-row gap-[10px] max-w-[439px] w-full">
+    <div class="flex flex-col md:flex-row gap-[10px] max-w-[439px] w-full">
       <dp-basic-search-engine
         (event)="search($event)"
         [disabled]="disabledFilter"
@@ -46,4 +49,5 @@
       ></dp-basic-filter>
     </div>
   </div>
+  <dp-view-signatures-table class="overflow-x-auto"></dp-view-signatures-table>
 </div>
