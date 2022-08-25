@@ -20,7 +20,8 @@ export class GetPetitionsCommitteeService {
   public success$: Observable<Result<ResponsePetition[]>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<ResponsePetition[]>>;
-  private submit$: Subject<FilterData[]> = new Subject();
+  private submit$: Subject<{ id: string; filter: FilterData[] }> =
+    new Subject();
 
   constructor(private _petitionLogic: PetitionService) {
     this.result$ = this.submit$.pipe(
@@ -60,7 +61,7 @@ export class GetPetitionsCommitteeService {
   /** This method begins the process of obtaining a committee's petitions
   @param value: FilterData type: request filtering criteria
   */
-  getPetitions(value: FilterData[]) {
-    this.submit$.next(value);
+  getPetitions(data: { id: string; filter: FilterData[] }) {
+    this.submit$.next(data);
   }
 }
