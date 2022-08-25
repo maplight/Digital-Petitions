@@ -27,6 +27,7 @@ import {
 } from 'src/graphql/mutations';
 import { getPetitionsByOwner, getPetitionsByType } from 'src/graphql/queries';
 import { __values } from 'tslib';
+import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
@@ -159,8 +160,8 @@ export class PetitionService {
 
   getCommitteePetitions(data: {
     id: string;
-    filter: FilterData[];
-  }): Observable<Result<ResponsePetition[]>> {
+    cursor?: string;
+  }): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByOwner,
@@ -168,6 +169,7 @@ export class PetitionService {
           query: {
             status: PetitionListStatusCheck.ANY,
             owner: data.id,
+            cursor: data.cursor,
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -175,6 +177,10 @@ export class PetitionService {
     ).pipe(
       map((value) => {
         let petitions: ResponsePetition[] = [];
+        let cursor: string | undefined = value.data?.getPetitionsByOwner.token
+          ? value.data?.getPetitionsByOwner.token
+          : undefined;
+
         value.data?.getPetitionsByOwner.items.forEach((value) => {
           value.type === PetitionType.ISSUE
             ? petitions.push({ dataIssue: value as IssuePetition })
@@ -183,7 +189,7 @@ export class PetitionService {
             : null;
         });
 
-        return { result: petitions };
+        return { result: { cursor: cursor, items: petitions } };
       }),
       catchError((error) => {
         return of({ error: error.errors?.[0]?.message });

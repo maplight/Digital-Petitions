@@ -6,10 +6,12 @@ import {
   Subject,
   Subscription,
   takeUntil,
+  tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
 import { FilterData } from 'src/app/shared/models/exports';
+import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -19,7 +21,11 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 export class CommitteeHomeComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  protected resultData: ResponsePetition[] = [];
+  protected loadingTitle: string = '';
+  protected loadingSeeMore: boolean = false;
+  protected cursor: string | undefined;
+  protected disabledSeeMore: boolean = true;
+  protected resultData!: BufferPetition;
   protected result$!: Subscription;
   protected error: string | undefined;
   protected loading$!: Observable<boolean>;
@@ -30,14 +36,6 @@ export class CommitteeHomeComponent
   );
   private _unsubscribeAll: Subject<void> = new Subject();
 
-  private currentFilter: FilterData[] = [
-    {
-      property: '',
-      value: '',
-      page: 0,
-    },
-  ];
-
   constructor(
     private _committeeLogic: GetPetitionsCommitteeService,
     private _accountLogic: AccountService
@@ -47,24 +45,31 @@ export class CommitteeHomeComponent
     this._unsubscribeAll.complete();
   }
   ngAfterViewInit(): void {
-    this._accountLogic.currentUser$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((value) => {
-        if (value) {
-          this._committeeLogic.getPetitions({
-            id: value.attributes.sub,
-            filter: this.currentFilter,
-          });
-        }
-      });
+    this.getPetitions();
   }
   ngOnInit(): void {
+    this.loadingTitle = 'Waiting for user data';
     this.result$ = this._committeeLogic.result$
-      .pipe(takeUntil(this._unsubscribeAll))
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        tap(() => (this.loadingTitle = 'Waiting for your petitions'))
+      )
       .subscribe((result) => {
+        this.loadingSeeMore = false;
         if (!!result.result) {
-          this.resultData = result.result;
-          if (result.result.length === 0) {
+          this.disabledSeeMore = false;
+          if (this.resultData) {
+            this.resultData.items = this.resultData.items.concat(
+              result.result.items
+            );
+            this.cursor = result.result.cursor;
+            console.log(this.cursor);
+          } else {
+            this.resultData = result.result;
+            this.cursor = result.result.cursor;
+          }
+
+          if (result.result.items.length === 0) {
             this.currentStep$.next('empty');
           } else {
             this.currentStep$.next('contents');
@@ -75,5 +80,22 @@ export class CommitteeHomeComponent
         }
       });
     this.loading$ = this._committeeLogic.loading$;
+  }
+  private getPetitions() {
+    this.disabledSeeMore = true;
+    this._accountLogic.currentUser$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((value) => {
+        if (value) {
+          this._committeeLogic.getPetitions({
+            id: value.attributes.sub,
+            cursor: this.cursor,
+          });
+        }
+      });
+  }
+  pageNumber() {
+    this.loadingSeeMore = true;
+    this.getPetitions();
   }
 }

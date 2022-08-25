@@ -11,17 +11,17 @@ import {
 } from 'rxjs';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
+import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { PetitionService } from '../petition/exports';
 
 @Injectable()
 export class GetPetitionsCommitteeService {
-  public error$: Observable<Result<ResponsePetition[]>>;
-  public success$: Observable<Result<ResponsePetition[]>>;
+  public error$: Observable<Result<BufferPetition>>;
+  public success$: Observable<Result<BufferPetition>>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<ResponsePetition[]>>;
-  private submit$: Subject<{ id: string; filter: FilterData[] }> =
-    new Subject();
+  public result$: Observable<Result<BufferPetition>>;
+  private submit$: Subject<{ id: string; cursor?: string }> = new Subject();
 
   constructor(private _petitionLogic: PetitionService) {
     this.result$ = this.submit$.pipe(
@@ -61,7 +61,7 @@ export class GetPetitionsCommitteeService {
   /** This method begins the process of obtaining a committee's petitions
   @param value: FilterData type: request filtering criteria
   */
-  getPetitions(data: { id: string; filter: FilterData[] }) {
+  getPetitions(data: { id: string; cursor?: string }) {
     this.submit$.next(data);
   }
 }

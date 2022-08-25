@@ -12,14 +12,7 @@
         <h3 class="flex leading-7 font-extrabold">Your Petitions</h3>
         <ng-container [ngSwitch]="currentStep$ | async">
           <ng-container *ngSwitchCase="'loading'">
-            <div class="flex justify-center w-full">
-              <h3 class="leading-7 font-extrabold">Loading</h3>
-            </div>
-
-            <mat-progress-bar
-              mode="indeterminate"
-              color="primary"
-            ></mat-progress-bar>
+            <dp-loading-bar [title]="loadingTitle"></dp-loading-bar>
           </ng-container>
           <ng-container class="flex" *ngSwitchCase="'error'">
             <div class="flex justify-center w-full">
@@ -43,13 +36,23 @@
           </ng-container>
           <ng-container class="flex" *ngSwitchCase="'contents'">
             <dp-petition-card
-              *ngFor="let item of resultData"
+              *ngFor="let item of resultData.items"
               [data]="item"
               [showStatus]="true"
               [showType]="true"
               [showSignature]="true"
               [basicRoute]="'/committee/home/'"
             ></dp-petition-card>
+            <dp-loading-bar *ngIf="loadingSeeMore"></dp-loading-bar>
+            <button
+              *ngIf="cursor"
+              mat-button
+              color="primary"
+              (click)="pageNumber()"
+              [disabled]="disabledSeeMore"
+            >
+              See More
+            </button>
           </ng-container>
         </ng-container>
       </div>
