@@ -1,8 +1,4 @@
 <table mat-table [dataSource]="dataSource" [class]="tableStyle">
-  <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- Signer Name Column -->
   <ng-container matColumnDef="check">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
@@ -14,7 +10,6 @@
     </td>
   </ng-container>
 
-  <!-- Signer Name Column -->
   <ng-container matColumnDef="signer_name">
     <th mat-header-cell *matHeaderCellDef>Signer Name</th>
     <td mat-cell *matCellDef="let element">
@@ -22,7 +17,6 @@
     </td>
   </ng-container>
 
-  <!-- Signer Date Column -->
   <ng-container matColumnDef="signer_date">
     <th mat-header-cell *matHeaderCellDef>Signer Date</th>
     <td mat-cell *matCellDef="let element">
@@ -30,7 +24,6 @@
     </td>
   </ng-container>
 
-  <!-- address Column -->
   <ng-container matColumnDef="address">
     <th mat-header-cell *matHeaderCellDef>Address</th>
     <td mat-cell *matCellDef="let element">
@@ -38,7 +31,6 @@
     </td>
   </ng-container>
 
-  <!-- email Column -->
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef>Email</th>
     <td mat-cell *matCellDef="let element">
@@ -46,7 +38,6 @@
     </td>
   </ng-container>
 
-  <!-- registered Column -->
   <ng-container matColumnDef="status">
     <th mat-header-cell *matHeaderCellDef>Status</th>
     <td mat-cell *matCellDef="let element">

@@ -8,7 +8,7 @@ import { BasicSearchEngineModule } from 'src/app/shared/basic-search-engine/basi
 import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ViewSignaturesTableModule } from './view-signatures-table/view-signatures-table.module';
-import { LoadingModule } from 'src/app/shared/loading/loading.module';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { MatButtonModule } from '@angular/material/button';
 import { SortSignaturesModule } from './sort-signatures/sort-signatures.module';
 
@@ -23,7 +23,7 @@ import { SortSignaturesModule } from './sort-signatures/sort-signatures.module';
     BasicSearchEngineModule,
     BasicFilterModule,
     MatCheckboxModule,
-    LoadingModule,
+    LoadingBarModule,
     MatButtonModule,
     SortSignaturesModule,
   ],

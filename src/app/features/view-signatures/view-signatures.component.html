@@ -68,7 +68,7 @@
       ></dp-sort-signatures>
     </div>
   </div>
-  <dp-loading *ngIf="loading$ | async"></dp-loading>
+  <dp-loading-bar [title]="'Loading'" *ngIf="loading$ | async"></dp-loading-bar>
   <dp-view-signatures-table
     [dataSource]="resultData"
     (emitSignaturesSelected)="setSignaturesSelected($event)"
