@@ -2,20 +2,21 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type EditCandidatePetitionInput = {
+export type TargetPetitionInput = {
   PK: string,
-  address?: AddressInput | null,
   expectedVersion: number,
-  office?: string | null,
-  party?: string | null,
 };
 
-export type AddressInput = {
-  address: string,
-  city?: string | null,
-  number?: string | null,
-  state: string,
-  zipCode?: string | null,
+export type Petition = {
+  __typename: "Petition",
+  PK: string,
+  createdAt: string,
+  owner: string,
+  signatureSummary?: SignatureSummary | null,
+  status: PetitionStatus,
+  type: PetitionType,
+  updatedAt: string,
+  version: number,
 };
 
 export type CandidatePetition = {
@@ -34,17 +35,39 @@ export type CandidatePetition = {
   version: number,
 };
 
-export type Petition = {
-  __typename: "Petition",
-  PK: string,
-  createdAt: string,
-  owner: string,
-  signatureSummary?: SignatureSummary | null,
-  status: PetitionStatus,
-  type: PetitionType,
-  updatedAt: string,
-  version: number,
+export type AddressData = {
+  __typename: "AddressData",
+  address: string,
+  city?: string | null,
+  number?: string | null,
+  state: string,
+  zipCode?: string | null,
 };
+
+export type SignatureSummary = {
+  __typename: "SignatureSummary",
+  approved: number,
+  deadline?: string | null,
+  required: number,
+  submitted: number,
+};
+
+export enum PetitionStatus {
+  ACTIVE = "ACTIVE",
+  CANCELED = "CANCELED",
+  NEW = "NEW",
+  NOT_QUALIFIED = "NOT_QUALIFIED",
+  QUALIFIED = "QUALIFIED",
+  REJECTED = "REJECTED",
+  WITHDRAWN = "WITHDRAWN",
+}
+
+
+export enum PetitionType {
+  CANDIDATE = "CANDIDATE",
+  ISSUE = "ISSUE",
+}
+
 
 export type IssuePetition = {
   __typename: "IssuePetition",
@@ -60,32 +83,15 @@ export type IssuePetition = {
   version: number,
 };
 
-export type SignatureSummary = {
-  __typename: "SignatureSummary",
-  approved: number,
-  deadline?: string | null,
-  required: number,
-  submitted: number,
+export type EditCandidatePetitionInput = {
+  PK: string,
+  address?: AddressInput | null,
+  expectedVersion: number,
+  office?: string | null,
+  party?: string | null,
 };
 
-export enum PetitionStatus {
-  ACTIVE = "ACTIVE",
-  CANCELED = "CANCELED",
-  NEW = "NEW",
-  QUALIFIED = "QUALIFIED",
-  REJECTED = "REJECTED",
-  WITHDRAWN = "WITHDRAWN",
-}
-
-
-export enum PetitionType {
-  CANDIDATE = "CANDIDATE",
-  ISSUE = "ISSUE",
-}
-
-
-export type AddressData = {
-  __typename: "AddressData",
+export type AddressInput = {
   address: string,
   city?: string | null,
   number?: string | null,
@@ -110,6 +116,93 @@ export type CandidatePetitionInput = {
 export type IssuePetitionInput = {
   detail: string,
   title: string,
+};
+
+export type PetitionsByOwnerInput = {
+  cursor?: string | null,
+  limit?: number | null,
+  owner: string,
+  status?: PetitionListStatusCheck | null,
+};
+
+export enum PetitionListStatusCheck {
+  ACTIVE = "ACTIVE",
+  ANY = "ANY",
+  CANCELED = "CANCELED",
+  INACTIVE = "INACTIVE",
+  NEW = "NEW",
+  NOT_QUALIFIED = "NOT_QUALIFIED",
+  QUALIFIED = "QUALIFIED",
+  REJECTED = "REJECTED",
+  WITHDRAWN = "WITHDRAWN",
+}
+
+
+export type PetitionConnection = {
+  __typename: "PetitionConnection",
+  items:  Array<Petition >,
+  token?: string | null,
+};
+
+export type PetitionsByTypeInput = {
+  cursor?: string | null,
+  limit?: number | null,
+  status?: PetitionListStatusCheck | null,
+  type?: PetitionType | null,
+};
+
+export type ApprovePetitionMutationVariables = {
+  data: TargetPetitionInput,
+};
+
+export type ApprovePetitionMutation = {
+  approvePetition: ( {
+      __typename: "CandidatePetition",
+      PK: string,
+      createdAt: string,
+      owner: string,
+      signatureSummary?:  {
+        __typename: string,
+        approved: number,
+        deadline?: string | null,
+        required: number,
+        submitted: number,
+      } | null,
+      status: PetitionStatus,
+      type: PetitionType,
+      updatedAt: string,
+      version: number,
+      address:  {
+        __typename: string,
+        address: string,
+        city?: string | null,
+        number?: string | null,
+        state: string,
+        zipCode?: string | null,
+      },
+      name: string,
+      office: string,
+      party: string,
+    } | {
+      __typename: "IssuePetition",
+      PK: string,
+      createdAt: string,
+      owner: string,
+      signatureSummary?:  {
+        __typename: string,
+        approved: number,
+        deadline?: string | null,
+        required: number,
+        submitted: number,
+      } | null,
+      status: PetitionStatus,
+      type: PetitionType,
+      updatedAt: string,
+      version: number,
+      detail: string,
+      title: string,
+    }
+  ) | null,
 };
 
 export type EditCandidatePetitionMutationVariables = {
@@ -173,6 +266,60 @@ export type EditIssuePetitionMutation = {
   } | null,
 };
 
+export type RejectPetitionMutationVariables = {
+  data: TargetPetitionInput,
+};
+
+export type RejectPetitionMutation = {
+  rejectPetition: ( {
+      __typename: "CandidatePetition",
+      PK: string,
+      createdAt: string,
+      owner: string,
+      signatureSummary?:  {
+        __typename: string,
+        approved: number,
+        deadline?: string | null,
+        required: number,
+        submitted: number,
+      } | null,
+      status: PetitionStatus,
+      type: PetitionType,
+      updatedAt: string,
+      version: number,
+      address:  {
+        __typename: string,
+        address: string,
+        city?: string | null,
+        number?: string | null,
+        state: string,
+        zipCode?: string | null,
+      },
+      name: string,
+      office: string,
+      party: string,
+    } | {
+      __typename: "IssuePetition",
+      PK: string,
+      createdAt: string,
+      owner: string,
+      signatureSummary?:  {
+        __typename: string,
+        approved: number,
+        deadline?: string | null,
+        required: number,
+        submitted: number,
+      } | null,
+      status: PetitionStatus,
+      type: PetitionType,
+      updatedAt: string,
+      version: number,
+      detail: string,
+      title: string,
+    }
+  ) | null,
+};
+
 export type SubmitCandidatePetitionMutationVariables = {
   data: CandidatePetitionInput,
 };
@@ -231,6 +378,122 @@ export type SubmitIssuePetitionMutation = {
     type: PetitionType,
     updatedAt: string,
     version: number,
+  },
+};
+
+export type GetPetitionsByOwnerQueryVariables = {
+  query?: PetitionsByOwnerInput | null,
+};
+
+export type GetPetitionsByOwnerQuery = {
+  getPetitionsByOwner:  {
+    __typename: "PetitionConnection",
+    items:  Array<( {
+        __typename: "CandidatePetition",
+        PK: string,
+        createdAt: string,
+        owner: string,
+        signatureSummary?:  {
+          __typename: string,
+          approved: number,
+          deadline?: string | null,
+          required: number,
+          submitted: number,
+        } | null,
+        status: PetitionStatus,
+        type: PetitionType,
+        updatedAt: string,
+        version: number,
+        address:  {
+          __typename: string,
+          address: string,
+          city?: string | null,
+          number?: string | null,
+          state: string,
+          zipCode?: string | null,
+        },
+        name: string,
+        office: string,
+        party: string,
+      } | {
+        __typename: "IssuePetition",
+        PK: string,
+        createdAt: string,
+        owner: string,
+        signatureSummary?:  {
+          __typename: string,
+          approved: number,
+          deadline?: string | null,
+          required: number,
+          submitted: number,
+        } | null,
+        status: PetitionStatus,
+        type: PetitionType,
+        updatedAt: string,
+        version: number,
+        detail: string,
+        title: string,
+      }
+    ) >,
+    token?: string | null,
+  },
+};
+
+export type GetPetitionsByTypeQueryVariables = {
+  query?: PetitionsByTypeInput | null,
+};
+
+export type GetPetitionsByTypeQuery = {
+  getPetitionsByType:  {
+    __typename: "PetitionConnection",
+    items:  Array<( {
+        __typename: "CandidatePetition",
+        PK: string,
+        createdAt: string,
+        owner: string,
+        signatureSummary?:  {
+          __typename: string,
+          approved: number,
+          deadline?: string | null,
+          required: number,
+          submitted: number,
+        } | null,
+        status: PetitionStatus,
+        type: PetitionType,
+        updatedAt: string,
+        version: number,
+        address:  {
+          __typename: string,
+          address: string,
+          city?: string | null,
+          number?: string | null,
+          state: string,
+          zipCode?: string | null,
+        },
+        name: string,
+        office: string,
+        party: string,
+      } | {
+        __typename: "IssuePetition",
+        PK: string,
+        createdAt: string,
+        owner: string,
+        signatureSummary?:  {
+          __typename: string,
+          approved: number,
+          deadline?: string | null,
+          required: number,
+          submitted: number,
+        } | null,
+        status: PetitionStatus,
+        type: PetitionType,
+        updatedAt: string,
+        version: number,
+        detail: string,
+        title: string,
+      }
+    ) >,
+    token?: string | null,
   },
 };
 
