@@ -12,9 +12,7 @@ import {
 import { Result } from 'src/app/shared/models/exports';
 import { SignatureService } from './signature.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class DenySignatureService {
   public error$: Observable<Result<string>>;
   public success$: Observable<Result<string>>;
