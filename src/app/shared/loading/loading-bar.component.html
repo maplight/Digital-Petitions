@@ -1,6 +1,6 @@
 <div class="flex flex-col w-full">
-  <div class="flex justify-center w-full" *ngIf="showTitle">
-    <h3 class="leading-7 font-extrabold">Loading</h3>
+  <div class="flex justify-center w-full" *ngIf="title">
+    <h3 class="leading-7 font-extrabold">{{ title }}</h3>
   </div>
 
   <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>

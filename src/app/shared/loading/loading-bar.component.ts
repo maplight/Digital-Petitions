@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'dp-loading',
-  templateUrl: './loading.component.html',
+  selector: 'dp-loading-bar',
+  templateUrl: './loading-bar.component.html',
 })
-export class LoadingComponent implements OnInit {
-  @Input() showTitle: boolean = false;
+export class LoadingBarComponent implements OnInit {
+  @Input() title: string | undefined;
   @Input() show$!: Observable<boolean>;
   constructor() {}
 
