@@ -10,7 +10,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ViewSignaturesTableModule } from './view-signatures-table/view-signatures-table.module';
 import { LoadingModule } from 'src/app/shared/loading/loading.module';
 import { MatButtonModule } from '@angular/material/button';
+
 import { SortSignaturesModule } from './sort-signatures/sort-signatures.module';
+
+import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.service';
+import { ApproveSignatureService } from 'src/app/logic/signature/approve-signature.service';
+import { DenySignatureService } from 'src/app/logic/signature/deny-signature.service';
 
 @NgModule({
   declarations: [ViewSignaturesComponent],
@@ -26,6 +31,11 @@ import { SortSignaturesModule } from './sort-signatures/sort-signatures.module';
     LoadingModule,
     MatButtonModule,
     SortSignaturesModule,
+  ],
+  providers: [
+    GetSignaturesService,
+    ApproveSignatureService,
+    DenySignatureService,
   ],
 })
 export class ViewSignaturesModule {}
