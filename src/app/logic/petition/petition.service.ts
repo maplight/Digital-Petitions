@@ -99,6 +99,8 @@ export class PetitionService {
           status: PetitionStatus.NEW,
           title: 'Title1',
           type: PetitionType.ISSUE,
+          updatedAt: '00/00/0000',
+          version: 1,
         },
 
         /** 
@@ -171,6 +173,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             title: 'Title1',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
         {
@@ -185,6 +189,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             title: 'Title1',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
         {
@@ -206,6 +212,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             name: 'First name and last name',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
       ],
@@ -235,6 +243,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             title: 'Title1',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
         {
@@ -255,6 +265,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             title: 'Title1',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
         {
@@ -283,6 +295,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             name: 'First name and last name',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
       ],
@@ -312,6 +326,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             title: 'Title1',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
         {
@@ -332,6 +348,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             title: 'Title1',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
         {
@@ -360,6 +378,8 @@ export class PetitionService {
             status: PetitionStatus.NEW,
             name: 'First name and last name',
             type: PetitionType.ISSUE,
+            updatedAt: '00/00/0000',
+            version: 1,
           },
         },
       ],

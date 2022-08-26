@@ -2,11 +2,12 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CandidatePetitionInput = {
-  address: AddressInput,
-  name: string,
-  office: string,
-  party: string,
+export type EditCandidatePetitionInput = {
+  PK: string,
+  address?: AddressInput | null,
+  expectedVersion: number,
+  office?: string | null,
+  party?: string | null,
 };
 
 export type AddressInput = {
@@ -29,6 +30,8 @@ export type CandidatePetition = {
   signatureSummary?: SignatureSummary | null,
   status: PetitionStatus,
   type: PetitionType,
+  updatedAt: string,
+  version: number,
 };
 
 export type Petition = {
@@ -39,6 +42,8 @@ export type Petition = {
   signatureSummary?: SignatureSummary | null,
   status: PetitionStatus,
   type: PetitionType,
+  updatedAt: string,
+  version: number,
 };
 
 export type IssuePetition = {
@@ -51,6 +56,8 @@ export type IssuePetition = {
   status: PetitionStatus,
   title: string,
   type: PetitionType,
+  updatedAt: string,
+  version: number,
 };
 
 export type SignatureSummary = {
@@ -86,9 +93,84 @@ export type AddressData = {
   zipCode?: string | null,
 };
 
+export type EditIssuePetitionInput = {
+  PK: string,
+  detail?: string | null,
+  expectedVersion: number,
+  title?: string | null,
+};
+
+export type CandidatePetitionInput = {
+  address: AddressInput,
+  name: string,
+  office: string,
+  party: string,
+};
+
 export type IssuePetitionInput = {
   detail: string,
   title: string,
+};
+
+export type EditCandidatePetitionMutationVariables = {
+  data: EditCandidatePetitionInput,
+};
+
+export type EditCandidatePetitionMutation = {
+  editCandidatePetition?:  {
+    __typename: "CandidatePetition",
+    PK: string,
+    address:  {
+      __typename: "AddressData",
+      address: string,
+      city?: string | null,
+      number?: string | null,
+      state: string,
+      zipCode?: string | null,
+    },
+    createdAt: string,
+    name: string,
+    office: string,
+    owner: string,
+    party: string,
+    signatureSummary?:  {
+      __typename: "SignatureSummary",
+      approved: number,
+      deadline?: string | null,
+      required: number,
+      submitted: number,
+    } | null,
+    status: PetitionStatus,
+    type: PetitionType,
+    updatedAt: string,
+    version: number,
+  } | null,
+};
+
+export type EditIssuePetitionMutationVariables = {
+  data: EditIssuePetitionInput,
+};
+
+export type EditIssuePetitionMutation = {
+  editIssuePetition?:  {
+    __typename: "IssuePetition",
+    PK: string,
+    createdAt: string,
+    detail: string,
+    owner: string,
+    signatureSummary?:  {
+      __typename: "SignatureSummary",
+      approved: number,
+      deadline?: string | null,
+      required: number,
+      submitted: number,
+    } | null,
+    status: PetitionStatus,
+    title: string,
+    type: PetitionType,
+    updatedAt: string,
+    version: number,
+  } | null,
 };
 
 export type SubmitCandidatePetitionMutationVariables = {
@@ -121,6 +203,8 @@ export type SubmitCandidatePetitionMutation = {
     } | null,
     status: PetitionStatus,
     type: PetitionType,
+    updatedAt: string,
+    version: number,
   },
 };
 
@@ -145,6 +229,8 @@ export type SubmitIssuePetitionMutation = {
     status: PetitionStatus,
     title: string,
     type: PetitionType,
+    updatedAt: string,
+    version: number,
   },
 };
 
