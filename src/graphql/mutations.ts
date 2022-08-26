@@ -2,6 +2,41 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const approvePetition = /* GraphQL */ `
+  mutation ApprovePetition($data: TargetPetitionInput!) {
+    approvePetition(data: $data) {
+      PK
+      createdAt
+      owner
+      signatureSummary {
+        approved
+        deadline
+        required
+        submitted
+      }
+      status
+      type
+      updatedAt
+      version
+      ... on CandidatePetition {
+        address {
+          address
+          city
+          number
+          state
+          zipCode
+        }
+        name
+        office
+        party
+      }
+      ... on IssuePetition {
+        detail
+        title
+      }
+    }
+  }
+`;
 export const editCandidatePetition = /* GraphQL */ `
   mutation EditCandidatePetition($data: EditCandidatePetitionInput!) {
     editCandidatePetition(data: $data) {
@@ -49,6 +84,41 @@ export const editIssuePetition = /* GraphQL */ `
       type
       updatedAt
       version
+    }
+  }
+`;
+export const rejectPetition = /* GraphQL */ `
+  mutation RejectPetition($data: TargetPetitionInput!) {
+    rejectPetition(data: $data) {
+      PK
+      createdAt
+      owner
+      signatureSummary {
+        approved
+        deadline
+        required
+        submitted
+      }
+      status
+      type
+      updatedAt
+      version
+      ... on CandidatePetition {
+        address {
+          address
+          city
+          number
+          state
+          zipCode
+        }
+        name
+        office
+        party
+      }
+      ... on IssuePetition {
+        detail
+        title
+      }
     }
   }
 `;

@@ -59,14 +59,13 @@
         [disabled]="disabledFilter"
         class="w-full min-w-[100px]"
       ></dp-basic-search-engine>
-      <dp-basic-filter
+      <dp-sort-signatures
         class="w-full md:max-w-[125px] md:min-w-[100px]"
         [filterName]="'Sort by'"
         [elements]="sortBy"
         [disabled]="disabledFilter"
-        [mode]="'Select'"
         (event)="sort($event)"
-      ></dp-basic-filter>
+      ></dp-sort-signatures>
     </div>
   </div>
   <dp-loading *ngIf="loading$ | async"></dp-loading>

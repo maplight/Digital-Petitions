@@ -1,9 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
 
 @Component({
   selector: 'dp-view-signatures-table',
   templateUrl: './view-signatures-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewSignaturesTableComponent implements OnInit {
   tableStyle = 'w-full';
