@@ -8,6 +8,7 @@ import { PetitionCardModule } from '../../shared/petition-card/petition-card.mod
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [CommitteeHomeComponent],
@@ -19,6 +20,7 @@ import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitio
     PetitionCardModule,
     MatIconModule,
     MatProgressBarModule,
+    LoadingBarModule,
   ],
   providers: [GetPetitionsCommitteeService],
 })

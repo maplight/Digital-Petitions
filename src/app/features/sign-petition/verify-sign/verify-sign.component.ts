@@ -36,7 +36,7 @@ export class VerifySignComponent implements OnInit {
     });
     this.formGroupLicense = this._fb.group({
       licenseNumber: ['', [Validators.required]],
-      dateOfBirth: ['', [Validators.required]],
+      dateOfBirth: [Date, [Validators.required]],
     });
     this.isContinue$ = merge(
       this.formGroup.valueChanges,
