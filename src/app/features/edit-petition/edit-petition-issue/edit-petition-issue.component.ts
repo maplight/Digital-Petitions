@@ -10,7 +10,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, shareReplay, tap } from 'rxjs';
-import { IssuePetition } from 'src/app/core/api/API';
+import { IssuePetition, Petition } from 'src/app/core/api/API';
 import { EditPetitionIssueService } from 'src/app/logic/petition/edit-petition-issue.service';
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -61,9 +61,20 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
         .pipe(
           tap((response) => {
             if (response) {
-              this._editPetitionIssueLogic.editIssuePetition(
-                this.formGroup.value
-              );
+              if (this.formData.dataIssue) {
+                console.log({
+                  PK: this.formData.dataIssue.PK,
+                  expectedVersion: this.formData.dataIssue.version + 1,
+                  title: this.formGroup.value.title,
+                  detail: this.formGroup.value.text,
+                });
+                this._editPetitionIssueLogic.editIssuePetition({
+                  PK: this.formData.dataIssue.PK,
+                  expectedVersion: this.formData.dataIssue.version + 1,
+                  title: this.formGroup.value.title,
+                  detail: this.formGroup.value.text,
+                });
+              }
             }
           })
         )
