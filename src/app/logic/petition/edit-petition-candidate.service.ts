@@ -9,7 +9,10 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { CandidatePetition } from 'src/app/core/api/API';
+import {
+  CandidatePetition,
+  EditCandidatePetitionInput,
+} from 'src/app/core/api/API';
 
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
@@ -20,7 +23,7 @@ export class EditPetitionCandidateService {
   public success$: Observable<Result<CandidatePetition>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<CandidatePetition>>;
-  private submit$: Subject<CandidatePetition> = new Subject();
+  private submit$: Subject<EditCandidatePetitionInput> = new Subject();
 
   constructor(private _editPetitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
@@ -63,7 +66,7 @@ export class EditPetitionCandidateService {
   /** This method begins the process of edition of a candidate type petition
   @param value: CandidatePetition type: contains the data of a candidate type petition provided by the user
   */
-  editCandidatePetition(value: CandidatePetition) {
+  editCandidatePetition(value: EditCandidatePetitionInput) {
     this.submit$.next(value);
   }
 }
