@@ -72,7 +72,9 @@ export class ViewSignaturesComponent
   protected signaturesSelected: SignaturesData[] = [];
   protected result$!: Subscription;
   protected error: string | undefined;
-  protected loading$!: Observable<boolean>;
+  protected loadingGetSignatures$!: Observable<boolean>;
+  protected loadingApprove$!: Observable<boolean>;
+  protected loadingDeny$!: Observable<boolean>;
   constructor(
     private _getSignatureLogic: GetSignaturesService,
     private _approveLogic: ApproveSignatureService,
@@ -143,11 +145,9 @@ export class ViewSignaturesComponent
           this.showAlert = true;
         }
       });
-    this.loading$ = merge(
-      this._getSignatureLogic.loading$,
-      this._approveLogic.loading$,
-      this._denyLogic.loading$
-    );
+    this.loadingGetSignatures$ = this._getSignatureLogic.loading$;
+    this.loadingApprove$ = this._approveLogic.loading$;
+    this.loadingDeny$ = this._denyLogic.loading$;
   }
   setSignaturesSelected(data: SignaturesData[]) {
     this.signaturesSelected = data;
