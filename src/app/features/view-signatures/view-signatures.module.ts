@@ -17,7 +17,6 @@ import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.ser
 import { ApproveSignatureService } from 'src/app/logic/signature/approve-signature.service';
 import { DenySignatureService } from 'src/app/logic/signature/deny-signature.service';
 
-
 @NgModule({
   declarations: [ViewSignaturesComponent],
   imports: [
