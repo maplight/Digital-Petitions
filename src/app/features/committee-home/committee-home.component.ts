@@ -63,7 +63,6 @@ export class CommitteeHomeComponent
               result.result.items
             );
             this.cursor = result.result.cursor;
-            console.log(this.cursor);
           } else {
             this.resultData = result.result;
             this.cursor = result.result.cursor;

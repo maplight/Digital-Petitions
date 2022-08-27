@@ -7,6 +7,7 @@ import { SetNewPasswordService } from 'src/app/logic/auth/exports';
 @Component({
   selector: 'dp-set-new-password',
   templateUrl: './set-new-password.component.html',
+  providers: [SetNewPasswordService],
 })
 export class SetNewPasswordComponent implements OnInit, OnDestroy {
   protected hideConfirmPassword = true;

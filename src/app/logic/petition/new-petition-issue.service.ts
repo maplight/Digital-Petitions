@@ -16,8 +16,8 @@ import { PetitionService } from './exports';
 
 @Injectable()
 export class NewPetitionIssueService {
-  public error$: Observable<Result<IssuePetition>>;
-  public success$: Observable<Result<IssuePetition>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<IssuePetition | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<IssuePetition>>;
   private submit$: Subject<IssuePetitionInput> = new Subject();
@@ -33,9 +33,15 @@ export class NewPetitionIssueService {
       (value) => !!value.result
     );
 
-    this.success$ = success$.pipe(shareReplay(1));
+    this.success$ = success$.pipe(
+      map((value) => value.result),
+      shareReplay(1)
+    );
 
-    this.error$ = error$.pipe(shareReplay(1));
+    this.error$ = error$.pipe(
+      map((value) => value.error),
+      shareReplay(1)
+    );
 
     const end$ = merge(this.success$, this.error$);
 

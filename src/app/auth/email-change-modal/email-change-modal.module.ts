@@ -25,6 +25,5 @@ import { ChangeEmailService } from 'src/app/logic/auth/exports';
     MatIconModule,
     MatProgressBarModule,
   ],
-  providers: [ChangeEmailService],
 })
 export class EmailChangeModalModule {}

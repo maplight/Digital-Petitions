@@ -14,6 +14,7 @@ import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-resul
 @Component({
   selector: 'dp-confirm-email-change-modal',
   templateUrl: './confirm-email-change-modal.component.html',
+  providers: [ConfirmChangeEmailService],
 })
 export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
   protected result$;

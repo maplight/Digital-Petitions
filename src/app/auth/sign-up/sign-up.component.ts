@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'dp-sign-up',
   templateUrl: './sign-up.component.html',
+  providers: [SignUpService],
 })
 export class SignUpComponent {
   protected localStates: state[] = states;

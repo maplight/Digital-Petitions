@@ -87,7 +87,6 @@ export class ViewPetitionCityStaffComponent implements OnInit {
   }
 
   approveDialog(): void {
-    console.log('kk');
     const dialogRef = this._dialog.open(ApproveDialogComponent, {
       width: '690px',
       data: {

@@ -27,6 +27,5 @@ import { SignUpService } from 'src/app/logic/auth/exports';
     BasicCardModule,
     MatProgressBarModule,
   ],
-  providers: [SignUpService],
 })
 export class SignUpModule {}

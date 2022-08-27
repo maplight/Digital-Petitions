@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'dp-change-personal-details-modal',
   templateUrl: './change-personal-details-modal.component.html',
+  providers: [ChangePersonalDetailsService],
 })
 export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
   protected result$;

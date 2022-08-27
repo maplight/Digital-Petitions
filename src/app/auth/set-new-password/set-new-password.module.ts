@@ -28,6 +28,5 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [CheckTokenFpService, SetNewPasswordService],
 })
 export class SetNewPasswordModule {}

@@ -16,8 +16,8 @@ import { PetitionService } from '../petition/exports';
 
 @Injectable()
 export class GetPetitionsActiveService {
-  public error$: Observable<Result<ResponsePetition[]>>;
-  public success$: Observable<Result<ResponsePetition[]>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<ResponsePetition[] | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<ResponsePetition[]>>;
   private submit$: Subject<FilterData[]> = new Subject();
@@ -32,11 +32,13 @@ export class GetPetitionsActiveService {
     );
 
     this.success$ = success$.pipe(
+      map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
+      map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );

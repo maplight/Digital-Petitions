@@ -14,6 +14,7 @@ import { ChangeEmailService } from 'src/app/logic/auth/exports';
 @Component({
   selector: 'dp-email-change-modal',
   templateUrl: './email-change-modal.component.html',
+  providers: [ChangeEmailService],
 })
 export class EmailChangeModalComponent implements OnInit, OnDestroy {
   protected result$;

@@ -14,8 +14,8 @@ import { Result } from 'src/app/shared/models/exports';
 
 @Injectable()
 export class SignOutService implements OnDestroy {
-  public error$: Observable<Result<string>>;
-  public success$: Observable<Result<string>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
   private submit$: Subject<void> = new Subject();
@@ -30,14 +30,13 @@ export class SignOutService implements OnDestroy {
     );
 
     this.success$ = success$.pipe(
-      //redirect
-      //map((value) => value.result),
+      map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      //map((value) => value.error),
+      map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );

@@ -25,6 +25,5 @@ import { SignUpConfirmService } from 'src/app/logic/auth/sign-up-confirm.service
     MatProgressBarModule,
     SignUpConfirmRoutingModule,
   ],
-  providers: [SignUpConfirmService],
 })
 export class SignUpConfirmModule {}

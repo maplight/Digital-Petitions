@@ -23,6 +23,5 @@ import { ChangePasswordService } from 'src/app/logic/auth/exports';
     DialogResultModule,
     MatProgressBarModule,
   ],
-  providers: [ChangePasswordService],
 })
 export class ChangePasswordModalModule {}

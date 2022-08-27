@@ -15,6 +15,7 @@ import { DialogResultComponent } from '../../shared/dialog-result/dialog-result.
 @Component({
   selector: 'dp-change-password-modal',
   templateUrl: './change-password-modal.component.html',
+  providers: [ChangePasswordService],
 })
 export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   protected hideNewPassword = true;

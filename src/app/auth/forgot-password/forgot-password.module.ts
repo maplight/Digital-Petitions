@@ -25,6 +25,5 @@ import { ForgotPasswordService } from 'src/app/logic/auth/exports';
     ReactiveFormsModule,
     ReturnLinkModule,
   ],
-  providers: [ForgotPasswordService]
 })
 export class ForgotPasswordModule {}

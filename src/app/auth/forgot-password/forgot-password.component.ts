@@ -12,6 +12,7 @@ import { ForgotPasswordService } from 'src/app/logic/auth/exports';
 @Component({
   selector: 'dp-forgot-password',
   templateUrl: './forgot-password.component.html',
+  providers: [ForgotPasswordService],
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   protected hide_password = true;

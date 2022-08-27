@@ -7,6 +7,7 @@ import { SignInService } from 'src/app/logic/auth/exports';
 @Component({
   selector: 'dp-sign-in',
   templateUrl: './sign-in.component.html',
+  providers: [SignInService],
 })
 export class SignInComponent {
   protected hidePassword = true;

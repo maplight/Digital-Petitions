@@ -17,8 +17,8 @@ import { SignatureService } from './signature.service';
   providedIn: 'root',
 })
 export class GetSignaturesService {
-  public error$: Observable<Result<SignaturesData[]>>;
-  public success$: Observable<Result<SignaturesData[]>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<SignaturesData[] | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<SignaturesData[]>>;
   private submit$: Subject<FilterData[]> = new Subject();
@@ -33,11 +33,13 @@ export class GetSignaturesService {
     );
 
     this.success$ = success$.pipe(
+      map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
+      map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );

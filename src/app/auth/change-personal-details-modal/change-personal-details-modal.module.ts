@@ -25,6 +25,5 @@ import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
     MatSelectModule,
     MatProgressBarModule,
   ],
-  providers: [ChangePersonalDetailsService],
 })
 export class ChangePersonalDetailsModalModule {}

@@ -16,8 +16,8 @@ import { SignatureService } from './signature.service';
   providedIn: 'root',
 })
 export class DenySignatureService {
-  public error$: Observable<Result<string>>;
-  public success$: Observable<Result<string>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
   private submit$: Subject<string[]> = new Subject();
@@ -32,11 +32,13 @@ export class DenySignatureService {
     );
 
     this.success$ = success$.pipe(
+      map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
+      map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );

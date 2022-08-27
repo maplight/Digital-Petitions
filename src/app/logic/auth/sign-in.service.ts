@@ -14,11 +14,11 @@ import { Result, SignInCredentials } from 'src/app/shared/models/exports';
 
 @Injectable()
 export class SignInService implements OnDestroy {
-  public error$: Observable<Result<string>>;
+  public error$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
   private _submit: Subject<SignInCredentials> = new Subject();
-  public success$: Observable<Result<string>>;
+  public success$: Observable<string | undefined>;
 
   constructor(private _accountService: AccountService) {
     this.result$ = this._submit.pipe(
@@ -32,15 +32,13 @@ export class SignInService implements OnDestroy {
     );
 
     this.success$ = success$.pipe(
-      // probably there is no need to redirect here as the consumer can always
-      // pipe from the result observable ask for the success result and take
-      // the appropiate action
+      map((value) => value.result),
       tap((value) => console.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      //map((value) => value.error),
+      map((value) => value.error),
       tap((value) => console.log(value)),
       shareReplay(1)
     );

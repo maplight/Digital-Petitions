@@ -23,6 +23,5 @@ import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
     MatIconModule,
     MatProgressBarModule,
   ],
-  providers: [ConfirmChangeEmailService],
 })
 export class ConfirmEmailChangeModalModule {}

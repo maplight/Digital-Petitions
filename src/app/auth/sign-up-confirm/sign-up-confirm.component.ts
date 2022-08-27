@@ -9,6 +9,7 @@ import { SignUpService } from 'src/app/logic/auth/sign-up.service';
 @Component({
   selector: 'dp-sign-up-confirm',
   templateUrl: './sign-up-confirm.component.html',
+  providers: [SignUpConfirmService],
 })
 export class SignUpConfirmComponent {
   protected result$;
