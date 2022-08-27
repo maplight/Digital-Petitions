@@ -9,6 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -22,7 +23,10 @@ export class GetPetitionsInactiveService {
   public result$: Observable<Result<ResponsePetition[]>>;
   private submit$: Subject<FilterData[]> = new Subject();
 
-  constructor(private _petitionLogic: PetitionService) {
+  constructor(
+    private _petitionLogic: PetitionService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._petitionLogic.getInactivePetitions(data)),
       shareReplay(1)
@@ -33,13 +37,13 @@ export class GetPetitionsInactiveService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
       map((value) => value.error),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

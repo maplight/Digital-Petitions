@@ -10,6 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result, SignInCredentials } from 'src/app/shared/models/exports';
 
 @Injectable()
@@ -20,7 +21,10 @@ export class SignInService implements OnDestroy {
   private _submit: Subject<SignInCredentials> = new Subject();
   public success$: Observable<string | undefined>;
 
-  constructor(private _accountService: AccountService) {
+  constructor(
+    private _accountService: AccountService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this._submit.pipe(
       exhaustMap((data) => this._accountService.signIn(data)),
       shareReplay(1)
@@ -33,13 +37,13 @@ export class SignInService implements OnDestroy {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
       map((value) => value.error),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

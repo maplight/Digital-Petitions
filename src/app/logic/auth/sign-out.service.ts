@@ -10,6 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 
 @Injectable()
@@ -20,9 +21,12 @@ export class SignOutService implements OnDestroy {
   public result$: Observable<Result<string>>;
   private submit$: Subject<void> = new Subject();
 
-  constructor(private AccountService: AccountService) {
+  constructor(
+    private _accountLogic: AccountService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap(() => this.AccountService.signOut()),
+      exhaustMap(() => this._accountLogic.signOut()),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -31,13 +35,13 @@ export class SignOutService implements OnDestroy {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
       map((value) => value.error),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

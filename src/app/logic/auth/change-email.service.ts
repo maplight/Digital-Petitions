@@ -10,7 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
-import { LogginService } from 'src/app/core/loggin/loggin.service';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { ChangeEmailData, Result } from 'src/app/shared/models/exports';
 
 @Injectable()
@@ -22,11 +22,11 @@ export class ChangeEmailService implements OnDestroy {
   private submit$: Subject<ChangeEmailData> = new Subject();
 
   constructor(
-    private AccountService: AccountService,
-    private _logginService: LogginService
+    private _accountLogic: AccountService,
+    private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.changeEmail(data)),
+      exhaustMap((data) => this._accountLogic.changeEmail(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -35,13 +35,13 @@ export class ChangeEmailService implements OnDestroy {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
       map((value) => value.error),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

@@ -9,6 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';
 
@@ -23,7 +24,10 @@ export class ApprovePetitionService {
     id: string;
   }> = new Subject();
 
-  constructor(private _petitionService: PetitionService) {
+  constructor(
+    private _petitionService: PetitionService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._petitionService.approvePetition(data)),
       shareReplay(1)
@@ -34,13 +38,13 @@ export class ApprovePetitionService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
       map((value) => value.error),
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

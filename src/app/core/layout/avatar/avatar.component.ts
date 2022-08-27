@@ -11,8 +11,8 @@ export class AvatarComponent implements OnInit {
   protected currentUser$;
 
   protected l_avatar: string = '';
-  constructor(private AccountService: AccountService) {
-    this.currentUser$ = this.AccountService.currentUser$
+  constructor(private _accountLogic: AccountService) {
+    this.currentUser$ = this._accountLogic.currentUser$
       .pipe(
         tap((data) => {
           if (!!data) {
