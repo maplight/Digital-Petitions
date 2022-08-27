@@ -387,57 +387,61 @@ export type SubmitIssuePetitionMutation = {
 };
 
 export type GetPetitionQueryVariables = {
-  PK: string,
+  PK: string;
 };
 
 export type GetPetitionQuery = {
-  getPetition: ( {
-      __typename: "CandidatePetition",
-      PK: string,
-      createdAt: string,
-      owner: string,
-      signatureSummary?:  {
-        __typename: string,
-        approved: number,
-        deadline?: string | null,
-        required: number,
-        submitted: number,
-      } | null,
-      status: PetitionStatus,
-      type: PetitionType,
-      updatedAt: string,
-      version: number,
-      address:  {
-        __typename: string,
-        address: string,
-        city?: string | null,
-        number?: string | null,
-        state: string,
-        zipCode?: string | null,
-      },
-      name: string,
-      office: string,
-      party: string,
-    } | {
-      __typename: "IssuePetition",
-      PK: string,
-      createdAt: string,
-      owner: string,
-      signatureSummary?:  {
-        __typename: string,
-        approved: number,
-        deadline?: string | null,
-        required: number,
-        submitted: number,
-      } | null,
-      status: PetitionStatus,
-      type: PetitionType,
-      updatedAt: string,
-      version: number,
-      detail: string,
-      title: string,
-    }
-  ) | null,
+  getPetition:
+    | (
+        | {
+            __typename: 'CandidatePetition';
+            PK: string;
+            createdAt: string;
+            owner: string;
+            signatureSummary?: {
+              __typename: string;
+              approved: number;
+              deadline?: string | null;
+              required: number;
+              submitted: number;
+            } | null;
+            status: PetitionStatus;
+            type: PetitionType;
+            updatedAt: string;
+            version: number;
+            address: {
+              __typename: string;
+              address: string;
+              city?: string | null;
+              number?: string | null;
+              state: string;
+              zipCode?: string | null;
+            };
+            name: string;
+            office: string;
+            party: string;
+          }
+        | {
+            __typename: 'IssuePetition';
+            PK: string;
+            createdAt: string;
+            owner: string;
+            signatureSummary?: {
+              __typename: string;
+              approved: number;
+              deadline?: string | null;
+              required: number;
+              submitted: number;
+            } | null;
+            status: PetitionStatus;
+            type: PetitionType;
+            updatedAt: string;
+            version: number;
+            detail: string;
+            title: string;
+          }
+      )
+    | null;
 };
 
 export type GetPetitionsByOwnerQueryVariables = {
