@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   exhaustMap,
   map,
@@ -11,19 +12,21 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
+import { CognitoUserLite } from 'src/app/shared/models/auth/user';
 import { Result, SignInCredentials } from 'src/app/shared/models/exports';
 
 @Injectable()
 export class SignInService implements OnDestroy {
   public error$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
+  public result$: Observable<Result<CognitoUserLite>>;
   private _submit: Subject<SignInCredentials> = new Subject();
-  public success$: Observable<string | undefined>;
+  public success$: Observable<CognitoUserLite | undefined>;
 
   constructor(
     private _accountService: AccountService,
-    private _loggingService: LoggingService
+    private _loggingService: LoggingService,
+    private _router: Router
   ) {
     this.result$ = this._submit.pipe(
       exhaustMap((data) => this._accountService.signIn(data)),
@@ -37,7 +40,15 @@ export class SignInService implements OnDestroy {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+        switch (value?.attributes.custom.access_group) {
+          case 'petitioner':
+            this._router.navigate(['/committee/home']);
+            break;
+          //You must add as many conditions as there are roles
+        }
+      }),
       shareReplay(1)
     );
 

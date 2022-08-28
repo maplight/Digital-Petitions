@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { ForgotPasswordService } from 'src/app/logic/auth/exports';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [ForgotPasswordComponent],
@@ -24,6 +26,8 @@ import { ForgotPasswordService } from 'src/app/logic/auth/exports';
     FormsModule,
     ReactiveFormsModule,
     ReturnLinkModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
 })
 export class ForgotPasswordModule {}

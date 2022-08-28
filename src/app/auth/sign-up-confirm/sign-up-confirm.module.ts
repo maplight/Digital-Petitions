@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SignUpConfirmRoutingModule } from './sign-up-confirm-routing.module';
 import { SignUpConfirmService } from 'src/app/logic/auth/sign-up-confirm.service';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [SignUpConfirmComponent],
@@ -24,6 +26,8 @@ import { SignUpConfirmService } from 'src/app/logic/auth/sign-up-confirm.service
     MatButtonModule,
     MatProgressBarModule,
     SignUpConfirmRoutingModule,
+    ErrorMsgModule,
+    LoadingBarModule,
   ],
 })
 export class SignUpConfirmModule {}

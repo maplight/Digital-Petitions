@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [ConfirmEmailChangeModalComponent],
@@ -22,6 +23,7 @@ import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
+    LoadingBarModule,
   ],
 })
 export class ConfirmEmailChangeModalModule {}

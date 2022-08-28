@@ -11,6 +11,8 @@ import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { SignUpRoutingModule } from './sign-up-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SignUpService } from 'src/app/logic/auth/exports';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [SignUpComponent],
@@ -26,6 +28,8 @@ import { SignUpService } from 'src/app/logic/auth/exports';
     RouterModule,
     BasicCardModule,
     MatProgressBarModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
 })
 export class SignUpModule {}

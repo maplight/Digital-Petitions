@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 
@@ -17,8 +17,7 @@ import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-resul
   providers: [ConfirmChangeEmailService],
 })
 export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
-  protected result$;
-  protected loading$;
+  protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();
   public formGroup: FormGroup;
 
@@ -32,30 +31,23 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
     this.formGroup = this._fb.group({
       code: new FormControl('', [Validators.required]),
     });
-    this.result$ = this._confirmChangeEmailLogic.result$
-      .pipe(
-        tap((result) => {
-          if (!!result.result) {
-            this.dialogRef.close();
-            this.openDialog('Email Successfully Changed!', '', true);
-            this._router.navigate([]);
-          } else {
-            //I'm not sure this is the best way to handle errors here
-            this.dialogRef.close();
-            this.openDialog(
-              'An error has occurred',
-              result.error ? result.error : '',
-              false
-            );
-          }
-        }),
-        takeUntil(this._unsubscribeAll)
-      )
-      .subscribe();
-    this.loading$ = this._confirmChangeEmailLogic.loading$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._confirmChangeEmailLogic.success$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this.dialogRef.close();
+        this.openDialog('Password Successfully Changed!', '', true);
+      });
+    this._confirmChangeEmailLogic.error$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((error) => {
+        this.dialogRef.close();
+        this.openDialog('An error has occurred', error ? error : '', false);
+      });
+    this.loading$ = this._confirmChangeEmailLogic.loading$;
+  }
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();

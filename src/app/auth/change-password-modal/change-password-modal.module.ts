@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DialogResultModule } from '../../shared/dialog-result/dialog-result.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChangePasswordService } from 'src/app/logic/auth/exports';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [ChangePasswordModalComponent],
@@ -22,6 +23,7 @@ import { ChangePasswordService } from 'src/app/logic/auth/exports';
     MatButtonModule,
     DialogResultModule,
     MatProgressBarModule,
+    LoadingBarModule,
   ],
 })
 export class ChangePasswordModalModule {}

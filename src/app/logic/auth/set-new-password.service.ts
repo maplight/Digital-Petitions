@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   exhaustMap,
   map,
@@ -27,7 +28,8 @@ export class SetNewPasswordService implements OnDestroy {
 
   constructor(
     private _accountLogic: AccountService,
-    private _loggingService: LoggingService
+    private _loggingService: LoggingService,
+    private _router: Router
   ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._accountLogic.setNewPassword(data)),
@@ -39,7 +41,10 @@ export class SetNewPasswordService implements OnDestroy {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+        this._router.navigate(['/auth/success-change-password']);
+      }),
       shareReplay(1)
     );
 

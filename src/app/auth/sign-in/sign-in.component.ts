@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { SignInService } from 'src/app/logic/auth/exports';
 
 @Component({
@@ -12,9 +12,9 @@ import { SignInService } from 'src/app/logic/auth/exports';
 export class SignInComponent {
   protected hidePassword = true;
 
-  protected result$;
+  protected error$!: Observable<string | undefined>;
 
-  protected loading$;
+  protected loading$!: Observable<boolean>;
 
   public formGroup: FormGroup;
 
@@ -28,16 +28,7 @@ export class SignInComponent {
       password: ['', [Validators.required]],
     });
 
-    this.result$ = this._signInLogic.result$.pipe(
-      tap((result) => {
-        if (!!result.result) {
-          // on success redirect the user to the home page
-          // TODO - create a landing route that later redirects based on the user's role
-          this._router.navigate(['/committee/home']);
-        }
-      }),
-      shareReplay(1)
-    );
+    this.error$ = this._signInLogic.error$;
 
     this.loading$ = this._signInLogic.loading$;
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   exhaustMap,
   map,
@@ -24,7 +25,8 @@ export class SignUpConfirmService {
 
   constructor(
     private _accountLogic: AccountService,
-    private _loggingService: LoggingService
+    private _loggingService: LoggingService,
+    private _router: Router
   ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._accountLogic.signUpConfirm(data)),
@@ -36,7 +38,10 @@ export class SignUpConfirmService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+        this._router.navigate(['/committee/account-settings']);
+      }),
       shareReplay(1)
     );
 

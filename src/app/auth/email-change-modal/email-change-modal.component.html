@@ -2,11 +2,7 @@
   <span modal-title>Change Email</span>
   <span modal-body class="w-full flex flex-col gap-6">
     <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
-      <mat-progress-bar
-        mode="indeterminate"
-        color="primary"
-        *ngIf="loading$ | async"
-      ></mat-progress-bar>
+      <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <mat-form-field>
         <mat-label>Enter New Email Address</mat-label>
         <input type="text" matInput formControlName="email" />

@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [ChangePersonalDetailsModalComponent],
@@ -24,6 +25,7 @@ import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
     MatIconModule,
     MatSelectModule,
     MatProgressBarModule,
+    LoadingBarModule,
   ],
 })
 export class ChangePersonalDetailsModalModule {}

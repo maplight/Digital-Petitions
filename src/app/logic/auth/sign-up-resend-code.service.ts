@@ -37,7 +37,7 @@ export class SignUpResendCodeService {
     );
 
     this.success$ = success$.pipe(
-      map((value) => value.result),
+      map(() => 'A new code has been sent to your email'),
       tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );

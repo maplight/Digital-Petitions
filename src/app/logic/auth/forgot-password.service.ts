@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   exhaustMap,
   map,
@@ -20,10 +21,12 @@ export class ForgotPasswordService {
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
   private submit$: Subject<RecoverPasswordData> = new Subject();
+  private email!: string;
 
   constructor(
     private _accountLogic: AccountService,
-    private _loggingService: LoggingService
+    private _loggingService: LoggingService,
+    private _router: Router
   ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._accountLogic.forgotPassword(data)),
@@ -35,7 +38,10 @@ export class ForgotPasswordService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+        this._router.navigate(['/auth/set-new-password', this.email]);
+      }),
       shareReplay(1)
     );
 
@@ -67,5 +73,6 @@ export class ForgotPasswordService {
   */
   formGroupValue(value: RecoverPasswordData) {
     this.submit$.next(value);
+    this.email = value.email;
   }
 }

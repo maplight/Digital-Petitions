@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Route, Router } from '@angular/router';
 import {
   exhaustMap,
   filter,
@@ -23,10 +24,12 @@ export class SignUpService implements OnDestroy {
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
   private submit$: Subject<SignUpCredentials> = new Subject();
+  private email!: string;
 
   constructor(
     private _accountLogic: AccountService,
-    private _loggingService: LoggingService
+    private _loggingService: LoggingService,
+    private _router: Router
   ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._accountLogic.signUp(data)),
@@ -38,7 +41,10 @@ export class SignUpService implements OnDestroy {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value),
+          this._router.navigate(['/auth/sign-up', this.email]);
+      }),
       shareReplay(1)
     );
 
@@ -70,5 +76,6 @@ export class SignUpService implements OnDestroy {
   */
   formGroupValue(value: SignUpCredentials) {
     this.submit$.next(value);
+    this.email = value.email;
   }
 }

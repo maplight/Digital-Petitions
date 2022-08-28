@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { ForgotPasswordService } from 'src/app/logic/auth/exports';
 
 @Component({
@@ -17,8 +17,8 @@ import { ForgotPasswordService } from 'src/app/logic/auth/exports';
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   protected hide_password = true;
 
-  protected result$;
-  protected loading$;
+  protected error$!: Observable<string | undefined>;
+  protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();
 
   public formGroup: FormGroup;
@@ -30,20 +30,12 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.formGroup = this._fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
     });
-    this.result$ = this._forgotPasswordLogic.result$.pipe(
-      tap((result) => {
-        if (!!result.result) {
-          this._router.navigate([
-            '/auth/set-new-password',
-            this.formGroup.value.email,
-          ]);
-        }
-      })
-    );
-    this.loading$ = this._forgotPasswordLogic.loading$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.error$ = this._forgotPasswordLogic.error$;
+    this.loading$ = this._forgotPasswordLogic.loading$;
+  }
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
