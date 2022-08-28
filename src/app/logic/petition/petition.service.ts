@@ -4,6 +4,7 @@ import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import {
   CandidatePetition,
   CandidatePetitionInput,
+  GetPetitionQuery,
   GetPetitionsByOwnerQuery,
   GetPetitionsByTypeQuery,
   IssuePetition,
@@ -25,7 +26,11 @@ import {
   submitCandidatePetition,
   submitIssuePetition,
 } from 'src/graphql/mutations';
-import { getPetitionsByOwner, getPetitionsByType } from 'src/graphql/queries';
+import {
+  getPetition,
+  getPetitionsByOwner,
+  getPetitionsByType,
+} from 'src/graphql/queries';
 import { __values } from 'tslib';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 
@@ -87,60 +92,34 @@ export class PetitionService {
     return of({ result: data }).pipe(delay(3000));
   }
 
-  getPetition(data: number): Observable<Result<ResponsePetition>> {
-    return of({
-      result: {
-        dataIssue: {
-          __typename: this.IssuePetition,
-          PK: '0',
-          createdAt: '00/00/0000',
-          detail:
-            'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-          owner: 'CommitteUser-1',
-          signatureSummary: {
-            __typename: this.SignatureSummary,
-            approved: 15000,
-            deadline: '00/00/0000',
-            required: 24000,
-            submitted: 20000,
-          },
-          status: PetitionStatus.NEW,
-          title: 'Title1',
-          type: PetitionType.ISSUE,
-          updatedAt: '00/00/0000',
-          version: 1,
+  getPetition(id: string): Observable<Result<ResponsePetition>> {
+    console.log(id);
+    return from(
+      API.graphql({
+        query: getPetition,
+        variables: {
+          PK: id,
         },
-
-        /** 
-        dataCandidate: {
-          __typename: this.CandidatePetition,
-          PK: '0',
-          address: {
-            __typename: this.AddressData,
-            address: 'address',
-            city: 'city',
-            number: '22',
-            state: 'Alaska',
-            zipCode: '1200',
-          },
-          createdAt: '00/00/0000',
-          office: 'My Office',
-          owner: 'CommitteUser-1',
-          party: 'Green',
-          signatureSummary: {
-            __typename: this.SignatureSummary,
-            approved: 15000,
-            deadline: '00/00/0000',
-            required: 24000,
-            submitted: 20000,
-          },
-          status: PetitionStatus.ACTIVE,
-          name: 'First name and last name',
-          type: PetitionType.CANDIDATE,
-        },
-        */
-      },
-    }).pipe(delay(1000));
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<GetPetitionQuery>>
+    ).pipe(
+      map((value) => {
+        let petition: ResponsePetition = {};
+        if (value.data) {
+          if (value.data.getPetition?.type === PetitionType.ISSUE) {
+            petition = { dataIssue: value.data.getPetition as IssuePetition };
+          } else if (value.data.getPetition?.type === PetitionType.CANDIDATE) {
+            petition = {
+              dataCandidate: value.data.getPetition as CandidatePetition,
+            };
+          }
+        }
+        return { result: petition };
+      }),
+      catchError((error) => {
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
   }
 
   withdrawPetition(data: number): Observable<Result<string>> {

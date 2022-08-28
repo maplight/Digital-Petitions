@@ -20,7 +20,7 @@ export class GetPetitionService {
   public success$: Observable<Result<ResponsePetition>>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<ResponsePetition>>;
-  private submit$: Subject<number> = new Subject();
+  private submit$: Subject<string> = new Subject();
 
   constructor(private _petitionService: PetitionService) {
     this.result$ = this.submit$.pipe(
@@ -62,7 +62,7 @@ export class GetPetitionService {
   @param id: The requested request ID
   */
 
-  getPetition(id: number) {
+  getPetition(id: string) {
     this.submit$.next(id);
   }
 }

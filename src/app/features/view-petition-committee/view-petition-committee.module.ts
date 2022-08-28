@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { ConfirmWithdrawlPetitionModule } from './confirm-withdrawl-petition/confirm-withdrawl-petition.module';
 import { WithdrawlResultModule } from './withdrawl-result/withdrawl-result.module';
+import { PetitionStatusModule } from 'src/app/pipes/petition-status/petition-status.module';
 
 @NgModule({
   declarations: [ViewPetitionCommitteeComponent],
@@ -31,6 +32,7 @@ import { WithdrawlResultModule } from './withdrawl-result/withdrawl-result.modul
     MatDialogModule,
     RouterModule,
     WithdrawlResultModule,
+    PetitionStatusModule,
   ],
   providers: [GetPetitionService],
 })

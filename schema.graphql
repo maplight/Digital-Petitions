@@ -1,4 +1,4 @@
-﻿﻿schema {
+﻿﻿﻿schema {
   query: Query
   mutation: Mutation
 }
@@ -71,6 +71,7 @@ type PetitionConnection @aws_cognito_user_pools @aws_iam {
 }
 
 type Query {
+  getPetition(PK: ID!): Petition @aws_cognito_user_pools @aws_iam
   getPetitionsByOwner(query: PetitionsByOwnerInput): PetitionConnection!
     @aws_cognito_user_pools
   getPetitionsByType(query: PetitionsByTypeInput): PetitionConnection!
