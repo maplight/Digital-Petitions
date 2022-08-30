@@ -175,7 +175,9 @@ const routes: Routes = [
       {
         path: 'admin',
         loadChildren: () =>
-          import('./city-staff/admin/admin.module').then((m) => m.AdminModule),
+          import('./features/city-staff-admin/city-staff-admin.module').then(
+            (m) => m.CityStaffAdminModule
+          ),
       },
     ],
   },
