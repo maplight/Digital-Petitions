@@ -1,1 +1,26 @@
-<p>admin works!</p>
+<div class="flex flex-col gap-4 w-full">
+  <h2 class="font-extrabold">Site Admin</h2>
+  <p class="mb-8">Edit or change your account informaton and password.</p>
+  <div
+    class="flex flex-row justify-between px-4 py-6 border border-[#D7D7D7] rounded-lg shadow-sm items-center"
+  >
+    <p class="text-lg leading-6 font-bold">Permissions and Administrators</p>
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      cdkFocusInitial
+      [routerLink]="'/city-staff/permissions'"
+    >
+      Edit
+    </button>
+  </div>
+  <div
+    class="flex flex-row justify-between px-4 py-6 border border-[#D7D7D7] rounded-lg shadow-sm items-center"
+  >
+    <p class="text-lg leading-6 font-bold">Site Designer</p>
+    <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
+      Edit
+    </button>
+  </div>
+</div>
