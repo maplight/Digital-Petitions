@@ -27,6 +27,9 @@ import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-e
 })
 export class EditPetitionCandidateComponent implements OnInit, OnChanges {
   @Input() formData: ResponsePetition = {};
+  @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
+  @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
+
   @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
     new EventEmitter();
   @Output() _submitEvent: EventEmitter<CandidatePetition> = new EventEmitter();
@@ -49,11 +52,14 @@ export class EditPetitionCandidateComponent implements OnInit, OnChanges {
     this.loading$ = this._editPetitionCandidateLogic.loading$;
   }
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.formData);
     this.formGroup = this._fb.group({
-      fullName: [this.formData.dataCandidate?.name, [Validators.required]],
       office: [this.formData.dataCandidate?.office, [Validators.required]],
       party: [this.formData.dataCandidate?.party, [Validators.required]],
-      address: [this.formData.dataCandidate?.address, [Validators.required]],
+      address: [
+        this.formData.dataCandidate?.address.address,
+        [Validators.required],
+      ],
       aptNumber: [
         this.formData.dataCandidate?.address.number,
         [Validators.required],
@@ -81,9 +87,22 @@ export class EditPetitionCandidateComponent implements OnInit, OnChanges {
         .pipe(
           tap((response) => {
             if (response) {
-              this._editPetitionCandidateLogic.editCandidatePetition(
-                this.formGroup.value
-              );
+              if (this.formData.dataCandidate) {
+                this._editPetitionCandidateLogic.editCandidatePetition({
+                  PK: this.formData.dataCandidate.PK,
+                  expectedVersion: this.formData.dataCandidate.version,
+                  office: this.formGroup.value.office,
+                  party: this.formGroup.value.party,
+
+                  address: {
+                    address: this.formGroup.value.address,
+                    state: this.formGroup.value.state,
+                    city: this.formGroup.value.city,
+                    number: this.formGroup.value.aptNumber,
+                    zipCode: this.formGroup.value.zipCode,
+                  },
+                });
+              }
             }
           })
         )

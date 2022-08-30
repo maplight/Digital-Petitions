@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ReturnLinkComponent implements OnInit {
   @Input()
-  route: string = '#';
+  route: string = '';
 
   @Input()
   text: string = '';

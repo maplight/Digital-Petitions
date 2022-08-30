@@ -4,6 +4,10 @@ import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import {
   CandidatePetition,
   CandidatePetitionInput,
+  EditCandidatePetitionInput,
+  EditCandidatePetitionMutation,
+  EditIssuePetitionInput,
+  EditIssuePetitionMutation,
   GetPetitionQuery,
   GetPetitionsByOwnerQuery,
   GetPetitionsByTypeQuery,
@@ -23,6 +27,8 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
 import {
+  editCandidatePetition,
+  editIssuePetition,
   submitCandidatePetition,
   submitIssuePetition,
 } from 'src/graphql/mutations';
@@ -82,14 +88,36 @@ export class PetitionService {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
-  editPetitionIssue(data: IssuePetition): Observable<Result<IssuePetition>> {
-    return of({ result: data }).pipe(delay(3000));
+  editPetitionIssue(
+    data: EditIssuePetitionInput
+  ): Observable<Result<IssuePetition>> {
+    return from(
+      API.graphql({
+        query: editIssuePetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<EditIssuePetitionMutation>>
+    ).pipe(
+      map(({ data }) => ({ result: data?.editIssuePetition as IssuePetition })),
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
+    );
   }
 
   editPetitionCandidate(
-    data: CandidatePetition
+    data: EditCandidatePetitionInput
   ): Observable<Result<CandidatePetition>> {
-    return of({ result: data }).pipe(delay(3000));
+    return from(
+      API.graphql({
+        query: editCandidatePetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<EditCandidatePetitionMutation>>
+    ).pipe(
+      map(({ data }) => ({
+        result: data?.editCandidatePetition as CandidatePetition,
+      })),
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
+    );
   }
 
   getPetition(id: string): Observable<Result<ResponsePetition>> {
