@@ -10,7 +10,6 @@ export class AdminService {
   constructor() {}
 
   getAllUser(cursor?: string): Observable<Result<Member[]>> {
-    console.log('?????');
     return of({
       result: [
         {

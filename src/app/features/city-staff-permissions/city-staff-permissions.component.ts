@@ -21,13 +21,12 @@ export class CityStaffPermissionsComponent implements OnInit {
   ];
   tableStyle = 'w-full';
 
-  constructor(private _getAllUserLogic: GetAllUsersService) {
+  constructor(private _getAllUserLogic: GetAllUsersService) {}
+
+  ngOnInit(): void {
     this.error$ = this._getAllUserLogic.error$;
     this.loading$ = this._getAllUserLogic.loading$;
     this.success$ = this._getAllUserLogic.success$;
-  }
-
-  ngOnInit(): void {
     this._getAllUserLogic.getMembers();
   }
 }

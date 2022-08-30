@@ -5,6 +5,7 @@ import {
   merge,
   Observable,
   partition,
+  ReplaySubject,
   shareReplay,
   Subject,
   tap,
@@ -20,7 +21,7 @@ export class GetAllUsersService {
   public success$: Observable<Member[] | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<Member[]>>;
-  private submit$: Subject<void> = new Subject();
+  private submit$: ReplaySubject<void> = new ReplaySubject();
   private cursor: string | undefined;
 
   constructor(
@@ -72,7 +73,6 @@ export class GetAllUsersService {
    */
 
   getMembers() {
-    console.log('????!!!');
     this.submit$.next();
   }
 }
