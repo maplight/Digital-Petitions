@@ -62,15 +62,9 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
           tap((response) => {
             if (response) {
               if (this.formData.dataIssue) {
-                console.log({
-                  PK: this.formData.dataIssue.PK,
-                  expectedVersion: this.formData.dataIssue.version + 1,
-                  title: this.formGroup.value.title,
-                  detail: this.formGroup.value.text,
-                });
                 this._editPetitionIssueLogic.editIssuePetition({
                   PK: this.formData.dataIssue.PK,
-                  expectedVersion: this.formData.dataIssue.version + 1,
+                  expectedVersion: this.formData.dataIssue.version,
                   title: this.formGroup.value.title,
                   detail: this.formGroup.value.text,
                 });
