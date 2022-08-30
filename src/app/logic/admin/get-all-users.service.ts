@@ -10,26 +10,25 @@ import {
   tap,
 } from 'rxjs';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
-import { FilterData, Result } from 'src/app/shared/models/exports';
-import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
-import { SignatureService } from './signature.service';
+import { Member } from 'src/app/shared/models/admin/member';
+import { Result } from 'src/app/shared/models/exports';
+import { AdminService } from './admin.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GetSignaturesService {
+@Injectable()
+export class GetAllUsersService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<SignaturesData[] | undefined>;
+  public success$: Observable<Member[] | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<SignaturesData[]>>;
-  private submit$: Subject<FilterData[]> = new Subject();
+  public result$: Observable<Result<Member[]>>;
+  private submit$: Subject<void> = new Subject();
+  private cursor: string | undefined;
 
   constructor(
-    private _signatureService: SignatureService,
+    private _adminService: AdminService,
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._signatureService.getSignatures(data)),
+      exhaustMap(() => this._adminService.getAllUser(this.cursor)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -38,7 +37,11 @@ export class GetSignaturesService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+        //extract the cursor from the received object
+        this.cursor = '';
+      }),
       shareReplay(1)
     );
 
@@ -65,11 +68,11 @@ export class GetSignaturesService {
     this.submit$.complete();
   }
 
-  /** This method begins the process of obtaining a signatures
-  @param filter: filter criteria for signatures
-  */
+  /** This method begins the process of obtaining a members
+   */
 
-  getSignatures(filter: FilterData[]) {
-    this.submit$.next(filter);
+  getMembers() {
+    console.log('????!!!');
+    this.submit$.next();
   }
 }
