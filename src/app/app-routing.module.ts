@@ -179,6 +179,13 @@ const routes: Routes = [
             (m) => m.CityStaffAdminModule
           ),
       },
+      {
+        path: 'permissions',
+        loadChildren: () =>
+          import(
+            './features/city-staff-permissions/city-staff-permissions.module'
+          ).then((m) => m.CityStaffPermissionsModule),
+      },
     ],
   },
 ];
