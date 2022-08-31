@@ -8,6 +8,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { NewMemberModule } from './new-member/new-member.module';
+
 @NgModule({
   declarations: [CityStaffPermissionsComponent],
   imports: [
@@ -18,6 +21,10 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatMenuModule,
     LoadingBarModule,
     ErrorMsgModule,
+
+    MatDialogModule,
+    NewMemberModule,
+
   ],
 })
 export class CityStaffPermissionsModule {}

@@ -2,7 +2,16 @@
   <h2 class="font-extrabold">Permissions and Administrators</h2>
   <p class="mb-8">Manage, invite and grant permissions for your team.</p>
   <div class="flex flex-row w-full justify-end">
+
     <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
+
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      cdkFocusInitial
+      (click)="openDialogNewMember()"
+    >
       + Add Member
     </button>
   </div>
