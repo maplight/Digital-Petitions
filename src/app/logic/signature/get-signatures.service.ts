@@ -14,9 +14,7 @@ import { FilterData, Result } from 'src/app/shared/models/exports';
 import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
 import { SignatureService } from './signature.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class GetSignaturesService {
   public error$: Observable<string | undefined>;
   public success$: Observable<SignaturesData[] | undefined>;
