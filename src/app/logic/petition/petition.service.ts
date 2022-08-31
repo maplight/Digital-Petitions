@@ -219,7 +219,6 @@ export class PetitionService {
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
-
       map((value) => {
         let petitions: ResponsePetition[] = [];
         let cursor: string | undefined = value.data?.getPetitionsByType.token
@@ -239,7 +238,6 @@ export class PetitionService {
       catchError((error) => {
         return of({ error: error.errors?.[0]?.message });
       })
-
     );
   }
 
