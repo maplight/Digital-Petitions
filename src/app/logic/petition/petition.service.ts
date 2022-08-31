@@ -39,6 +39,7 @@ import {
 } from 'src/graphql/queries';
 import { __values } from 'tslib';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
@@ -46,8 +47,7 @@ export class PetitionService {
   private CandidatePetition: 'CandidatePetition' = 'CandidatePetition';
   private AddressData: 'AddressData' = 'AddressData';
   private SignatureSummary: 'SignatureSummary' = 'SignatureSummary';
-  private currentUser: any;
-  constructor(private _accountLogic: AccountService) {}
+  constructor(private _loggingService: LoggingService) {}
 
   newIssuePetition(
     data: IssuePetitionInput
@@ -74,7 +74,7 @@ export class PetitionService {
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<SubmitCandidatePetitionMutation>>
     ).pipe(
-      tap((value) => console.log(value)),
+      tap((value) => this._loggingService.log(value)),
       map(({ data }) => ({ result: data?.submitCandidatePetition })),
       catchError((error) => of({ error: error?.[0]?.message }))
     );

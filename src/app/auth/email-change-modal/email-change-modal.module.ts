@@ -10,6 +10,7 @@ import { ConfirmEmailChangeModalModule } from '../confirm-email-change-modal/con
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChangeEmailService } from 'src/app/logic/auth/exports';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [EmailChangeModalComponent],
@@ -24,7 +25,7 @@ import { ChangeEmailService } from 'src/app/logic/auth/exports';
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
+    LoadingBarModule,
   ],
-  providers: [ChangeEmailService],
 })
 export class EmailChangeModalModule {}

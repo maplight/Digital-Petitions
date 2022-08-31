@@ -1,18 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { SetNewPasswordService } from 'src/app/logic/auth/exports';
 
 @Component({
   selector: 'dp-set-new-password',
   templateUrl: './set-new-password.component.html',
+  providers: [SetNewPasswordService],
 })
 export class SetNewPasswordComponent implements OnInit, OnDestroy {
   protected hideConfirmPassword = true;
   protected password = true;
-  protected result$;
-  protected loading$;
+  protected error$!: Observable<string | undefined>;
+  protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();
   public formGroup: FormGroup;
 
@@ -28,17 +29,12 @@ export class SetNewPasswordComponent implements OnInit, OnDestroy {
       newPassword: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
     });
-    this.result$ = this._setNewPasswordLogic.result$.pipe(
-      tap((result) => {
-        if (!!result.result) {
-          this._router.navigate(['/auth/success-change-password']);
-        }
-      })
-    );
-    this.loading$ = this._setNewPasswordLogic.loading$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.error$ = this._setNewPasswordLogic.error$;
+    this.loading$ = this._setNewPasswordLogic.loading$;
+  }
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();

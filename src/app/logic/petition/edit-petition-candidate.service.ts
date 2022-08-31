@@ -9,6 +9,8 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import {
   CandidatePetition,
   EditCandidatePetitionInput,
@@ -19,13 +21,16 @@ import { PetitionService } from './exports';
 
 @Injectable()
 export class EditPetitionCandidateService {
-  public error$: Observable<Result<CandidatePetition>>;
-  public success$: Observable<Result<CandidatePetition>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<CandidatePetition | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<CandidatePetition>>;
   private submit$: Subject<EditCandidatePetitionInput> = new Subject();
 
-  constructor(private _editPetitionService: PetitionService) {
+  constructor(
+    private _editPetitionService: PetitionService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) =>
         this._editPetitionService.editPetitionCandidate(data)
@@ -37,12 +42,14 @@ export class EditPetitionCandidateService {
     );
 
     this.success$ = success$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.result),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.error),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

@@ -9,6 +9,8 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { PetitionListStatusCheck } from 'src/app/core/api/API';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
@@ -19,7 +21,9 @@ import { PetitionService } from '../petition/exports';
 @Injectable()
 export class GetPetitionsInactiveService {
   public error$: Observable<string | undefined>;
+
   public success$: Observable<BufferPetition | undefined>;
+
   public loading$: Observable<boolean>;
   public result$: Observable<Result<BufferPetition>>;
   private submit$: Subject<{
@@ -27,7 +31,10 @@ export class GetPetitionsInactiveService {
     cursor?: string;
   }> = new Subject();
 
-  constructor(private _petitionLogic: PetitionService) {
+  constructor(
+    private _petitionLogic: PetitionService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._petitionLogic.getInactivePetitions(data)),
       shareReplay(1)
@@ -37,14 +44,16 @@ export class GetPetitionsInactiveService {
     );
 
     this.success$ = success$.pipe(
-      tap((value) => console.log(value)),
       map((value) => value.result),
+      tap((value) => this._loggingService.log(value)),
+
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      tap((value) => console.log(value)),
       map((value) => value.error),
+      tap((value) => this._loggingService.log(value)),
+
       shareReplay(1)
     );
 

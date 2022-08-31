@@ -9,19 +9,23 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { FilterData, Result } from 'src/app/shared/models/exports';
 import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
 import { SignatureService } from './signature.service';
 
 @Injectable()
 export class GetSignaturesService {
-  public error$: Observable<Result<SignaturesData[]>>;
-  public success$: Observable<Result<SignaturesData[]>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<SignaturesData[] | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<SignaturesData[]>>;
   private submit$: Subject<FilterData[]> = new Subject();
 
-  constructor(private _signatureService: SignatureService) {
+  constructor(
+    private _signatureService: SignatureService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._signatureService.getSignatures(data)),
       shareReplay(1)
@@ -31,12 +35,14 @@ export class GetSignaturesService {
     );
 
     this.success$ = success$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.result),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.error),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

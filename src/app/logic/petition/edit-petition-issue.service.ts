@@ -10,19 +10,23 @@ import {
   tap,
 } from 'rxjs';
 import { EditIssuePetitionInput, IssuePetition } from 'src/app/core/api/API';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
 
 @Injectable()
 export class EditPetitionIssueService {
-  public error$: Observable<Result<IssuePetition>>;
-  public success$: Observable<Result<IssuePetition>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<IssuePetition | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<IssuePetition>>;
   private submit$: Subject<EditIssuePetitionInput> = new Subject();
 
-  constructor(private _editPetitionService: PetitionService) {
+  constructor(
+    private _editPetitionService: PetitionService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._editPetitionService.editPetitionIssue(data)),
       shareReplay(1)
@@ -32,12 +36,14 @@ export class EditPetitionIssueService {
     );
 
     this.success$ = success$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.result),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.error),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

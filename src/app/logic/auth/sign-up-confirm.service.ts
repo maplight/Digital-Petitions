@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   exhaustMap,
   map,
@@ -10,20 +11,25 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { SignUpConfirmationCode } from 'src/app/shared/models/auth/sign-up-confirmation-code';
 import { ConfirmationCode, Result } from 'src/app/shared/models/exports';
 
 @Injectable()
 export class SignUpConfirmService {
-  public error$: Observable<Result<string>>;
-  public success$: Observable<Result<string>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
   private submit$: Subject<SignUpConfirmationCode> = new Subject();
 
-  constructor(private AccountService: AccountService) {
+  constructor(
+    private _accountLogic: AccountService,
+    private _loggingService: LoggingService,
+    private _router: Router
+  ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this.AccountService.signUpConfirm(data)),
+      exhaustMap((data) => this._accountLogic.signUpConfirm(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -31,15 +37,17 @@ export class SignUpConfirmService {
     );
 
     this.success$ = success$.pipe(
-      //redirect
-      //map((value) => value.result),
-      tap((value) => console.log(value)),
+      map((value) => value.result),
+      tap((value) => {
+        this._loggingService.log(value);
+        this._router.navigate(['/committee/account-settings']);
+      }),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      //map((value) => value.error),
-      tap((value) => console.log(value)),
+      map((value) => value.error),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

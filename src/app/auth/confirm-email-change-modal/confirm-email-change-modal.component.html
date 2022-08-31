@@ -6,11 +6,7 @@
       confirm your new email
     </p>
     <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
-      <mat-progress-bar
-        mode="indeterminate"
-        color="primary"
-        *ngIf="loading$ | async"
-      ></mat-progress-bar>
+      <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <mat-form-field>
         <mat-label>Confirmation Code</mat-label>
         <input type="text" matInput formControlName="code" />

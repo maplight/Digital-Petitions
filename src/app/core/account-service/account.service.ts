@@ -16,17 +16,17 @@ import {
 
 import { API, Auth } from 'aws-amplify';
 import { SignUpConfirmationCode } from 'src/app/shared/models/auth/sign-up-confirmation-code';
+import { CognitoUserLite, User } from 'src/app/shared/models/auth/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  private privateCurrentUser: BehaviorSubject<any | null> = new BehaviorSubject<
-    any | null
-  >(null);
+  private privateCurrentUser: BehaviorSubject<User | null> =
+    new BehaviorSubject<any | null>(null);
   private privateisLoged: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-  public currentUser$: Observable<any | null> =
+  public currentUser$: Observable<User | null> =
     this.privateCurrentUser.asObservable();
   public isLoged$: Observable<boolean> = this.privateisLoged.asObservable();
 
@@ -58,12 +58,12 @@ export class AccountService {
     );
   }
 
-  public signIn(data: SignInCredentials): Observable<Result<string>> {
+  public signIn(data: SignInCredentials): Observable<Result<CognitoUserLite>> {
     return from(
       Auth.signIn(data.email, data.password)
-        .then((data) => {
+        .then((data: CognitoUserLite) => {
           this.updateUser();
-          return { result: 'SUCCESS' };
+          return { result: data };
         })
         .catch((error) => {
           return { error: error.message };
@@ -219,7 +219,7 @@ export class AccountService {
 
   public updateUser() {
     Auth.currentUserInfo()
-      .then((data: any) => {
+      .then((data: User) => {
         this.privateCurrentUser.next(data);
       })
       .catch((error) => {

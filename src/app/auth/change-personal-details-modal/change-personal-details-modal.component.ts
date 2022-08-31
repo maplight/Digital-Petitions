@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
 import { state, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
@@ -16,10 +16,10 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'dp-change-personal-details-modal',
   templateUrl: './change-personal-details-modal.component.html',
+  providers: [ChangePersonalDetailsService],
 })
 export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
-  protected result$;
-  protected loading$;
+  protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();
   protected formGroup: FormGroup;
   protected localStates: state[] = states;
@@ -40,34 +40,23 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
       state: [null, [Validators.required]],
       zipCode: ['', [Validators.required]],
     });
-    this.result$ = this._changePersonalDetailsLogic.result$
-      .pipe(
-        tap((result) => {
-          if (!!result.result) {
-            this.dialogRef.close();
-            this.openDialog(
-              'Personal Details Are Successfully Changed!',
-              '',
-              true
-            );
-            this._router.navigate([]);
-          } else {
-            //I'm not sure this is the best way to handle errors here
-            this.dialogRef.close();
-            this.openDialog(
-              'An error has occurred',
-              result.error ? result.error : '',
-              false
-            );
-          }
-        }),
-        takeUntil(this._unsubscribeAll)
-      )
-      .subscribe();
-    this.loading$ = this._changePersonalDetailsLogic.loading$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._changePersonalDetailsLogic.success$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this.dialogRef.close();
+        this.openDialog('Password Successfully Changed!', '', true);
+      });
+    this._changePersonalDetailsLogic.error$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((error) => {
+        this.dialogRef.close();
+        this.openDialog('An error has occurred', error ? error : '', false);
+      });
+    this.loading$ = this._changePersonalDetailsLogic.loading$;
+  }
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();

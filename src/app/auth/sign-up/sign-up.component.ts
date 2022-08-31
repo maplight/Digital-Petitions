@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,21 +8,22 @@ import {
 
 import { state, states } from '../../core/states';
 import { SignUpService } from 'src/app/logic/auth/exports';
-import { shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'dp-sign-up',
   templateUrl: './sign-up.component.html',
+  providers: [SignUpService],
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
   protected localStates: state[] = states;
 
   protected hidePassword = true;
 
-  protected result$;
+  protected error$!: Observable<string | undefined>;
 
-  protected loading$;
+  protected loading$!: Observable<boolean>;
 
   public formGroup: FormGroup;
 
@@ -41,14 +42,9 @@ export class SignUpComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
-    this.result$ = this._signUpLogic.result$.pipe(
-      tap((result) => {
-        if (!!result.result) {
-          this._router.navigate(['/auth/sign-up', this.formGroup.value.email]);
-        }
-      }),
-      shareReplay(1)
-    );
+  }
+  ngOnInit(): void {
+    this.error$ = this._signUpLogic.error$;
     this.loading$ = this._signUpLogic.loading$;
   }
 

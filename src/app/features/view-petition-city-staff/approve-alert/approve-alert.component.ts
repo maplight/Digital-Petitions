@@ -9,7 +9,5 @@ export class ApproveAlertComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  submit() {
-    console.log('asdasd');
-  }
+  submit() {}
 }

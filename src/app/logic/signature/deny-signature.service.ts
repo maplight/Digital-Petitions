@@ -9,18 +9,22 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { SignatureService } from './signature.service';
 
 @Injectable()
 export class DenySignatureService {
-  public error$: Observable<Result<string>>;
-  public success$: Observable<Result<string>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
   private submit$: Subject<string[]> = new Subject();
 
-  constructor(private _signatureService: SignatureService) {
+  constructor(
+    private _signatureService: SignatureService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._signatureService.denySignature(data)),
       shareReplay(1)
@@ -30,12 +34,14 @@ export class DenySignatureService {
     );
 
     this.success$ = success$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.result),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.error),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 

@@ -17,7 +17,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   protected isLoged$;
 
   constructor(
-    private AccountService: AccountService,
+    private _accountLogic: AccountService,
     private _router: Router,
     private SignOutService: SignOutService,
     public dialog: MatDialog
@@ -27,7 +27,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
         tap((result) => {
           if (!!result.result) {
             this._router.navigate(['/auth/login']);
-            this.AccountService.isLoged();
+            this._accountLogic.isLoged();
           } else {
             //I'm not sure this is the best way to handle errors here
             this.openDialog(
@@ -40,8 +40,8 @@ export class UserMenuComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.currentUser$ = this.AccountService.currentUser$;
-    this.isLoged$ = this.AccountService.isLoged$;
+    this.currentUser$ = this._accountLogic.currentUser$;
+    this.isLoged$ = this._accountLogic.isLoged$;
   }
 
   ngOnInit(): void {}

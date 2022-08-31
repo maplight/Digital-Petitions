@@ -9,6 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -16,13 +17,16 @@ import { PetitionService } from '../petition/exports';
 
 @Injectable()
 export class GetPetitionsActiveService {
-  public error$: Observable<Result<ResponsePetition[]>>;
-  public success$: Observable<Result<ResponsePetition[]>>;
+  public error$: Observable<string | undefined>;
+  public success$: Observable<ResponsePetition[] | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<ResponsePetition[]>>;
   private submit$: Subject<FilterData[]> = new Subject();
 
-  constructor(private _petitionLogic: PetitionService) {
+  constructor(
+    private _petitionLogic: PetitionService,
+    private _loggingService: LoggingService
+  ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._petitionLogic.getActivePetitions(data)),
       shareReplay(1)
@@ -32,12 +36,14 @@ export class GetPetitionsActiveService {
     );
 
     this.success$ = success$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.result),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
-      tap((value) => console.log(value)),
+      map((value) => value.error),
+      tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );
 
