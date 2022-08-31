@@ -9,33 +9,25 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-
 import { LoggingService } from 'src/app/core/logging/loggin.service';
-
-import {
-  CandidatePetition,
-  EditCandidatePetitionInput,
-} from 'src/app/core/api/API';
-
-import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
-import { PetitionService } from './exports';
+import { NewMemberData } from 'src/app/shared/models/admin/new-member-data';
+import { Result } from 'src/app/shared/models/exports';
+import { AdminService } from './admin.service';
 
 @Injectable()
-export class EditPetitionCandidateService {
+export class NewMemberService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<CandidatePetition | undefined>;
+  public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<CandidatePetition>>;
-  private submit$: Subject<EditCandidatePetitionInput> = new Subject();
+  public result$: Observable<Result<string>>;
+  private submit$: Subject<NewMemberData> = new Subject();
 
   constructor(
-    private _editPetitionService: PetitionService,
+    private _adminLogic: AdminService,
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) =>
-        this._editPetitionService.editPetitionCandidate(data)
-      ),
+      exhaustMap((data) => this._adminLogic.newMember(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -70,11 +62,10 @@ export class EditPetitionCandidateService {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
-
-  /** This method begins the process of edition of a candidate type petition
-  @param value: CandidatePetition type: contains the data of a candidate type petition provided by the user
+  /** This method begins the process of password change for the user of the committee currently authenticated
+  @param value: New user password
   */
-  editCandidatePetition(value: EditCandidatePetitionInput) {
+  formGroupValue(value: NewMemberData) {
     this.submit$.next(value);
   }
 }
