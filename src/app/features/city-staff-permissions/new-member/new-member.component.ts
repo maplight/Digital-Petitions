@@ -12,7 +12,7 @@ import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-resul
 @Component({
   selector: 'dp-new-member',
   templateUrl: './new-member.component.html',
-
+})
 export class NewMemberComponent implements OnInit {
   protected loading$!: Observable<boolean>;
   protected error$!: Observable<string | undefined>;
@@ -27,16 +27,12 @@ export class NewMemberComponent implements OnInit {
 
     private dialog: MatDialog,
     private _newMemberLogic: NewMemberService
-
-
-
   ) {
     this.formGroup = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
       type: ['', [Validators.required]],
     });
   }
-
 
   ngOnInit(): void {
     this._newMemberLogic.success$
@@ -59,7 +55,6 @@ export class NewMemberComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
-
   submit() {
     if (this.formGroup.valid) {
       this._newMemberLogic.formGroupValue(this.formGroup.value);
@@ -67,7 +62,6 @@ export class NewMemberComponent implements OnInit {
       this.formGroup.markAllAsTouched();
     }
   }
-
 
   openDialog(title: string, message: string, success: boolean): void {
     const dialogRef = this.dialog.open(DialogResultComponent, {
