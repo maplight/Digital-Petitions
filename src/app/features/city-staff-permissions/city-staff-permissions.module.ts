@@ -8,8 +8,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
-import { MatDialogModule } from '@angular/material/dialog';
+import { DialogModule } from '@angular/cdk/dialog';
+import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { NewMemberModule } from './new-member/new-member.module';
+import { ChangeAccountPermissionModule } from './change-account-permission/change-account-permission.module';
+
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [CityStaffPermissionsComponent],
@@ -22,9 +26,12 @@ import { NewMemberModule } from './new-member/new-member.module';
     LoadingBarModule,
     ErrorMsgModule,
 
-    MatDialogModule,
+    DialogModule,
+    DialogResultModule,
     NewMemberModule,
+    ChangeAccountPermissionModule,
 
+    MatDialogModule,
   ],
 })
 export class CityStaffPermissionsModule {}

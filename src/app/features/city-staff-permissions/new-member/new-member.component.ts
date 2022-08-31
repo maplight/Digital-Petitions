@@ -12,6 +12,8 @@ import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-resul
 @Component({
   selector: 'dp-new-member',
   templateUrl: './new-member.component.html',
+
+  providers: [NewMemberService],
 })
 export class NewMemberComponent implements OnInit {
   protected loading$!: Observable<boolean>;

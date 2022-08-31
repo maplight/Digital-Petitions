@@ -16,7 +16,6 @@ export class AdminService {
     return of({
       result: [
         {
-
           id: '0',
 
           email: 'marvin.mckinney@email.com',
@@ -24,7 +23,6 @@ export class AdminService {
           status: 'Admin',
         },
         {
-
           id: '0',
 
           email: 'marvin.mckinney2@email.com',
@@ -53,5 +51,4 @@ export class AdminService {
       result: 'member',
     }).pipe(delay(3000));
   }
-
 }
