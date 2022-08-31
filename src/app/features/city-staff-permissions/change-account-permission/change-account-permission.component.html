@@ -1,0 +1,44 @@
+<dp-basic-modal (event)="submit()">
+  <span modal-title>Change Account Permission </span>
+  <span modal-body class="w-full">
+    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Member Status</mat-label>
+        <mat-select formControlName="type">
+          <mat-option>--</mat-option>
+          <mat-option value="member"
+            ><p>
+              <span class="font-bold leading-5">Member</span> - Can approve and
+              deny petitions, signatures
+            </p>
+            <p></p
+          ></mat-option>
+          <mat-option value="admin"
+            ><p>
+              <span class="font-bold leading-5">Admin</span> - Has Full access
+              and can set permissions
+            </p>
+            <p></p
+          ></mat-option>
+          <mat-option value="guest"
+            ><p>
+              <span class="font-bold leading-5">Guest</span> - Has limited
+              access and can only view content
+            </p>
+            <p></p
+          ></mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.formGroup.get('type')?.errors?.['required']">
+          <div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">State is required</span>
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </span>
+  <ng-container modal-footer>Save</ng-container>
+</dp-basic-modal>
