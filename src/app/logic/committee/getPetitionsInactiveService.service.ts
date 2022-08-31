@@ -12,7 +12,6 @@ import {
 
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 
-
 import { PetitionListStatusCheck } from 'src/app/core/api/API';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
