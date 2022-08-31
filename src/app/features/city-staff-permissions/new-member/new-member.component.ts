@@ -5,7 +5,6 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 
 import { NewMemberService } from 'src/app/logic/admin/new-member.service';
 
-
 import { ChangePasswordService } from 'src/app/logic/auth/change-password.service';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
@@ -15,7 +14,6 @@ import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-resul
   templateUrl: './new-member.component.html',
 
   providers: [NewMemberService],
-
 })
 export class NewMemberComponent implements OnInit {
   protected loading$!: Observable<boolean>;

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';
@@ -8,9 +7,6 @@ import { Member } from 'src/app/shared/models/admin/member';
 
 import { ChangeAccountPermissionComponent } from './change-account-permission/change-account-permission.component';
 import { NewMemberComponent } from './new-member/new-member.component';
-
-
-
 
 @Component({
   selector: 'dp-city-staff-permissions',
@@ -30,12 +26,10 @@ export class CityStaffPermissionsComponent implements OnInit {
   ];
   tableStyle = 'w-full';
 
-
   constructor(
     private _getAllUserLogic: GetAllUsersService,
     private _dialog: MatDialog
   ) {}
-
 
   ngOnInit(): void {
     this.error$ = this._getAllUserLogic.error$;
@@ -56,5 +50,4 @@ export class CityStaffPermissionsComponent implements OnInit {
       data: { id: id },
     });
   }
-
 }

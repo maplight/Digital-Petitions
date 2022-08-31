@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { Member } from 'src/app/shared/models/admin/member';
 
-
 import { NewMemberData } from 'src/app/shared/models/admin/new-member-data';
-
 
 import { Result } from 'src/app/shared/models/exports';
 
@@ -18,7 +16,6 @@ export class AdminService {
     return of({
       result: [
         {
-
           id: '0',
 
           email: 'marvin.mckinney@email.com',
@@ -26,7 +23,6 @@ export class AdminService {
           status: 'Admin',
         },
         {
-
           id: '0',
 
           email: 'marvin.mckinney2@email.com',
@@ -36,7 +32,6 @@ export class AdminService {
       ],
     }).pipe(delay(3000));
   }
-
 
   newMember(data: NewMemberData): Observable<Result<string>> {
     return of({
@@ -56,6 +51,4 @@ export class AdminService {
       result: 'member',
     }).pipe(delay(3000));
   }
-
-
 }
