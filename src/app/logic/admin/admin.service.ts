@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { Member } from 'src/app/shared/models/admin/member';
+
 import { NewMemberData } from 'src/app/shared/models/admin/new-member-data';
+
 import { Result } from 'src/app/shared/models/exports';
 
 @Injectable({
@@ -15,12 +17,14 @@ export class AdminService {
       result: [
         {
           id: '0',
+
           email: 'marvin.mckinney@email.com',
           name: 'Marvin McKinney (You)',
           status: 'Admin',
         },
         {
           id: '0',
+
           email: 'marvin.mckinney2@email.com',
           name: 'Marvin McKinney (Not You)',
           status: 'Member',
@@ -28,6 +32,7 @@ export class AdminService {
       ],
     }).pipe(delay(3000));
   }
+
   newMember(data: NewMemberData): Observable<Result<string>> {
     return of({
       result: 'SUCCESS',

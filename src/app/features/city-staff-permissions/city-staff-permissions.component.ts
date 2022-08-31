@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';
 import { Member } from 'src/app/shared/models/admin/member';
+
 import { ChangeAccountPermissionComponent } from './change-account-permission/change-account-permission.component';
 import { NewMemberComponent } from './new-member/new-member.component';
 
@@ -41,6 +43,7 @@ export class CityStaffPermissionsComponent implements OnInit {
       width: '690px',
     });
   }
+
   openDialogChangeAccountPermission(id: string): void {
     const dialogRef = this._dialog.open(ChangeAccountPermissionComponent, {
       width: '690px',

@@ -13,9 +13,7 @@ import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { SignatureService } from './signature.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class DenySignatureService {
   public error$: Observable<string | undefined>;
   public success$: Observable<string | undefined>;
