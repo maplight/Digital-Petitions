@@ -44,7 +44,6 @@ export class GetPetitionsInactiveService {
     );
 
     this.success$ = success$.pipe(
-
       map((value) => value.result),
       tap((value) => this._loggingService.log(value)),
 
@@ -52,7 +51,6 @@ export class GetPetitionsInactiveService {
     );
 
     this.error$ = error$.pipe(
-
       map((value) => value.error),
       tap((value) => this._loggingService.log(value)),
 
