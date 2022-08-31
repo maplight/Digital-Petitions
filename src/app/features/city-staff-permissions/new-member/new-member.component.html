@@ -2,12 +2,6 @@
   <span modal-title>Invite People To Your Organization</span>
   <span modal-body class="w-full">
     <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
-      <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
-      <dp-error-msg
-        *ngIf="!(loading$ | async) && (error$ | async) as error"
-        [error]="error"
-      >
-      </dp-error-msg>
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input type="text" matInput formControlName="email" />
