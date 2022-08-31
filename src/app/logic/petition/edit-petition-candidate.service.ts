@@ -16,7 +16,6 @@ import {
   EditCandidatePetitionInput,
 } from 'src/app/core/api/API';
 
-
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './exports';
 
