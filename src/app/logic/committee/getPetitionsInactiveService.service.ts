@@ -9,19 +9,29 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 
+import { PetitionListStatusCheck } from 'src/app/core/api/API';
+
+
 import { FilterData, Result } from 'src/app/shared/models/exports';
+import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { PetitionService } from '../petition/exports';
 
 @Injectable()
 export class GetPetitionsInactiveService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<ResponsePetition[] | undefined>;
+
+  public success$: Observable<BufferPetition | undefined>;
+
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<ResponsePetition[]>>;
-  private submit$: Subject<FilterData[]> = new Subject();
+  public result$: Observable<Result<BufferPetition>>;
+  private submit$: Subject<{
+    status: string;
+    cursor?: string;
+  }> = new Subject();
 
   constructor(
     private _petitionLogic: PetitionService,
@@ -36,14 +46,18 @@ export class GetPetitionsInactiveService {
     );
 
     this.success$ = success$.pipe(
+
       map((value) => value.result),
       tap((value) => this._loggingService.log(value)),
+
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
+
       map((value) => value.error),
       tap((value) => this._loggingService.log(value)),
+
       shareReplay(1)
     );
 
@@ -66,7 +80,7 @@ export class GetPetitionsInactiveService {
   /** This method begins the process of obtaining inactive petitions
   @param value: FilterData type: request filtering criteria
   */
-  getPetitions(value: FilterData[]) {
-    this.submit$.next(value);
+  getPetitions(data: { status: string; cursor?: string }) {
+    this.submit$.next(data);
   }
 }
