@@ -51,4 +51,9 @@ export class AdminService {
       result: 'member',
     }).pipe(delay(3000));
   }
+  removeMember(id: string): Observable<Result<string>> {
+    return of({
+      result: 'SUCCESS',
+    }).pipe(delay(3000));
+  }
 }
