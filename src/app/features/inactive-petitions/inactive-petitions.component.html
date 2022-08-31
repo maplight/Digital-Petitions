@@ -39,16 +39,19 @@
           (event)="filterStatus($event)"
         ></dp-basic-filter>
       </div>
-      <dp-petition-card
-        [buttonText]="false"
-        [linkText]="'Read More'"
-        *ngFor="let item of resultData"
-        [data]="item"
-        [showStatus]="true"
-        [showType]="true"
-        [showSignature]="true"
-        [basicRoute]="'/inactive-petitions/'"
-      ></dp-petition-card>
+      <ng-container *ngIf="resultData">
+        <dp-petition-card
+          [buttonText]="false"
+          [linkText]="'Read More'"
+          *ngFor="let item of resultData.items"
+          [data]="item"
+          [showStatus]="true"
+          [showType]="true"
+          [showSignature]="true"
+          [basicRoute]="'/inactive-petitions/'"
+        ></dp-petition-card>
+      </ng-container>
+
       <ng-container [ngSwitch]="currentStep$ | async">
         <ng-container *ngSwitchCase="'loading'">
           <div class="flex flex-col">
@@ -78,12 +81,13 @@
         <ng-container class="flex" *ngSwitchCase="'empty'">
           <div class="flex justify-center w-full">
             <h3 class="leading-7 font-extrabold">
-              You still have no petitions
+              No requests to display here
             </h3>
           </div>
         </ng-container>
       </ng-container>
       <button
+        *ngIf="cursor"
         mat-button
         color="primary"
         (click)="pageNumber()"
