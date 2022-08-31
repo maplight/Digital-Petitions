@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'dp-admin',
-  templateUrl: './admin.component.html',
+  templateUrl: './city-staff-admin.component.html',
 })
-export class AdminComponent implements OnInit {
+export class CityStaffAdminComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

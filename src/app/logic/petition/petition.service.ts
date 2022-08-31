@@ -121,7 +121,6 @@ export class PetitionService {
   }
 
   getPetition(id: string): Observable<Result<ResponsePetition>> {
-    console.log(id);
     return from(
       API.graphql({
         query: getPetition,

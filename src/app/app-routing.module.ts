@@ -175,7 +175,16 @@ const routes: Routes = [
       {
         path: 'admin',
         loadChildren: () =>
-          import('./city-staff/admin/admin.module').then((m) => m.AdminModule),
+          import('./features/city-staff-admin/city-staff-admin.module').then(
+            (m) => m.CityStaffAdminModule
+          ),
+      },
+      {
+        path: 'permissions',
+        loadChildren: () =>
+          import(
+            './features/city-staff-permissions/city-staff-permissions.module'
+          ).then((m) => m.CityStaffPermissionsModule),
       },
     ],
   },

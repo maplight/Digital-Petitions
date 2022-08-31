@@ -63,8 +63,8 @@ export class GetSignaturesService {
     this.submit$.complete();
   }
 
-  /** This method begins the process of obtaining a petitions
-  @param id: The requested request ID
+  /** This method begins the process of obtaining a signatures
+  @param filter: filter criteria for signatures
   */
 
   getSignatures(filter: FilterData[]) {
