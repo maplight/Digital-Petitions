@@ -204,19 +204,41 @@ export class PetitionService {
     );
   }
 
-  getInactivePetitions(
-    filter: FilterData[]
-  ): Observable<Result<ResponsePetition[]>> {
+  getInactivePetitions(data: {
+    status: string;
+    cursor?: string;
+  }): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByType,
-        variables: {},
+        variables: {
+          query: {
+            status: data.status,
+            cursor: data.cursor,
+          },
+        },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
-      tap((value) => console.log(value)),
-      map(({ data }) => ({ result: [] })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      map((value) => {
+        let petitions: ResponsePetition[] = [];
+        let cursor: string | undefined = value.data?.getPetitionsByType.token
+          ? value.data?.getPetitionsByType.token
+          : undefined;
+
+        value.data?.getPetitionsByType.items.forEach((value) => {
+          value.type === PetitionType.ISSUE
+            ? petitions.push({ dataIssue: value as IssuePetition })
+            : value.type === PetitionType.CANDIDATE
+            ? petitions.push({ dataCandidate: value as CandidatePetition })
+            : null;
+        });
+
+        return { result: { cursor: cursor, items: petitions } };
+      }),
+      catchError((error) => {
+        return of({ error: error.errors?.[0]?.message });
+      })
     );
   }
 

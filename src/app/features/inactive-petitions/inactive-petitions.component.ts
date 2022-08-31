@@ -1,8 +1,17 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  Subscription,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import { PetitionListStatusCheck } from 'src/app/core/api/API';
 import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
 import { FilterData } from 'src/app/shared/models/exports';
+import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -10,8 +19,13 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   templateUrl: './inactive-petitions.component.html',
 })
 export class InactivePetitionsComponent implements OnInit, AfterViewInit {
-  protected resultData: ResponsePetition[] = [];
+  private _unsubscribeAll: Subject<void> = new Subject();
+
+  protected resultData!: BufferPetition;
   protected result$!: Subscription;
+  protected cursor: string | undefined;
+  protected loadingTitle: string = '';
+  protected loadingSeeMore: boolean = false;
   protected error: string | undefined;
   protected loading$!: Observable<boolean>;
   protected currentStep$: BehaviorSubject<
@@ -29,10 +43,11 @@ export class InactivePetitionsComponent implements OnInit, AfterViewInit {
     },
     {
       property: 'Status',
-      value: 'All',
+      value: PetitionListStatusCheck.INACTIVE,
       page: 0,
     },
   ];
+
   protected filterByCategory: {
     name: string;
     value: string;
@@ -44,54 +59,90 @@ export class InactivePetitionsComponent implements OnInit, AfterViewInit {
   ];
   protected filterByStatus: {
     name: string;
-    value: string;
+    value: PetitionListStatusCheck;
     active: boolean;
   }[] = [
-    { name: 'All types', value: 'all', active: true },
-    { name: 'Pased', value: 'pased', active: false },
-    { name: 'Failed', value: 'failed', active: false },
+    {
+      name: 'All types',
+      value: PetitionListStatusCheck.INACTIVE,
+      active: true,
+    },
+    { name: 'Pased', value: PetitionListStatusCheck.QUALIFIED, active: false },
+    {
+      name: 'Failed',
+      value: PetitionListStatusCheck.NOT_QUALIFIED,
+      active: false,
+    },
   ];
   constructor(private _committeeLogic: GetPetitionsInactiveService) {}
   ngAfterViewInit(): void {
-    this._committeeLogic.getPetitions(this.currentFilter);
+    this._committeeLogic.getPetitions({
+      status: this.currentFilter[1].value,
+      cursor: this.cursor,
+    });
   }
   ngOnInit(): void {
-    this.result$ = this._committeeLogic.result$.subscribe((result) => {
-      this.disabledFilter = false;
-      this.disabledSeeMore = false;
-      if (!!result.result) {
-        this.resultData = this.resultData.concat(result.result);
-        this.currentStep$.next('contents');
-      } else {
-        this.error = result.error;
-        this.currentStep$.next('error');
-      }
-    });
+    this.result$ = this._committeeLogic.result$
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        tap(() => (this.loadingTitle = 'Waiting for your petitions'))
+      )
+      .subscribe((result) => {
+        this.loadingSeeMore = false;
+        if (!!result.result) {
+          this.disabledSeeMore = false;
+          if (this.resultData) {
+            this.resultData.items = this.resultData.items.concat(
+              result.result.items
+            );
+            this.cursor = result.result.cursor;
+            console.log(this.cursor);
+          } else {
+            this.resultData = result.result;
+            this.cursor = result.result.cursor;
+          }
+
+          if (result.result.items.length === 0) {
+            this.currentStep$.next('empty');
+          } else {
+            this.currentStep$.next('contents');
+          }
+        } else {
+          this.error = result.error;
+          this.currentStep$.next('error');
+        }
+      });
     this.loading$ = this._committeeLogic.loading$;
   }
   filterCategory(value: string) {
     this.disabledFilter = true;
     this.disabledSeeMore = true;
     this.currentFilter[0].value = value;
-    this.resultData = [];
+
     this.currentStep$.next('loading');
-    this._committeeLogic.getPetitions(this.currentFilter);
+    this._committeeLogic.getPetitions({
+      status: this.currentFilter[1].value,
+      cursor: this.cursor,
+    });
   }
 
   filterStatus(value: string) {
     this.disabledFilter = true;
     this.disabledSeeMore = true;
     this.currentFilter[1].value = value;
-    this.resultData = [];
     this.currentStep$.next('loading');
-    this._committeeLogic.getPetitions(this.currentFilter);
+    this.getPetitions();
+  }
+  private getPetitions() {
+    this.disabledSeeMore = true;
+
+    this._committeeLogic.getPetitions({
+      status: this.currentFilter[1].value,
+      cursor: this.cursor,
+    });
   }
   pageNumber() {
-    this.disabledFilter = true;
-    this.disabledSeeMore = true;
-    this.currentStep$.next('loading');
-    this.currentFilter[0].page += 1;
-    this.currentFilter[1].page += 1;
-    this._committeeLogic.getPetitions(this.currentFilter);
+    this.loadingSeeMore = true;
+    this.getPetitions();
   }
 }
