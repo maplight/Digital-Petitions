@@ -16,7 +16,7 @@ import {
 } from 'src/app/core/api/API';
 import { CityStaffHomeService } from 'src/app/logic/admin/city-staff-home.service';
 import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
-import { CognitoUserLite, User } from 'src/app/shared/models/auth/user';
+import { User } from 'src/app/shared/models/auth/user';
 import { FilterData } from 'src/app/shared/models/exports';
 import {
   FilterByStatus,
