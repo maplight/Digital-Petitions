@@ -9,6 +9,8 @@ import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.modu
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -21,7 +23,8 @@ import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsA
     BasicFilterModule,
     MatProgressBarModule,
     MatIconModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
-  providers: [GetPetitionsActiveService],
 })
 export class HomeModule {}
