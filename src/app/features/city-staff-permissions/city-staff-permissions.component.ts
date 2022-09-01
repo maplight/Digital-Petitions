@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';
 import { Member } from 'src/app/shared/models/admin/member';
 
 import { ChangeAccountPermissionComponent } from './change-account-permission/change-account-permission.component';
 import { NewMemberComponent } from './new-member/new-member.component';
+import { RemoveMemberComponent } from './remove-member/remove-member.component';
 
 @Component({
   selector: 'dp-city-staff-permissions',
@@ -49,5 +50,21 @@ export class CityStaffPermissionsComponent implements OnInit {
       width: '690px',
       data: { id: id },
     });
+  }
+
+  removeMember(id: string) {
+    const dialogRef = this._dialog.open(RemoveMemberComponent, {
+      width: '480px',
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        tap((response) => {
+          if (response) {
+            //remove user
+          }
+        })
+      )
+      .subscribe();
   }
 }

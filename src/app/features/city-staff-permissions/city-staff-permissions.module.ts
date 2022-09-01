@@ -14,6 +14,7 @@ import { NewMemberModule } from './new-member/new-member.module';
 import { ChangeAccountPermissionModule } from './change-account-permission/change-account-permission.module';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { RemoveMemberModule } from './remove-member/remove-member.module';
 
 @NgModule({
   declarations: [CityStaffPermissionsComponent],
@@ -32,6 +33,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ChangeAccountPermissionModule,
 
     MatDialogModule,
+    RemoveMemberModule,
   ],
 })
 export class CityStaffPermissionsModule {}
