@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
+
 import { merge, Observable, Subject, takeUntil, tap } from 'rxjs';
+
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';
 import { RemoveMemberService } from 'src/app/logic/admin/remove-member.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
