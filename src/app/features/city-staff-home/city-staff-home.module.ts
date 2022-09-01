@@ -9,6 +9,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { PetitionCardModule } from 'src/app/shared/petition-card/petition-card.module';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [CityStaffHomeComponent],
@@ -21,7 +23,8 @@ import { PetitionCardModule } from 'src/app/shared/petition-card/petition-card.m
     MatIconModule,
     MatButtonModule,
     PetitionCardModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
-  providers: [GetPetitionsActiveService],
 })
 export class CityStaffHomeModule {}

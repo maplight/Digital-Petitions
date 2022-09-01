@@ -1,6 +1,8 @@
 <div class="flex flex-col w-full gap-2">
   <div class="flex flex-col md:flex-row md:justify-between md:items-end w-full">
-    <h2 class="font-extrabold">Welcome, {{ username }}</h2>
+    <h2 class="font-extrabold">
+      Welcome, {{ (successLogin$ | async)?.attributes?.given_name }}
+    </h2>
     <a
       [routerLink]="'/city-staff/inactive-petitions'"
       class="text-primary-500 font-extrabold text-sm leading-4"
@@ -12,14 +14,14 @@
   >
     <dp-basic-search-engine
       (event)="search($event)"
-      [disabled]="disabledFilter"
+      [disabled]="!!(loading$ | async)"
       class="w-full min-w-[100px]"
     ></dp-basic-search-engine>
     <dp-basic-filter
       class="w-full md:max-w-[250px] md:min-w-[150px]"
       [filterName]="'Filter by Category'"
       [elements]="filterByCategory"
-      [disabled]="disabledFilter"
+      [disabled]="!!(loading$ | async)"
       [mode]="'Select'"
       (event)="filterCategory($event)"
     ></dp-basic-filter>
@@ -27,7 +29,7 @@
       class="w-full md:max-w-[250px] md:min-w-[150px]"
       [filterName]="'Filter by Status'"
       [elements]="filterByStatus"
-      [disabled]="disabledFilter"
+      [disabled]="!!(loading$ | async)"
       [mode]="'Select'"
       (event)="filterStatus($event)"
     ></dp-basic-filter>
@@ -36,62 +38,42 @@
     <p class="text-lg leading-6 font-bold">Active Petitions In the city</p>
   </div>
 
-  <ng-container [ngSwitch]="currentStep$ | async">
-    <ng-container *ngSwitchCase="'loadingUp'">
-      <div class="flex justify-center w-full">
-        <h3 class="leading-7 font-extrabold">Loading</h3>
-      </div>
-
-      <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
-    </ng-container>
-  </ng-container>
-
-  <dp-petition-card
-    [buttonText]="'View Petition'"
-    [linkText]="'Read More'"
-    *ngFor="let item of resultData"
-    [data]="item"
-    [disabled]="disabledFilter"
-    [showType]="true"
-    [showStatus]="true"
-    [showExtraDates]="true"
-    [characters]="250"
-    [basicRoute]="'/city-staff/home/'"
-  ></dp-petition-card>
-
-  <ng-container [ngSwitch]="currentStep$ | async">
-    <ng-container *ngSwitchCase="'loading'">
-      <div class="flex justify-center w-full">
-        <h3 class="leading-7 font-extrabold">Loading</h3>
-      </div>
-
-      <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
-    </ng-container>
-    <ng-container class="flex" *ngSwitchCase="'error'">
-      <div class="flex justify-center w-full">
-        <h3 class="leading-7 font-extrabold">An error has occurred</h3>
-      </div>
-
-      <div class="flex flex-row items-center justify-center">
-        <mat-icon
-          class="w-[14px] h-[14px]"
-          [svgIcon]="'custom_icons:c_close'"
-        ></mat-icon>
-        <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
-      </div>
-    </ng-container>
-    <ng-container class="flex" *ngSwitchCase="'empty'">
-      <div class="flex justify-center w-full">
-        <h3 class="leading-7 font-extrabold">You still have no petitions</h3>
-      </div>
-    </ng-container>
-  </ng-container>
-  <button
-    mat-button
-    color="primary"
-    (click)="pageNumber()"
-    [disabled]="disabledSeeMore"
+  <dp-error-msg
+    *ngIf="!(loading$ | async) && (error$ | async) as error"
+    [error]="error"
   >
-    See More
-  </button>
+  </dp-error-msg>
+  <dp-loading-bar *ngIf="(loading$ | async) && loadingUp"></dp-loading-bar>
+  <ng-container *ngIf="successPetition$ | async as petitions">
+    <dp-petition-card
+      [buttonText]="'View Petition'"
+      [linkText]="'Read More'"
+      *ngFor="let item of petitions.items"
+      [data]="item"
+      [disabled]="!!(loading$ | async)"
+      [showType]="true"
+      [showStatus]="true"
+      [showExtraDates]="true"
+      [characters]="250"
+      [basicRoute]="'/city-staff/home/'"
+    ></dp-petition-card>
+
+    <div
+      class="flex justify-center w-full"
+      *ngIf="petitions.items.length === 0"
+    >
+      <h3 class="leading-7 font-extrabold">You still have no petitions</h3>
+    </div>
+
+    <dp-loading-bar *ngIf="(loading$ | async) && loadingDown"></dp-loading-bar>
+    <button
+      mat-button
+      color="primary"
+      (click)="pageNumber()"
+      [disabled]="!!(loading$ | async)"
+      *ngIf="petitions.cursor"
+    >
+      See More
+    </button>
+  </ng-container>
 </div>
