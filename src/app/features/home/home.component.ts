@@ -3,24 +3,21 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
 import { FilterData } from 'src/app/shared/models/exports';
+import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-home',
   templateUrl: './home.component.html',
+  providers: [GetPetitionsActiveService],
 })
-export class HomeComponent implements OnInit, AfterViewInit {
-  protected resultData: ResponsePetition[] = [];
-  protected result$!: Subscription;
-  protected error: string | undefined;
+export class HomeComponent implements OnInit {
+  protected loadingUp: boolean = true;
+  protected loadingDown: boolean = !this.loadingUp;
+  protected successPetition$!: Observable<BufferPetition | undefined>;
   protected loading$!: Observable<boolean>;
-  protected currentStep$: BehaviorSubject<
-    'loadingUp' | 'loading' | 'empty' | 'contents' | 'error'
-  > = new BehaviorSubject<
-    'loadingUp' | 'loading' | 'empty' | 'contents' | 'error'
-  >('loading');
-  protected disabledFilter: boolean = true;
-  protected disabledSeeMore: boolean = true;
+  protected error$!: Observable<string | undefined>;
+  protected cursor: string | undefined;
   private currentFilter: FilterData[] = [
     {
       property: 'Category',
@@ -28,6 +25,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       page: 0,
     },
   ];
+
   protected filterByCategory: {
     name: string;
     value: string;
@@ -38,36 +36,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
     { name: 'Candidate', value: 'candidate', active: false },
   ];
 
-  constructor(private _committeeLogic: GetPetitionsActiveService) {}
-  ngAfterViewInit(): void {
-    this._committeeLogic.getPetitions(this.currentFilter);
-  }
+  constructor(private _getPetitionsActiveLogic: GetPetitionsActiveService) {}
+
   ngOnInit(): void {
-    this.result$ = this._committeeLogic.result$.subscribe((result) => {
-      this.disabledFilter = false;
-      this.disabledSeeMore = false;
-      if (!!result.result) {
-        this.resultData = this.resultData.concat(result.result);
-        this.currentStep$.next('contents');
-      } else {
-        this.error = result.error;
-        this.currentStep$.next('error');
-      }
-    });
-    this.loading$ = this._committeeLogic.loading$;
+    this.successPetition$ = this._getPetitionsActiveLogic.success$;
+    this.error$ = this._getPetitionsActiveLogic.error$;
+    this.loading$ = this._getPetitionsActiveLogic.loading$;
+    this.getPetitions();
   }
+
   filter(value: string) {
-    this.disabledFilter = true;
-    this.disabledSeeMore = true;
     this.currentFilter[0].value = value;
-    this.currentStep$.next('loadingUp');
-    this._committeeLogic.getPetitions(this.currentFilter);
+
+    this.loadingUp = true;
+    this.getPetitions();
+  }
+
+  private getPetitions() {
+    this._getPetitionsActiveLogic.getPetitions('ANY');
   }
   pageNumber() {
-    this.disabledFilter = true;
-    this.disabledSeeMore = true;
-    this.currentStep$.next('loading');
-    this.currentFilter[0].page += 1;
-    this._committeeLogic.getPetitions(this.currentFilter);
+    this.loadingUp = false;
+    this.getPetitions();
   }
 }

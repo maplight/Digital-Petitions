@@ -280,85 +280,40 @@ export class PetitionService {
   }
 
   getActivePetitions(
-    filter: FilterData[]
-  ): Observable<Result<ResponsePetition[]>> {
-    return of({
-      result: [
-        {
-          dataIssue: {
-            __typename: this.IssuePetition,
-            PK: '0',
-            createdAt: '00/00/0000',
-            detail:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-            owner: 'CommitteUser-1',
-            signatureSummary: {
-              __typename: this.SignatureSummary,
-              approved: 15000,
-              deadline: '00/00/0000',
-              required: 24000,
-              submitted: 20000,
-            },
-            status: PetitionStatus.NEW,
-            title: 'Title1',
-            type: PetitionType.ISSUE,
-            updatedAt: '00/00/0000',
-            version: 1,
+    status: string,
+    cursor?: string
+  ): Observable<Result<BufferPetition>> {
+    return from(
+      API.graphql({
+        query: getPetitionsByType,
+        variables: {
+          query: {
+            status: status,
+            cursor: cursor,
           },
         },
-        {
-          dataIssue: {
-            __typename: this.IssuePetition,
-            PK: '0',
-            createdAt: '00/00/0000',
-            detail:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas fugiat dicta omnis nulla nam, reprehenderit officia quo sit a recusandae animi maxime odit qui voluptatum, eaque quod dolorum non iusto!',
-            owner: 'CommitteUser-1',
-            signatureSummary: {
-              __typename: this.SignatureSummary,
-              approved: 15000,
-              deadline: '00/00/0000',
-              required: 24000,
-              submitted: 20000,
-            },
-            status: PetitionStatus.NEW,
-            title: 'Title1',
-            type: PetitionType.ISSUE,
-            updatedAt: '00/00/0000',
-            version: 1,
-          },
-        },
-        {
-          dataCandidate: {
-            __typename: this.CandidatePetition,
-            PK: '0',
-            address: {
-              __typename: this.AddressData,
-              address: 'address',
-              city: 'city',
-              number: '22',
-              state: 'Alaska',
-              zipCode: '1200',
-            },
-            createdAt: '00/00/0000',
-            office: 'My Office',
-            owner: 'CommitteUser-1',
-            signatureSummary: {
-              __typename: this.SignatureSummary,
-              approved: 15000,
-              deadline: '00/00/0000',
-              required: 24000,
-              submitted: 20000,
-            },
-            party: 'Green',
-            status: PetitionStatus.NEW,
-            name: 'First name and last name',
-            type: PetitionType.ISSUE,
-            updatedAt: '00/00/0000',
-            version: 1,
-          },
-        },
-      ],
-    }).pipe(delay(3000));
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
+    ).pipe(
+      map((value) => {
+        let petitions: ResponsePetition[] = [];
+        let cursor: string | undefined = value.data?.getPetitionsByType.token
+          ? value.data?.getPetitionsByType.token
+          : undefined;
+
+        value.data?.getPetitionsByType.items.forEach((value) => {
+          value.type === PetitionType.ISSUE
+            ? petitions.push({ dataIssue: value as IssuePetition })
+            : value.type === PetitionType.CANDIDATE
+            ? petitions.push({ dataCandidate: value as CandidatePetition })
+            : null;
+        });
+
+        return { result: { cursor: cursor, items: petitions } };
+      }),
+      catchError((error) => {
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
   }
 }
