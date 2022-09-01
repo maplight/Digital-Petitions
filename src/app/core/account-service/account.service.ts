@@ -24,7 +24,7 @@ import {
 
 import { API, Auth } from 'aws-amplify';
 import { SignUpConfirmationCode } from 'src/app/shared/models/auth/sign-up-confirmation-code';
-import { CognitoUserLite, User } from 'src/app/shared/models/auth/user';
+import { CognitoUserFacade, User } from 'src/app/shared/models/auth/user';
 
 @Injectable({
   providedIn: 'root',
@@ -65,10 +65,12 @@ export class AccountService {
     );
   }
 
-  public signIn(data: SignInCredentials): Observable<Result<CognitoUserLite>> {
+  public signIn(
+    data: SignInCredentials
+  ): Observable<Result<CognitoUserFacade>> {
     return from(
       Auth.signIn(data.email, data.password)
-        .then((data: CognitoUserLite) => {
+        .then((data: CognitoUserFacade) => {
           this.updateUser();
           return { result: data };
         })
