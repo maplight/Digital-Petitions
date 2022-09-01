@@ -241,6 +241,44 @@ export class PetitionService {
     );
   }
 
+  getCityStaffPetitions(
+    status: string,
+    cursor?: string
+  ): Observable<Result<BufferPetition>> {
+    return from(
+      API.graphql({
+        query: getPetitionsByType,
+        variables: {
+          query: {
+            status: status,
+            cursor: cursor,
+          },
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
+    ).pipe(
+      map((value) => {
+        let petitions: ResponsePetition[] = [];
+        let cursor: string | undefined = value.data?.getPetitionsByType.token
+          ? value.data?.getPetitionsByType.token
+          : undefined;
+
+        value.data?.getPetitionsByType.items.forEach((value) => {
+          value.type === PetitionType.ISSUE
+            ? petitions.push({ dataIssue: value as IssuePetition })
+            : value.type === PetitionType.CANDIDATE
+            ? petitions.push({ dataCandidate: value as CandidatePetition })
+            : null;
+        });
+
+        return { result: { cursor: cursor, items: petitions } };
+      }),
+      catchError((error) => {
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
+  }
+
   getActivePetitions(
     filter: FilterData[]
   ): Observable<Result<ResponsePetition[]>> {
