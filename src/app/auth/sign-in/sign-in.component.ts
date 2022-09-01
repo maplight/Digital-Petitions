@@ -1,29 +1,35 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Observable } from 'rxjs';
 import { SignInService } from 'src/app/logic/auth/exports';
 
+type SignInForm = {
+  email: FormControl<string>;
+  password: FormControl<string>;
+};
+
 @Component({
-  selector: 'dp-sign-in',
   templateUrl: './sign-in.component.html',
   providers: [SignInService],
 })
-export class SignInComponent {
-  protected hidePassword = true;
-
+export class SignInComponent implements OnInit {
   protected error$!: Observable<string | undefined>;
+
+  protected formGroup!: FormGroup<SignInForm>;
+
+  protected hidePassword = true;
 
   protected loading$!: Observable<boolean>;
 
-  public formGroup: FormGroup;
+  constructor(private _fb: FormBuilder, private _signInLogic: SignInService) {}
 
-  constructor(
-    private _fb: FormBuilder,
-    private _signInLogic: SignInService,
-    private _router: Router
-  ) {
-    this.formGroup = this._fb.group({
+  ngOnInit(): void {
+    this.formGroup = this._fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
@@ -35,7 +41,7 @@ export class SignInComponent {
 
   submit() {
     if (this.formGroup.valid) {
-      this._signInLogic.requestSignIn(this.formGroup.value);
+      this._signInLogic.requestSignIn(this.formGroup.getRawValue());
     }
   }
 }

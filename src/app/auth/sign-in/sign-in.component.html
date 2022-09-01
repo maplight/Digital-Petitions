@@ -16,9 +16,7 @@
           <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="text" matInput formControlName="email" />
-            <mat-error
-              *ngIf="this.formGroup.get('email')?.errors?.['required']"
-            >
+            <mat-error *ngIf="formGroup.get('email')!.getError('required')">
               <div class="flex flex-row items-center">
                 <mat-icon
                   class="w-[14px] h-[14px]"
@@ -27,7 +25,7 @@
                 <span class="ml-[9px]">Email is required</span>
               </div>
             </mat-error>
-            <mat-error *ngIf="this.formGroup.get('email')?.errors?.['email']">
+            <mat-error *ngIf="formGroup.get('email')!.getError('email')">
               <div class="flex flex-row items-center">
                 <mat-icon
                   class="w-[14px] h-[14px]"
@@ -46,7 +44,7 @@
                 formControlName="password"
               />
               <mat-error
-                *ngIf="this.formGroup.get('password')?.errors?.['required']"
+                *ngIf="formGroup.get('password')!.getError('required')"
               >
                 <div class="flex flex-row items-center">
                   <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
