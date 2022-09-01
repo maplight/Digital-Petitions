@@ -3,7 +3,7 @@ export interface Attributes {
   address: string;
   email_verified: boolean;
   given_name: string;
-  custom: { access_group: string };
+  'custom:access_group': string;
   family_name: string;
   email: string;
 }
@@ -14,7 +14,7 @@ export interface User {
   attributes: Attributes;
 }
 
-export interface CognitoUserLite {
+export interface CognitoUserFacade {
   username: string;
   attributes: Attributes;
 }
