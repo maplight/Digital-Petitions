@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { TargetPetitionInput } from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ApproveAlertComponent } from '../approve-alert/approve-alert.component';
@@ -22,7 +23,7 @@ export class ApproveDialogComponent implements OnInit {
     private _fb: FormBuilder,
     private _approvePetitionLogic: ApprovePetitionService,
     @Inject(MAT_DIALOG_DATA)
-    public data: { id: string }
+    public data: TargetPetitionInput
   ) {
     this.formGroup = this._fb.group({
       deadline: ['', [Validators.required]],
@@ -56,10 +57,7 @@ export class ApproveDialogComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this._approvePetitionLogic.approvePetition(
-            this.formGroup.value,
-            this.data.id
-          );
+          this._approvePetitionLogic.approvePetition(this.data);
         } else {
           this._dialog.closeAll();
         }

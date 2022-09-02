@@ -1,25 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  Subscription,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { Observable } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import {
   PetitionsByTypeInput,
-  PetitionStatus,
   PetitionStatusQuery,
   PetitionType,
 } from 'src/app/core/api/API';
 import { CityStaffHomeService } from 'src/app/logic/admin/city-staff-home.service';
-import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 import { User } from 'src/app/shared/models/auth/user';
-import { FilterData } from 'src/app/shared/models/exports';
 import {
   FilterByStatus,
+  FilterByStatusAny,
   FilterByStatusInactive,
 } from 'src/app/shared/models/filter/filter-by-status';
 import {
@@ -27,7 +18,6 @@ import {
   FilterByTypeData,
 } from 'src/app/shared/models/filter/filter-by-type';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
-import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-home',
@@ -43,12 +33,12 @@ export class CityStaffHomeComponent implements OnInit {
   protected error$!: Observable<string | undefined>;
   protected cursor: string | undefined;
   private petitionsByTypeInput: PetitionsByTypeInput = {
-    status: undefined,
+    status: PetitionStatusQuery.ANY,
     type: undefined,
   };
 
   protected filterByCategory: FilterByType[] = FilterByTypeData;
-  protected filterByStatus: FilterByStatus[] = FilterByStatusInactive;
+  protected filterByStatus: FilterByStatus[] = FilterByStatusAny;
   constructor(
     private _cityStaffHomeLogic: CityStaffHomeService,
     private _accountLogic: AccountService
@@ -64,8 +54,8 @@ export class CityStaffHomeComponent implements OnInit {
 
   search(value: string) {}
 
-  filterCategory(value: PetitionType | undefined) {
-    this.petitionsByTypeInput.type = value;
+  filterCategory(value: PetitionType | undefined | 'ANY') {
+    this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;
     this.loadingUp = true;
     this.getPetitions();
   }

@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit {
     this.getPetitions();
   }
 
-  filter(value: PetitionType | undefined) {
-    this.petitionsByTypeInput.type = value;
+  filter(value: PetitionType | undefined | 'ANY') {
+    this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;
 
     this.loadingUp = true;
     this.getPetitions();
