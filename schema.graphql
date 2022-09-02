@@ -8,6 +8,7 @@ interface Petition {
   createdAt: AWSDateTime!
   owner: ID!
   signatureSummary: SignatureSummary
+  signatures(query: SignaturesOfPetitionInput): SignatureConnection!
   status: PetitionStatus!
   type: PetitionType!
   updatedAt: AWSDateTime!
@@ -31,6 +32,8 @@ type CandidatePetition implements Petition @aws_cognito_user_pools @aws_iam {
   owner: ID!
   party: ID!
   signatureSummary: SignatureSummary
+  signatures(query: SignaturesOfPetitionInput): SignatureConnection!
+    @aws_cognito_user_pools
   status: PetitionStatus!
   type: PetitionType!
   updatedAt: AWSDateTime!
@@ -43,6 +46,8 @@ type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
   detail: String!
   owner: ID!
   signatureSummary: SignatureSummary
+  signatures(query: SignaturesOfPetitionInput): SignatureConnection!
+    @aws_cognito_user_pools
   status: PetitionStatus!
   title: String!
   type: PetitionType!
@@ -53,6 +58,10 @@ type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
 type Mutation {
   approvePetition(data: TargetPetitionInput!): Petition
     @aws_cognito_user_pools(cognito_groups: ["CityStaffGroup", "AdminGroup"])
+  createStaffUser(data: StaffUserInput!): User!
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
+  deleteStaffUser(username: ID!): Boolean!
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   editCandidatePetition(data: EditCandidatePetitionInput!): CandidatePetition
     @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
   editIssuePetition(data: EditIssuePetitionInput!): IssuePetition
@@ -77,7 +86,26 @@ type Query {
   getPetitionsByType(query: PetitionsByTypeInput): PetitionConnection!
     @aws_cognito_user_pools
     @aws_iam
+  getSignaturesByPetition(
+    query: SignaturesByPetitionInput
+  ): SignatureConnection! @aws_cognito_user_pools
+  getUsers(query: SearchUsersInput): UserConnection!
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   publicEcho(ping: String!): String!
+}
+
+type Signature @aws_cognito_user_pools {
+  address: String!
+  createdAt: AWSDateTime!
+  name: String!
+  signer: ID!
+  status: SignatureStatus!
+  updatedAt: AWSDateTime!
+}
+
+type SignatureConnection @aws_cognito_user_pools {
+  items: [Signature!]!
+  token: ID
 }
 
 type SignatureSummary @aws_cognito_user_pools @aws_iam {
@@ -88,16 +116,32 @@ type SignatureSummary @aws_cognito_user_pools @aws_iam {
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup", "CityStaffGroup"])
 }
 
-enum PetitionListStatusCheck {
-  ACTIVE
-  ANY
-  CANCELED
-  INACTIVE
-  NEW
-  NOT_QUALIFIED
-  QUALIFIED
-  REJECTED
-  WITHDRAWN
+type User @aws_cognito_user_pools {
+  email: String!
+  firstName: String
+  lastName: String
+  permissions: AccessLevel!
+  username: ID!
+}
+
+type UserConnection @aws_cognito_user_pools {
+  items: [User!]!
+  token: ID
+}
+
+enum AccessLevel {
+  ADMIN
+  GUEST
+  NONE
+  PETITIONER
+  STAFF
+}
+
+enum AccessLevelQuery {
+  ADMIN
+  GUEST
+  PETITIONER
+  STAFF
 }
 
 enum PetitionStatus {
@@ -110,9 +154,42 @@ enum PetitionStatus {
   WITHDRAWN
 }
 
+enum PetitionStatusQuery {
+  ACTIVE
+  ANY
+  CANCELED
+  INACTIVE
+  NEW
+  NOT_QUALIFIED
+  QUALIFIED
+  REJECTED
+  WITHDRAWN
+}
+
 enum PetitionType {
   CANDIDATE
   ISSUE
+}
+
+enum SignatureStatus {
+  APPROVED
+  REJECTED
+  SUBMITTED
+  VERIFIED
+}
+
+enum SignatureStatusQuery {
+  ANY
+  APPROVED
+  REJECTED
+  SUBMITTED
+  VERIFIED
+}
+
+enum StaffAccessLevel {
+  ADMIN
+  GUEST
+  STAFF
 }
 
 input AddressInput {
@@ -154,14 +231,40 @@ input PetitionsByOwnerInput {
   cursor: ID
   limit: Int
   owner: ID!
-  status: PetitionListStatusCheck
+  status: PetitionStatusQuery
 }
 
 input PetitionsByTypeInput {
   cursor: ID
   limit: Int
-  status: PetitionListStatusCheck
+  status: PetitionStatusQuery
   type: PetitionType
+}
+
+input SearchUsersInput {
+  cursor: ID
+  limit: Int
+  searchEmail: String
+  searchGroup: AccessLevelQuery
+  searchName: String
+}
+
+input SignaturesByPetitionInput {
+  cursor: ID
+  limit: Int
+  petition: ID!
+  status: SignatureStatusQuery
+}
+
+input SignaturesOfPetitionInput {
+  cursor: ID
+  limit: Int
+  status: SignatureStatusQuery
+}
+
+input StaffUserInput {
+  email: String!
+  permissions: StaffAccessLevel!
 }
 
 input TargetPetitionInput {

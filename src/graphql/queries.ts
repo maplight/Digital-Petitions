@@ -14,6 +14,17 @@ export const getPetition = /* GraphQL */ `
         required
         submitted
       }
+      signatures {
+        items {
+          address
+          createdAt
+          name
+          signer
+          status
+          updatedAt
+        }
+        token
+      }
       status
       type
       updatedAt
@@ -49,6 +60,9 @@ export const getPetitionsByOwner = /* GraphQL */ `
           deadline
           required
           submitted
+        }
+        signatures {
+          token
         }
         status
         type
@@ -88,6 +102,9 @@ export const getPetitionsByType = /* GraphQL */ `
           required
           submitted
         }
+        signatures {
+          token
+        }
         status
         type
         updatedAt
@@ -108,6 +125,35 @@ export const getPetitionsByType = /* GraphQL */ `
           detail
           title
         }
+      }
+      token
+    }
+  }
+`;
+export const getSignaturesByPetition = /* GraphQL */ `
+  query GetSignaturesByPetition($query: SignaturesByPetitionInput) {
+    getSignaturesByPetition(query: $query) {
+      items {
+        address
+        createdAt
+        name
+        signer
+        status
+        updatedAt
+      }
+      token
+    }
+  }
+`;
+export const getUsers = /* GraphQL */ `
+  query GetUsers($query: SearchUsersInput) {
+    getUsers(query: $query) {
+      items {
+        email
+        firstName
+        lastName
+        permissions
+        username
       }
       token
     }
