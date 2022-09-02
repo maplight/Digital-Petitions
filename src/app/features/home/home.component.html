@@ -9,13 +9,13 @@
     ></div>
     <div class="flex flex-col max-w-[792px] w-full gap-6">
       <h1 class="font-extrabold">Sign A Petition</h1>
-      <dp-basic-filter
+      <dp-filter-by-category
         class="md:hidden flex"
         [filterName]="'Filter by Category'"
-        [elements]="filterByCategory"
+        [filterType]="filterByCategory"
         [disabled]="!!(loading$ | async)"
         (event)="filter($event)"
-      ></dp-basic-filter>
+      ></dp-filter-by-category>
       <dp-error-msg
         *ngIf="!(loading$ | async) && (error$ | async) as error"
         [error]="error"
@@ -62,12 +62,12 @@
       </div>
     </div>
     <div class="hidden md:flex md:justify-center md:max-w-[200px] md:w-full">
-      <dp-basic-filter
+      <dp-filter-by-category
         [filterName]="'Filter by Category'"
-        [elements]="filterByCategory"
+        [filterType]="filterByCategory"
         [disabled]="!!(loading$ | async)"
         (event)="filter($event)"
-      ></dp-basic-filter>
+      ></dp-filter-by-category>
     </div>
   </div>
 </div>

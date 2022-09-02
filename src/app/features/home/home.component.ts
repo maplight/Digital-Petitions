@@ -1,10 +1,13 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { PetitionsByTypeInput, PetitionType } from 'src/app/core/api/API';
 import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
-import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
-import { FilterData } from 'src/app/shared/models/exports';
+
+import {
+  FilterByType,
+  FilterByTypeData,
+} from 'src/app/shared/models/filter/filter-by-type';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
-import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-home',
@@ -18,23 +21,12 @@ export class HomeComponent implements OnInit {
   protected loading$!: Observable<boolean>;
   protected error$!: Observable<string | undefined>;
   protected cursor: string | undefined;
-  private currentFilter: FilterData[] = [
-    {
-      property: 'Category',
-      value: 'All',
-      page: 0,
-    },
-  ];
+  private petitionsByTypeInput: PetitionsByTypeInput = {
+    status: undefined,
+    type: undefined,
+  };
 
-  protected filterByCategory: {
-    name: string;
-    value: string;
-    active: boolean;
-  }[] = [
-    { name: 'All types', value: 'all', active: true },
-    { name: 'Ballot', value: 'issue', active: false },
-    { name: 'Candidate', value: 'candidate', active: false },
-  ];
+  protected filterByCategory: FilterByType[] = FilterByTypeData;
 
   constructor(private _getPetitionsActiveLogic: GetPetitionsActiveService) {}
 
@@ -45,15 +37,15 @@ export class HomeComponent implements OnInit {
     this.getPetitions();
   }
 
-  filter(value: string) {
-    this.currentFilter[0].value = value;
+  filter(value: PetitionType | undefined) {
+    this.petitionsByTypeInput.type = value;
 
     this.loadingUp = true;
     this.getPetitions();
   }
 
   private getPetitions() {
-    this._getPetitionsActiveLogic.getPetitions('ANY');
+    this._getPetitionsActiveLogic.getPetitions(this.petitionsByTypeInput);
   }
   pageNumber() {
     this.loadingUp = false;

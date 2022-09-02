@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [CommitteeHomeComponent],
@@ -21,6 +22,7 @@ import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
     MatIconModule,
     MatProgressBarModule,
     LoadingBarModule,
+    ErrorMsgModule,
   ],
   providers: [GetPetitionsCommitteeService],
 })
