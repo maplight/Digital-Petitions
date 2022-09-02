@@ -32,6 +32,7 @@ import {
   approvePetition,
   editCandidatePetition,
   editIssuePetition,
+  rejectPetition,
   submitCandidatePetition,
   submitIssuePetition,
 } from 'src/graphql/mutations';
@@ -187,8 +188,35 @@ export class PetitionService {
     );
   }
 
-  denyPetition(data: { id: string }): Observable<Result<string>> {
-    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  denyPetition(
+    data: TargetPetitionInput
+  ): Observable<Result<ResponsePetition>> {
+    return from(
+      API.graphql({
+        query: rejectPetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<ApprovePetitionMutation>>
+    ).pipe(
+      map((value) => {
+        let petition: ResponsePetition = {};
+        if (value.data) {
+          if (value.data.approvePetition?.type === PetitionType.ISSUE) {
+            petition = {
+              dataIssue: value.data.approvePetition as IssuePetition,
+            };
+          } else if (
+            value.data.approvePetition?.type === PetitionType.CANDIDATE
+          ) {
+            petition = {
+              dataCandidate: value.data.approvePetition as CandidatePetition,
+            };
+          }
+        }
+        return { result: petition };
+      }),
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
+    );
   }
 
   getCommitteePetitions(
