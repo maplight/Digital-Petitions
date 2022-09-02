@@ -7,7 +7,7 @@
       <div class="flex w-full pt-[11px]">
         <mat-chip-list [disabled]="disabled">
           <mat-chip
-            *ngFor="let item of elements"
+            *ngFor="let item of filterType"
             [class]="item.active ? activeStyle : inActiveStyle"
             (click)="sendFilter(item)"
             >{{ item.name }}</mat-chip
@@ -24,7 +24,7 @@
         <mat-label>{{ filterName }}</mat-label>
         <mat-select [value]="itemActive$ | async" [disabled]="disabled">
           <mat-option
-            *ngFor="let item of elements"
+            *ngFor="let item of filterType"
             [value]="item.value"
             (click)="sendFilter(item)"
             >{{ item.name }}</mat-option
@@ -42,7 +42,7 @@
         <mat-label>{{ filterName }}</mat-label>
         <mat-select [value]="itemActive$ | async" [disabled]="disabled">
           <mat-option
-            *ngFor="let item of elements"
+            *ngFor="let item of filterType"
             [value]="item.value"
             (click)="sendFilter(item)"
             >{{ item.name }}</mat-option
