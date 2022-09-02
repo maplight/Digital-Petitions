@@ -7,6 +7,7 @@ import {
   PetitionType,
 } from 'src/app/core/api/API';
 import { CityStaffHomeService } from 'src/app/logic/admin/city-staff-home.service';
+
 import { User } from 'src/app/shared/models/auth/user';
 import {
   FilterByStatus,
@@ -17,6 +18,7 @@ import {
   FilterByType,
   FilterByTypeData,
 } from 'src/app/shared/models/filter/filter-by-type';
+
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 
 @Component({
