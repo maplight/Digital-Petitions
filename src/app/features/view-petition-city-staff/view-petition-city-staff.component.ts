@@ -46,11 +46,6 @@ export class ViewPetitionCityStaffComponent implements OnInit {
     private _dialog: MatDialog,
     private _activatedRoute: ActivatedRoute
   ) {}
-  ngAfterViewInit(): void {
-    this._getPetitionLogic.getPetition(
-      this._activatedRoute.snapshot.params['id']
-    );
-  }
   ngOnInit(): void {
     this.success$ = this._getPetitionLogic.success$;
     this.success$.pipe(takeUntil(this._unSuscribeAll)).subscribe((value) => {
@@ -78,6 +73,9 @@ export class ViewPetitionCityStaffComponent implements OnInit {
         this.openDialog(false, error);
       });
     this.loadingDeny$ = this._denyPetitionLogic.loading$;
+    this._getPetitionLogic.getPetition(
+      this._activatedRoute.snapshot.params['id']
+    );
   }
 
   approveDialog(): void {
@@ -105,9 +103,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._denyPetitionLogic.denyPetition(
-          this._activatedRoute.snapshot.params['id']
-        );
+        this._denyPetitionLogic.denyPetition(this._targetPetitionInput);
       } else {
         this._dialog.closeAll();
       }

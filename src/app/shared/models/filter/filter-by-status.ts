@@ -15,8 +15,8 @@ export const FilterByStatusAny: FilterByStatus[] = [
   { name: 'Passed', value: PetitionStatusQuery.QUALIFIED, active: false },
   { name: 'Failed', value: PetitionStatusQuery.NOT_QUALIFIED, active: false },
   { name: 'Cancelled', value: PetitionStatusQuery.CANCELED, active: false },
+  { name: 'Rejected', value: PetitionStatusQuery.REJECTED, active: false },
   { name: 'Active', value: PetitionStatusQuery.ACTIVE, active: false },
   { name: 'Awaiting Approval', value: PetitionStatusQuery.NEW, active: false },
-  { name: 'Failed', value: PetitionStatusQuery.REJECTED, active: false },
   { name: 'Withdrawn', value: PetitionStatusQuery.WITHDRAWN, active: false },
 ];
