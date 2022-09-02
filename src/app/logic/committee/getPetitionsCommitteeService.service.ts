@@ -4,11 +4,15 @@ import {
   map,
   merge,
   Observable,
+  of,
   partition,
+  ReplaySubject,
   shareReplay,
   Subject,
   tap,
 } from 'rxjs';
+import { AccountService } from 'src/app/core/account-service/account.service';
+import { PetitionsByOwnerInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
@@ -22,11 +26,13 @@ export class GetPetitionsCommitteeService {
   public success$: Observable<BufferPetition | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<BufferPetition>>;
-  private submit$: Subject<{ id: string; cursor?: string }> = new Subject();
+  private submit$: ReplaySubject<PetitionsByOwnerInput> = new ReplaySubject();
+  private cursor!: string | undefined;
 
   constructor(
     private _petitionLogic: PetitionService,
-    private _loggingService: LoggingService
+    private _loggingService: LoggingService,
+    private _accountService: AccountService
   ) {
     this.result$ = this.submit$.pipe(
       exhaustMap((data) => this._petitionLogic.getCommitteePetitions(data)),
@@ -38,7 +44,10 @@ export class GetPetitionsCommitteeService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+        this.cursor = value?.cursor;
+      }),
       shareReplay(1)
     );
 
@@ -67,7 +76,11 @@ export class GetPetitionsCommitteeService {
   /** This method begins the process of obtaining a committee's petitions
   @param value: FilterData type: request filtering criteria
   */
-  getPetitions(data: { id: string; cursor?: string }) {
-    this.submit$.next(data);
+  getPetitions(data: PetitionsByOwnerInput) {
+    this._accountService.currentUser$.subscribe((value) => {
+      data.owner = value?.id ? value.id : '';
+      data.cursor = this.cursor;
+      this.submit$.next(data);
+    });
   }
 }

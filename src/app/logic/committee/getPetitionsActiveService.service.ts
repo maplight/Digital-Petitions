@@ -10,6 +10,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { PetitionsByTypeInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
@@ -23,16 +24,14 @@ export class GetPetitionsActiveService {
   public success$: Observable<BufferPetition | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<BufferPetition>>;
-  private submit$: ReplaySubject<string> = new ReplaySubject();
+  private submit$: ReplaySubject<PetitionsByTypeInput> = new ReplaySubject();
   private cursor!: string | undefined;
   constructor(
     private _petitionLogic: PetitionService,
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) =>
-        this._petitionLogic.getActivePetitions(data, this.cursor)
-      ),
+      exhaustMap((data) => this._petitionLogic.getActivePetitions(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -75,7 +74,8 @@ export class GetPetitionsActiveService {
   /** This method begins the process of obtaining inactive petitions
   @param data: FilterData type: request filtering criteria
   */
-  getPetitions(data: string) {
+  getPetitions(data: PetitionsByTypeInput) {
+    data.cursor = this.cursor;
     this.submit$.next(data);
   }
 }
