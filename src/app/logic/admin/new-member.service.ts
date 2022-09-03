@@ -9,6 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { StaffUserInput, User } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { NewMemberData } from 'src/app/shared/models/admin/new-member-data';
 import { Result } from 'src/app/shared/models/exports';
@@ -17,10 +18,10 @@ import { AdminService } from './admin.service';
 @Injectable()
 export class NewMemberService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<string | undefined>;
+  public success$: Observable<User | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
-  private submit$: Subject<NewMemberData> = new Subject();
+  public result$: Observable<Result<User>>;
+  private submit$: Subject<StaffUserInput> = new Subject();
 
   constructor(
     private _adminLogic: AdminService,
@@ -63,9 +64,9 @@ export class NewMemberService {
     this.submit$.complete();
   }
   /** This method begins the process of password change for the user of the committee currently authenticated
-  @param value: New user password
+  @param value: New user data
   */
-  formGroupValue(value: NewMemberData) {
+  formGroupValue(value: StaffUserInput) {
     this.submit$.next(value);
   }
 }

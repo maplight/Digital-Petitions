@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { StaffAccessLevel } from 'src/app/core/api/API';
 
 import { NewMemberService } from 'src/app/logic/admin/new-member.service';
 
@@ -32,7 +33,7 @@ export class NewMemberComponent implements OnInit {
   ) {
     this.formGroup = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
-      type: ['', [Validators.required]],
+      permissions: [StaffAccessLevel, [Validators.required]],
     });
   }
 
