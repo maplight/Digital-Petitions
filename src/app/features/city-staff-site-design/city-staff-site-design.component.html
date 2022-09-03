@@ -1,0 +1,91 @@
+<div class="flex flex-row w-full h-full">
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="submit()"
+    class="flex flex-col max-w-[288px] w-full h-full bg-[#F7F7F7] border border-[#D7D7D7] gap-4 py-4 px-6"
+  >
+    <dp-return-link
+      [route]="'/city-staff/admin'"
+      [text]="'Site Admin'"
+    ></dp-return-link>
+    <p class="font-bold text-lg leading-6">Global Designer Setting</p>
+    <div class="flex flex-col w-full gap-2">
+      <p class="font-bold text-sm leading-[18px]">Highlight Color</p>
+      <div
+        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
+      >
+        <input
+          id="input-highlightColor"
+          type="color"
+          class="hidden"
+          formControlName="highlightColor"
+        />
+        <label
+          for="input-highlightColor"
+          [ngClass]="'rounded-[4px] border-none w-10 h-10'"
+          [ngStyle]="{ 'background-color': formGroup.value.highlightColor }"
+        ></label>
+        <p class="text-sm leading-4">
+          {{ formGroup.value.highlightColor | uppercase }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full gap-2">
+      <p class="font-bold text-sm leading-[18px]">Button Colors</p>
+      <div
+        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
+      >
+        <input
+          id="input-buttonColor"
+          type="color"
+          class="hidden"
+          formControlName="buttonColor"
+        />
+        <label
+          for="input-buttonColor"
+          [ngClass]="'rounded-[4px] border-none w-10 h-10'"
+          [ngStyle]="{ 'background-color': formGroup.value.buttonColor }"
+        ></label>
+        <p class="text-sm leading-4">
+          {{ formGroup.value.buttonColor | uppercase }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full gap-2">
+      <p class="font-bold text-sm leading-[18px]">Logo</p>
+      <div
+        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
+      >
+        <input class="hidden" id="input-file-id" multiple type="file" />
+        <label for="input-file-id" class="md-button md-raised md-primary"
+          >Choose Files</label
+        >
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full gap-2">
+      <p class="font-bold text-sm leading-[18px]">Header Color</p>
+      <div
+        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
+      >
+        <input
+          id="input-headerColor"
+          type="color"
+          class="hidden"
+          formControlName="headerColor"
+        />
+        <label
+          for="input-headerColor"
+          [ngClass]="'rounded-[4px] border-none w-10 h-10'"
+          [ngStyle]="{ 'background-color': formGroup.value.headerColor }"
+        ></label>
+        <p class="text-sm leading-4">
+          {{ formGroup.value.headerColor | uppercase }}
+        </p>
+      </div>
+    </div>
+  </form>
+  <div class="flex flex-col max-w-[879px] w-full h-full bg-green-300"></div>
+</div>
