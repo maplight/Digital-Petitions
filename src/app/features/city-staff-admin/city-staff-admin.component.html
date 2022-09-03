@@ -6,10 +6,9 @@
   >
     <p class="text-lg leading-6 font-bold">Permissions and Administrators</p>
     <button
-      type="submit"
+      type="button"
       mat-flat-button
       color="primary"
-      cdkFocusInitial
       [routerLink]="'/city-staff/permissions'"
     >
       Edit
@@ -19,7 +18,12 @@
     class="flex flex-row justify-between px-4 py-6 border border-[#D7D7D7] rounded-lg shadow-sm items-center"
   >
     <p class="text-lg leading-6 font-bold">Site Designer</p>
-    <button type="submit" mat-flat-button color="primary" cdkFocusInitial>
+    <button
+      type="button"
+      mat-flat-button
+      color="primary"
+      [routerLink]="'/city-staff/site-design'"
+    >
       Edit
     </button>
   </div>
