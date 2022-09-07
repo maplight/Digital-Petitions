@@ -242,6 +242,14 @@ $table-border: #d7d7d7;
   }
 }
 
+.mat-expansion-panel {
+  .mat-expansion-panel-content {
+    .mat-expansion-panel-body {
+      padding: 0px;
+    }
+  }
+}
+
 .mat-form-field {
   @apply max-w-full;
 
