@@ -4,7 +4,10 @@ import { API } from 'aws-amplify';
 import { catchError, delay, from, map, Observable, of } from 'rxjs';
 import {
   CreateStaffUserMutation,
+  SiteConfiguration,
+  SiteConfigurationInput,
   StaffUserInput,
+  UpdateSiteConfigurationMutation,
   User,
 } from 'src/app/core/api/API';
 import { Member } from 'src/app/shared/models/admin/member';
@@ -13,7 +16,10 @@ import { NewMemberData } from 'src/app/shared/models/admin/new-member-data';
 import { TemeData } from 'src/app/shared/models/admin/teme-data';
 
 import { Result } from 'src/app/shared/models/exports';
-import { createStaffUser } from 'src/graphql/mutations';
+import {
+  createStaffUser,
+  updateSiteConfiguration,
+} from 'src/graphql/mutations';
 
 @Injectable({
   providedIn: 'root',
@@ -76,10 +82,19 @@ export class AdminService {
     }).pipe(delay(3000));
   }
 
-  setTemeData(value: TemeData): Observable<Result<string>> {
-    return of({
-      result: 'SUCCESS',
-    }).pipe(delay(3000));
+  setTemeData(
+    data: SiteConfigurationInput
+  ): Observable<Result<SiteConfiguration>> {
+    return from(
+      API.graphql({
+        query: updateSiteConfiguration,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<UpdateSiteConfigurationMutation>>
+    ).pipe(
+      map(({ data }) => ({ result: data?.updateSiteConfiguration })),
+      catchError((error) => of({ error: error?.[0]?.message }))
+    );
   }
 
   getTemeData(): Observable<Result<TemeData>> {

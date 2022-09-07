@@ -11,7 +11,12 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { StaffUserInput, User } from 'src/app/core/api/API';
+import {
+  SiteConfiguration,
+  SiteConfigurationInput,
+  StaffUserInput,
+  User,
+} from 'src/app/core/api/API';
 import { Result } from 'src/app/shared/models/exports';
 import { TemeData } from 'src/app/shared/models/admin/teme-data';
 
@@ -20,10 +25,10 @@ import { TemeData } from 'src/app/shared/models/admin/teme-data';
 })
 export class SetSiteDesignService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<string | undefined>;
+  public success$: Observable<SiteConfiguration | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
-  private submit$: Subject<TemeData> = new Subject();
+  public result$: Observable<Result<SiteConfiguration>>;
+  private submit$: Subject<SiteConfigurationInput> = new Subject();
 
   constructor(
     private _adminLogic: AdminService,
@@ -66,7 +71,7 @@ export class SetSiteDesignService {
     this.submit$.complete();
   }
 
-  setSiteTemeData(value: TemeData) {
+  setSiteTemeData(value: SiteConfigurationInput) {
     this.submit$.next(value);
   }
 }

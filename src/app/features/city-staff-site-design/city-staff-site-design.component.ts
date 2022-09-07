@@ -71,7 +71,8 @@ export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
         buttonColor: this.buttonColor,
         headerColor: this.headerColor,
         highlightColor: this.highlightColor,
-        logo: [{ img: this.logo, active: true }],
+        logoImage: this.logo,
+        expectedVersion: 1,
       });
       this.localError.next('');
     } else {
