@@ -30,7 +30,7 @@
     <dp-side-menu></dp-side-menu>
   </mat-drawer>
 
-  <mat-drawer-content class="pt-6 px-6 lg:px-30 content-height">
-    <div class="w-full pb-[50px]"><router-outlet></router-outlet></div>
+  <mat-drawer-content [class]="currentStyle">
+    <div class="w-full h-full"><router-outlet></router-outlet></div>
   </mat-drawer-content>
 </mat-drawer-container>
