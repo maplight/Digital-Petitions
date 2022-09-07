@@ -1,8 +1,6 @@
 <div class="flex flex-row w-full h-full">
-  <form
-    [formGroup]="formGroup"
-    (ngSubmit)="submit()"
-    class="flex flex-col max-w-[288px] w-full h-full bg-[#F7F7F7] border border-[#D7D7D7] gap-4 py-4 px-6"
+  <div
+    class="flex flex-col max-w-[288px] w-full h-full bg-[#F7F7F7] border-l-1 border-r-1 border-[#D7D7D7] gap-4 py-4 px-6"
   >
     <dp-return-link
       [route]="'/city-staff/admin'"
@@ -11,81 +9,75 @@
     <p class="font-bold text-lg leading-6">Global Designer Setting</p>
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Highlight Color</p>
-      <div
-        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
-      >
-        <input
-          id="input-highlightColor"
-          type="color"
-          class="hidden"
-          formControlName="highlightColor"
-        />
-        <label
-          for="input-highlightColor"
-          [ngClass]="'rounded-[4px] border-none w-10 h-10'"
-          [ngStyle]="{ 'background-color': formGroup.value.highlightColor }"
-        ></label>
-        <p class="text-sm leading-4">
-          {{ formGroup.value.highlightColor | uppercase }}
-        </p>
-      </div>
+      <dp-color-picker
+        (eventColor)="highlightColor = $event"
+        [color]="defaulthighlightColor"
+      ></dp-color-picker>
     </div>
 
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Button Colors</p>
-      <div
-        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
-      >
-        <input
-          id="input-buttonColor"
-          type="color"
-          class="hidden"
-          formControlName="buttonColor"
-        />
-        <label
-          for="input-buttonColor"
-          [ngClass]="'rounded-[4px] border-none w-10 h-10'"
-          [ngStyle]="{ 'background-color': formGroup.value.buttonColor }"
-        ></label>
-        <p class="text-sm leading-4">
-          {{ formGroup.value.buttonColor | uppercase }}
-        </p>
-      </div>
+      <dp-color-picker
+        (eventColor)="buttonColor = $event"
+        [color]="defaultbuttonColor"
+      ></dp-color-picker>
     </div>
 
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Logo</p>
-      <div
-        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
-      >
-        <input class="hidden" id="input-file-id" multiple type="file" />
-        <label for="input-file-id" class="md-button md-raised md-primary"
-          >Choose Files</label
-        >
-      </div>
+      <dp-image-picker (eventImg)="logo = $event"></dp-image-picker>
     </div>
 
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Header Color</p>
-      <div
-        class="flex flex-row py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center"
+      <dp-color-picker
+        (eventColor)="headerColor = $event"
+        [color]="defaultheaderColor"
+      ></dp-color-picker>
+    </div>
+    <div class="flex flex-row justify-end pt-5">
+      <button
+        class="w-full md:w-auto"
+        type="button"
+        mat-flat-button
+        color="primary"
+        (click)="submit()"
       >
-        <input
-          id="input-headerColor"
-          type="color"
-          class="hidden"
-          formControlName="headerColor"
-        />
-        <label
-          for="input-headerColor"
-          [ngClass]="'rounded-[4px] border-none w-10 h-10'"
-          [ngStyle]="{ 'background-color': formGroup.value.headerColor }"
-        ></label>
-        <p class="text-sm leading-4">
-          {{ formGroup.value.headerColor | uppercase }}
-        </p>
+        Save
+      </button>
+    </div>
+  </div>
+  <div class="flex flex-col max-w-[879px] w-full h-full">
+    <div class="flex flex-col w-full gap-[65px]">
+      <div
+        class="shadow-md px-6 lg:px-30 w-auto h-25 flex justify-between items-center relative z-40"
+        [ngStyle]="{ 'background-color': headerColor || defaultheaderColor }"
+      >
+        <img class="w-auto h-8" [src]="logo" />
+      </div>
+      <div class="flex flex-col gap-[26px] px-[96px]">
+        <dp-petition-card
+          [linkText]="'Read More'"
+          [data]="mockPetition"
+          [showType]="true"
+          [showStatus]="false"
+          [showExtraDates]="false"
+          [characters]="500"
+          [buttonText]="false"
+        ></dp-petition-card>
+        <div class="flex flex-row justify-end">
+          <button
+            class="w-full md:w-auto"
+            type="button"
+            mat-flat-button
+            [ngStyle]="{
+              'background-color': buttonColor || defaultbuttonColor
+            }"
+          >
+            Endorse Now
+          </button>
+        </div>
       </div>
     </div>
-  </form>
-  <div class="flex flex-col max-w-[879px] w-full h-full bg-green-300"></div>
+  </div>
 </div>
