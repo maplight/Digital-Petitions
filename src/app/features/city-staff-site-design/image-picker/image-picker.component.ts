@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ImagePickerComponent implements OnInit {
   public formGroup: FormGroup;
-  protected imageSrc: { img: string; active: boolean }[] = [];
+  @Input() imageSrc: { img: string; active: boolean }[] = [];
   protected selectedStyle: string = '';
   protected unSelectedStyle: string = '';
   @Output() eventImg: EventEmitter<string> = new EventEmitter();
@@ -50,5 +50,11 @@ export class ImagePickerComponent implements OnInit {
     this.eventImg.emit(value);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.imageSrc.forEach((value) => {
+      if (value.active) {
+        this.eventImg.emit(value.img);
+      }
+    });
+  }
 }
