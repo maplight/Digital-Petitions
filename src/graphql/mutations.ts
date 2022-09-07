@@ -14,6 +14,17 @@ export const approvePetition = /* GraphQL */ `
         required
         submitted
       }
+      signatures {
+        items {
+          address
+          createdAt
+          name
+          signer
+          status
+          updatedAt
+        }
+        token
+      }
       status
       type
       updatedAt
@@ -35,6 +46,22 @@ export const approvePetition = /* GraphQL */ `
         title
       }
     }
+  }
+`;
+export const createStaffUser = /* GraphQL */ `
+  mutation CreateStaffUser($data: StaffUserInput!) {
+    createStaffUser(data: $data) {
+      email
+      firstName
+      lastName
+      permissions
+      username
+    }
+  }
+`;
+export const deleteStaffUser = /* GraphQL */ `
+  mutation DeleteStaffUser($username: ID!) {
+    deleteStaffUser(username: $username)
   }
 `;
 export const editCandidatePetition = /* GraphQL */ `
@@ -59,6 +86,17 @@ export const editCandidatePetition = /* GraphQL */ `
         required
         submitted
       }
+      signatures {
+        items {
+          address
+          createdAt
+          name
+          signer
+          status
+          updatedAt
+        }
+        token
+      }
       status
       type
       updatedAt
@@ -79,6 +117,17 @@ export const editIssuePetition = /* GraphQL */ `
         required
         submitted
       }
+      signatures {
+        items {
+          address
+          createdAt
+          name
+          signer
+          status
+          updatedAt
+        }
+        token
+      }
       status
       title
       type
@@ -98,6 +147,17 @@ export const rejectPetition = /* GraphQL */ `
         deadline
         required
         submitted
+      }
+      signatures {
+        items {
+          address
+          createdAt
+          name
+          signer
+          status
+          updatedAt
+        }
+        token
       }
       status
       type
@@ -144,6 +204,17 @@ export const submitCandidatePetition = /* GraphQL */ `
         required
         submitted
       }
+      signatures {
+        items {
+          address
+          createdAt
+          name
+          signer
+          status
+          updatedAt
+        }
+        token
+      }
       status
       type
       updatedAt
@@ -163,6 +234,17 @@ export const submitIssuePetition = /* GraphQL */ `
         deadline
         required
         submitted
+      }
+      signatures {
+        items {
+          address
+          createdAt
+          name
+          signer
+          status
+          updatedAt
+        }
+        token
       }
       status
       title

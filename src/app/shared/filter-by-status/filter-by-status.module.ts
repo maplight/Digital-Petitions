@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasicFilterComponent } from './basic-filter.component';
+import { FilterByStatusComponent } from './filter-by-status.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
-  declarations: [BasicFilterComponent],
+  declarations: [FilterByStatusComponent],
   imports: [
     CommonModule,
     MatChipsModule,
@@ -16,6 +16,6 @@ import { MatInputModule } from '@angular/material/input';
     MatSelectModule,
     MatInputModule,
   ],
-  exports: [BasicFilterComponent],
+  exports: [FilterByStatusComponent],
 })
-export class BasicFilterModule {}
+export class FilterByStatusModule {}

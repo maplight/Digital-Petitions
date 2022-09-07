@@ -13,9 +13,8 @@ import {
   GetPetitionsByTypeQuery,
   IssuePetition,
   IssuePetitionInput,
-  Petition,
-  PetitionListStatusCheck,
-  PetitionStatus,
+  PetitionsByOwnerInput,
+  PetitionsByTypeInput,
   PetitionType,
   SubmitCandidatePetitionMutation,
   SubmitIssuePetitionMutation,
@@ -164,17 +163,16 @@ export class PetitionService {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
-  getCommitteePetitions(data: {
-    id: string;
-    cursor?: string;
-  }): Observable<Result<BufferPetition>> {
+  getCommitteePetitions(
+    data: PetitionsByOwnerInput
+  ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByOwner,
         variables: {
           query: {
-            status: PetitionListStatusCheck.ANY,
-            owner: data.id,
+            status: data.status,
+            owner: data.owner,
             cursor: data.cursor,
           },
         },
@@ -203,10 +201,9 @@ export class PetitionService {
     );
   }
 
-  getInactivePetitions(data: {
-    status: string;
-    cursor?: string;
-  }): Observable<Result<BufferPetition>> {
+  getInactivePetitions(
+    data: PetitionsByTypeInput
+  ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByType,
@@ -214,6 +211,7 @@ export class PetitionService {
           query: {
             status: data.status,
             cursor: data.cursor,
+            type: data.type,
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -242,16 +240,16 @@ export class PetitionService {
   }
 
   getCityStaffPetitions(
-    status: string,
-    cursor?: string
+    data: PetitionsByTypeInput
   ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByType,
         variables: {
           query: {
-            status: status,
-            cursor: cursor,
+            status: data.status,
+            cursor: data.cursor,
+            type: data.type,
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -280,16 +278,16 @@ export class PetitionService {
   }
 
   getActivePetitions(
-    status: string,
-    cursor?: string
+    data: PetitionsByTypeInput
   ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByType,
         variables: {
           query: {
-            status: status,
-            cursor: cursor,
+            status: data.status,
+            cursor: data.cursor,
+            type: data.type,
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
