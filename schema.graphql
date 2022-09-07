@@ -1,6 +1,7 @@
-﻿﻿﻿schema {
+﻿﻿schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 interface Petition {
@@ -56,7 +57,7 @@ type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
 }
 
 type Mutation {
-  approvePetition(data: TargetPetitionInput!): Petition
+  approvePetition(data: ApprovePetitionInput!): Petition
     @aws_cognito_user_pools(cognito_groups: ["CityStaffGroup", "AdminGroup"])
   createStaffUser(data: StaffUserInput!): User!
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
@@ -72,6 +73,10 @@ type Mutation {
     @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
   submitIssuePetition(data: IssuePetitionInput!): IssuePetition!
     @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
+  updateSiteConfiguration(data: SiteConfigurationInput!): SiteConfiguration!
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
+  updateUserAccess(data: UpdateUserAccessInput!): User!
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
 }
 
 type PetitionConnection @aws_cognito_user_pools @aws_iam {
@@ -86,12 +91,24 @@ type Query {
   getPetitionsByType(query: PetitionsByTypeInput): PetitionConnection!
     @aws_cognito_user_pools
     @aws_iam
+  getResourceUploadURL(query: GetResourceUploadURLInput!): String
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
+  getResourceVersion(query: GetResourceVersionInput!): String
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   getSignaturesByPetition(
     query: SignaturesByPetitionInput
   ): SignatureConnection! @aws_cognito_user_pools
+  getSiteResources(query: ListResourcesInput!): ResourceConnection!
+    @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   getUsers(query: SearchUsersInput): UserConnection!
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   publicEcho(ping: String!): String!
+  siteConfiguration: SiteConfiguration! @aws_cognito_user_pools @aws_iam
+}
+
+type ResourceConnection @aws_cognito_user_pools @aws_iam {
+  items: [String!]!
+  token: ID
 }
 
 type Signature @aws_cognito_user_pools {
@@ -114,6 +131,21 @@ type SignatureSummary @aws_cognito_user_pools @aws_iam {
   required: Int!
   submitted: Int!
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup", "CityStaffGroup"])
+}
+
+type SiteConfiguration @aws_cognito_user_pools @aws_iam {
+  buttonColor: ID
+  headerColor: ID
+  highlightColor: ID
+  logoImage: ID
+  version: Int!
+}
+
+type Subscription {
+  updatedSiteConfiguration: SiteConfiguration
+    @aws_cognito_user_pools
+    @aws_iam
+    @aws_subscribe(mutations: ["updateSiteConfiguration"])
 }
 
 type User @aws_cognito_user_pools {
@@ -142,6 +174,10 @@ enum AccessLevelQuery {
   GUEST
   PETITIONER
   STAFF
+}
+
+enum AssetType {
+  LOGO
 }
 
 enum PetitionStatus {
@@ -200,6 +236,13 @@ input AddressInput {
   zipCode: String
 }
 
+input ApprovePetitionInput {
+  PK: ID!
+  deadline: AWSDateTime!
+  expectedVersion: Int!
+  requiredSignatures: Int!
+}
+
 input CandidatePetitionInput {
   address: AddressInput!
   name: String!
@@ -222,9 +265,23 @@ input EditIssuePetitionInput {
   title: String
 }
 
+input GetResourceUploadURLInput {
+  type: AssetType!
+}
+
+input GetResourceVersionInput {
+  type: AssetType!
+}
+
 input IssuePetitionInput {
   detail: String!
   title: String!
+}
+
+input ListResourcesInput {
+  cursor: ID
+  limit: Int
+  type: AssetType!
 }
 
 input PetitionsByOwnerInput {
@@ -262,6 +319,14 @@ input SignaturesOfPetitionInput {
   status: SignatureStatusQuery
 }
 
+input SiteConfigurationInput {
+  buttonColor: ID
+  expectedVersion: Int!
+  headerColor: ID
+  highlightColor: ID
+  logoImage: ID
+}
+
 input StaffUserInput {
   email: String!
   permissions: StaffAccessLevel!
@@ -270,4 +335,9 @@ input StaffUserInput {
 input TargetPetitionInput {
   PK: ID!
   expectedVersion: Int!
+}
+
+input UpdateUserAccessInput {
+  permissions: AccessLevel!
+  username: ID!
 }
