@@ -12,7 +12,7 @@ import {
 
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 
-import { PetitionListStatusCheck } from 'src/app/core/api/API';
+import { PetitionsByTypeInput } from 'src/app/core/api/API';
 
 import { FilterData, Result } from 'src/app/shared/models/exports';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
@@ -27,10 +27,8 @@ export class GetPetitionsInactiveService {
 
   public loading$: Observable<boolean>;
   public result$: Observable<Result<BufferPetition>>;
-  private submit$: Subject<{
-    status: string;
-    cursor?: string;
-  }> = new Subject();
+  private submit$: Subject<PetitionsByTypeInput> = new Subject();
+  private cursor!: string | undefined;
 
   constructor(
     private _petitionLogic: PetitionService,
@@ -46,7 +44,10 @@ export class GetPetitionsInactiveService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+        this.cursor = value?.cursor;
+      }),
 
       shareReplay(1)
     );
@@ -77,7 +78,8 @@ export class GetPetitionsInactiveService {
   /** This method begins the process of obtaining inactive petitions
   @param value: FilterData type: request filtering criteria
   */
-  getPetitions(data: { status: string; cursor?: string }) {
+  getPetitions(data: PetitionsByTypeInput) {
+    data.cursor = this.cursor;
     this.submit$.next(data);
   }
 }

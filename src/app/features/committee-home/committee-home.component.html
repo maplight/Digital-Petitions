@@ -10,50 +10,46 @@
         class="flex flex-col gap-5 rounded-[18px] py-6 px-4 bg-[#EDEDED] max-w-[892px] w-full"
       >
         <h3 class="flex leading-7 font-extrabold">Your Petitions</h3>
-        <ng-container [ngSwitch]="currentStep$ | async">
-          <ng-container *ngSwitchCase="'loading'">
-            <dp-loading-bar [title]="loadingTitle"></dp-loading-bar>
-          </ng-container>
-          <ng-container class="flex" *ngSwitchCase="'error'">
-            <div class="flex justify-center w-full">
-              <h3 class="leading-7 font-extrabold">An error has occurred</h3>
-            </div>
 
-            <div class="flex flex-row items-center justify-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
-            </div>
-          </ng-container>
-          <ng-container class="flex" *ngSwitchCase="'empty'">
-            <div class="flex justify-center w-full">
-              <h3 class="leading-7 font-extrabold">
-                You still have no petitions
-              </h3>
-            </div>
-          </ng-container>
-          <ng-container class="flex" *ngSwitchCase="'contents'">
-            <dp-petition-card
-              *ngFor="let item of resultData.items"
-              [data]="item"
-              [showStatus]="true"
-              [showType]="true"
-              [showSignature]="true"
-              [basicRoute]="'/committee/home/'"
-            ></dp-petition-card>
-            <dp-loading-bar *ngIf="loadingSeeMore"></dp-loading-bar>
-            <button
-              *ngIf="cursor"
-              mat-button
-              color="primary"
-              (click)="pageNumber()"
-              [disabled]="disabledSeeMore"
-            >
-              See More
-            </button>
-          </ng-container>
+        <dp-error-msg
+          *ngIf="!(loading$ | async) && (error$ | async) as error"
+          [error]="error"
+        >
+        </dp-error-msg>
+        <dp-loading-bar
+          *ngIf="(loading$ | async) && loadingUp"
+        ></dp-loading-bar>
+        <ng-container *ngIf="successPetition$ | async as petitions">
+          <dp-petition-card
+            *ngFor="let item of petitions.items"
+            [data]="item"
+            [showStatus]="true"
+            [showType]="true"
+            [showSignature]="true"
+            [disabled]="!!(loading$ | async)"
+            [basicRoute]="'/committee/home/'"
+          ></dp-petition-card>
+          <div
+            class="flex justify-center w-full"
+            *ngIf="petitions.items.length === 0"
+          >
+            <h3 class="leading-7 font-extrabold">
+              You still have no petitions
+            </h3>
+          </div>
+
+          <dp-loading-bar
+            *ngIf="(loading$ | async) && loadingDown"
+          ></dp-loading-bar>
+          <button
+            mat-button
+            color="primary"
+            (click)="pageNumber()"
+            [disabled]="!!(loading$ | async)"
+            *ngIf="petitions.cursor"
+          >
+            See More
+          </button>
         </ng-container>
       </div>
       <div

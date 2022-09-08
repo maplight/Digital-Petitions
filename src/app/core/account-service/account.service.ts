@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, catchError, delay, from, Observable, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  delay,
+  from,
+  Observable,
+  of,
+  ReplaySubject,
+} from 'rxjs';
 
 import {
   ChangeEmailData,
@@ -22,8 +30,7 @@ import { CognitoUserFacade, User } from 'src/app/shared/models/auth/user';
   providedIn: 'root',
 })
 export class AccountService {
-  private privateCurrentUser: BehaviorSubject<User | null> =
-    new BehaviorSubject<any | null>(null);
+  private privateCurrentUser: ReplaySubject<User | null> = new ReplaySubject();
   private privateisLoged: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
   public currentUser$: Observable<User | null> =

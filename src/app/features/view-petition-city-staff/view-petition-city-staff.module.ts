@@ -15,6 +15,8 @@ import { ApproveDialogModule } from './approve-dialog/approve-dialog.module';
 import { DenyAlertModule } from './deny-alert/deny-alert.module';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.service';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [ViewPetitionCityStaffComponent],
@@ -32,6 +34,8 @@ import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.servic
     ApproveDialogModule,
     DenyAlertModule,
     DialogResultModule,
+    ErrorMsgModule,
+    LoadingBarModule,
   ],
   providers: [GetPetitionService, DenyPetitionService],
 })

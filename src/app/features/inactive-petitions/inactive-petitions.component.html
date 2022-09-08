@@ -24,91 +24,70 @@
     <div class="flex flex-col max-w-[792px] w-full gap-6">
       <h1 class="font-extrabold">Inactive Petitions</h1>
       <div class="flex flex-col w-full gap-4 md:hidden">
-        <dp-basic-filter
+        <dp-filter-by-category
           class="w-full"
           [filterName]="'Filter by Category'"
-          [elements]="filterByCategory"
-          [disabled]="disabledFilter"
+          [filterType]="filterByCategory"
+          [disabled]="!!(loading$ | async)"
           (event)="filterCategory($event)"
-        ></dp-basic-filter>
-        <dp-basic-filter
+        ></dp-filter-by-category>
+        <dp-filter-by-status
           class="w-full"
           [filterName]="'Filter by Status'"
-          [elements]="filterByStatus"
-          [disabled]="disabledFilter"
+          [filterStatus]="filterByStatus"
+          [disabled]="!!(loading$ | async)"
           (event)="filterStatus($event)"
-        ></dp-basic-filter>
+        ></dp-filter-by-status>
       </div>
-      <ng-container *ngIf="resultData">
+      <dp-error-msg
+        *ngIf="!(loading$ | async) && (error$ | async) as error"
+        [error]="error"
+      >
+      </dp-error-msg>
+      <dp-loading-bar *ngIf="(loading$ | async) && loadingUp"></dp-loading-bar>
+      <ng-container *ngIf="successPetition$ | async as petitions">
         <dp-petition-card
           [buttonText]="false"
           [linkText]="'Read More'"
-          *ngFor="let item of resultData.items"
+          *ngFor="let item of petitions.items"
           [data]="item"
           [showStatus]="true"
           [showType]="true"
           [showSignature]="true"
           [basicRoute]="'/inactive-petitions/'"
         ></dp-petition-card>
+
+        <div
+          class="flex justify-center w-full"
+          *ngIf="petitions.items.length === 0"
+        >
+          <h3 class="leading-7 font-extrabold">No requests to display here</h3>
+        </div>
+
+        <button
+          mat-button
+          color="primary"
+          (click)="pageNumber()"
+          [disabled]="!!(loading$ | async)"
+          *ngIf="petitions.cursor"
+        >
+          See More
+        </button>
       </ng-container>
-
-      <ng-container [ngSwitch]="currentStep$ | async">
-        <ng-container *ngSwitchCase="'loading'">
-          <div class="flex flex-col">
-            <div class="flex justify-center w-full">
-              <h3 class="leading-7 font-extrabold">Loading</h3>
-            </div>
-
-            <mat-progress-bar
-              mode="indeterminate"
-              color="primary"
-            ></mat-progress-bar>
-          </div>
-        </ng-container>
-        <ng-container class="flex" *ngSwitchCase="'error'">
-          <div class="flex justify-center w-full">
-            <h3 class="leading-7 font-extrabold">An error has occurred</h3>
-          </div>
-
-          <div class="flex flex-row items-center justify-center">
-            <mat-icon
-              class="w-[14px] h-[14px]"
-              [svgIcon]="'custom_icons:c_close'"
-            ></mat-icon>
-            <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
-          </div>
-        </ng-container>
-        <ng-container class="flex" *ngSwitchCase="'empty'">
-          <div class="flex justify-center w-full">
-            <h3 class="leading-7 font-extrabold">
-              No requests to display here
-            </h3>
-          </div>
-        </ng-container>
-      </ng-container>
-      <button
-        *ngIf="cursor"
-        mat-button
-        color="primary"
-        (click)="pageNumber()"
-        [disabled]="disabledSeeMore"
-      >
-        See More
-      </button>
     </div>
     <div class="hidden md:flex md:flex-col md:max-w-[200px] md:w-full md:gap-8">
-      <dp-basic-filter
+      <dp-filter-by-category
         [filterName]="'Filter by Category'"
-        [elements]="filterByCategory"
-        [disabled]="disabledFilter"
+        [filterType]="filterByCategory"
+        [disabled]="!!(loading$ | async)"
         (event)="filterCategory($event)"
-      ></dp-basic-filter>
-      <dp-basic-filter
+      ></dp-filter-by-category>
+      <dp-filter-by-status
         [filterName]="'Filter by Status'"
-        [elements]="filterByStatus"
-        [disabled]="disabledFilter"
+        [filterStatus]="filterByStatus"
+        [disabled]="!!(loading$ | async)"
         (event)="filterStatus($event)"
-      ></dp-basic-filter>
+      ></dp-filter-by-status>
     </div>
   </div>
 </div>

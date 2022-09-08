@@ -7,10 +7,25 @@ import {
   takeUntil,
   tap,
 } from 'rxjs';
-import { PetitionListStatusCheck } from 'src/app/core/api/API';
+import {
+  GetPetitionsByTypeQuery,
+  PetitionsByTypeInput,
+  PetitionStatus,
+  PetitionStatusQuery,
+  PetitionType,
+} from 'src/app/core/api/API';
+
 import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
 import { FilterData } from 'src/app/shared/models/exports';
+import {
+  FilterByStatus,
+  FilterByStatusInactive,
+} from 'src/app/shared/models/filter/filter-by-status';
+import {
+  FilterByType,
+  FilterByTypeData,
+} from 'src/app/shared/models/filter/filter-by-type';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
@@ -18,131 +33,49 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   selector: 'dp-inactive-petitions',
   templateUrl: './inactive-petitions.component.html',
 })
-export class InactivePetitionsComponent implements OnInit, AfterViewInit {
-  private _unsubscribeAll: Subject<void> = new Subject();
-
-  protected resultData!: BufferPetition;
-  protected result$!: Subscription;
-  protected cursor: string | undefined;
-  protected loadingTitle: string = '';
-  protected loadingSeeMore: boolean = false;
-  protected error: string | undefined;
+export class InactivePetitionsComponent implements OnInit {
+  protected loadingUp: boolean = true;
+  protected loadingDown: boolean = !this.loadingUp;
+  protected successPetition$!: Observable<BufferPetition | undefined>;
   protected loading$!: Observable<boolean>;
-  protected currentStep$: BehaviorSubject<
-    'loading' | 'empty' | 'contents' | 'error'
-  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
-    'loading'
-  );
-  protected disabledFilter: boolean = true;
-  protected disabledSeeMore: boolean = true;
-  private currentFilter: FilterData[] = [
-    {
-      property: 'Category',
-      value: 'All',
-      page: 0,
-    },
-    {
-      property: 'Status',
-      value: PetitionListStatusCheck.INACTIVE,
-      page: 0,
-    },
-  ];
+  protected error$!: Observable<string | undefined>;
+  protected cursor: string | undefined;
 
-  protected filterByCategory: {
-    name: string;
-    value: string;
-    active: boolean;
-  }[] = [
-    { name: 'All types', value: 'all', active: true },
-    { name: 'Ballot', value: 'issue', active: false },
-    { name: 'Candidate', value: 'candidate', active: false },
-  ];
-  protected filterByStatus: {
-    name: string;
-    value: PetitionListStatusCheck;
-    active: boolean;
-  }[] = [
-    {
-      name: 'All types',
-      value: PetitionListStatusCheck.INACTIVE,
-      active: true,
-    },
-    { name: 'Pased', value: PetitionListStatusCheck.QUALIFIED, active: false },
-    {
-      name: 'Failed',
-      value: PetitionListStatusCheck.NOT_QUALIFIED,
-      active: false,
-    },
-  ];
-  constructor(private _committeeLogic: GetPetitionsInactiveService) {}
-  ngAfterViewInit(): void {
-    this._committeeLogic.getPetitions({
-      status: this.currentFilter[1].value,
-      cursor: this.cursor,
-    });
-  }
+  private petitionsByTypeInput: PetitionsByTypeInput = {
+    status: PetitionStatusQuery.ANY,
+    type: undefined,
+  };
+
+  protected filterByCategory: FilterByType[] = FilterByTypeData;
+  protected filterByStatus: FilterByStatus[] = FilterByStatusInactive;
+
+  constructor(
+    private _getPetitionsInactiveService: GetPetitionsInactiveService
+  ) {}
+
   ngOnInit(): void {
-    this.result$ = this._committeeLogic.result$
-      .pipe(
-        takeUntil(this._unsubscribeAll),
-        tap(() => (this.loadingTitle = 'Waiting for your petitions'))
-      )
-      .subscribe((result) => {
-        this.loadingSeeMore = false;
-        if (!!result.result) {
-          this.disabledSeeMore = false;
-          if (this.resultData) {
-            this.resultData.items = this.resultData.items.concat(
-              result.result.items
-            );
-            this.cursor = result.result.cursor;
-            console.log(this.cursor);
-          } else {
-            this.resultData = result.result;
-            this.cursor = result.result.cursor;
-          }
-
-          if (result.result.items.length === 0) {
-            this.currentStep$.next('empty');
-          } else {
-            this.currentStep$.next('contents');
-          }
-        } else {
-          this.error = result.error;
-          this.currentStep$.next('error');
-        }
-      });
-    this.loading$ = this._committeeLogic.loading$;
-  }
-  filterCategory(value: string) {
-    this.disabledFilter = true;
-    this.disabledSeeMore = true;
-    this.currentFilter[0].value = value;
-
-    this.currentStep$.next('loading');
-    this._committeeLogic.getPetitions({
-      status: this.currentFilter[1].value,
-      cursor: this.cursor,
-    });
-  }
-
-  filterStatus(value: string) {
-    this.disabledFilter = true;
-    this.disabledSeeMore = true;
-    this.currentFilter[1].value = value;
-    this.currentStep$.next('loading');
+    this.successPetition$ = this._getPetitionsInactiveService.success$;
+    this.error$ = this._getPetitionsInactiveService.error$;
+    this.loading$ = this._getPetitionsInactiveService.loading$;
     this.getPetitions();
   }
-  private getPetitions() {
-    this.disabledSeeMore = true;
+  filterCategory(value: PetitionType | undefined | 'ANY') {
+    this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;
+    this.loadingUp = true;
+    this.getPetitions();
+  }
 
-    this._committeeLogic.getPetitions({
-      status: this.currentFilter[1].value,
-      cursor: this.cursor,
-    });
+  filterStatus(value: PetitionStatusQuery | undefined) {
+    this.petitionsByTypeInput.status = value;
+    this.loadingUp = true;
+    this.getPetitions();
+  }
+
+  private getPetitions() {
+    this._getPetitionsInactiveService.getPetitions(this.petitionsByTypeInput);
   }
   pageNumber() {
-    this.loadingSeeMore = true;
+    this.loadingUp = false;
     this.getPetitions();
   }
 }

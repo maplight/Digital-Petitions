@@ -1,11 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  Subscription,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import {
   CandidatePetition,
   IssuePetition,
+  Petition,
   PetitionStatus,
+  TargetPetitionInput,
 } from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.service';
@@ -20,77 +29,71 @@ import { DenyAlertComponent } from './deny-alert/deny-alert.component';
   templateUrl: './view-petition-city-staff.component.html',
 })
 export class ViewPetitionCityStaffComponent implements OnInit {
-  protected id: string = '0';
-  protected resultData: ResponsePetition = {};
-
-  protected result$!: Subscription;
-  protected error: string | undefined;
+  protected success$!: Observable<ResponsePetition | undefined>;
+  protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
 
-  protected resultDeny$!: Subscription;
-  protected errorDeny: string | undefined;
   protected loadingDeny$!: Observable<boolean>;
 
-  protected currentStep$: BehaviorSubject<
-    'loading' | 'empty' | 'contents' | 'error'
-  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
-    'loading'
-  );
-  protected petition: IssuePetition | CandidatePetition | undefined;
+  private _unSuscribeAll: Subject<void> = new Subject();
+  private _targetPetitionInput: TargetPetitionInput = {
+    PK: '',
+    expectedVersion: 0,
+  };
   constructor(
-    private _committeeLogic: GetPetitionService,
+    private _getPetitionLogic: GetPetitionService,
     private _denyPetitionLogic: DenyPetitionService,
     private _dialog: MatDialog,
     private _activatedRoute: ActivatedRoute
   ) {}
-  ngAfterViewInit(): void {
-    this.id = this._activatedRoute.snapshot.params['id'];
-    this._committeeLogic.getPetition(
+
+  ngOnInit(): void {
+    this.success$ = this._getPetitionLogic.success$;
+    this.success$.pipe(takeUntil(this._unSuscribeAll)).subscribe((value) => {
+      if (value?.dataCandidate) {
+        this._targetPetitionInput.PK = value.dataCandidate.PK;
+        this._targetPetitionInput.expectedVersion = value.dataCandidate.version;
+      }
+      if (value?.dataIssue) {
+        this._targetPetitionInput.PK = value.dataIssue.PK;
+        this._targetPetitionInput.expectedVersion = value.dataIssue.version;
+      }
+    });
+    this.error$ = this._getPetitionLogic.error$;
+    this.loading$ = this._getPetitionLogic.loading$;
+
+    //Deny
+    this._denyPetitionLogic.success$
+      .pipe(takeUntil(this._unSuscribeAll))
+      .subscribe((_) => {
+        this.openDialog(true);
+      });
+    this._denyPetitionLogic.error$
+      .pipe(takeUntil(this._unSuscribeAll))
+      .subscribe((error) => {
+        this.openDialog(false, error);
+      });
+    this.loadingDeny$ = this._denyPetitionLogic.loading$;
+
+    this._getPetitionLogic.getPetition(
       this._activatedRoute.snapshot.params['id']
     );
-  }
-  ngOnInit(): void {
-    this.result$ = this._committeeLogic.result$.subscribe((result) => {
-      if (!!result.result) {
-        this.resultData = result.result;
-        this.setState(result.result);
-        this.currentStep$.next('contents');
-      } else {
-        this.error = result.error;
-        this.currentStep$.next('error');
-      }
-    });
-    this.loading$ = this._committeeLogic.loading$;
-    //Deny
-    this.resultDeny$ = this._denyPetitionLogic.result$.subscribe((result) => {
-      if (!!result.result) {
-        this._dialog.open(DialogResultComponent, {
-          width: '520px',
-          data: {
-            title: 'Petition Denied!',
-            message: '',
-            success: true,
-          },
-        });
-      } else {
-        this.errorDeny = result.error;
-      }
-    });
-    this.loadingDeny$ = this._denyPetitionLogic.loading$;
-  }
-  private setState(data: ResponsePetition) {
-    this.petition = this.resultData.dataCandidate
-      ? this.resultData.dataCandidate
-      : this.resultData.dataIssue
-      ? this.resultData.dataIssue
-      : undefined;
   }
 
   approveDialog(): void {
     const dialogRef = this._dialog.open(ApproveDialogComponent, {
       width: '690px',
+      data: this._targetPetitionInput,
+    });
+  }
+
+  private openDialog(status: boolean, message?: string) {
+    this._dialog.open(DialogResultComponent, {
+      width: '520px',
       data: {
-        id: this.id,
+        title: status ? 'Petition Denied!' : 'An error has occurred!',
+        message: message,
+        success: status,
       },
     });
   }
@@ -102,7 +105,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._denyPetitionLogic.denyPetition(this.id);
+        this._denyPetitionLogic.denyPetition(this._targetPetitionInput);
       } else {
         this._dialog.closeAll();
       }

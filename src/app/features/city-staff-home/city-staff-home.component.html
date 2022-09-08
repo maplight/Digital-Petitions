@@ -17,22 +17,22 @@
       [disabled]="!!(loading$ | async)"
       class="w-full min-w-[100px]"
     ></dp-basic-search-engine>
-    <dp-basic-filter
+    <dp-filter-by-category
       class="w-full md:max-w-[250px] md:min-w-[150px]"
       [filterName]="'Filter by Category'"
-      [elements]="filterByCategory"
+      [filterType]="filterByCategory"
       [disabled]="!!(loading$ | async)"
       [mode]="'Select'"
       (event)="filterCategory($event)"
-    ></dp-basic-filter>
-    <dp-basic-filter
+    ></dp-filter-by-category>
+    <dp-filter-by-status
       class="w-full md:max-w-[250px] md:min-w-[150px]"
       [filterName]="'Filter by Status'"
-      [elements]="filterByStatus"
+      [filterStatus]="filterByStatus"
       [disabled]="!!(loading$ | async)"
       [mode]="'Select'"
       (event)="filterStatus($event)"
-    ></dp-basic-filter>
+    ></dp-filter-by-status>
   </div>
   <div class="flex p-2">
     <p class="text-lg leading-6 font-bold">Active Petitions In the city</p>

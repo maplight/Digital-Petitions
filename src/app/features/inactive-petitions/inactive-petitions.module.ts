@@ -4,11 +4,14 @@ import { InactivePetitionsComponent } from './inactive-petitions.component';
 import { PetitionCardModule } from 'src/app/shared/petition-card/petition-card.module';
 import { InactivePetitionsRoutingModule } from './inactive-petitions-routing.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
-import { BasicFilterModule } from 'src/app/shared/basic-filter/basic-filter.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
+import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
+import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-status.module';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [InactivePetitionsComponent],
@@ -17,10 +20,13 @@ import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetition
     InactivePetitionsRoutingModule,
     PetitionCardModule,
     ReturnLinkModule,
-    BasicFilterModule,
+    FilterByCategoryModule,
+    FilterByStatusModule,
     MatIconModule,
     MatProgressBarModule,
     MatButtonModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   providers: [GetPetitionsInactiveService],
 })

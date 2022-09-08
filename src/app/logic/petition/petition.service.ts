@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import API, { GraphQLResult } from '@aws-amplify/api';
 import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import {
+  ApprovePetitionMutation,
   CandidatePetition,
   CandidatePetitionInput,
   EditCandidatePetitionInput,
@@ -13,12 +14,13 @@ import {
   GetPetitionsByTypeQuery,
   IssuePetition,
   IssuePetitionInput,
-  Petition,
-  PetitionListStatusCheck,
-  PetitionStatus,
+  PetitionsByOwnerInput,
+  PetitionsByTypeInput,
+  PetitionStatusQuery,
   PetitionType,
   SubmitCandidatePetitionMutation,
   SubmitIssuePetitionMutation,
+  TargetPetitionInput,
 } from 'src/app/core/api/API';
 import { AccountService } from 'src/app/core/account-service/account.service';
 
@@ -27,8 +29,10 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
 import {
+  approvePetition,
   editCandidatePetition,
   editIssuePetition,
+  rejectPetition,
   submitCandidatePetition,
   submitIssuePetition,
 } from 'src/graphql/mutations';
@@ -153,28 +157,78 @@ export class PetitionService {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
-  approvePetition(data: {
-    data: { deadline: string; signatures: string };
-    id: string;
-  }): Observable<Result<string>> {
-    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  approvePetition(
+    data: TargetPetitionInput
+  ): Observable<Result<ResponsePetition>> {
+    return from(
+      API.graphql({
+        query: approvePetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<ApprovePetitionMutation>>
+    ).pipe(
+      map((value) => {
+        let petition: ResponsePetition = {};
+        if (value.data) {
+          if (value.data.approvePetition?.type === PetitionType.ISSUE) {
+            petition = {
+              dataIssue: value.data.approvePetition as IssuePetition,
+            };
+          } else if (
+            value.data.approvePetition?.type === PetitionType.CANDIDATE
+          ) {
+            petition = {
+              dataCandidate: value.data.approvePetition as CandidatePetition,
+            };
+          }
+        }
+        return { result: petition };
+      }),
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
+    );
   }
 
-  denyPetition(data: { id: string }): Observable<Result<string>> {
-    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  denyPetition(
+    data: TargetPetitionInput
+  ): Observable<Result<ResponsePetition>> {
+    return from(
+      API.graphql({
+        query: rejectPetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<ApprovePetitionMutation>>
+    ).pipe(
+      map((value) => {
+        let petition: ResponsePetition = {};
+        if (value.data) {
+          if (value.data.approvePetition?.type === PetitionType.ISSUE) {
+            petition = {
+              dataIssue: value.data.approvePetition as IssuePetition,
+            };
+          } else if (
+            value.data.approvePetition?.type === PetitionType.CANDIDATE
+          ) {
+            petition = {
+              dataCandidate: value.data.approvePetition as CandidatePetition,
+            };
+          }
+        }
+        return { result: petition };
+      }),
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
+    );
   }
 
-  getCommitteePetitions(data: {
-    id: string;
-    cursor?: string;
-  }): Observable<Result<BufferPetition>> {
+  getCommitteePetitions(
+    data: PetitionsByOwnerInput
+  ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByOwner,
         variables: {
           query: {
-            status: PetitionListStatusCheck.ANY,
-            owner: data.id,
+            status: data.status,
+            owner: data.owner,
             cursor: data.cursor,
           },
         },
@@ -203,10 +257,9 @@ export class PetitionService {
     );
   }
 
-  getInactivePetitions(data: {
-    status: string;
-    cursor?: string;
-  }): Observable<Result<BufferPetition>> {
+  getInactivePetitions(
+    data: PetitionsByTypeInput
+  ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByType,
@@ -214,6 +267,7 @@ export class PetitionService {
           query: {
             status: data.status,
             cursor: data.cursor,
+            type: data.type,
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -242,16 +296,16 @@ export class PetitionService {
   }
 
   getCityStaffPetitions(
-    status: string,
-    cursor?: string
+    data: PetitionsByTypeInput
   ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByType,
         variables: {
           query: {
-            status: status,
-            cursor: cursor,
+            status: data.status,
+            cursor: data.cursor,
+            type: data.type,
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -280,16 +334,16 @@ export class PetitionService {
   }
 
   getActivePetitions(
-    status: string,
-    cursor?: string
+    data: PetitionsByTypeInput
   ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
         query: getPetitionsByType,
         variables: {
           query: {
-            status: status,
-            cursor: cursor,
+            status: data.status,
+            cursor: data.cursor,
+            type: data.type,
           },
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',

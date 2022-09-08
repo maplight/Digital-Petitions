@@ -34,23 +34,23 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Member Status</mat-label>
-        <mat-select formControlName="type">
+        <mat-select formControlName="permissions">
           <mat-option>--</mat-option>
-          <mat-option value="member"
+          <mat-option value="STAFF"
             ><p>
               <span class="font-bold leading-5">Member</span> - Can approve and
               deny petitions, signatures
             </p>
             <p></p
           ></mat-option>
-          <mat-option value="admin"
+          <mat-option value="ADMIN"
             ><p>
               <span class="font-bold leading-5">Admin</span> - Has Full access
               and can set permissions
             </p>
             <p></p
           ></mat-option>
-          <mat-option value="guest"
+          <mat-option value="GUEST"
             ><p>
               <span class="font-bold leading-5">Guest</span> - Has limited
               access and can only view content
@@ -58,7 +58,9 @@
             <p></p
           ></mat-option>
         </mat-select>
-        <mat-error *ngIf="this.formGroup.get('type')?.errors?.['required']">
+        <mat-error
+          *ngIf="this.formGroup.get('permissions')?.errors?.['required']"
+        >
           <div class="flex flex-row items-center">
             <mat-icon
               class="w-[14px] h-[14px]"
