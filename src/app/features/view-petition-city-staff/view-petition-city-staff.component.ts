@@ -46,6 +46,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
     private _dialog: MatDialog,
     private _activatedRoute: ActivatedRoute
   ) {}
+
   ngOnInit(): void {
     this.success$ = this._getPetitionLogic.success$;
     this.success$.pipe(takeUntil(this._unSuscribeAll)).subscribe((value) => {
@@ -73,6 +74,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
         this.openDialog(false, error);
       });
     this.loadingDeny$ = this._denyPetitionLogic.loading$;
+
     this._getPetitionLogic.getPetition(
       this._activatedRoute.snapshot.params['id']
     );
