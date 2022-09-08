@@ -186,6 +186,13 @@ const routes: Routes = [
             './features/city-staff-permissions/city-staff-permissions.module'
           ).then((m) => m.CityStaffPermissionsModule),
       },
+      {
+        path: 'site-design',
+        loadChildren: () =>
+          import(
+            './features/city-staff-site-design/city-staff-site-design.module'
+          ).then((m) => m.CityStaffSiteDesignModule),
+      },
     ],
   },
 ];

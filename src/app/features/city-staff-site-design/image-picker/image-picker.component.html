@@ -1,0 +1,41 @@
+<form
+  [formGroup]="formGroup"
+  class="flex flex-col py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] items-center w-full"
+>
+  <input
+    class="hidden"
+    id="input-file-id"
+    multiple
+    type="file"
+    formControlName="logo"
+    (change)="onFileChange($event)"
+  />
+
+  <div class="flex flex-wrap items-center gap-2">
+    <img
+      *ngFor="let item of imageSrc"
+      [src]="item.img"
+      class="h-14 w-14 rounded cursor-pointer"
+      [ngStyle]="{
+        'border-width': item.active ? '2px' : '1px',
+        'border-color': item.active ? '#6284FD' : '#D7D7D7',
+        '--tw-shadow': item.active
+          ? '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)'
+          : '',
+        '--tw-shadow-colored': item.active
+          ? '0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color)'
+          : '',
+        'box-shadow': item.active
+          ? 'var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)'
+          : ''
+      }"
+      (click)="onClickImg(item)"
+    />
+    <label
+      matRipple
+      for="input-file-id"
+      class="flex justify-center items-center h-10 w-10 font-extrabold text-on-primary-100 rounded-full bg-primary-100 hover:bg-primary-200 hover:text-on-primary-200 cursor-pointer shadow-md"
+      >+
+    </label>
+  </div>
+</form>

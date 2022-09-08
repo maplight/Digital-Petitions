@@ -1,0 +1,24 @@
+<mat-accordion>
+  <mat-expansion-panel
+    hideToggle
+    class="py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] shadow-none"
+  >
+    <mat-expansion-panel-header class="p-0 justify-start">
+      <div class="flex flex-row gap-[10px] items-center">
+        <div
+          [ngClass]="'rounded-[4px] border border-gray-300 w-10 h-10'"
+          [ngStyle]="{ 'background-color': color || 'white' }"
+        ></div>
+        <p class="text-sm leading-4">
+          {{ color | uppercase }}
+        </p>
+      </div>
+    </mat-expansion-panel-header>
+    <div class="flex flex-row gap-2 rounded-md">
+      <dp-color-palette
+        [hue]="hue"
+        (color)="sendColor($event)"
+      ></dp-color-palette>
+      <dp-color-slider (color)="hue = $event"></dp-color-slider>
+    </div> </mat-expansion-panel
+></mat-accordion>
