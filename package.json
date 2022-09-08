@@ -20,7 +20,7 @@
     "@angular/platform-browser": "^14.1.2",
     "@angular/platform-browser-dynamic": "^14.1.2",
     "@angular/router": "^14.1.2",
-    "aws-amplify": "^4.3.30",
+    "aws-amplify": "^4.3.31",
     "rxjs": "~7.5.6",
     "tinycolor2": "^1.4.2",
     "tslib": "^2.3.0",
