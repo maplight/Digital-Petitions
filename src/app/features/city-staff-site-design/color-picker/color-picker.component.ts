@@ -20,7 +20,7 @@ export class ColorPickerComponent implements OnInit {
     this.eventColor.emit(this.color);
   }
   protected hue!: string | null;
-  @Input() color!: string | null;
+  @Input() color!: string | null | undefined;
   @Output() eventColor: EventEmitter<string | null> = new EventEmitter();
   sendColor(value: string | null) {
     this.color = value;

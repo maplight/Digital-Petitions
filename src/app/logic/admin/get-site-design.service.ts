@@ -10,6 +10,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { SiteConfiguration } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { TemeData } from 'src/app/shared/models/admin/teme-data';
 import { Result } from 'src/app/shared/models/exports';
@@ -20,9 +21,9 @@ import { AdminService } from './admin.service';
 })
 export class GetSiteDesignService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<TemeData | undefined>;
+  public success$: Observable<SiteConfiguration | null | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<TemeData>>;
+  public result$: Observable<Result<SiteConfiguration | null>>;
   private submit$: ReplaySubject<void> = new ReplaySubject();
 
   constructor(

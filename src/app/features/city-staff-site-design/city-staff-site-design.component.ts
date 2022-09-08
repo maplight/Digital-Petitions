@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PetitionStatus, PetitionType } from 'src/app/core/api/API';
+import {
+  PetitionStatus,
+  PetitionType,
+  SiteConfiguration,
+} from 'src/app/core/api/API';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { merge, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { SetSiteDesignService } from 'src/app/logic/admin/set-site-design.service';
 import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
-import { TemeData } from 'src/app/shared/models/admin/teme-data';
 
 @Component({
   selector: 'dp-city-staff-site-design',
@@ -36,7 +39,7 @@ export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
   protected firstLoading$!: Observable<boolean>;
-  protected success$!: Observable<TemeData | undefined>;
+  protected success$!: Observable<SiteConfiguration | null | undefined>;
 
   private localError: Subject<string> = new Subject();
 
@@ -71,7 +74,7 @@ export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
         buttonColor: this.buttonColor,
         headerColor: this.headerColor,
         highlightColor: this.highlightColor,
-        logoImage: this.logo,
+        logoImage: '',
         expectedVersion: 1,
       });
       this.localError.next('');
