@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import API, { GraphQLResult } from '@aws-amplify/api';
 import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import {
+  ApprovePetitionMutation,
   CandidatePetition,
   CandidatePetitionInput,
   EditCandidatePetitionInput,
@@ -15,9 +16,11 @@ import {
   IssuePetitionInput,
   PetitionsByOwnerInput,
   PetitionsByTypeInput,
+  PetitionStatusQuery,
   PetitionType,
   SubmitCandidatePetitionMutation,
   SubmitIssuePetitionMutation,
+  TargetPetitionInput,
 } from 'src/app/core/api/API';
 import { AccountService } from 'src/app/core/account-service/account.service';
 
@@ -26,6 +29,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
 import {
+  approvePetition,
   editCandidatePetition,
   editIssuePetition,
   submitCandidatePetition,
@@ -152,11 +156,35 @@ export class PetitionService {
     return of({ result: 'SUCCESS' }).pipe(delay(3000));
   }
 
-  approvePetition(data: {
-    data: { deadline: string; signatures: string };
-    id: string;
-  }): Observable<Result<string>> {
-    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  approvePetition(
+    data: TargetPetitionInput
+  ): Observable<Result<ResponsePetition>> {
+    return from(
+      API.graphql({
+        query: approvePetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<ApprovePetitionMutation>>
+    ).pipe(
+      map((value) => {
+        let petition: ResponsePetition = {};
+        if (value.data) {
+          if (value.data.approvePetition?.type === PetitionType.ISSUE) {
+            petition = {
+              dataIssue: value.data.approvePetition as IssuePetition,
+            };
+          } else if (
+            value.data.approvePetition?.type === PetitionType.CANDIDATE
+          ) {
+            petition = {
+              dataCandidate: value.data.approvePetition as CandidatePetition,
+            };
+          }
+        }
+        return { result: petition };
+      }),
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
+    );
   }
 
   denyPetition(data: { id: string }): Observable<Result<string>> {

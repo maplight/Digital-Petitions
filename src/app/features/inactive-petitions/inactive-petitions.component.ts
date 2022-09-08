@@ -42,7 +42,7 @@ export class InactivePetitionsComponent implements OnInit {
   protected cursor: string | undefined;
 
   private petitionsByTypeInput: PetitionsByTypeInput = {
-    status: undefined,
+    status: PetitionStatusQuery.ANY,
     type: undefined,
   };
 
@@ -59,8 +59,8 @@ export class InactivePetitionsComponent implements OnInit {
     this.loading$ = this._getPetitionsInactiveService.loading$;
     this.getPetitions();
   }
-  filterCategory(value: PetitionType | undefined) {
-    this.petitionsByTypeInput.type = value;
+  filterCategory(value: PetitionType | undefined | 'ANY') {
+    this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;
     this.loadingUp = true;
     this.getPetitions();
   }

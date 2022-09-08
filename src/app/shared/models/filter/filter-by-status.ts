@@ -6,12 +6,12 @@ export interface FilterByStatus {
   active?: boolean;
 }
 export const FilterByStatusInactive: FilterByStatus[] = [
-  { name: 'All types', value: undefined, active: true },
+  { name: 'All types', value: PetitionStatusQuery.INACTIVE, active: true },
   { name: 'Passed', value: PetitionStatusQuery.QUALIFIED, active: false },
   { name: 'Failed', value: PetitionStatusQuery.NOT_QUALIFIED, active: false },
 ];
 export const FilterByStatusAny: FilterByStatus[] = [
-  { name: 'All types', value: undefined, active: true },
+  { name: 'All types', value: PetitionStatusQuery.ANY, active: true },
   { name: 'Passed', value: PetitionStatusQuery.QUALIFIED, active: false },
   { name: 'Failed', value: PetitionStatusQuery.NOT_QUALIFIED, active: false },
   { name: 'Cancelled', value: PetitionStatusQuery.CANCELED, active: false },

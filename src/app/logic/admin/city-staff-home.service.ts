@@ -70,7 +70,7 @@ export class CityStaffHomeService {
     this.submit$.complete();
   }
   /** This method begins the process of obtaining inactive petitions
-  @param value: FilterData type: request filtering criteria
+  @param data: PetitionsByTypeInput type: request filtering criteria
   */
   getPetitions(data: PetitionsByTypeInput) {
     data.cursor = this.cursor;

@@ -9,20 +9,19 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { TargetPetitionInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
+import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { PetitionService } from './petition.service';
 
 @Injectable()
 export class ApprovePetitionService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<string | undefined>;
+  public success$: Observable<ResponsePetition | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
-  private submit$: Subject<{
-    data: { deadline: string; signatures: string };
-    id: string;
-  }> = new Subject();
+  public result$: Observable<Result<ResponsePetition>>;
+  private submit$: Subject<TargetPetitionInput> = new Subject();
 
   constructor(
     private _petitionService: PetitionService,
@@ -69,7 +68,7 @@ export class ApprovePetitionService {
   @param id: ID of the petition to withdraw
   */
 
-  approvePetition(data: { deadline: string; signatures: string }, id: string) {
-    this.submit$.next({ data: data, id: id });
+  approvePetition(data: TargetPetitionInput) {
+    this.submit$.next(data);
   }
 }
