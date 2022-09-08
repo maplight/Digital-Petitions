@@ -1,4 +1,11 @@
-<div class="flex flex-row w-full h-full">
+<div
+  class="flex w-full h-full justify-center items-center p-10"
+  *ngIf="firstLoading$ | async"
+>
+  <dp-loading-bar [title]="'Loading'" class="w-full"></dp-loading-bar>
+</div>
+
+<div class="flex flex-row w-full h-full" *ngIf="success$ | async as temeData">
   <div
     class="flex flex-col max-w-[288px] w-full h-full bg-[#F7F7F7] border-l-1 border-r-1 border-[#D7D7D7] gap-4 py-4 px-6"
   >
@@ -11,7 +18,7 @@
       <p class="font-bold text-sm leading-[18px]">Highlight Color</p>
       <dp-color-picker
         (eventColor)="highlightColor = $event"
-        [color]="defaulthighlightColor"
+        [color]="temeData.highlightColor"
       ></dp-color-picker>
     </div>
 
@@ -19,22 +26,31 @@
       <p class="font-bold text-sm leading-[18px]">Button Colors</p>
       <dp-color-picker
         (eventColor)="buttonColor = $event"
-        [color]="defaultbuttonColor"
+        [color]="temeData.buttonColor"
       ></dp-color-picker>
     </div>
 
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Logo</p>
-      <dp-image-picker (eventImg)="logo = $event"></dp-image-picker>
+      <dp-image-picker
+        (eventImg)="logo = $event"
+        [imageSrc]="temeData.logo"
+      ></dp-image-picker>
     </div>
 
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Header Color</p>
       <dp-color-picker
         (eventColor)="headerColor = $event"
-        [color]="defaultheaderColor"
+        [color]="temeData.headerColor"
       ></dp-color-picker>
     </div>
+    <dp-error-msg
+      *ngIf="!(loading$ | async) && (error$ | async) as error"
+      [error]="error"
+    >
+    </dp-error-msg>
+    <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
     <div class="flex flex-row justify-end pt-5">
       <button
         class="w-full md:w-auto"
@@ -42,16 +58,17 @@
         mat-flat-button
         color="primary"
         (click)="submit()"
+        [disabled]="loading$ | async"
       >
         Save
       </button>
     </div>
   </div>
-  <div class="flex flex-col max-w-[879px] w-full h-full">
+  <div class="flex flex-col w-full h-full">
     <div class="flex flex-col w-full gap-[65px]">
       <div
         class="shadow-md px-6 lg:px-30 w-auto h-25 flex justify-between items-center relative z-40"
-        [ngStyle]="{ 'background-color': headerColor || defaultheaderColor }"
+        [ngStyle]="{ 'background-color': headerColor }"
       >
         <img class="w-auto h-8" [src]="logo" />
       </div>
@@ -71,7 +88,7 @@
             type="button"
             mat-flat-button
             [ngStyle]="{
-              'background-color': buttonColor || defaultbuttonColor
+              'background-color': buttonColor
             }"
           >
             Endorse Now
