@@ -78,7 +78,6 @@ export class ViewPetitionCityStaffComponent implements OnInit {
     this._getPetitionLogic.getPetition(
       this._activatedRoute.snapshot.params['id']
     );
-
   }
 
   approveDialog(): void {
@@ -106,9 +105,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-
         this._denyPetitionLogic.denyPetition(this._targetPetitionInput);
-
       } else {
         this._dialog.closeAll();
       }
