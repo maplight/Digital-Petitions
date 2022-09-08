@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { API } from 'aws-amplify';
+import { catchError, delay, from, map, Observable, of } from 'rxjs';
+import {
+  CreateStaffUserMutation,
+  StaffUserInput,
+  User,
+} from 'src/app/core/api/API';
 import { Member } from 'src/app/shared/models/admin/member';
 
 import { NewMemberData } from 'src/app/shared/models/admin/new-member-data';
 
 import { Result } from 'src/app/shared/models/exports';
+import { createStaffUser } from 'src/graphql/mutations';
 
 @Injectable({
   providedIn: 'root',
@@ -33,10 +41,17 @@ export class AdminService {
     }).pipe(delay(3000));
   }
 
-  newMember(data: NewMemberData): Observable<Result<string>> {
-    return of({
-      result: 'SUCCESS',
-    }).pipe(delay(3000));
+  newMember(data: StaffUserInput): Observable<Result<User>> {
+    return from(
+      API.graphql({
+        query: createStaffUser,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<CreateStaffUserMutation>>
+    ).pipe(
+      map(({ data }) => ({ result: data?.createStaffUser })),
+      catchError((error) => of({ error: error?.[0]?.message }))
+    );
   }
   changeAccountPermission(data: {
     id: string;
