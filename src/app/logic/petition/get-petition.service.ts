@@ -5,6 +5,7 @@ import {
   merge,
   Observable,
   partition,
+  ReplaySubject,
   shareReplay,
   Subject,
   tap,
@@ -21,7 +22,7 @@ export class GetPetitionService {
   public success$: Observable<ResponsePetition | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<ResponsePetition>>;
-  private submit$: Subject<string> = new Subject();
+  private submit$: ReplaySubject<string> = new ReplaySubject();
 
   constructor(
     private _petitionService: PetitionService,
