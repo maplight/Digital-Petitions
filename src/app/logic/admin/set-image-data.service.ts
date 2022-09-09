@@ -22,7 +22,8 @@ export class SetImageDataService {
   public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<{ url: string; img: ArrayBuffer }> = new Subject();
+  private submit$: Subject<{ url: string; img: File | Blob | ArrayBuffer }> =
+    new Subject();
 
   constructor(
     private _adminLogic: AdminService,
@@ -65,7 +66,7 @@ export class SetImageDataService {
     this.submit$.complete();
   }
 
-  setImageData(value: { url: string; img: ArrayBuffer }) {
+  setImageData(value: { url: string; img: File | Blob | ArrayBuffer }) {
     this.submit$.next(value);
   }
 }

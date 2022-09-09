@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API } from 'aws-amplify';
@@ -122,13 +118,11 @@ export class AdminService {
     );
   }
 
-  setImg(value: { url: string; img: ArrayBuffer }): Observable<Result<any>> {
-    let head: HttpHeaders = new HttpHeaders()
-      .set('origin', 'http://d1ucwckhv9qcdh.cloudfront.net')
-      .set('referer', 'http://d1ucwckhv9qcdh.cloudfront.net')
-      .set('Access-Control-Allow-Origin', '*');
-    console.log(head);
-    return this._httpClient.put(value.url, value.img, { headers: head }).pipe(
+  setImg(value: {
+    url: string;
+    img: File | Blob | ArrayBuffer;
+  }): Observable<Result<any>> {
+    return this._httpClient.put(value.url, value.img).pipe(
       map((data) => ({ result: data })),
       catchError((error) => of({ error: error }))
     );
