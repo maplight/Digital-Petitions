@@ -35,23 +35,16 @@ export class ImagePickerComponent implements OnInit {
     });
   }
 
-  onFileChange(event: any) {
-    const reader = new FileReader();
+  onFileChange(event: Event) {
     this._getUrlLogic.formGroupValue();
-    this._getUrlLogic.success$.subscribe((data) => {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
+    this._getUrlLogic.success$.subscribe((url) => {
+      const input = event.target as HTMLInputElement;
 
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          if (typeof data === 'string') {
-            this._setImgLogic.setImageData({
-              url: data,
-              img: reader.result as ArrayBuffer,
-            });
-          }
-        };
+      if (!!input?.files?.length && typeof url === 'string') {
+        const img = input.files.item(0);
+        if (img) {
+          this._setImgLogic.setImageData({ url, img });
+        }
       }
     });
   }
