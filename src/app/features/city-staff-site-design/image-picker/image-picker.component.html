@@ -14,7 +14,7 @@
   <div class="flex flex-wrap items-center gap-2">
     <img
       *ngFor="let item of imageSrc"
-      [src]="item.img"
+      [src]="'https://d1ucwckhv9qcdh.cloudfront.net/' + item.img"
       class="h-14 w-14 rounded cursor-pointer"
       [ngStyle]="{
         'border-width': item.active ? '2px' : '1px',
@@ -38,4 +38,10 @@
       >+
     </label>
   </div>
+  <dp-error-msg
+    *ngIf="!(loading$ | async) && (error$ | async) as error"
+    [error]="error"
+  >
+  </dp-error-msg>
+  <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
 </form>

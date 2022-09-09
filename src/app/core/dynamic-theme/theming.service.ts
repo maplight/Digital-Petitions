@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ColorConfig, ThemeConfig, ThemeMainColorType } from './theme-config';
 import * as tinycolor from 'tinycolor2';
 import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
-import { Observable, delay, ReplaySubject } from 'rxjs';
+import { Observable, firstValueFrom, ReplaySubject } from 'rxjs';
 import { SiteConfiguration } from '../api/API';
 
 @Injectable({
@@ -24,22 +24,25 @@ export class ThemingService {
    * The load method must return a Promise, since that will make the application wait in the APP_INITIALIZER DI token
    * After all the loading and set up is finished, we can proceed with rendering the application
    */
-  initializeTheme() {
-    this.success$.pipe(delay(3000)).subscribe((data) => {
-      let theme: ThemeConfig = {
-        themeId: 'site-teme',
-        mainColors: {
-          primaryColor: data?.buttonColor || 'blue',
-          accentColor: data?.highlightColor || '#FFFFFF',
-          warnColor: '#ff0700',
-          headerColor: data?.headerColor || '#FFFFFF',
-        },
-      };
-      this.logo.next(data?.logoImage || '');
-      this.setupMainPalettes(theme);
-    });
-
+  initializeTheme(): Promise<unknown> {
     this._getSiteDesignLogic.getSiteTemeData();
+    return firstValueFrom(this.success$)
+      .then((data) => {
+        let theme: ThemeConfig = {
+          themeId: 'site-teme',
+          mainColors: {
+            primaryColor: data?.buttonColor || '#1924E6',
+            accentColor: data?.highlightColor || '#FFFFFF',
+            warnColor: '#ff0700',
+            headerColor: data?.headerColor || '#FFFFFF',
+          },
+        };
+        this.logo.next(data?.logoImage || '');
+        this.setupMainPalettes(theme);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   /**

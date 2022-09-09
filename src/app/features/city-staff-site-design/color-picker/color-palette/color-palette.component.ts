@@ -32,7 +32,10 @@ export class ColorPaletteComponent implements AfterViewInit, OnChanges {
 
   public selectedPosition: { x: number; y: number } = { x: 0, y: 0 };
 
+  private viewInit: boolean = false;
+
   ngAfterViewInit() {
+    this.viewInit = true;
     this.draw();
   }
 
@@ -79,7 +82,7 @@ export class ColorPaletteComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['hue']) {
+    if (changes['hue'] && this.viewInit) {
       this.draw();
       const pos = this.selectedPosition;
       if (pos) {

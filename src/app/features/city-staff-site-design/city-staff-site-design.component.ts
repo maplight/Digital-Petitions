@@ -13,7 +13,7 @@ import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.servic
   selector: 'dp-city-staff-site-design',
   templateUrl: './city-staff-site-design.component.html',
 })
-export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
+export class CityStaffSiteDesignComponent implements OnInit {
   protected mockPetition: ResponsePetition = {
     dataIssue: {
       __typename: 'IssuePetition',
@@ -56,9 +56,6 @@ export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
     this.firstLoading$ = this._getSiteDesignLogic.loading$;
     this.success$ = this._getSiteDesignLogic.success$;
   }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit(): void {
     this._getSiteDesignLogic.getSiteTemeData();
@@ -74,7 +71,7 @@ export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
         buttonColor: this.buttonColor,
         headerColor: this.headerColor,
         highlightColor: this.highlightColor,
-        logoImage: '',
+        logoImage: this.logo,
         expectedVersion: 1,
       });
       this.localError.next('');
