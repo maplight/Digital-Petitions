@@ -14,11 +14,8 @@ import {
 import {
   SiteConfiguration,
   SiteConfigurationInput,
-  StaffUserInput,
-  User,
 } from 'src/app/core/api/API';
 import { Result } from 'src/app/shared/models/exports';
-import { TemeData } from 'src/app/shared/models/admin/teme-data';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +32,7 @@ export class SetSiteDesignService {
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._adminLogic.setTemeData(data)),
+      exhaustMap((data) => this._adminLogic.setThemeData(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -58,11 +55,11 @@ export class SetSiteDesignService {
 
     this.loading$ = merge(
       this.submit$.pipe(
-        map((v) => true),
+        map(() => true),
         tap(() => console.log('start'))
       ),
       end$.pipe(
-        map((v) => false),
+        map(() => false),
         tap(() => console.log('end'))
       )
     ).pipe(shareReplay(1));
