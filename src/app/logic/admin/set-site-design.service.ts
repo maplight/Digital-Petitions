@@ -32,7 +32,7 @@ export class SetSiteDesignService {
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._adminLogic.setTemeData(data)),
+      exhaustMap((data) => this._adminLogic.setThemeData(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>

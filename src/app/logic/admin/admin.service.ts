@@ -91,7 +91,7 @@ export class AdminService {
     }).pipe(delay(3000));
   }
 
-  setTemeData(config: SiteConfigurationInput): Observable<Result<any>> {
+  setThemeData(config: SiteConfigurationInput): Observable<Result<any>> {
     console.log(config);
     return from(
       API.graphql({
