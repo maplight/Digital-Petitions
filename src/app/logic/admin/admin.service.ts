@@ -1,18 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
-import { Amplify, API, graphqlOperation } from 'aws-amplify';
-import {
-  catchError,
-  delay,
-  from,
-  map,
-  Observable,
-  of,
-  tap,
-  isObservable,
-  Subscribable,
-} from 'rxjs';
+import { API } from 'aws-amplify';
+import { catchError, delay, from, map, Observable, of } from 'rxjs';
 
 import {
   AssetType,
@@ -21,8 +11,6 @@ import {
   SiteConfiguration,
   SiteConfigurationInput,
   StaffUserInput,
-  UpdateSiteConfigurationMutation,
-  UpdatedSiteConfigurationSubscription,
   User,
   GetResourceUploadURLQuery,
   ResourceConnection,
@@ -30,8 +18,6 @@ import {
   SiteConfigurationQuery,
 } from 'src/app/core/api/API';
 import { Member } from 'src/app/shared/models/admin/member';
-
-import { TemeData } from 'src/app/shared/models/admin/teme-data';
 
 import { Result } from 'src/app/shared/models/exports';
 import {
@@ -43,17 +29,12 @@ import {
   getSiteResources,
   siteConfiguration,
 } from 'src/graphql/queries';
-import { updatedSiteConfiguration } from 'src/graphql/subscriptions';
-import { GetThemeDataService } from './get-theme-data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  constructor(
-    private _httpClient: HttpClient,
-    private getThemeData: GetThemeDataService
-  ) {}
+  constructor(private _httpClient: HttpClient) {}
 
   getAllUser(cursor?: string): Observable<Result<Member[]>> {
     return of({
@@ -157,16 +138,17 @@ export class AdminService {
     );
   }
 
-  getTemeData(): Observable<Result<SiteConfiguration>> {
+  getThemeData(): Observable<Result<SiteConfiguration>> {
     return from(
       API.graphql({
         query: siteConfiguration,
-
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: 'AWS_IAM',
       }) as Promise<GraphQLResult<SiteConfigurationQuery>>
     ).pipe(
       map(({ data }) => ({ result: data?.siteConfiguration })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError(
+        (error) => (console.log(error), of({ error: error?.[0]?.message }))
+      )
     );
   }
 }

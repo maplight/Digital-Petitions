@@ -58,7 +58,7 @@ export class CityStaffSiteDesignComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._getSiteDesignLogic.getSiteTemeData();
+    this._getSiteDesignLogic.getSiteThemeData();
   }
   submit() {
     if (

@@ -7,12 +7,10 @@ import {
   partition,
   ReplaySubject,
   shareReplay,
-  Subject,
   tap,
 } from 'rxjs';
 import { SiteConfiguration } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
-import { TemeData } from 'src/app/shared/models/admin/teme-data';
 import { Result } from 'src/app/shared/models/exports';
 import { AdminService } from './admin.service';
 
@@ -31,7 +29,7 @@ export class GetSiteDesignService {
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((_) => this._adminLogic.getTemeData()),
+      exhaustMap((_) => this._adminLogic.getThemeData()),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -54,11 +52,11 @@ export class GetSiteDesignService {
 
     this.loading$ = merge(
       this.submit$.pipe(
-        map((v) => true),
+        map(() => true),
         tap(() => console.log('start'))
       ),
       end$.pipe(
-        map((v) => false),
+        map(() => false),
         tap(() => console.log('end'))
       )
     ).pipe(shareReplay(1));
@@ -67,7 +65,7 @@ export class GetSiteDesignService {
     this.submit$.complete();
   }
 
-  getSiteTemeData() {
+  getSiteThemeData() {
     this.submit$.next();
   }
 }
