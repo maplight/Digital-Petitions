@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import { API, graphqlOperation } from 'aws-amplify';
+import {
+  SiteConfiguration,
+  SiteConfigurationQuery,
+} from 'src/app/core/api/API';
+import { Result } from 'src/app/shared/models/exports';
 import { updatedSiteConfiguration } from 'src/graphql/subscriptions';
 import { Observable } from 'zen-observable-ts';
 @Injectable({
@@ -7,11 +12,10 @@ import { Observable } from 'zen-observable-ts';
 })
 export class GetThemeDataService {
   constructor() {}
-  fun() {
-    console.log('todoData');
-    const subscription = (
+  updatedThemeData(): Observable<any> {
+    return (
       API.graphql(graphqlOperation(updatedSiteConfiguration)) as Observable<any>
-    ).subscribe((data) => console.log(data));
+    ).map((data) => data.updateSiteConfiguration);
 
     /*
     try {

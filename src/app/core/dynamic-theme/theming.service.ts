@@ -4,18 +4,25 @@ import * as tinycolor from 'tinycolor2';
 import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
 import { Observable, firstValueFrom, ReplaySubject } from 'rxjs';
 import { SiteConfiguration } from '../api/API';
+import { GetThemeDataService } from 'src/app/logic/admin/get-theme-data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemingService {
   private static readonly THEME_VARIABLE_PREFIX = '--theme';
-  private error$!: Observable<string | undefined>;
+  public error$!: Observable<string | undefined>;
   public loading$!: Observable<boolean>;
   private success$!: Observable<SiteConfiguration | null | undefined>;
-  private logo: ReplaySubject<string> = new ReplaySubject();
-  public _logo$: Observable<string> = this.logo.asObservable();
-  constructor(private _getSiteDesignLogic: GetSiteDesignService) {
+  private theme: ReplaySubject<SiteConfiguration | null | undefined> =
+    new ReplaySubject();
+  public theme$: Observable<SiteConfiguration | null | undefined> =
+    this.theme.asObservable();
+  public version: number | undefined;
+  constructor(
+    private _getSiteDesignLogic: GetSiteDesignService,
+    private _getThemeDataService: GetThemeDataService
+  ) {
     this.error$ = this._getSiteDesignLogic.error$;
     this.loading$ = this._getSiteDesignLogic.loading$;
     this.success$ = this._getSiteDesignLogic.success$;
@@ -26,6 +33,12 @@ export class ThemingService {
    */
   initializeTheme(): Promise<unknown> {
     this._getSiteDesignLogic.getSiteTemeData();
+    this._getThemeDataService.updatedThemeData().subscribe((data) => {
+      console.log({ data });
+      this.theme.next(data);
+      this.version = data?.version;
+    });
+
     return firstValueFrom(this.success$)
       .then((data) => {
         let theme: ThemeConfig = {
@@ -37,7 +50,8 @@ export class ThemingService {
             headerColor: data?.headerColor || '#FFFFFF',
           },
         };
-        this.logo.next(data?.logoImage || '');
+        this.theme.next(data);
+        this.version = data?.version;
         this.setupMainPalettes(theme);
       })
       .catch((error) => {

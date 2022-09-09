@@ -8,6 +8,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 import { merge, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { SetSiteDesignService } from 'src/app/logic/admin/set-site-design.service';
 import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
+import { ThemingService } from 'src/app/core/dynamic-theme/theming.service';
 
 @Component({
   selector: 'dp-city-staff-site-design',
@@ -45,21 +46,15 @@ export class CityStaffSiteDesignComponent implements OnInit {
 
   constructor(
     private _setSiteDesignLogic: SetSiteDesignService,
-    private _getSiteDesignLogic: GetSiteDesignService
+    private _themeLogic: ThemingService
   ) {
-    this.error$ = merge(
-      this._setSiteDesignLogic.error$,
-      this._getSiteDesignLogic.error$,
-      this.localError
-    );
+    this.error$ = merge(this._setSiteDesignLogic.error$, this.localError);
     this.loading$ = this._setSiteDesignLogic.loading$;
-    this.firstLoading$ = this._getSiteDesignLogic.loading$;
-    this.success$ = this._getSiteDesignLogic.success$;
+    this.firstLoading$ = this._themeLogic.loading$;
+    this.success$ = this._themeLogic.theme$;
   }
 
-  ngOnInit(): void {
-    this._getSiteDesignLogic.getSiteTemeData();
-  }
+  ngOnInit(): void {}
   submit() {
     if (
       this.buttonColor &&
@@ -72,7 +67,7 @@ export class CityStaffSiteDesignComponent implements OnInit {
         headerColor: this.headerColor,
         highlightColor: this.highlightColor,
         logoImage: this.logo,
-        expectedVersion: 1,
+        expectedVersion: this._themeLogic.version || 0,
       });
       this.localError.next('');
     } else {

@@ -1,7 +1,13 @@
 <div
   class="bg-header-color-500 shadow-md px-6 lg:px-30 w-auto h-25 flex justify-between items-center relative z-40"
 >
-  <img class="w-auto h-8" [src]="img$ | async" />
+  <ng-container *ngIf="theme$ | async as theme">
+    <img
+      class="w-auto h-8"
+      [src]="'https://d1ucwckhv9qcdh.cloudfront.net/' + theme.logoImage"
+    />
+  </ng-container>
+
   <div>
     <dp-user-menu></dp-user-menu>
   </div>
