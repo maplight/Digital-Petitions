@@ -33,6 +33,23 @@ export class ThemingService {
    */
   async initializeTheme(): Promise<void> {
     this._getSiteDesignLogic.getSiteThemeData();
+    this._getThemeDataService.updatedThemeData().subscribe((data) => {
+      let siteConfig: SiteConfiguration =
+        data.value.data.updatedSiteConfiguration;
+
+      const theme: ThemeConfig = {
+        themeId: 'site-teme',
+        mainColors: {
+          primaryColor: siteConfig?.buttonColor || '#1924E6',
+          accentColor: siteConfig?.highlightColor || '#FFFFFF',
+          warnColor: '#ff0700',
+          headerColor: siteConfig?.headerColor || '#FFFFFF',
+        },
+      };
+      this.theme.next(siteConfig);
+      this.setupMainPalettes(theme);
+      this.version = siteConfig?.version;
+    });
 
     try {
       const data = await firstValueFrom(this.success$);
@@ -49,6 +66,7 @@ export class ThemingService {
 
       this.theme.next(data);
       this.setupMainPalettes(theme);
+      this.version = data?.version;
     } catch (err) {
       console.log(err);
     }
