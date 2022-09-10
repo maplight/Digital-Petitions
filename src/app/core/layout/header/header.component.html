@@ -2,10 +2,7 @@
   class="bg-header-color-500 shadow-md px-6 lg:px-30 w-auto h-25 flex justify-between items-center relative z-40"
 >
   <ng-container *ngIf="theme$ | async as theme">
-    <img
-      class="w-auto h-8"
-      [src]="'https://d1ucwckhv9qcdh.cloudfront.net/' + theme.logoImage"
-    />
+    <img class="w-auto h-8" [src]="theme.logoImage" />
   </ng-container>
 
   <div>
