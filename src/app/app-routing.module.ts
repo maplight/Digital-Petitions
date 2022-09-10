@@ -4,7 +4,7 @@ import { LayoutComponent } from './core/layout/layout.component';
 import { NoAuthGuard, CityStaffGuard, CommitteeGuard } from './guards/exports';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'example',
     loadChildren: () =>
