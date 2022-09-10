@@ -6,7 +6,7 @@ import {
 import { Injectable } from '@angular/core';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API } from 'aws-amplify';
-import { catchError, delay, from, map, Observable, of } from 'rxjs';
+import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 
 import {
   AssetType,
@@ -96,7 +96,6 @@ export class AdminService {
   }
 
   setThemeData(config: SiteConfigurationInput): Observable<Result<any>> {
-    console.log(config);
     return from(
       API.graphql({
         query: updateSiteConfiguration,
@@ -123,12 +122,8 @@ export class AdminService {
   }
 
   setImg(value: { url: string; img: ArrayBuffer }): Observable<Result<any>> {
-    let head: HttpHeaders = new HttpHeaders()
-      .set('origin', 'http://d1ucwckhv9qcdh.cloudfront.net')
-      .set('referer', 'http://d1ucwckhv9qcdh.cloudfront.net')
-      .set('Access-Control-Allow-Origin', '*');
-    console.log(head);
-    return this._httpClient.put(value.url, value.img, { headers: head }).pipe(
+    return this._httpClient.put(value.url, value.img).pipe(
+      tap((_) => this.getImg({ type: AssetType.LOGO })),
       map((data) => ({ result: data })),
       catchError((error) => of({ error: error }))
     );
