@@ -130,6 +130,16 @@ export const getPetitionsByType = /* GraphQL */ `
     }
   }
 `;
+export const getResourceUploadURL = /* GraphQL */ `
+  query GetResourceUploadURL($query: GetResourceUploadURLInput!) {
+    getResourceUploadURL(query: $query)
+  }
+`;
+export const getResourceVersion = /* GraphQL */ `
+  query GetResourceVersion($query: GetResourceVersionInput!) {
+    getResourceVersion(query: $query)
+  }
+`;
 export const getSignaturesByPetition = /* GraphQL */ `
   query GetSignaturesByPetition($query: SignaturesByPetitionInput) {
     getSignaturesByPetition(query: $query) {
@@ -141,6 +151,14 @@ export const getSignaturesByPetition = /* GraphQL */ `
         status
         updatedAt
       }
+      token
+    }
+  }
+`;
+export const getSiteResources = /* GraphQL */ `
+  query GetSiteResources($query: ListResourcesInput!) {
+    getSiteResources(query: $query) {
+      items
       token
     }
   }
@@ -162,5 +180,16 @@ export const getUsers = /* GraphQL */ `
 export const publicEcho = /* GraphQL */ `
   query PublicEcho($ping: String!) {
     publicEcho(ping: $ping)
+  }
+`;
+export const siteConfiguration = /* GraphQL */ `
+  query SiteConfiguration {
+    siteConfiguration {
+      buttonColor
+      headerColor
+      highlightColor
+      logoImage
+      version
+    }
   }
 `;

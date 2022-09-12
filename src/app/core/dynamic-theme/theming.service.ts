@@ -1,20 +1,75 @@
 import { Injectable } from '@angular/core';
 import { ColorConfig, ThemeConfig, ThemeMainColorType } from './theme-config';
-import { DEFAULT_THEME } from './default-theme';
 import * as tinycolor from 'tinycolor2';
+import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
+import { Observable, firstValueFrom, ReplaySubject } from 'rxjs';
+import { SiteConfiguration } from '../api/API';
+import { GetThemeDataService } from 'src/app/logic/admin/get-theme-data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemingService {
   private static readonly THEME_VARIABLE_PREFIX = '--theme';
-
+  public error$!: Observable<string | undefined>;
+  public loading$!: Observable<boolean>;
+  private success$!: Observable<SiteConfiguration | null | undefined>;
+  private theme: ReplaySubject<SiteConfiguration | null | undefined> =
+    new ReplaySubject();
+  public theme$: Observable<SiteConfiguration | null | undefined> =
+    this.theme.asObservable();
+  public version: number | undefined;
+  constructor(
+    private _getSiteDesignLogic: GetSiteDesignService,
+    private _getThemeDataService: GetThemeDataService
+  ) {
+    this.error$ = this._getSiteDesignLogic.error$;
+    this.loading$ = this._getSiteDesignLogic.loading$;
+    this.success$ = this._getSiteDesignLogic.success$;
+  }
   /**
    * The load method must return a Promise, since that will make the application wait in the APP_INITIALIZER DI token
    * After all the loading and set up is finished, we can proceed with rendering the application
    */
-  initializeTheme() {
-    this.setupMainPalettes(DEFAULT_THEME);
+  async initializeTheme(): Promise<void> {
+    this._getSiteDesignLogic.getSiteThemeData();
+    this._getThemeDataService.updatedThemeData().subscribe((data) => {
+      let siteConfig: SiteConfiguration =
+        data.value.data.updatedSiteConfiguration;
+
+      const theme: ThemeConfig = {
+        themeId: 'site-teme',
+        mainColors: {
+          primaryColor: siteConfig?.buttonColor || '#1924E6',
+          accentColor: siteConfig?.highlightColor || '#FFFFFF',
+          warnColor: '#ff0700',
+          headerColor: siteConfig?.headerColor || '#FFFFFF',
+        },
+      };
+      this.theme.next(siteConfig);
+      this.setupMainPalettes(theme);
+      this.version = siteConfig?.version;
+    });
+
+    try {
+      const data = await firstValueFrom(this.success$);
+
+      const theme: ThemeConfig = {
+        themeId: 'site-teme',
+        mainColors: {
+          primaryColor: data?.buttonColor || '#1924E6',
+          accentColor: data?.highlightColor || '#FFFFFF',
+          warnColor: '#ff0700',
+          headerColor: data?.headerColor || '#FFFFFF',
+        },
+      };
+
+      this.theme.next(data);
+      this.setupMainPalettes(theme);
+      this.version = data?.version;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**

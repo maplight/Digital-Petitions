@@ -1,16 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PetitionStatus, PetitionType } from 'src/app/core/api/API';
+import {
+  PetitionStatus,
+  PetitionType,
+  SiteConfiguration,
+} from 'src/app/core/api/API';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { merge, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { SetSiteDesignService } from 'src/app/logic/admin/set-site-design.service';
 import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
-import { TemeData } from 'src/app/shared/models/admin/teme-data';
+import { ThemingService } from 'src/app/core/dynamic-theme/theming.service';
 
 @Component({
   selector: 'dp-city-staff-site-design',
   templateUrl: './city-staff-site-design.component.html',
 })
-export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
+export class CityStaffSiteDesignComponent implements OnInit {
   protected mockPetition: ResponsePetition = {
     dataIssue: {
       __typename: 'IssuePetition',
@@ -36,30 +40,21 @@ export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
   protected firstLoading$!: Observable<boolean>;
-  protected success$!: Observable<TemeData | undefined>;
+  protected success$!: Observable<SiteConfiguration | null | undefined>;
 
   private localError: Subject<string> = new Subject();
 
   constructor(
     private _setSiteDesignLogic: SetSiteDesignService,
-    private _getSiteDesignLogic: GetSiteDesignService
+    private _themeLogic: ThemingService
   ) {
-    this.error$ = merge(
-      this._setSiteDesignLogic.error$,
-      this._getSiteDesignLogic.error$,
-      this.localError
-    );
+    this.error$ = merge(this._setSiteDesignLogic.error$, this.localError);
     this.loading$ = this._setSiteDesignLogic.loading$;
-    this.firstLoading$ = this._getSiteDesignLogic.loading$;
-    this.success$ = this._getSiteDesignLogic.success$;
-  }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.firstLoading$ = this._themeLogic.loading$;
+    this.success$ = this._themeLogic.theme$;
   }
 
-  ngOnInit(): void {
-    this._getSiteDesignLogic.getSiteTemeData();
-  }
+  ngOnInit(): void {}
   submit() {
     if (
       this.buttonColor &&
@@ -71,7 +66,8 @@ export class CityStaffSiteDesignComponent implements OnInit, OnDestroy {
         buttonColor: this.buttonColor,
         headerColor: this.headerColor,
         highlightColor: this.highlightColor,
-        logo: [{ img: this.logo, active: true }],
+        logoImage: this.logo,
+        expectedVersion: this._themeLogic.version || 0,
       });
       this.localError.next('');
     } else {
