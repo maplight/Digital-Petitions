@@ -13,24 +13,31 @@
         <mat-label>Member Status</mat-label>
         <mat-select formControlName="type" [disabled]="!!(loading$ | async)">
           <mat-option>--</mat-option>
-          <mat-option value="member"
+          <mat-option value="STAFF"
             ><p>
               <span class="font-bold leading-5">Member</span> - Can approve and
               deny petitions, signatures
             </p>
             <p></p
           ></mat-option>
-          <mat-option value="admin"
+          <mat-option value="ADMIN"
             ><p>
               <span class="font-bold leading-5">Admin</span> - Has Full access
               and can set permissions
             </p>
             <p></p
           ></mat-option>
-          <mat-option value="guest"
+          <mat-option value="GUEST"
             ><p>
               <span class="font-bold leading-5">Guest</span> - Has limited
               access and can only view content
+            </p>
+            <p></p
+          ></mat-option>
+          <mat-option value="NONE"
+            ><p>
+              <span class="font-bold leading-5">Revoke Access</span> - User will
+              no longer have access to the platform.
             </p>
             <p></p
           ></mat-option>

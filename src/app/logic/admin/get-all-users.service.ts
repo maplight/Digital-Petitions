@@ -10,6 +10,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { SearchUsersInput, UserConnection } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Member } from 'src/app/shared/models/admin/member';
 import { Result } from 'src/app/shared/models/exports';
@@ -18,18 +19,18 @@ import { AdminService } from './admin.service';
 @Injectable()
 export class GetAllUsersService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<Member[] | undefined>;
+  public success$: Observable<UserConnection | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<Member[]>>;
-  private submit$: ReplaySubject<void> = new ReplaySubject();
-  private cursor: string | undefined;
+  public result$: Observable<Result<UserConnection>>;
+  private submit$: ReplaySubject<SearchUsersInput> = new ReplaySubject();
+  private cursor: string | null | undefined;
 
   constructor(
     private _adminService: AdminService,
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap(() => this._adminService.getAllUser(this.cursor)),
+      exhaustMap((data) => this._adminService.getAllUser(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -41,7 +42,7 @@ export class GetAllUsersService {
       tap((value) => {
         this._loggingService.log(value);
         //extract the cursor from the received object
-        this.cursor = '';
+        this.cursor = value?.token;
       }),
       shareReplay(1)
     );
@@ -69,10 +70,8 @@ export class GetAllUsersService {
     this.submit$.complete();
   }
 
-  /** This method begins the process of obtaining a members
-   */
-
-  getMembers() {
-    this.submit$.next();
+  getMembers(cursorFlag: boolean) {
+    let data: SearchUsersInput = { cursor: cursorFlag ? this.cursor : null };
+    this.submit$.next(data);
   }
 }

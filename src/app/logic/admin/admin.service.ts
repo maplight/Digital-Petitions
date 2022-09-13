@@ -73,12 +73,20 @@ export class AdminService {
     );
   }
 
-  changeAccountPermission(id: string): Observable<Result<string>> {
-    return of({
-      result: 'SUCCESS',
-    }).pipe(delay(3000));
+  changeAccountPermission(
+    data: UpdateUserAccessInput
+  ): Observable<Result<User>> {
+    return from(
+      API.graphql({
+        query: updateUserAccess,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<UpdateUserAccessMutation>>
+    ).pipe(
+      map(({ data }) => ({ result: data?.updateUserAccess })),
+      catchError((error) => of({ error: error?.errors[0].message }))
+    );
   }
-
   getAccountPermission(id: string): Observable<Result<string>> {
     return of({
       result: 'member',
