@@ -20,6 +20,11 @@ import {
   ResourceConnection,
   GetSiteResourcesQuery,
   SiteConfigurationQuery,
+  UpdateUserAccessInput,
+  UpdateUserAccessMutation,
+  SearchUsersInput,
+  GetUsersQuery,
+  UserConnection,
 } from 'src/app/core/api/API';
 import { Member } from 'src/app/shared/models/admin/member';
 
@@ -27,10 +32,12 @@ import { Result } from 'src/app/shared/models/exports';
 import {
   createStaffUser,
   updateSiteConfiguration,
+  updateUserAccess,
 } from 'src/graphql/mutations';
 import {
   getResourceUploadURL,
   getSiteResources,
+  getUsers,
   siteConfiguration,
 } from 'src/graphql/queries';
 
@@ -40,25 +47,17 @@ import {
 export class AdminService {
   constructor(private _httpClient: HttpClient) {}
 
-  getAllUser(cursor?: string): Observable<Result<Member[]>> {
-    return of({
-      result: [
-        {
-          id: '0',
-
-          email: 'marvin.mckinney@email.com',
-          name: 'Marvin McKinney (You)',
-          status: 'Admin',
-        },
-        {
-          id: '0',
-
-          email: 'marvin.mckinney2@email.com',
-          name: 'Marvin McKinney (Not You)',
-          status: 'Member',
-        },
-      ],
-    }).pipe(delay(3000));
+  getAllUser(data: SearchUsersInput): Observable<Result<UserConnection>> {
+    return from(
+      API.graphql({
+        query: getUsers,
+        variables: { query: data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<GetUsersQuery>>
+    ).pipe(
+      map(({ data }) => ({ result: data?.getUsers })),
+      catchError((error) => of({ error: error?.[0]?.message }))
+    );
   }
 
   newMember(data: StaffUserInput): Observable<Result<User>> {
@@ -70,14 +69,11 @@ export class AdminService {
       }) as Promise<GraphQLResult<CreateStaffUserMutation>>
     ).pipe(
       map(({ data }) => ({ result: data?.createStaffUser })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error?.errors[0].message }))
     );
   }
 
-  changeAccountPermission(data: {
-    id: string;
-    value: 'admin' | 'guest' | 'member';
-  }): Observable<Result<string>> {
+  changeAccountPermission(id: string): Observable<Result<string>> {
     return of({
       result: 'SUCCESS',
     }).pipe(delay(3000));
