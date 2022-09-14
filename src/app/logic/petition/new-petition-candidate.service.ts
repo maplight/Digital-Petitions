@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
+  BehaviorSubject,
   exhaustMap,
   map,
   merge,
   Observable,
+  of,
   partition,
   shareReplay,
   Subject,
