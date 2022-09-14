@@ -3,7 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const approvePetition = /* GraphQL */ `
-  mutation ApprovePetition($data: TargetPetitionInput!) {
+  mutation ApprovePetition($data: ApprovePetitionInput!) {
     approvePetition(data: $data) {
       PK
       createdAt
@@ -251,6 +251,28 @@ export const submitIssuePetition = /* GraphQL */ `
       type
       updatedAt
       version
+    }
+  }
+`;
+export const updateSiteConfiguration = /* GraphQL */ `
+  mutation UpdateSiteConfiguration($data: SiteConfigurationInput!) {
+    updateSiteConfiguration(data: $data) {
+      buttonColor
+      headerColor
+      highlightColor
+      logoImage
+      version
+    }
+  }
+`;
+export const updateUserAccess = /* GraphQL */ `
+  mutation UpdateUserAccess($data: UpdateUserAccessInput!) {
+    updateUserAccess(data: $data) {
+      email
+      firstName
+      lastName
+      permissions
+      username
     }
   }
 `;

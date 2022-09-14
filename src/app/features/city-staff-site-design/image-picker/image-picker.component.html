@@ -38,4 +38,10 @@
       >+
     </label>
   </div>
+  <dp-error-msg
+    *ngIf="!(loading$ | async) && (error$ | async) as error"
+    [error]="error"
+  >
+  </dp-error-msg>
+  <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
 </form>

@@ -2,9 +2,11 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type TargetPetitionInput = {
+export type ApprovePetitionInput = {
   PK: string,
+  deadline: string,
   expectedVersion: number,
+  requiredSignatures: number,
 };
 
 export type Petition = {
@@ -163,6 +165,11 @@ export type EditIssuePetitionInput = {
   title?: string | null,
 };
 
+export type TargetPetitionInput = {
+  PK: string,
+  expectedVersion: number,
+};
+
 export type CandidatePetitionInput = {
   address: AddressInput,
   name: string,
@@ -173,6 +180,28 @@ export type CandidatePetitionInput = {
 export type IssuePetitionInput = {
   detail: string,
   title: string,
+};
+
+export type SiteConfigurationInput = {
+  buttonColor?: string | null,
+  expectedVersion: number,
+  headerColor?: string | null,
+  highlightColor?: string | null,
+  logoImage?: string | null,
+};
+
+export type SiteConfiguration = {
+  __typename: "SiteConfiguration",
+  buttonColor?: string | null,
+  headerColor?: string | null,
+  highlightColor?: string | null,
+  logoImage?: string | null,
+  version: number,
+};
+
+export type UpdateUserAccessInput = {
+  permissions: AccessLevel,
+  username: string,
 };
 
 export type PetitionsByOwnerInput = {
@@ -208,6 +237,19 @@ export type PetitionsByTypeInput = {
   type?: PetitionType | null,
 };
 
+export type GetResourceUploadURLInput = {
+  type: AssetType,
+};
+
+export enum AssetType {
+  LOGO = "LOGO",
+}
+
+
+export type GetResourceVersionInput = {
+  type: AssetType,
+};
+
 export type SignaturesByPetitionInput = {
   cursor?: string | null,
   limit?: number | null,
@@ -223,6 +265,18 @@ export enum SignatureStatusQuery {
   VERIFIED = "VERIFIED",
 }
 
+
+export type ListResourcesInput = {
+  cursor?: string | null,
+  limit?: number | null,
+  type: AssetType,
+};
+
+export type ResourceConnection = {
+  __typename: "ResourceConnection",
+  items: Array< string >,
+  token?: string | null,
+};
 
 export type SearchUsersInput = {
   cursor?: string | null,
@@ -247,7 +301,7 @@ export type UserConnection = {
 };
 
 export type ApprovePetitionMutationVariables = {
-  data: TargetPetitionInput,
+  data: ApprovePetitionInput,
 };
 
 export type ApprovePetitionMutation = {
@@ -603,6 +657,36 @@ export type SubmitIssuePetitionMutation = {
   },
 };
 
+export type UpdateSiteConfigurationMutationVariables = {
+  data: SiteConfigurationInput,
+};
+
+export type UpdateSiteConfigurationMutation = {
+  updateSiteConfiguration:  {
+    __typename: "SiteConfiguration",
+    buttonColor?: string | null,
+    headerColor?: string | null,
+    highlightColor?: string | null,
+    logoImage?: string | null,
+    version: number,
+  },
+};
+
+export type UpdateUserAccessMutationVariables = {
+  data: UpdateUserAccessInput,
+};
+
+export type UpdateUserAccessMutation = {
+  updateUserAccess:  {
+    __typename: "User",
+    email: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    permissions: AccessLevel,
+    username: string,
+  },
+};
+
 export type GetPetitionQueryVariables = {
   PK: string,
 };
@@ -815,6 +899,22 @@ export type GetPetitionsByTypeQuery = {
   },
 };
 
+export type GetResourceUploadURLQueryVariables = {
+  query: GetResourceUploadURLInput,
+};
+
+export type GetResourceUploadURLQuery = {
+  getResourceUploadURL?: string | null,
+};
+
+export type GetResourceVersionQueryVariables = {
+  query: GetResourceVersionInput,
+};
+
+export type GetResourceVersionQuery = {
+  getResourceVersion?: string | null,
+};
+
 export type GetSignaturesByPetitionQueryVariables = {
   query?: SignaturesByPetitionInput | null,
 };
@@ -831,6 +931,18 @@ export type GetSignaturesByPetitionQuery = {
       status: SignatureStatus,
       updatedAt: string,
     } >,
+    token?: string | null,
+  },
+};
+
+export type GetSiteResourcesQueryVariables = {
+  query: ListResourcesInput,
+};
+
+export type GetSiteResourcesQuery = {
+  getSiteResources:  {
+    __typename: "ResourceConnection",
+    items: Array< string >,
     token?: string | null,
   },
 };
@@ -860,4 +972,26 @@ export type PublicEchoQueryVariables = {
 
 export type PublicEchoQuery = {
   publicEcho: string,
+};
+
+export type SiteConfigurationQuery = {
+  siteConfiguration:  {
+    __typename: "SiteConfiguration",
+    buttonColor?: string | null,
+    headerColor?: string | null,
+    highlightColor?: string | null,
+    logoImage?: string | null,
+    version: number,
+  },
+};
+
+export type UpdatedSiteConfigurationSubscription = {
+  updatedSiteConfiguration?:  {
+    __typename: "SiteConfiguration",
+    buttonColor?: string | null,
+    headerColor?: string | null,
+    highlightColor?: string | null,
+    logoImage?: string | null,
+    version: number,
+  } | null,
 };
