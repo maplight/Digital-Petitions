@@ -236,17 +236,18 @@ export class AccountService {
       });
   }
 
-  public isLoged(): Observable<boolean> {
+  public isLoged(): Observable<CognitoUserFacade | undefined> {
     return from(
-      Auth.currentSession()
-        .then(() => {
+      Auth.currentAuthenticatedUser()
+        .then((data) => {
           this.privateisLoged.next(true);
           this.updateUser();
-          return true;
+          console.log(data);
+          return data as unknown as CognitoUserFacade;
         })
         .catch(() => {
           this.privateisLoged.next(false);
-          return false;
+          return undefined;
         })
     );
   }

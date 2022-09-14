@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LoggingService } from 'src/app/core/logging/loggin.service';
-import { AdminService } from './admin.service';
 import {
   exhaustMap,
   map,
@@ -11,28 +9,28 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import {
-  SiteConfiguration,
-  SiteConfigurationInput,
-} from 'src/app/core/api/API';
+import { StaffUserInput } from 'src/app/core/api/API';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
+import { AdminService } from './admin.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SetSiteDesignService {
+export class SetImageDataService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<SiteConfiguration | undefined>;
+  public success$: Observable<null | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<SiteConfiguration>>;
-  private submit$: Subject<SiteConfigurationInput> = new Subject();
+  public result$: Observable<Result<string>>;
+  private submit$: Subject<{ url: string; img: File | Blob | ArrayBuffer }> =
+    new Subject();
 
   constructor(
     private _adminLogic: AdminService,
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._adminLogic.setThemeData(data)),
+      exhaustMap((data) => this._adminLogic.setImg(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -55,11 +53,11 @@ export class SetSiteDesignService {
 
     this.loading$ = merge(
       this.submit$.pipe(
-        map(() => true),
+        map((v) => true),
         tap(() => console.log('start'))
       ),
       end$.pipe(
-        map(() => false),
+        map((v) => false),
         tap(() => console.log('end'))
       )
     ).pipe(shareReplay(1));
@@ -68,7 +66,7 @@ export class SetSiteDesignService {
     this.submit$.complete();
   }
 
-  setSiteTemeData(value: SiteConfigurationInput) {
+  setImageData(value: { url: string; img: File | Blob | ArrayBuffer }) {
     this.submit$.next(value);
   }
 }

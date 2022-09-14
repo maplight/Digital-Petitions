@@ -45,6 +45,9 @@ export class SignInService implements OnDestroy {
           case 'petitioner':
             this._router.navigate(['/committee/home']);
             break;
+          case 'admin':
+            this._router.navigate(['/city-staff/home']);
+            break;
           //You must add as many conditions as there are roles
         }
       }),

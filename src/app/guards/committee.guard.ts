@@ -22,7 +22,7 @@ export class CommitteeGuard implements CanActivate {
     | UrlTree {
     return this._auth.isLoged().pipe(
       map((data) => {
-        if (data) {
+        if (data?.attributes['custom:access_group'] === 'petitioner') {
           return true;
         } else {
           return this._router.parseUrl('/auth/login');

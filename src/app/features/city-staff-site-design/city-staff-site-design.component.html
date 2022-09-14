@@ -5,7 +5,7 @@
   <dp-loading-bar [title]="'Loading'" class="w-full"></dp-loading-bar>
 </div>
 
-<div class="flex flex-row w-full h-full" *ngIf="success$ | async as temeData">
+<div class="flex flex-row w-full h-full" *ngIf="success$ | async as themeData">
   <div
     class="flex flex-col max-w-[288px] w-full h-full bg-[#F7F7F7] border-l-1 border-r-1 border-[#D7D7D7] gap-4 py-4 px-6"
   >
@@ -18,7 +18,7 @@
       <p class="font-bold text-sm leading-[18px]">Highlight Color</p>
       <dp-color-picker
         (eventColor)="highlightColor = $event"
-        [color]="temeData.highlightColor"
+        [color]="themeData.highlightColor"
       ></dp-color-picker>
     </div>
 
@@ -26,23 +26,20 @@
       <p class="font-bold text-sm leading-[18px]">Button Colors</p>
       <dp-color-picker
         (eventColor)="buttonColor = $event"
-        [color]="temeData.buttonColor"
+        [color]="themeData.buttonColor"
       ></dp-color-picker>
     </div>
 
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Logo</p>
-      <dp-image-picker
-        (eventImg)="logo = $event"
-        [imageSrc]="temeData.logo"
-      ></dp-image-picker>
+      <dp-image-picker (eventImg)="logo = $event"></dp-image-picker>
     </div>
 
     <div class="flex flex-col w-full gap-2">
       <p class="font-bold text-sm leading-[18px]">Header Color</p>
       <dp-color-picker
         (eventColor)="headerColor = $event"
-        [color]="temeData.headerColor"
+        [color]="themeData.headerColor"
       ></dp-color-picker>
     </div>
     <dp-error-msg

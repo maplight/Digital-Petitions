@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ThemingService } from '../../dynamic-theme/theming.service';
+import { Observable } from 'rxjs';
+import { SiteConfiguration } from '../../api/API';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  protected theme$!: Observable<SiteConfiguration | null | undefined>;
+  constructor(private _themingService: ThemingService) {
+    this.theme$ = this._themingService.theme$;
   }
 
+  ngOnInit(): void {}
 }
