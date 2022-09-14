@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { NewPetitionCandidateService } from 'src/app/logic/petition/new-petition-candidate.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [NewPetitionCandidateComponent],
@@ -22,6 +24,8 @@ import { NewPetitionCandidateService } from 'src/app/logic/petition/new-petition
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   exports: [NewPetitionCandidateComponent],
   providers: [NewPetitionCandidateService],
