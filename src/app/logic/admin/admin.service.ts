@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { API } from 'aws-amplify';
@@ -121,7 +117,10 @@ export class AdminService {
     );
   }
 
-  setImg(value: { url: string; img: ArrayBuffer }): Observable<Result<any>> {
+  setImg(value: {
+    url: string;
+    img: File | Blob | ArrayBuffer;
+  }): Observable<Result<any>> {
     return this._httpClient.put(value.url, value.img).pipe(
       tap((_) => this.getImg({ type: AssetType.LOGO })),
       map((data) => ({ result: data })),
