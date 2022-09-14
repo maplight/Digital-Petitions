@@ -80,7 +80,7 @@ export class PetitionService {
     ).pipe(
       tap((value) => this._loggingService.log(value)),
       map(({ data }) => ({ result: data?.submitCandidatePetition })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
     );
   }
 
