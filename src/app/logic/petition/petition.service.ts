@@ -226,11 +226,7 @@ export class PetitionService {
       API.graphql({
         query: getPetitionsByOwner,
         variables: {
-          query: {
-            status: data.status,
-            owner: data.owner,
-            cursor: data.cursor,
-          },
+          query: data,
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetPetitionsByOwnerQuery>>

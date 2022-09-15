@@ -4,10 +4,4 @@ import { Component, OnInit } from '@angular/core';
   selector: 'dp-confirm-edit-petition',
   templateUrl: './confirm-edit-petition.component.html',
 })
-export class ConfirmEditPetitionComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  submit() {}
-}
+export class ConfirmEditPetitionComponent {}

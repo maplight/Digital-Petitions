@@ -7,7 +7,6 @@ import { StepIndicatorComponent } from './step-indicator.component';
 describe('StepIndicatorComponent', () => {
   let component: StepIndicatorComponent;
   let fixture: ComponentFixture<StepIndicatorComponent>;
-  let comp: StepIndicatorComponent;
 
   let _stepIndicatorService: StepIndicatorService;
   class MockStepIndicatorService {

@@ -13,13 +13,4 @@ export class BasicAlertComponent implements OnInit {
   onCancelClick(): void {
     this.dialogRef.close();
   }
-  @Input()
-  id_form: string = '';
-
-  @Output()
-  event = new EventEmitter<void>();
-
-  onSend() {
-    this.event.emit();
-  }
 }
