@@ -22,8 +22,7 @@ import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-e
 })
 export class EditPetitionIssueComponent implements OnInit, OnChanges {
   @Input() formData: ResponsePetition = {};
-  @Output() _cancelEvent: EventEmitter<'1' | '21' | '22' | '3'> =
-    new EventEmitter();
+  @Output() _cancelEvent: EventEmitter<void> = new EventEmitter();
   @Output() _submitEvent: EventEmitter<IssuePetition> = new EventEmitter();
   protected result$;
   protected loading$;
