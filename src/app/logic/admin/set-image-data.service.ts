@@ -21,7 +21,7 @@ export class SetImageDataService {
   public error$: Observable<string | undefined>;
   public success$: Observable<null | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
+  public result$: Observable<Result<null>>;
   private submit$: Subject<{ url: string; img: File | Blob | ArrayBuffer }> =
     new Subject();
 
