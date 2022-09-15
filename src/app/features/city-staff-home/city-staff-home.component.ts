@@ -28,7 +28,9 @@ import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions'
 })
 export class CityStaffHomeComponent implements OnInit {
   protected loadingUp: boolean = true;
-  protected get loadingDown (): boolean { return !this.loadingUp };
+  protected get loadingDown(): boolean {
+    return !this.loadingUp;
+  }
 
   protected successLogin$!: Observable<User | null>;
   protected successPetition$!: Observable<BufferPetition | undefined>;

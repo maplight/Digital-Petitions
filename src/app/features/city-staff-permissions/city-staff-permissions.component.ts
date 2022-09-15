@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { merge, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { AccessLevel, User, UserConnection } from 'src/app/core/api/API';
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';
 import { RemoveMemberService } from 'src/app/logic/admin/remove-member.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
@@ -17,10 +18,12 @@ import { RemoveMemberComponent } from './remove-member/remove-member.component';
   providers: [GetAllUsersService, RemoveMemberService],
 })
 export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
-  protected success$!: Observable<Member[] | undefined>;
+  protected items: User[] = [];
+  protected cursor!: boolean;
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
   private _unSuscribeAll: Subject<void> = new Subject();
+  protected loadingUp: boolean = true;
 
   protected displayedColumns: string[] = [
     'member',
@@ -32,7 +35,6 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _getAllUserLogic: GetAllUsersService,
-    private _removeMember: RemoveMemberService,
     private _dialog: MatDialog
   ) {}
   ngOnDestroy(): void {
@@ -41,29 +43,16 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.success$ = this._getAllUserLogic.success$;
-    this._removeMember.success$
-      .pipe(takeUntil(this._unSuscribeAll))
-      .subscribe(() => {
-        this._getAllUserLogic.getMembers();
-        this._dialog.open(DialogResultComponent, {
-          width: '520px',
-          data: {
-            title: 'User Successfully Deleted',
-            message: '',
-            success: true,
-          },
-        });
-      });
-    this.error$ = merge(
-      this._getAllUserLogic.error$,
-      this._removeMember.error$
-    );
-    this.loading$ = merge(
-      this._getAllUserLogic.loading$,
-      this._removeMember.loading$
-    );
-    this._getAllUserLogic.getMembers();
+    this._getAllUserLogic.success$.subscribe((data) => {
+      if (data?.items) {
+        this.items = this.items.concat(data.items);
+      }
+      this.cursor = data?.token ? true : false;
+    });
+
+    this.error$ = this._getAllUserLogic.error$;
+    this.loading$ = this._getAllUserLogic.loading$;
+    this.getUsers(false);
   }
 
   openDialogNewMember(): void {
@@ -72,26 +61,25 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDialogChangeAccountPermission(id: string): void {
+  openDialogChangeAccountPermission(id: string, access: AccessLevel): void {
     const dialogRef = this._dialog.open(ChangeAccountPermissionComponent, {
       width: '690px',
-      data: { id: id },
+      data: { id: id, access: access },
+    });
+    dialogRef.afterClosed().subscribe((_) => {
+      this.getUsers(false);
     });
   }
 
-  removeMember(id: string) {
-    const dialogRef = this._dialog.open(RemoveMemberComponent, {
-      width: '480px',
-    });
-    dialogRef
-      .afterClosed()
-      .pipe(
-        tap((response) => {
-          if (response) {
-            this._removeMember.formGroupValue(id);
-          }
-        })
-      )
-      .subscribe();
+  getUsers(cursorFlag: boolean) {
+    if (!cursorFlag) {
+      this.items = [];
+    }
+    this.loadingUp = !cursorFlag;
+    this._getAllUserLogic.getMembers(cursorFlag);
+  }
+
+  pageNumber() {
+    this.getUsers(true);
   }
 }

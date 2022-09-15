@@ -73,7 +73,7 @@
       class="mb-2"
       (click)="pageNumber()"
       [disabled]="!!(loading$ | async)"
-      *ngIf="petitions.cursor else spacer"
+      *ngIf="petitions.cursor; else spacer"
     >
       See More
     </button>

@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
-import { NoAuthGuard, CityStaffGuard, CommitteeGuard } from './guards/exports';
+import {
+  NoAuthGuard,
+  CityStaffGuard,
+  CommitteeGuard,
+  AnonimousGuard,
+} from './guards/exports';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -13,12 +18,14 @@ const routes: Routes = [
   {
     path: 'home',
     component: LayoutComponent,
+    canActivate: [AnonimousGuard],
     loadChildren: () =>
       import('./features/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'home/:id',
     component: LayoutComponent,
+    canActivate: [AnonimousGuard],
     loadChildren: () =>
       import('./features/sign-petition/sign-petition.module').then(
         (m) => m.SignPetitionModule
@@ -27,6 +34,7 @@ const routes: Routes = [
   {
     path: 'petition/result-confirm-code',
     component: LayoutComponent,
+    canActivate: [AnonimousGuard],
     loadChildren: () =>
       import(
         './features/result-sign-petition/result-sign-petition.module'
@@ -35,6 +43,7 @@ const routes: Routes = [
   {
     path: 'petition/confirm-code',
     component: LayoutComponent,
+    canActivate: [AnonimousGuard],
     loadChildren: () =>
       import(
         './features/confirm-sign-petition/confirm-sign-petition.module'
@@ -43,6 +52,7 @@ const routes: Routes = [
   {
     path: 'inactive-petitions',
     component: LayoutComponent,
+    canActivate: [AnonimousGuard],
     loadChildren: () =>
       import('./features/inactive-petitions/inactive-petitions.module').then(
         (m) => m.InactivePetitionsModule
@@ -51,6 +61,7 @@ const routes: Routes = [
   {
     path: 'inactive-petitions/:id',
     component: LayoutComponent,
+    canActivate: [AnonimousGuard],
     loadChildren: () =>
       import(
         './features/view-petition-inactive/view-petition-inactive.module'
