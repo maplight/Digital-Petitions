@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { IssuePetition } from 'src/app/core/api/API';
 import { NewPetitionIssueService } from 'src/app/logic/petition/exports';
 import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
@@ -11,8 +11,9 @@ import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 })
 export class NewPetitionIssueComponent implements OnInit {
   public formGroup: FormGroup;
-  protected result$;
-  protected loading$;
+  protected success$!: Observable<IssuePetition | undefined>;
+  protected loading$!: Observable<boolean>;
+  protected error$!: Observable<string | undefined>;
 
   @Output() cancelEvent: EventEmitter<
     'type' | 'issue' | 'candidate' | 'result'
@@ -27,18 +28,19 @@ export class NewPetitionIssueComponent implements OnInit {
       title: ['', [Validators.required]],
       detail: ['', [Validators.required]],
     });
+  }
 
-    this.result$ = this._newPetitionIssueLogic.result$.pipe(
+  ngOnInit(): void {
+    this.success$ = this._newPetitionIssueLogic.success$.pipe(
       tap((result) => {
-        result.result ? this.submitEvent.emit(result.result) : null;
+        this.submitEvent.emit(result);
       }),
       shareReplay(1)
     );
 
     this.loading$ = this._newPetitionIssueLogic.loading$;
+    this.error$ = this._newPetitionIssueLogic.error$;
   }
-
-  ngOnInit(): void {}
 
   submit() {
     if (this.formGroup.valid) {

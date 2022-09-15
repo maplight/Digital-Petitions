@@ -7,8 +7,6 @@ import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.serv
   templateUrl: './step-indicator.component.html',
 })
 export class StepIndicatorComponent implements OnInit, OnDestroy {
-  @Input() step: 'type' | 'issue' | 'candidate' | 'result' = 'type';
-
   private basicStyleElement: string =
     'bg-[#EFEFEF] w-6 h-6 rounded-full flex justify-center items-center font-roboto text-[#8A8A8A] text-sm leading-[14px] font-normal border border-[#EFEFEF] cursor-default';
   private basicStyleLine: string = 'bg-[#EFEFEF] md:w-[122px] w-[61px] h-[2px]';
@@ -25,7 +23,20 @@ export class StepIndicatorComponent implements OnInit, OnDestroy {
 
   private _unsubscribeAll: Subject<void> = new Subject();
 
-  constructor(private _stepLogic: StepIndicatorService) {
+  constructor(private _stepLogic: StepIndicatorService) {}
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+  private setDefaultStyle() {
+    this.styleElement1 = this.basicStyleElement;
+    this.styleElement2 = this.basicStyleElement;
+    this.styleElement3 = this.basicStyleElement;
+    this.styleLine1 = this.basicStyleLine;
+    this.styleLine2 = this.basicStyleLine;
+  }
+
+  ngOnInit(): void {
     this._stepLogic._publicCurrentStep$
       .pipe(
         tap((step) => {
@@ -56,17 +67,4 @@ export class StepIndicatorComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
-  ngOnDestroy(): void {
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
-  }
-  private setDefaultStyle() {
-    this.styleElement1 = this.basicStyleElement;
-    this.styleElement2 = this.basicStyleElement;
-    this.styleElement3 = this.basicStyleElement;
-    this.styleLine1 = this.basicStyleLine;
-    this.styleLine2 = this.basicStyleLine;
-  }
-
-  ngOnInit(): void {}
 }

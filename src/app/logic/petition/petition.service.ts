@@ -64,7 +64,7 @@ export class PetitionService {
       }) as Promise<GraphQLResult<SubmitIssuePetitionMutation>>
     ).pipe(
       map(({ data }) => ({ result: data?.submitIssuePetition })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
     );
   }
 
