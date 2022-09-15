@@ -336,13 +336,9 @@ export class PetitionService {
       API.graphql({
         query: getPetitionsByType,
         variables: {
-          query: {
-            status: data.status,
-            cursor: data.cursor,
-            type: data.type,
-          },
+          query: data,
         },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: 'AWS_IAM',
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
       map((value) => {
@@ -362,6 +358,7 @@ export class PetitionService {
         return { result: { cursor: cursor, items: petitions } };
       }),
       catchError((error) => {
+        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );

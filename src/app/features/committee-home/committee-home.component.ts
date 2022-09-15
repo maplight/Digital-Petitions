@@ -30,7 +30,7 @@ export class CommitteeHomeComponent implements OnInit {
   protected error$!: Observable<string | undefined>;
   protected cursor: string | undefined;
   private _petitionsByOwnerInput: PetitionsByOwnerInput = {
-    status: PetitionStatusQuery.INACTIVE,
+    status: PetitionStatusQuery.ANY,
     owner: '',
   };
 

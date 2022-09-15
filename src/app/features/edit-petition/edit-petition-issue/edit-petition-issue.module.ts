@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { EditPetitionIssueService } from 'src/app/logic/petition/edit-petition-issue.service';
+import { LoadingBarComponent } from 'src/app/shared/loading/loading-bar.component';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [EditPetitionIssueComponent],
@@ -20,6 +23,8 @@ import { EditPetitionIssueService } from 'src/app/logic/petition/edit-petition-i
     MatIconModule,
     MatProgressBarModule,
     MatButtonModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   exports: [EditPetitionIssueComponent],
   providers: [EditPetitionIssueService],

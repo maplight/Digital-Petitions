@@ -24,8 +24,8 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
   @Input() formData: ResponsePetition = {};
   @Output() _cancelEvent: EventEmitter<void> = new EventEmitter();
   @Output() _submitEvent: EventEmitter<IssuePetition> = new EventEmitter();
-  protected result$;
-  protected loading$;
+  protected error$!: Observable<string | undefined>;
+  protected loading$!: Observable<boolean>;
   public formGroup!: FormGroup;
   constructor(
     private _fb: FormBuilder,
@@ -33,23 +33,24 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
     public _dialog: MatDialog,
     private _editPetitionIssueLogic: EditPetitionIssueService
   ) {
-    this.result$ = this._editPetitionIssueLogic.result$.pipe(
-      tap((result) => {
-        result.result ? this._submitEvent.emit(result.result) : null;
-      }),
-      shareReplay(1)
-    );
-
-    this.loading$ = this._editPetitionIssueLogic.loading$;
+    this._editPetitionIssueLogic.success$.subscribe((result) => {
+      this._submitEvent.emit(result);
+    }),
+      (this.loading$ = this._editPetitionIssueLogic.loading$);
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes?: SimpleChanges): void {
     this.formGroup = this._fb.group({
       title: [this.formData.dataIssue?.title, [Validators.required]],
       text: [this.formData.dataIssue?.detail, [Validators.required]],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formGroup = this._fb.group({
+      title: [this.formData.dataIssue?.title, [Validators.required]],
+      text: [this.formData.dataIssue?.detail, [Validators.required]],
+    });
+  }
   submit() {
     if (this.formGroup.valid) {
       const dialogRef = this._dialog.open(ConfirmEditPetitionComponent, {
