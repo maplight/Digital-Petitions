@@ -66,14 +66,20 @@
     </div>
 
     <dp-loading-bar *ngIf="(loading$ | async) && loadingDown"></dp-loading-bar>
+
     <button
       mat-button
       color="primary"
+      class="mb-2"
       (click)="pageNumber()"
       [disabled]="!!(loading$ | async)"
-      *ngIf="petitions.cursor"
+      *ngIf="petitions.cursor; else spacer"
     >
       See More
     </button>
+
+    <ng-template #spacer>
+      <span class="w-full h-1 min-h-full"></span>
+    </ng-template>
   </ng-container>
 </div>

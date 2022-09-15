@@ -6,6 +6,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { merge, Observable, Subject, takeUntil } from 'rxjs';
+import { AccessLevel } from 'src/app/core/api/API';
 import { ChangeAccountPermissionService } from 'src/app/logic/admin/change-account-permission.service';
 import { GetAccountPermissionService } from 'src/app/logic/admin/get-account-permission.service';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
@@ -27,12 +28,11 @@ export class ChangeAccountPermissionComponent implements OnInit {
     private dialogRef: MatDialogRef<BasicModalComponent>,
     private dialog: MatDialog,
     private _changeAccountPermissionLogic: ChangeAccountPermissionService,
-    private _getAccountPermissionLogic: GetAccountPermissionService,
     @Inject(MAT_DIALOG_DATA)
-    public data: { id: string }
+    public data: { id: string; access: AccessLevel }
   ) {
     this.formGroup = this._fb.group({
-      type: ['', [Validators.required]],
+      type: [this.data.access, [Validators.required]],
     });
   }
 
@@ -48,23 +48,10 @@ export class ChangeAccountPermissionComponent implements OnInit {
           true
         );*/
       });
-    this._getAccountPermissionLogic.success$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        this.formGroup = this._fb.group({
-          type: [data, [Validators.required]],
-        });
-      });
-    this.error$ = merge(
-      this._changeAccountPermissionLogic.error$,
-      this._getAccountPermissionLogic.error$
-    );
 
-    this.loading$ = merge(
-      this._changeAccountPermissionLogic.loading$,
-      this._getAccountPermissionLogic.loading$
-    );
-    this._getAccountPermissionLogic.formGroupValue(this.data.id);
+    this.error$ = this._changeAccountPermissionLogic.error$;
+
+    this.loading$ = this._changeAccountPermissionLogic.loading$;
   }
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
@@ -73,7 +60,10 @@ export class ChangeAccountPermissionComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-      this._changeAccountPermissionLogic.formGroupValue(this.formGroup.value);
+      this._changeAccountPermissionLogic.formGroupValue({
+        username: this.data.id,
+        permissions: this.formGroup.value.type,
+      });
     } else {
       this.formGroup.markAllAsTouched();
     }

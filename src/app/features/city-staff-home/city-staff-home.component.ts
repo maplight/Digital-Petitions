@@ -28,7 +28,10 @@ import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions'
 })
 export class CityStaffHomeComponent implements OnInit {
   protected loadingUp: boolean = true;
-  protected loadingDown: boolean = !this.loadingUp;
+  protected get loadingDown(): boolean {
+    return !this.loadingUp;
+  }
+
   protected successLogin$!: Observable<User | null>;
   protected successPetition$!: Observable<BufferPetition | undefined>;
   protected loading$!: Observable<boolean>;
@@ -59,18 +62,21 @@ export class CityStaffHomeComponent implements OnInit {
   filterCategory(value: PetitionType | undefined | 'ANY') {
     this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;
     this.loadingUp = true;
-    this.getPetitions();
+
+    this.getPetitions(true);
   }
 
   filterStatus(value: PetitionStatusQuery | undefined) {
     this.petitionsByTypeInput.status = value;
     this.loadingUp = true;
-    this.getPetitions();
+
+    this.getPetitions(true);
   }
 
-  private getPetitions() {
-    this._cityStaffHomeLogic.getPetitions(this.petitionsByTypeInput);
+  private getPetitions(reset: boolean = false) {
+    this._cityStaffHomeLogic.getPetitions(this.petitionsByTypeInput, reset);
   }
+
   pageNumber() {
     this.loadingUp = false;
     this.getPetitions();

@@ -44,7 +44,7 @@ export class NewMemberComponent implements OnInit {
         this.dialogRef.close();
         this.openDialog(
           'Invitation Sent!',
-          'Your new member will be able to acees your account once they click on the invitation link and set up their account.',
+          'Your new member will be able to access the system once they click on the invitation link and set up their account.',
           true
         );
       });
