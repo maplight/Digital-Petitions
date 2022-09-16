@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GetPetitionService } from './get-petition.service';
+import { GetPublicPetitionService } from './get-public-petition.service';
 
 describe('EditPetitionService', () => {
-  let service: GetPetitionService;
+  let service: GetPublicPetitionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GetPetitionService);
+    service = TestBed.inject(GetPublicPetitionService);
   });
 
   it('should be created', () => {
