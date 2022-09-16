@@ -12,13 +12,15 @@ import { ConfirmEditPetitionModule } from '../confirm-edit-petition/confirm-edit
 import { MatDialogModule } from '@angular/material/dialog';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
 import { EditPetitionCandidateService } from 'src/app/logic/petition/edit-petition-candidate.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [EditPetitionCandidateComponent],
   imports: [
     CommonModule,
     BasicCardModule,
-    MatProgressBarModule,
+
     MatButtonModule,
     MatInputModule,
     MatIconModule,
@@ -28,8 +30,9 @@ import { EditPetitionCandidateService } from 'src/app/logic/petition/edit-petiti
     ConfirmEditPetitionModule,
     MatDialogModule,
     BasicModalModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   exports: [EditPetitionCandidateComponent],
-  providers: [EditPetitionCandidateService],
 })
 export class EditPetitionCandidateModule {}

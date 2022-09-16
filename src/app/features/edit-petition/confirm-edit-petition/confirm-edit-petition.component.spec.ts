@@ -1,4 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BasicAlertModule } from 'src/app/shared/basic-alert/basic-alert.module';
 
 import { ConfirmEditPetitionComponent } from './confirm-edit-petition.component';
 
@@ -8,9 +14,21 @@ describe('ConfirmEditPetitionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmEditPetitionComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfirmEditPetitionComponent],
+      imports: [
+        CommonModule,
+        BasicAlertModule,
+        MatButtonModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+      ],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {},
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmEditPetitionComponent);
     component = fixture.componentInstance;
@@ -19,5 +37,31 @@ describe('ConfirmEditPetitionComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('evaluates that the "dp-basic-alert" component exists', () => {
+    const element =
+      fixture.debugElement.nativeElement.querySelector('dp-basic-alert');
+    expect(element).toBeTruthy();
+  });
+
+  it('evaluates that there are three buttons', () => {
+    const element =
+      fixture.debugElement.nativeElement.querySelectorAll('button');
+    expect(element.length).toBe(3);
+  });
+
+  it('check that the title exists', () => {
+    const element = fixture.debugElement.nativeElement.querySelectorAll('span');
+    expect(element[0].textContent).toEqual(
+      'Do you want to submit your changes?'
+    );
+  });
+
+  it('check that the alert message exists', () => {
+    const element = fixture.debugElement.nativeElement.querySelectorAll('p');
+    expect(element[0].textContent).toEqual(
+      'Once this has been Submitted it can not be undone.'
+    );
   });
 });

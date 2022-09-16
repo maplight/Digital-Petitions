@@ -74,7 +74,7 @@ export class GetPetitionsCommitteeService {
     this.submit$.complete();
   }
   /** This method begins the process of obtaining a committee's petitions
-  @param value: FilterData type: request filtering criteria
+  @param data: FilterData type: request filtering criteria
   */
   getPetitions(data: PetitionsByOwnerInput) {
     this._accountService.currentUser$.subscribe((value) => {

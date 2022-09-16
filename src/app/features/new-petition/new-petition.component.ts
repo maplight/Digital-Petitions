@@ -18,6 +18,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-new-petition',
   templateUrl: './new-petition.component.html',
+  providers: [StepIndicatorService],
 })
 export class NewPetitionComponent implements OnInit {
   protected dataResponse: ResponsePetition = {};

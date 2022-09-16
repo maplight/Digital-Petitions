@@ -9,7 +9,10 @@ import {
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
-import { PetitionsByOwnerInput } from 'src/app/core/api/API';
+import {
+  PetitionsByOwnerInput,
+  PetitionStatusQuery,
+} from 'src/app/core/api/API';
 import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
 import { FilterData } from 'src/app/shared/models/exports';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
@@ -27,7 +30,7 @@ export class CommitteeHomeComponent implements OnInit {
   protected error$!: Observable<string | undefined>;
   protected cursor: string | undefined;
   private _petitionsByOwnerInput: PetitionsByOwnerInput = {
-    status: undefined,
+    status: PetitionStatusQuery.ANY,
     owner: '',
   };
 

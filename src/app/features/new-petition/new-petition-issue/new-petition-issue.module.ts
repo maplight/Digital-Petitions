@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NewPetitionIssueService } from 'src/app/logic/petition/new-petition-issue.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [NewPetitionIssueComponent],
@@ -23,7 +25,8 @@ import { NewPetitionIssueService } from 'src/app/logic/petition/new-petition-iss
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
-    MatProgressBarModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   exports: [NewPetitionIssueComponent],
   providers: [NewPetitionIssueService],

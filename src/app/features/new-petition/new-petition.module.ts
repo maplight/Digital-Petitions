@@ -30,6 +30,5 @@ import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.serv
     ResultPetitionModule,
     NewPetitionCandidateModule,
   ],
-  providers: [StepIndicatorService],
 })
 export class NewPetitionModule {}

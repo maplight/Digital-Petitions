@@ -64,7 +64,7 @@ export class PetitionService {
       }) as Promise<GraphQLResult<SubmitIssuePetitionMutation>>
     ).pipe(
       map(({ data }) => ({ result: data?.submitIssuePetition })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
     );
   }
 
@@ -80,7 +80,7 @@ export class PetitionService {
     ).pipe(
       tap((value) => this._loggingService.log(value)),
       map(({ data }) => ({ result: data?.submitCandidatePetition })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
     );
   }
 
@@ -226,11 +226,7 @@ export class PetitionService {
       API.graphql({
         query: getPetitionsByOwner,
         variables: {
-          query: {
-            status: data.status,
-            owner: data.owner,
-            cursor: data.cursor,
-          },
+          query: data,
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetPetitionsByOwnerQuery>>
@@ -340,13 +336,9 @@ export class PetitionService {
       API.graphql({
         query: getPetitionsByType,
         variables: {
-          query: {
-            status: data.status,
-            cursor: data.cursor,
-            type: data.type,
-          },
+          query: data,
         },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: 'AWS_IAM',
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
       map((value) => {
@@ -366,6 +358,7 @@ export class PetitionService {
         return { result: { cursor: cursor, items: petitions } };
       }),
       catchError((error) => {
+        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );
