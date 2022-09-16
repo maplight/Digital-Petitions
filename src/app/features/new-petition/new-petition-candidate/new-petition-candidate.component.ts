@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 
 import { Observable, takeUntil, Subject } from 'rxjs';
 
-
 import { CandidatePetition } from 'src/app/core/api/API';
 import { state, states } from 'src/app/core/states';
 import { NewPetitionCandidateService } from 'src/app/logic/petition/exports';

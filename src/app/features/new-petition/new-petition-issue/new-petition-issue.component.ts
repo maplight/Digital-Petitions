@@ -53,7 +53,6 @@ export class NewPetitionIssueComponent implements OnInit, OnDestroy {
         this.submitEvent.emit(result);
       });
 
-
     this.loading$ = this._newPetitionIssueLogic.loading$;
     this.error$ = this._newPetitionIssueLogic.error$;
   }
