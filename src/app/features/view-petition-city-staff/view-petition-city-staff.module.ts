@@ -37,6 +37,5 @@ import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
     ErrorMsgModule,
     LoadingBarModule,
   ],
-  providers: [GetPublicPetitionService, DenyPetitionService],
 })
 export class ViewPetitionCityStaffModule {}

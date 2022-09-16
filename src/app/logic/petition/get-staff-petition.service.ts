@@ -17,7 +17,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 import { PetitionService } from './exports';
 
 @Injectable()
-export class GetPublicPetitionService {
+export class GetStaffPetitionService {
   public error$: Observable<string | undefined>;
   public success$: Observable<ResponsePetition | undefined>;
   public loading$: Observable<boolean>;
@@ -29,7 +29,7 @@ export class GetPublicPetitionService {
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.getPublicPetition(data)),
+      exhaustMap((data) => this._petitionService.getStaffPetition(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>

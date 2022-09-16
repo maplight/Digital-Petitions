@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommitteeAccountSettingsComponent } from './committee-account-settings.component';
+import { AccountSettingsComponent } from './account-settings.component';
 
 describe('CommitteeAccountSettingsComponent', () => {
-  let component: CommitteeAccountSettingsComponent;
-  let fixture: ComponentFixture<CommitteeAccountSettingsComponent>;
+  let component: AccountSettingsComponent;
+  let fixture: ComponentFixture<AccountSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CommitteeAccountSettingsComponent],
+      declarations: [AccountSettingsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CommitteeAccountSettingsComponent);
+    fixture = TestBed.createComponent(AccountSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,6 +6,7 @@ import {
   CityStaffGuard,
   CommitteeGuard,
   AnonimousGuard,
+  AccountSettingGuard,
 } from './guards/exports';
 
 const routes: Routes = [
@@ -14,6 +15,14 @@ const routes: Routes = [
     path: 'example',
     loadChildren: () =>
       import('./example/example.module').then((m) => m.ExampleModule),
+  },
+  {
+    path: 'account-setting',
+    canActivate: [AccountSettingGuard],
+    loadChildren: () =>
+      import('./features/account-settings/account-settings.module').then(
+        (m) => m.AccountSettingsModule
+      ),
   },
   {
     path: 'home',
@@ -122,9 +131,9 @@ const routes: Routes = [
       {
         path: 'account-settings',
         loadChildren: () =>
-          import(
-            './features/committee-account-settings/committee-account-settings.module'
-          ).then((m) => m.CommitteeAccountSettingsModule),
+          import('./features/account-settings/account-settings.module').then(
+            (m) => m.AccountSettingsModule
+          ),
       },
       {
         path: 'new-petition',

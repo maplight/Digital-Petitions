@@ -10,13 +10,13 @@
     <p class="mt-[22px]">
       Edit or change your account information and password.
     </p>
-    <dp-basic-card class="mt-8">
+    <dp-basic-card class="mt-8" *ngIf="currentUser$ | async as user">
       <div class="w-full flex flex-col gap-11">
         <div
           class="w-full flex flex-col md:flex-row justify-between items-center"
         >
           <p class="font-bold leading-5 md:min-w-[150px]">Email</p>
-          <p class="max-w-full">{{ email }}</p>
+          <p class="max-w-full">{{ user.attributes.email }}</p>
           <button mat-flat-button color="primary" (click)="openDialogEmail()">
             Edit
           </button>
@@ -40,7 +40,9 @@
           <p class="font-bold leading-5 md:min-w-[150px]">
             Contact information
           </p>
-          <p class="max-w-full">{{ name }}</p>
+          <p class="max-w-full">
+            {{ user.attributes.given_name + " " + user.attributes.family_name }}
+          </p>
           <button
             mat-flat-button
             color="primary"

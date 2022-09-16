@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  Subscription,
-  takeUntil,
-  tap,
-} from 'rxjs';
+
 import { AccountService } from 'src/app/core/account-service/account.service';
 import {
   PetitionsByOwnerInput,

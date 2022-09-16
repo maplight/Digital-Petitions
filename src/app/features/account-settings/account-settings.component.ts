@@ -1,19 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordModalComponent } from 'src/app/auth/change-password-modal/change-password-modal.component';
 import { ChangePersonalDetailsModalComponent } from 'src/app/auth/change-personal-details-modal/change-personal-details-modal.component';
 import { EmailChangeModalComponent } from 'src/app/auth/email-change-modal/email-change-modal.component';
+import { AccountService } from 'src/app/core/account-service/account.service';
+import { User } from 'src/app/shared/models/auth/user';
 
 @Component({
   selector: 'dp-committee-account-settings',
-  templateUrl: './committee-account-settings.component.html',
+  templateUrl: './account-settings.component.html',
 })
-export class CommitteeAccountSettingsComponent implements OnInit {
-  protected email: string = 'james@email.com';
-  protected name: string = 'James Johnson';
-  constructor(public dialog: MatDialog) {}
+export class AccountSettingsComponent implements OnInit {
+  protected currentUser$!: Observable<User | null>;
+  constructor(
+    private dialog: MatDialog,
+    private _accountService: AccountService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentUser$ = this._accountService.currentUser$;
+  }
 
   openDialogPassword(): void {
     const dialogRef = this.dialog.open(ChangePasswordModalComponent, {
