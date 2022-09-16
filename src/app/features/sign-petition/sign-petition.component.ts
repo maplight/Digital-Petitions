@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { SignPetitionService } from 'src/app/logic/petition/sign-petition.service';
 import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -26,7 +26,7 @@ export class SignPetitionComponent implements OnInit {
   protected signatureData!: SignaturePetitionData;
 
   constructor(
-    private _committeeLogic: GetPetitionService,
+    private _committeeLogic: GetPublicPetitionService,
 
     private _activatedRoute: ActivatedRoute
   ) {}

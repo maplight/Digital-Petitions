@@ -6,7 +6,7 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { PetitionViewModule } from 'src/app/shared/petition-view/petition-view.module';
-import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { SignThisPetitionModule } from './sign-this-petition/sign-this-petition.module';
 import { MatButtonModule } from '@angular/material/button';
 import { VerifySignModule } from './verify-sign/verify-sign.module';
@@ -24,6 +24,6 @@ import { VerifySignModule } from './verify-sign/verify-sign.module';
     SignThisPetitionModule,
     VerifySignModule,
   ],
-  providers: [GetPetitionService],
+  providers: [GetPublicPetitionService],
 })
 export class SignPetitionModule {}

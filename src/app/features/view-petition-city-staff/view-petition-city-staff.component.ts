@@ -18,7 +18,7 @@ import {
 } from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.service';
-import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { ApproveDialogComponent } from './approve-dialog/approve-dialog.component';
@@ -41,7 +41,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
     expectedVersion: 0,
   };
   constructor(
-    private _getPetitionLogic: GetPetitionService,
+    private _getPetitionLogic: GetPublicPetitionService,
     private _denyPetitionLogic: DenyPetitionService,
     private _dialog: MatDialog,
     private _activatedRoute: ActivatedRoute

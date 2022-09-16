@@ -7,7 +7,7 @@ import {
   IssuePetition,
   PetitionStatus,
 } from 'src/app/core/api/API';
-import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { AlertWithdrawlPetitionComponent } from './alert-withdrawl-petition/alert-withdrawl-petition.component';
 import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/confirm-withdrawl-petition.component';
@@ -36,7 +36,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
   protected StatusStyleRed: string =
     'flex bg-[#FF3030] px-4 py-1 rounded-full items-center justify-center';
   constructor(
-    private _committeeLogic: GetPetitionService,
+    private _committeeLogic: GetPublicPetitionService,
 
     private _activatedRoute: ActivatedRoute,
     public _alertDialogRef: MatDialogRef<AlertWithdrawlPetitionComponent>,

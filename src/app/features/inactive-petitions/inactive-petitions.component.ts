@@ -35,14 +35,12 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 })
 export class InactivePetitionsComponent implements OnInit {
   protected loadingUp: boolean = true;
-  protected loadingDown: boolean = !this.loadingUp;
-  protected successPetition$!: Observable<BufferPetition | undefined>;
   protected loading$!: Observable<boolean>;
   protected error$!: Observable<string | undefined>;
   protected cursor: string | undefined;
-
+  protected items: ResponsePetition[] = [];
   private petitionsByTypeInput: PetitionsByTypeInput = {
-    status: PetitionStatusQuery.ANY,
+    status: PetitionStatusQuery.INACTIVE,
     type: undefined,
   };
 
@@ -54,20 +52,29 @@ export class InactivePetitionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.successPetition$ = this._getPetitionsInactiveService.success$;
+    this._getPetitionsInactiveService.success$.subscribe((data) => {
+      this.items = this.items.concat(data?.items ? data.items : []);
+      this.cursor = data?.cursor;
+    });
     this.error$ = this._getPetitionsInactiveService.error$;
     this.loading$ = this._getPetitionsInactiveService.loading$;
     this.getPetitions();
   }
   filterCategory(value: PetitionType | undefined | 'ANY') {
     this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;
+
     this.loadingUp = true;
+    this.items = [];
+    this.cursor = undefined;
     this.getPetitions();
   }
 
   filterStatus(value: PetitionStatusQuery | undefined) {
     this.petitionsByTypeInput.status = value;
+
     this.loadingUp = true;
+    this.items = [];
+    this.cursor = undefined;
     this.getPetitions();
   }
 

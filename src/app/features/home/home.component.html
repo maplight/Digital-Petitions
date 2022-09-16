@@ -22,11 +22,11 @@
       >
       </dp-error-msg>
       <dp-loading-bar *ngIf="(loading$ | async) && loadingUp"></dp-loading-bar>
-      <ng-container *ngIf="successPetition$ | async as petitions">
+      <ng-container *ngIf="items">
         <dp-petition-card
           [buttonText]="'Endorse Now'"
           [linkText]="'Read More'"
-          *ngFor="let item of petitions.items"
+          *ngFor="let item of items"
           [data]="item"
           [disabled]="!!(loading$ | async)"
           [showType]="true"
@@ -35,20 +35,20 @@
         ></dp-petition-card>
         <div
           class="flex justify-center w-full"
-          *ngIf="petitions.items.length === 0"
+          *ngIf="(items.length === 0 || !items) && !(loading$ | async)"
         >
           <h3 class="leading-7 font-extrabold">You still have no petitions</h3>
         </div>
 
         <dp-loading-bar
-          *ngIf="(loading$ | async) && loadingDown"
+          *ngIf="(loading$ | async) && !loadingUp"
         ></dp-loading-bar>
         <button
           mat-button
           color="primary"
           (click)="pageNumber()"
           [disabled]="!!(loading$ | async)"
-          *ngIf="petitions.cursor"
+          *ngIf="cursor"
         >
           See More
         </button>

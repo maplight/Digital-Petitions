@@ -24,23 +24,22 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 })
 export class CommitteeHomeComponent implements OnInit {
   protected loadingUp: boolean = true;
-  protected loadingDown: boolean = !this.loadingUp;
-  protected successPetition$!: Observable<BufferPetition | undefined>;
   protected loading$!: Observable<boolean>;
   protected error$!: Observable<string | undefined>;
   protected cursor: string | undefined;
+  protected items: ResponsePetition[] = [];
   private _petitionsByOwnerInput: PetitionsByOwnerInput = {
     status: PetitionStatusQuery.ANY,
     owner: '',
   };
 
-  constructor(
-    private _committeeLogic: GetPetitionsCommitteeService,
-    private _accountLogic: AccountService
-  ) {}
+  constructor(private _committeeLogic: GetPetitionsCommitteeService) {}
 
   ngOnInit(): void {
-    this.successPetition$ = this._committeeLogic.success$;
+    this._committeeLogic.success$.subscribe((data) => {
+      this.items = this.items.concat(data?.items ? data.items : []);
+      this.cursor = data?.cursor;
+    });
     this.error$ = this._committeeLogic.error$;
     this.loading$ = this._committeeLogic.loading$;
     this.getPetitions();
