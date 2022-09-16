@@ -4,20 +4,17 @@ import {
   map,
   merge,
   Observable,
-  of,
   partition,
   ReplaySubject,
   shareReplay,
-  Subject,
   tap,
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { PetitionsByOwnerInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 
-import { FilterData, Result } from 'src/app/shared/models/exports';
+import { Result } from 'src/app/shared/models/exports';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
-import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { PetitionService } from '../petition/exports';
 
 @Injectable()
@@ -80,7 +77,7 @@ export class GetPetitionsCommitteeService {
     this._accountService.currentUser$
       .pipe(
         map((value) => {
-          return value?.id.split(':')[1];
+          return value?.attributes?.sub;
         })
       )
       .subscribe((value) => {
