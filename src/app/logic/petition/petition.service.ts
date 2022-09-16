@@ -368,6 +368,7 @@ export class PetitionService {
           query: data,
         },
         authMode: 'AWS_IAM',
+
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
       map((value) => {
@@ -403,6 +404,7 @@ export class PetitionService {
           query: data,
         },
         authMode: 'AWS_IAM',
+
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
       map((value) => {

@@ -8,7 +8,10 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { Observable, takeUntil, Subject } from 'rxjs';
+
+
 import { CandidatePetition } from 'src/app/core/api/API';
 import { state, states } from 'src/app/core/states';
 import { NewPetitionCandidateService } from 'src/app/logic/petition/exports';
@@ -51,6 +54,7 @@ export class NewPetitionCandidateComponent implements OnInit, OnDestroy {
       }),
     });
   }
+
   ngOnDestroy(): void {
     this._unSubscribeAll.next();
     this._unSubscribeAll.complete();
