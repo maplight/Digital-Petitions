@@ -1,21 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  Subscription,
-  takeUntil,
-  tap,
-} from 'rxjs';
-import { AccountService } from 'src/app/core/account-service/account.service';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   PetitionsByOwnerInput,
   PetitionStatusQuery,
 } from 'src/app/core/api/API';
 import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
-import { FilterData } from 'src/app/shared/models/exports';
-import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -45,9 +34,11 @@ export class CommitteeHomeComponent implements OnInit {
     this.loading$ = this._committeeLogic.loading$;
     this.getPetitions();
   }
+
   private getPetitions() {
     this._committeeLogic.getPetitions(this._petitionsByOwnerInput);
   }
+
   pageNumber() {
     this.loadingUp = false;
     this.getPetitions();
