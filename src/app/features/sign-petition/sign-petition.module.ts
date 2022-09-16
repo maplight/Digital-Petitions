@@ -10,6 +10,8 @@ import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-peti
 import { SignThisPetitionModule } from './sign-this-petition/sign-this-petition.module';
 import { MatButtonModule } from '@angular/material/button';
 import { VerifySignModule } from './verify-sign/verify-sign.module';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [SignPetitionComponent],
@@ -23,6 +25,8 @@ import { VerifySignModule } from './verify-sign/verify-sign.module';
     PetitionViewModule,
     SignThisPetitionModule,
     VerifySignModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   providers: [GetPublicPetitionService],
 })

@@ -28,12 +28,7 @@ import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
-import {
-  approvePetition,
-  editCandidatePetition,
-  editIssuePetition,
-  rejectPetition,
-} from 'src/graphql/mutations';
+import { approvePetition, rejectPetition } from 'src/graphql/mutations';
 import { getPetitionsByType } from 'src/graphql/queries';
 import { __values } from 'tslib';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
@@ -44,6 +39,8 @@ import {
   getPetitionsByType as getPetitionsByTypeAn,
 } from 'src/graphql/not-generated/queries';
 import {
+  editCandidatePetition,
+  editIssuePetition,
   submitCandidatePetition,
   submitIssuePetition,
 } from 'src/graphql/not-generated/mutations';
@@ -134,7 +131,7 @@ export class PetitionService {
         variables: {
           PK: id,
         },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: 'AWS_IAM',
       }) as Promise<GraphQLResult<GetPetitionQuery>>
     ).pipe(
       map((value) => {
@@ -299,6 +296,8 @@ export class PetitionService {
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
       map((value) => {
+        console.log(value);
+
         let petitions: ResponsePetition[] = [];
         let cursor: string | undefined = value.data?.getPetitionsByType.token
           ? value.data?.getPetitionsByType.token

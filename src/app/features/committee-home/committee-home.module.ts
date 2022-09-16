@@ -24,6 +24,5 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     LoadingBarModule,
     ErrorMsgModule,
   ],
-  providers: [GetPetitionsCommitteeService],
 })
 export class CommitteeHomeModule {}

@@ -34,6 +34,5 @@ import { PetitionStatusModule } from 'src/app/pipes/petition-status/petition-sta
     WithdrawlResultModule,
     PetitionStatusModule,
   ],
-  providers: [GetPublicPetitionService],
 })
 export class ViewPetitionCommitteeModule {}

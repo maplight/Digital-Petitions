@@ -68,8 +68,8 @@
           mat-button
           color="primary"
           (click)="pageNumber()"
-          [disabled]="!!(loading$ | async)"
-          *ngIf="cursor"
+          [disabled]="!!(loading$ | async) && (items.length === 0 || !items)"
+          *ngIf="cursor && items.length > 0"
         >
           See More
         </button>

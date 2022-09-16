@@ -34,11 +34,8 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
   @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
   @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
 
-  @Output() cancelEvent: EventEmitter<
-    'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error'
-  > = new EventEmitter<
-    'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error'
-  >();
+  @Output() cancelEvent: EventEmitter<'verify' | 'view' | 'sign'> =
+    new EventEmitter<'verify' | 'view' | 'sign'>();
   @Output() submitEvent: EventEmitter<SignaturePetitionData> =
     new EventEmitter<SignaturePetitionData>();
   protected signatureSummary: SignatureSummary | null | undefined;
@@ -60,7 +57,7 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
       this.submitEvent.emit(this.formGroup.value);
     }
   }
-  cancel(value: 'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error') {
+  cancel(value: 'verify' | 'view' | 'sign') {
     this.cancelEvent.emit(value);
   }
 

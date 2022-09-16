@@ -21,6 +21,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-committee-home',
   templateUrl: './committee-home.component.html',
+  providers: [GetPetitionsCommitteeService],
 })
 export class CommitteeHomeComponent implements OnInit {
   protected loadingUp: boolean = true;

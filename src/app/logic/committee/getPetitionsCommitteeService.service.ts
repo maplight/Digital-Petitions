@@ -77,16 +77,10 @@ export class GetPetitionsCommitteeService {
   @param data: FilterData type: request filtering criteria
   */
   getPetitions(data: PetitionsByOwnerInput) {
-    this._accountService.currentUser$
-      .pipe(
-        map((value) => {
-          return value?.id.split(':')[1];
-        })
-      )
-      .subscribe((value) => {
-        data.owner = value ?? '';
-        data.cursor = this.cursor;
-        this.submit$.next(data);
-      });
+    this._accountService.currentUser$.subscribe((value) => {
+      data.owner = value?.attributes.sub ?? '';
+      data.cursor = this.cursor;
+      this.submit$.next(data);
+    });
   }
 }

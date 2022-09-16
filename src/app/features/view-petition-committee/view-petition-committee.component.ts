@@ -15,6 +15,7 @@ import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/
 @Component({
   selector: 'dp-view-petition-committee',
   templateUrl: './view-petition-committee.component.html',
+  providers: [GetPublicPetitionService],
 })
 export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
   protected id: string = '0';
