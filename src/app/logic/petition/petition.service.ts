@@ -28,22 +28,22 @@ import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
-import {
-  approvePetition,
-  editCandidatePetition,
-  editIssuePetition,
-  rejectPetition,
-  submitCandidatePetition,
-  submitIssuePetition,
-} from 'src/graphql/mutations';
-import {
-  getPetition,
-  getPetitionsByOwner,
-  getPetitionsByType,
-} from 'src/graphql/queries';
+import { approvePetition, rejectPetition } from 'src/graphql/mutations';
+import { getPetitionsByType } from 'src/graphql/queries';
 import { __values } from 'tslib';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
+import {
+  getPetition,
+  getPetitionsByOwner,
+  getPetitionsByType as getPetitionsByTypeAn,
+} from 'src/graphql/not-generated/queries';
+import {
+  editCandidatePetition,
+  editIssuePetition,
+  submitCandidatePetition,
+  submitIssuePetition,
+} from 'src/graphql/not-generated/mutations';
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
@@ -124,10 +124,39 @@ export class PetitionService {
     );
   }
 
-  getPetition(id: string): Observable<Result<ResponsePetition>> {
+  getPublicPetition(id: string): Observable<Result<ResponsePetition>> {
     return from(
       API.graphql({
-        query: getPetition,
+        query: getPetition.public,
+        variables: {
+          PK: id,
+        },
+        authMode: 'AWS_IAM',
+      }) as Promise<GraphQLResult<GetPetitionQuery>>
+    ).pipe(
+      map((value) => {
+        let petition: ResponsePetition = {};
+        if (value.data) {
+          if (value.data.getPetition?.type === PetitionType.ISSUE) {
+            petition = { dataIssue: value.data.getPetition as IssuePetition };
+          } else if (value.data.getPetition?.type === PetitionType.CANDIDATE) {
+            petition = {
+              dataCandidate: value.data.getPetition as CandidatePetition,
+            };
+          }
+        }
+        return { result: petition };
+      }),
+      catchError((error) => {
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
+  }
+
+  getStaffPetition(id: string): Observable<Result<ResponsePetition>> {
+    return from(
+      API.graphql({
+        query: getPetition.staff,
         variables: {
           PK: id,
         },
@@ -232,6 +261,7 @@ export class PetitionService {
       }) as Promise<GraphQLResult<GetPetitionsByOwnerQuery>>
     ).pipe(
       map((value) => {
+        console.log(value);
         let petitions: ResponsePetition[] = [];
         let cursor: string | undefined = value.data?.getPetitionsByOwner.token
           ? value.data?.getPetitionsByOwner.token
@@ -258,18 +288,16 @@ export class PetitionService {
   ): Observable<Result<BufferPetition>> {
     return from(
       API.graphql({
-        query: getPetitionsByType,
+        query: getPetitionsByTypeAn,
         variables: {
-          query: {
-            status: data.status,
-            cursor: data.cursor,
-            type: data.type,
-          },
+          query: data,
         },
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: 'AWS_IAM',
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
       map((value) => {
+        console.log(value);
+
         let petitions: ResponsePetition[] = [];
         let cursor: string | undefined = value.data?.getPetitionsByType.token
           ? value.data?.getPetitionsByType.token
@@ -286,6 +314,7 @@ export class PetitionService {
         return { result: { cursor: cursor, items: petitions } };
       }),
       catchError((error) => {
+        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );
@@ -335,6 +364,41 @@ export class PetitionService {
     return from(
       API.graphql({
         query: getPetitionsByType,
+        variables: {
+          query: data,
+        },
+        authMode: 'AWS_IAM',
+      }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
+    ).pipe(
+      map((value) => {
+        let petitions: ResponsePetition[] = [];
+        let cursor: string | undefined = value.data?.getPetitionsByType.token
+          ? value.data?.getPetitionsByType.token
+          : undefined;
+
+        value.data?.getPetitionsByType.items.forEach((value) => {
+          value.type === PetitionType.ISSUE
+            ? petitions.push({ dataIssue: value as IssuePetition })
+            : value.type === PetitionType.CANDIDATE
+            ? petitions.push({ dataCandidate: value as CandidatePetition })
+            : null;
+        });
+
+        return { result: { cursor: cursor, items: petitions } };
+      }),
+      catchError((error) => {
+        console.log(error);
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
+  }
+
+  getAnonymousActivePetitions(
+    data: PetitionsByTypeInput
+  ): Observable<Result<BufferPetition>> {
+    return from(
+      API.graphql({
+        query: getPetitionsByTypeAn,
         variables: {
           query: data,
         },

@@ -10,26 +10,29 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { PetitionsByTypeInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 
-import { Result } from 'src/app/shared/models/exports';
+import { FilterData, Result } from 'src/app/shared/models/exports';
+import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
-import { PetitionService } from './exports';
+import { PetitionService } from '../petition/exports';
 
 @Injectable()
-export class GetPetitionService {
+export class GetAnonymousPetitionsActiveService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<ResponsePetition | undefined>;
+  public success$: Observable<BufferPetition | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<ResponsePetition>>;
-  private submit$: ReplaySubject<string> = new ReplaySubject();
-
+  public result$: Observable<Result<BufferPetition>>;
+  private submit$: ReplaySubject<PetitionsByTypeInput> = new ReplaySubject();
   constructor(
-    private _petitionService: PetitionService,
+    private _petitionLogic: PetitionService,
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) => this._petitionService.getPetition(data)),
+      exhaustMap((data) =>
+        this._petitionLogic.getAnonymousActivePetitions(data)
+      ),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -38,13 +41,17 @@ export class GetPetitionService {
 
     this.success$ = success$.pipe(
       map((value) => value.result),
-      tap((value) => this._loggingService.log(value)),
+      tap((value) => {
+        this._loggingService.log(value);
+      }),
+
       shareReplay(1)
     );
 
     this.error$ = error$.pipe(
       map((value) => value.error),
       tap((value) => this._loggingService.log(value)),
+
       shareReplay(1)
     );
 
@@ -64,12 +71,10 @@ export class GetPetitionService {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
-
-  /** This method begins the process of obtaining a petitions
-  @param id: The requested request ID
+  /** This method begins the process of obtaining inactive petitions
+  @param data: FilterData type: request filtering criteria
   */
-
-  getPetition(id: string) {
-    this.submit$.next(id);
+  getPetitionsAnonymous(data: PetitionsByTypeInput) {
+    this.submit$.next(data);
   }
 }

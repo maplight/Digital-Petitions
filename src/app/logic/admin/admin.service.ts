@@ -104,7 +104,7 @@ export class AdminService {
       }) as Promise<GraphQLResult<any>>
     ).pipe(
       map(({ data }) => ({ result: data })),
-      catchError((error) => of({ error: error }))
+      catchError((error) => of({ error: error?.errors[0].message }))
     );
   }
 

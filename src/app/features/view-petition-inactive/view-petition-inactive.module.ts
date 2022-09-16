@@ -4,7 +4,7 @@ import { ViewPetitionInactiveComponent } from './view-petition-inactive.componen
 import { ViewPetitionInactiveRoutingModule } from './view-petition-inactive-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
-import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { PetitionViewModule } from 'src/app/shared/petition-view/petition-view.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { StatusModule } from './status/status.module';
@@ -20,6 +20,6 @@ import { StatusModule } from './status/status.module';
     ReturnLinkModule,
     StatusModule,
   ],
-  providers: [GetPetitionService],
+  providers: [GetPublicPetitionService],
 })
 export class ViewPetitionInactiveModule {}

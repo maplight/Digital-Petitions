@@ -8,7 +8,7 @@ import { CurrentResultCityStaffModule } from './current-result-city-staff/curren
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { RouterModule } from '@angular/router';
 import { ViewPetitionCityStaffRoutingModule } from './view-petition-city-staff-routing.module';
-import { GetPetitionService } from 'src/app/logic/petition/get-petition.service';
+import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { NewBoxModule } from './new-box/new-box.module';
 import { CualifiedBoxModule } from './cualified-box/cualified-box.module';
 import { ApproveDialogModule } from './approve-dialog/approve-dialog.module';
@@ -37,6 +37,5 @@ import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
     ErrorMsgModule,
     LoadingBarModule,
   ],
-  providers: [GetPetitionService, DenyPetitionService],
 })
 export class ViewPetitionCityStaffModule {}

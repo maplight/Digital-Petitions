@@ -21,11 +21,8 @@ export class VerifySignComponent implements OnInit {
   protected error: string | undefined;
   protected loading$!: Observable<boolean>;
 
-  @Output() cancelEvent: EventEmitter<
-    'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error'
-  > = new EventEmitter<
-    'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error'
-  >();
+  @Output() cancelEvent: EventEmitter<'verify' | 'view' | 'sign'> =
+    new EventEmitter<'verify' | 'view' | 'sign'>();
   constructor(
     private _fb: FormBuilder,
     private _signPetitionLogic: SignPetitionService,
@@ -66,7 +63,7 @@ export class VerifySignComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-  cancel(value: 'loading' | 'verify' | 'empty' | 'view' | 'sign' | 'error') {
+  cancel(value: 'verify' | 'view' | 'sign') {
     this.cancelEvent.emit(value);
   }
 

@@ -10,7 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
-import { GetPetitionService } from 'src/app/logic/petition/exports';
+import { GetPublicPetitionService } from 'src/app/logic/petition/exports';
 import {
   CandidatePetitionData,
   IssuePetitionData,
@@ -35,7 +35,7 @@ export class EditPetitionComponent implements OnInit, AfterViewInit, OnDestroy {
   protected resultData: ResponsePetition = {};
 
   constructor(
-    private _editPetitionLogic: GetPetitionService,
+    private _editPetitionLogic: GetPublicPetitionService,
     protected _activatedRoute: ActivatedRoute,
     private _router: Router
   ) {}

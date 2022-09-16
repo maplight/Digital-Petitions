@@ -29,6 +29,5 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     ErrorMsgModule,
   ],
   exports: [NewPetitionIssueComponent],
-  providers: [NewPetitionIssueService],
 })
 export class NewPetitionIssueModule {}
