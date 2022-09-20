@@ -7,17 +7,14 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  filter,
+  combineLatest,
   map,
-  merge,
   Observable,
   shareReplay,
   startWith,
-  switchMap,
   take,
   tap,
 } from 'rxjs';
-import { AccountService } from 'src/app/core/account-service/account.service';
 import {
   CompleteNewPasswordService,
   SignInService,
@@ -47,7 +44,6 @@ export class SignInComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _router: Router,
-    private _accountService: AccountService,
     protected _signInLogic: SignInService,
     protected _completeNewPasswordLogic: CompleteNewPasswordService
   ) {}
@@ -58,10 +54,16 @@ export class SignInComponent implements OnInit {
       password: ['', [Validators.required]],
     });
 
-    this.loading$ = merge(
-      this._signInLogic.loading$,
-      this._completeNewPasswordLogic.loading$
-    ).pipe(shareReplay(1));
+    this.loading$ = combineLatest([
+      this._signInLogic.loading$.pipe(startWith(false)),
+      this._completeNewPasswordLogic.loading$.pipe(startWith(false)),
+    ]).pipe(
+      map(
+        ([signInLoading, setNewPasswordLoading]) =>
+          signInLoading || setNewPasswordLoading
+      ),
+      shareReplay(1)
+    );
 
     this.viewState$ = this._signInLogic.success$.pipe(
       tap((value) => this.onSuccess(value)),
