@@ -22,7 +22,7 @@ export class AnonimousGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this._auth.isLoged().pipe(
+    return this._auth.getCurrentUser().pipe(
       map((data) => {
         if (data) {
           return this._router.parseUrl('/auth/login');
