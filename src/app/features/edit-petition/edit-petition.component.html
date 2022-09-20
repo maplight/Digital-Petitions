@@ -1,96 +1,65 @@
 <div class="flex w-full justify-center">
   <div class="flex flex-col max-w-[550px] w-full">
     <div class="w-full flex flex-col py-12 gap-6">
-      <ng-container [ngSwitch]="currentStep$ | async">
-        <ng-container *ngSwitchCase="'loading'">
-          <div class="flex justify-center w-full">
-            <h3 class="leading-7 font-extrabold">Loading</h3>
-          </div>
+      <dp-error-msg
+        *ngIf="!(loading$ | async) && (error$ | async) as error"
+        [error]="error"
+      >
+      </dp-error-msg>
+      <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
+      <ng-container *ngIf="(success$ | async) && !result">
+        <dp-return-link
+          [route]="'/committee/home/' + _activatedRoute.snapshot.params['id']"
+          [text]="'Back to Petition'"
+        ></dp-return-link>
+        <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
+      </ng-container>
 
-          <mat-progress-bar
-            mode="indeterminate"
-            color="primary"
-          ></mat-progress-bar>
-        </ng-container>
-        <ng-container class="flex" *ngSwitchCase="'error'">
+      <ng-container *ngIf="result">
+        <div class="w-full flex flex-col">
           <div class="flex justify-center w-full">
-            <h3 class="leading-7 font-extrabold">An error has occurred</h3>
+            <h3 class="leading-7 font-extrabold">
+              Your petition has been successfully resubmitted!
+            </h3>
           </div>
-
-          <div class="flex flex-row items-center justify-center">
+          <div class="flex justify-center w-full">
             <mat-icon
-              class="w-[14px] h-[14px]"
-              [svgIcon]="'custom_icons:c_close'"
+              class="text-green-500 w-[26.67px] h-[26.67px]"
+              [svgIcon]="'custom_icons:like'"
             ></mat-icon>
-            <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
           </div>
-          <div class="flex flex-row items-center justify-center">
-            <dp-return-link
-              [route]="'/example'"
-              [text]="'Back to Petition'"
-            ></dp-return-link>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="'candidate'">
-          <dp-return-link
-            [route]="'/committee/home/' + _activatedRoute.snapshot.params['id']"
-            [text]="'Back to Petition'"
-          ></dp-return-link>
-          <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
-        </ng-container>
-        <ng-container *ngSwitchCase="'issue'">
-          <dp-return-link
-            [route]="'/committee/home/' + _activatedRoute.snapshot.params['id']"
-            [text]="'Back to Petition'"
-          ></dp-return-link>
-          <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
-        </ng-container>
-        <ng-container *ngSwitchCase="'result'">
-          <div class="w-full flex flex-col">
-            <div class="flex justify-center w-full">
-              <h3 class="leading-7 font-extrabold">
-                Your petition has been successfully resubmitted!
-              </h3>
-            </div>
-            <div class="flex justify-center w-full">
-              <mat-icon
-                class="text-green-500 w-[26.67px] h-[26.67px]"
-                [svgIcon]="'custom_icons:like'"
-              ></mat-icon>
-            </div>
-          </div>
-        </ng-container>
+        </div>
       </ng-container>
 
       <div class="flex justify-center w-full"></div>
 
-      <div class="flex justify-center w-full">
-        <ng-container [ngSwitch]="currentStep$ | async">
-          <dp-edit-petition-candidate
-            class="w-full"
-            [formData]="resultData"
-            (_cancelEvent)="cancel()"
-            (_submitEvent)="submitCandidate($event)"
-            *ngSwitchCase="'candidate'"
-          >
-          </dp-edit-petition-candidate>
-          <dp-edit-petition-issue
-            class="w-full"
-            [formData]="resultData"
-            (_cancelEvent)="cancel()"
-            (_submitEvent)="submitIssue($event)"
-            *ngSwitchCase="'issue'"
-          >
-          </dp-edit-petition-issue>
-        </ng-container>
-        <ng-container [ngSwitch]="currentStep$ | async">
-          <dp-edit-result-petition
-            class="w-full"
-            [data]="resultData"
-            *ngSwitchCase="'result'"
-          >
-          </dp-edit-result-petition>
-        </ng-container>
+      <div
+        class="flex justify-center w-full"
+        *ngIf="success$ | async as resultData"
+      >
+        <dp-edit-petition-candidate
+          class="w-full"
+          [formData]="resultData"
+          (_cancelEvent)="cancel()"
+          (_submitEvent)="submitCandidate($event)"
+          *ngIf="resultData.dataCandidate && !result"
+        >
+        </dp-edit-petition-candidate>
+        <dp-edit-petition-issue
+          class="w-full"
+          [formData]="resultData"
+          (_cancelEvent)="cancel()"
+          (_submitEvent)="submitIssue($event)"
+          *ngIf="resultData.dataIssue && !result"
+        >
+        </dp-edit-petition-issue>
+
+        <dp-edit-result-petition
+          class="w-full"
+          [data]="dataResponse"
+          *ngIf="result"
+        >
+        </dp-edit-result-petition>
       </div>
     </div>
   </div>

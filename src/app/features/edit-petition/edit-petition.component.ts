@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
 import { GetPublicPetitionService } from 'src/app/logic/petition/exports';
+import { GetCommitteePetitionService } from 'src/app/logic/petition/get-committee-petition.service';
 import {
   CandidatePetitionData,
   IssuePetitionData,
@@ -21,50 +22,30 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-edit-petition',
   templateUrl: './edit-petition.component.html',
+  providers: [GetCommitteePetitionService],
 })
-export class EditPetitionComponent implements OnInit, AfterViewInit, OnDestroy {
-  protected result$!: Subscription;
-  protected error: string | undefined;
+export class EditPetitionComponent implements OnInit {
+  public success$!: Observable<ResponsePetition | undefined>;
   protected loading$!: Observable<boolean>;
-  private _unsubscribeAll: Subject<void> = new Subject();
-  protected currentStep$: BehaviorSubject<
-    'loading' | 'candidate' | 'issue' | 'result' | 'error'
-  > = new BehaviorSubject<
-    'loading' | 'candidate' | 'issue' | 'result' | 'error'
-  >('loading');
-  protected resultData: ResponsePetition = {};
+  protected error$!: Observable<string | undefined>;
+  protected result!: boolean;
+
+  protected dataResponse: ResponsePetition = {};
 
   constructor(
-    private _editPetitionLogic: GetPublicPetitionService,
+    private _editPetitionLogic: GetCommitteePetitionService,
     protected _activatedRoute: ActivatedRoute,
     private _router: Router
   ) {}
-  ngOnDestroy(): void {
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
-  }
-  ngAfterViewInit(): void {
+
+  ngOnInit(): void {
+    this.success$ = this._editPetitionLogic.success$;
+    this.loading$ = this._editPetitionLogic.loading$;
+    this.error$ = this._editPetitionLogic.error$;
     this._editPetitionLogic.getPetition(
       this._activatedRoute.snapshot.params['id']
     );
-  }
-  ngOnInit(): void {
-    this.result$ = this._editPetitionLogic.result$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((result) => {
-        if (!!result.result) {
-          this.resultData = result.result;
-          if (!!result.result.dataCandidate) {
-            this.currentStep$.next('candidate');
-          } else if (!!result.result.dataIssue) {
-            this.currentStep$.next('issue');
-          }
-        } else {
-          this.error = result.error;
-          this.currentStep$.next('error');
-        }
-      });
-    this.loading$ = this._editPetitionLogic.loading$;
+    this.success$.subscribe();
   }
   cancel() {
     this._router.navigate([
@@ -72,11 +53,11 @@ export class EditPetitionComponent implements OnInit, AfterViewInit, OnDestroy {
     ]);
   }
   submitCandidate(data: CandidatePetition) {
-    this.resultData.dataCandidate = data;
-    this.currentStep$.next('result');
+    this.dataResponse.dataCandidate = data;
+    this.result = true;
   }
   submitIssue(data: IssuePetition) {
-    this.resultData.dataIssue = data;
-    this.currentStep$.next('result');
+    this.dataResponse.dataIssue = data;
+    this.result = true;
   }
 }
