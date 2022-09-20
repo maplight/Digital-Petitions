@@ -2,7 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { TargetPetitionInput } from 'src/app/core/api/API';
+import {
+  ApprovePetitionInput,
+  TargetPetitionInput,
+} from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ApproveAlertComponent } from '../approve-alert/approve-alert.component';
@@ -10,6 +13,7 @@ import { ApproveAlertComponent } from '../approve-alert/approve-alert.component'
 @Component({
   selector: 'dp-aprove-dialog',
   templateUrl: './approve-dialog.component.html',
+  providers: [ApprovePetitionService],
 })
 export class ApproveDialogComponent implements OnInit {
   protected formGroup: FormGroup;
@@ -23,11 +27,11 @@ export class ApproveDialogComponent implements OnInit {
     private _fb: FormBuilder,
     private _approvePetitionLogic: ApprovePetitionService,
     @Inject(MAT_DIALOG_DATA)
-    public data: TargetPetitionInput
+    public data: ApprovePetitionInput
   ) {
     this.formGroup = this._fb.group({
       deadline: ['', [Validators.required]],
-      signatures: ['', [Validators.required]],
+      signatures: ['', [Validators.required, Validators.pattern('[0-9]')]],
     });
   }
 
@@ -51,6 +55,8 @@ export class ApproveDialogComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
+      this.data.deadline = this.formGroup.value.deadline;
+      this.data.requiredSignatures = this.formGroup.value.signatures;
       const dialogRef = this._dialog.open(ApproveAlertComponent, {
         width: '480px',
       });

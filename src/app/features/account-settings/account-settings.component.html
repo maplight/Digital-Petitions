@@ -40,7 +40,10 @@
           <p class="font-bold leading-5 md:min-w-[150px]">
             Contact information
           </p>
-          <p class="max-w-full">
+          <p
+            class="max-w-full"
+            *ngIf="user.attributes.given_name || user.attributes.family_name"
+          >
             {{ user.attributes.given_name + " " + user.attributes.family_name }}
           </p>
           <button

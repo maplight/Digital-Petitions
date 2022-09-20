@@ -17,9 +17,15 @@
         </p>
       </div>
     </div>
-    <h3 *ngIf="disabled; else titleLink" class="flex leading-7 font-extrabold">
-      {{ issue.title }}
-    </h3>
+    <div class="w-fit">
+      <h3
+        *ngIf="disabled; else titleLink"
+        class="flex leading-7 font-extrabold"
+      >
+        {{ issue.title }}
+      </h3>
+    </div>
+
     <ng-template #titleLink
       ><h3
         class="flex leading-7 font-extrabold cursor-pointer"
@@ -90,9 +96,15 @@
         </p>
       </div>
     </div>
-    <h3 *ngIf="disabled; else titleLink" class="flex leading-7 font-extrabold">
-      {{ candidate.name }}
-    </h3>
+    <div class="w-fit">
+      <h3
+        *ngIf="disabled; else titleLink"
+        class="flex leading-7 font-extrabold"
+      >
+        {{ candidate.name }}
+      </h3>
+    </div>
+
     <ng-template #titleLink
       ><h3
         class="flex leading-7 font-extrabold cursor-pointer"
