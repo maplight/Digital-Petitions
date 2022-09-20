@@ -4,10 +4,6 @@ import { Component, OnInit } from '@angular/core';
   selector: 'dp-alert-withdrawl-petition',
   templateUrl: './alert-withdrawl-petition.component.html',
 })
-export class AlertWithdrawlPetitionComponent implements OnInit {
+export class AlertWithdrawlPetitionComponent {
   constructor() {}
-
-  ngOnInit(): void {}
-
-  submit() {}
 }
