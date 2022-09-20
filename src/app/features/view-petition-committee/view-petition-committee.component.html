@@ -5,71 +5,52 @@
         [route]="'/committee/home'"
         [text]="'Back to Home'"
       ></dp-return-link>
-      <ng-container [ngSwitch]="currentStep$ | async">
-        <ng-container *ngSwitchCase="'contents'">
-          <div
-            class="flex flex-col md:flex-row justify-center gap-4"
-            *ngIf="petition"
-          >
-            <div [class]="StatusStyleCurrent">
-              <p
-                class="text-[14px] leading-[18px] font-bold text-[#FFFFFF] cursor-default"
-              >
-                {{ petition.status | petitionStatus }}
-              </p>
-            </div>
-            <button
-              mat-button
-              color="primary"
-              [disabled]="!(petition.status === 'NEW')"
-              [routerLink]="'/committee/edit-petition/' + id"
-            >
-              Edit
-            </button>
-            <button mat-flat-button color="primary" (click)="submit()">
-              Withdrawl
-            </button>
-          </div></ng-container
-        >
-      </ng-container>
-    </div>
-    <ng-container [ngSwitch]="currentStep$ | async">
-      <ng-container *ngSwitchCase="'loading'">
-        <div class="flex justify-center w-full">
-          <h3 class="leading-7 font-extrabold">Loading</h3>
-        </div>
-
-        <mat-progress-bar
-          mode="indeterminate"
-          color="primary"
-        ></mat-progress-bar>
-      </ng-container>
-      <ng-container class="flex" *ngSwitchCase="'error'">
-        <div class="flex justify-center w-full">
-          <h3 class="leading-7 font-extrabold">An error has occurred</h3>
-        </div>
-
-        <div class="flex flex-row items-center justify-center">
-          <mat-icon
-            class="w-[14px] h-[14px]"
-            [svgIcon]="'custom_icons:c_close'"
-          ></mat-icon>
-          <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
-        </div>
-      </ng-container>
-
-      <ng-container class="flex" *ngSwitchCase="'contents'">
+      <ng-container *ngIf="success$ | async">
         <div
-          class="flex flex-col-reverse md:flex-row justify-center gap-6 mt-4"
+          class="flex flex-col md:flex-row justify-center gap-4"
+          *ngIf="petition"
         >
-          <div class="flex flex-col gap-5 max-w-[791px] w-full">
-            <dp-petition-view [data]="resultData"></dp-petition-view>
+          <div [class]="StatusStyleCurrent">
+            <p
+              class="text-[14px] leading-[18px] font-bold text-[#FFFFFF] cursor-default"
+            >
+              {{ petition.status | petitionStatus }}
+            </p>
           </div>
-          <div class="max-w-[386px] w-full h-fit">
-            <dp-current-result [data]="resultData"></dp-current-result>
-          </div>
+          <button
+            mat-button
+            color="primary"
+            [disabled]="!(petition.status === 'NEW')"
+            [routerLink]="
+              '/committee/edit-petition/' +
+              _activatedRoute.snapshot.params['id']
+            "
+          >
+            Edit
+          </button>
+          <button mat-flat-button color="primary" (click)="submit()">
+            Withdrawl
+          </button>
+        </div></ng-container
+      >
+    </div>
+
+    <dp-error-msg
+      *ngIf="!(loading$ | async) && (error$ | async) as error"
+      [error]="error"
+    >
+    </dp-error-msg>
+    <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
+
+    <ng-container class="flex" *ngIf="success$ | async as resultData">
+      <div class="flex flex-col-reverse md:flex-row justify-center gap-6 mt-4">
+        <div class="flex flex-col gap-5 max-w-[791px] w-full">
+          <dp-petition-view [data]="resultData"></dp-petition-view>
         </div>
-      </ng-container>
+        <div class="max-w-[386px] w-full h-fit">
+          <dp-current-result [data]="resultData"></dp-current-result>
+        </div>
+      </div>
     </ng-container>
   </div>
 </div>
