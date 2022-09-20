@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
@@ -14,110 +14,29 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
 import { EditPetitionCandidateModule } from './edit-petition-candidate/edit-petition-candidate.module';
 import { EditPetitionIssueModule } from './edit-petition-issue/edit-petition-issue.module';
 import { EditPetitionRoutingModule } from './edit-petition-routing.module';
-import {
-  exhaustMap,
-  map,
-  merge,
-  Observable,
-  of,
-  partition,
-  ReplaySubject,
-  shareReplay,
-  Subject,
-  tap,
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { EditPetitionComponent } from './edit-petition.component';
 import { EditResultPetitionModule } from './edit-result-petition/edit-result-petition.module';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
-import { Result } from 'src/app/shared/models/exports';
-import { PetitionService } from 'src/app/logic/petition/petition.service';
-import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { GetCommitteePetitionService } from 'src/app/logic/petition/get-committee-petition.service';
 import {
   IssuePetition,
   PetitionStatus,
   PetitionType,
 } from 'src/app/core/api/API';
+import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 
 describe('EditPetitionComponent', () => {
   let component: EditPetitionComponent;
+
   let fixture: ComponentFixture<EditPetitionComponent>;
+
   let _getCommitteePetitionService: GetCommitteePetitionService;
 
-  const mockedIssue: IssuePetition = {
-    __typename: 'IssuePetition',
-    PK: '',
-    createdAt: '',
-    detail: 'Text',
-    owner: '',
-    signatures: {
-      __typename: 'SignatureConnection',
-      items: [],
-      token: undefined,
-    },
-    status: PetitionStatus.NEW,
-    title: 'Title',
-    type: PetitionType.ISSUE,
-    updatedAt: '',
-    version: 0,
-  };
+  const activatedRoute = new ActivatedRouteStub();
 
-  class MockedGetCommitteePetitionService {
-    public error$: Observable<string | undefined>;
-    public success$: Observable<ResponsePetition | undefined>;
-    public loading$: Observable<boolean>;
-    public result$: Observable<Result<ResponsePetition>>;
-    private submit$: ReplaySubject<string> = new ReplaySubject();
-
-    constructor() {
-      this.result$ = this.submit$.pipe(
-        exhaustMap((_) =>
-          of({
-            result: { dataIssue: mockedIssue },
-          })
-        ),
-        shareReplay(1)
-      );
-      const [success$, error$] = partition(this.result$, (value) =>
-        value.result ? true : false
-      );
-
-      this.success$ = success$.pipe(
-        map((value) => value.result),
-
-        shareReplay(1)
-      );
-
-      this.error$ = error$.pipe(
-        map((value) => value.error),
-
-        shareReplay(1)
-      );
-
-      const end$ = merge(this.success$, this.error$);
-
-      this.loading$ = merge(
-        this.submit$.pipe(
-          map((v) => true),
-          tap(() => console.log('start'))
-        ),
-        end$.pipe(
-          map((v) => false),
-          tap(() => console.log('end'))
-        )
-      ).pipe(shareReplay(1));
-    }
-    ngOnDestroy(): void {
-      this.submit$.complete();
-    }
-
-    getPetition(id: string) {
-      this.submit$.next(id);
-    }
-  }
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       declarations: [EditPetitionComponent],
       imports: [
         CommonModule,
@@ -138,34 +57,165 @@ describe('EditPetitionComponent', () => {
         BrowserAnimationsModule,
       ],
       providers: [
-        EditPetitionComponent,
+        { provide: MatDialogRef, useValue: {} },
         {
-          provide: GetCommitteePetitionService,
-          useClass: MockedGetCommitteePetitionService,
+          provide: ActivatedRoute,
+          useValue: activatedRoute,
         },
       ],
-    }).compileComponents();
+    })
+      .overrideComponent(EditPetitionComponent, {
+        set: {
+          providers: [
+            {
+              provide: GetCommitteePetitionService,
+              useClass: MockedGetCommitteePetitionService,
+            },
+          ],
+        },
+      })
+      .compileComponents();
+  }));
 
-    component = TestBed.inject(EditPetitionComponent);
-    _getCommitteePetitionService = TestBed.inject(GetCommitteePetitionService);
+  beforeEach(async () => {
+    activatedRoute.setParamMap({ id: mockedIssue.PK });
     fixture = TestBed.createComponent(EditPetitionComponent);
-    component.ngOnInit();
-    fixture.detectChanges();
+    component = fixture.componentInstance;
+    _getCommitteePetitionService = fixture.debugElement.injector.get(
+      GetCommitteePetitionService
+    );
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeDefined();
   });
 
-  it('issue', () => {
-    _getCommitteePetitionService.success$.subscribe((_) => {
-      const issue_element = fixture.debugElement.nativeElement.querySelectorAll(
+  it('should show the loading bar when the petition is loading', () => {
+    component.ngOnInit();
+
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(1);
+  });
+
+  it('should not show the loading bar if the petition is not loading', () => {
+    spyOnProperty(
+      _getCommitteePetitionService,
+      'loading$',
+      'get'
+    ).and.returnValue(of(false));
+
+    component.ngOnInit();
+
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(0);
+  });
+
+  it('should show the edit petition issue element if the petition is an issue', () => {
+    component.ngOnInit();
+
+    fixture.detectChanges();
+
+    const dpEditPetitionIssue =
+      fixture.debugElement.nativeElement.querySelectorAll(
         'dp-edit-petition-issue'
       );
 
-      fixture.detectChanges();
-      expect(issue_element.length).toEqual(1);
-    });
+    expect(dpEditPetitionIssue.length).toBe(1);
+  });
+
+  it('should show the error element if an error ocurred and is not loading', () => {
+    spyOnProperty(
+      _getCommitteePetitionService,
+      'error$',
+      'get'
+    ).and.returnValue(of('error'));
+
+    spyOnProperty(
+      _getCommitteePetitionService,
+      'loading$',
+      'get'
+    ).and.returnValue(of(false));
+
+    component.ngOnInit();
+
     fixture.detectChanges();
+
+    const dpErrorMsg =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-error-msg');
+
+    expect(dpErrorMsg.length).toBe(1);
+  });
+
+  it('should not show the error element if an error ocurred and the component is loading', () => {
+    spyOnProperty(
+      _getCommitteePetitionService,
+      'error$',
+      'get'
+    ).and.returnValue(of('error'));
+
+    spyOnProperty(
+      _getCommitteePetitionService,
+      'loading$',
+      'get'
+    ).and.returnValue(of(true));
+
+    component.ngOnInit();
+
+    fixture.detectChanges();
+
+    const dpErrorMsg =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-error-msg');
+
+    expect(dpErrorMsg.length).toBe(0);
+  });
+
+  it('should call getPetition in the logic service with the corresponding id', () => {
+    const getPetitionSpy = spyOn(_getCommitteePetitionService, 'getPetition');
+
+    component.ngOnInit();
+
+    expect(getPetitionSpy).toHaveBeenCalledOnceWith('1');
   });
 });
+
+class MockedGetCommitteePetitionService {
+  public get error$(): Observable<string | undefined> {
+    return of(undefined);
+  }
+
+  public get success$(): Observable<ResponsePetition | undefined> {
+    return of({ dataIssue: mockedIssue });
+  }
+
+  public get loading$(): Observable<boolean> {
+    return of(true);
+  }
+
+  getPetition(id: string): void {}
+}
+
+const mockedIssue: IssuePetition = {
+  __typename: 'IssuePetition',
+  PK: '1',
+  createdAt: '',
+  detail: 'Text',
+  owner: '',
+  signatures: {
+    __typename: 'SignatureConnection',
+    items: [],
+    token: undefined,
+  },
+  status: PetitionStatus.NEW,
+  title: 'Title',
+  type: PetitionType.ISSUE,
+  updatedAt: '',
+  version: 0,
+};

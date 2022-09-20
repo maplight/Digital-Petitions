@@ -9,7 +9,7 @@
       <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <ng-container *ngIf="(success$ | async) && !result">
         <dp-return-link
-          [route]="'/committee/home/' + _activatedRoute.snapshot.params['id']"
+          [route]="'/committee/home/' + id"
           [text]="'Back to Petition'"
         ></dp-return-link>
         <h2 class="mt-[18px] leading-[30px] font-extrabold">Edit Petition</h2>
