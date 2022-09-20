@@ -182,7 +182,7 @@ describe('EditPetitionComponent', () => {
 
     component.ngOnInit();
 
-    expect(getPetitionSpy).toHaveBeenCalledOnceWith('1');
+    expect(getPetitionSpy).toHaveBeenCalledOnceWith(mockedIssue.PK);
   });
 });
 
