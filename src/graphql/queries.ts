@@ -11,8 +11,10 @@ export const getPetition = /* GraphQL */ `
       signatureSummary {
         approved
         deadline
+        rejected
         required
         submitted
+        verified
       }
       signatures {
         items {
@@ -58,8 +60,10 @@ export const getPetitionsByOwner = /* GraphQL */ `
         signatureSummary {
           approved
           deadline
+          rejected
           required
           submitted
+          verified
         }
         signatures {
           token
@@ -99,8 +103,10 @@ export const getPetitionsByType = /* GraphQL */ `
         signatureSummary {
           approved
           deadline
+          rejected
           required
           submitted
+          verified
         }
         signatures {
           token
@@ -174,6 +180,19 @@ export const getUsers = /* GraphQL */ `
         username
       }
       token
+    }
+  }
+`;
+export const getVoterRecordMatch = /* GraphQL */ `
+  query GetVoterRecordMatch($query: VoterRecordMatchInput!) {
+    getVoterRecordMatch(query: $query) {
+      address
+      city
+      fullName
+      methods
+      state
+      token
+      zipCode
     }
   }
 `;

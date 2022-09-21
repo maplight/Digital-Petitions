@@ -16,6 +16,7 @@ import {
   IssuePetition,
   PetitionsByOwnerInput,
   PetitionStatus,
+  PetitionStatusQuery,
   PetitionType,
 } from 'src/app/core/api/API';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -113,16 +114,19 @@ describe('CommitteeHomeComponent', () => {
     expect(dpPetitionCard.length).toBe(6);
   });
 
-  it('should show 12 petition card elements when a "see more" button is clicked', () => {
+  it('should call getPetitions function when a "see more" button is clicked', () => {
     //component.ngOnInit();
+    const getPetitionsSpy = spyOn(
+      _getPetitionsCommitteeService,
+      'getPetitions'
+    );
 
-    fixture.detectChanges();
     component.pageNumber();
 
-    const dpPetitionCard =
-      fixture.debugElement.nativeElement.querySelectorAll('dp-petition-card');
-
-    expect(dpPetitionCard.length).toBe(12);
+    expect(getPetitionsSpy).toHaveBeenCalledOnceWith({
+      status: PetitionStatusQuery.ANY,
+      owner: '',
+    });
   });
 
   it('should show the message " You still have no petitions " when there are no elements in a successful response', () => {
@@ -211,9 +215,6 @@ describe('CommitteeHomeComponent', () => {
 
     expect(dpErrorMsg.length).toBe(0);
   });
-
-  //evaluar que no muestre show moreç
-  //evaluar que muestre estoy vacio cuando este vacio
 });
 
 class MockedGetPetitionsCommitteeService {
