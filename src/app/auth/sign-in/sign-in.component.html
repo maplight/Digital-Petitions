@@ -4,14 +4,14 @@
     <dp-basic-card class="w-full">
       <div class="w-full flex justify-start">
         <h4 class="font-bold text-lg">
-          {{ viewState === "LOGIN" ? "Create an account" : "Change password" }}
+          {{ viewState === "LOGIN" ? "Create an account" : "Complete sign up" }}
         </h4>
       </div>
       <dp-error-msg
         *ngIf="
           !(loading$ | async) &&
           viewState == 'LOGIN' &&
-          (_signInLogic.error$ | async) as error
+          (signInLogic.error$ | async) as error
         "
         [error]="error"
       >
@@ -20,7 +20,7 @@
         *ngIf="
           !(loading$ | async) &&
           viewState != 'LOGIN' &&
-          (_completeNewPasswordLogic.error$ | async) as error
+          (completeAdminSignUpLogic.error$ | async) as error
         "
         [error]="error"
       >
@@ -104,7 +104,7 @@
       <ng-template #changePassword>
         <dp-change-password
           [loading]="loading$ | async"
-          (changePassword)="onChangePassword($event)"
+          (submitSignUpData)="onSubmitSignUpData($event)"
         ></dp-change-password>
       </ng-template>
     </dp-basic-card>

@@ -1,4 +1,4 @@
-import { state } from 'src/app/core/states';
+import { State } from 'src/app/core/states';
 
 export interface SignaturePetitionType {
   verifyType: string;

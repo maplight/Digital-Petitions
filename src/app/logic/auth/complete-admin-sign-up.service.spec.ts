@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CompleteNewPasswordService } from './complete-new-password.service';
+import { CompleteAdminSignUpService } from './complete-admin-sign-up.service';
 
 describe('CompleteNewPasswordService', () => {
-  let service: CompleteNewPasswordService;
+  let service: CompleteAdminSignUpService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CompleteNewPasswordService);
+    service = TestBed.inject(CompleteAdminSignUpService);
   });
 
   it('should be created', () => {

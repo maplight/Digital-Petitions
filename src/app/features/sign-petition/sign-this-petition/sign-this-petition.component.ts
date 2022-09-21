@@ -10,7 +10,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { SignatureSummary } from 'src/app/core/api/API';
-import { state, states } from 'src/app/core/states';
+import { State, states } from 'src/app/core/states';
 import { Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
@@ -30,7 +30,7 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
   };
 
   public formGroup: FormGroup;
-  protected localStates: state[] = states;
+  protected localStates: State[] = states;
   @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
   @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
 
