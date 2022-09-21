@@ -12,7 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { EditPetitionIssueModule } from './edit-petition-issue/edit-petition-issue.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [EditPetitionComponent],
@@ -29,7 +30,8 @@ import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-peti
     MatIconModule,
     MatProgressBarModule,
     MatButtonModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
-  providers: [GetPublicPetitionService],
 })
 export class EditPetitionModule {}

@@ -13,7 +13,7 @@
         class="md:hidden flex"
         [filterName]="'Filter by Category'"
         [filterType]="filterByCategory"
-        [disabled]="!!(loading$ | async)"
+        [disabled]="!!(loading$ | async) || items.length === 0 || !items"
         (event)="filter($event)"
       ></dp-filter-by-category>
       <dp-error-msg
@@ -65,7 +65,7 @@
       <dp-filter-by-category
         [filterName]="'Filter by Category'"
         [filterType]="filterByCategory"
-        [disabled]="!!(loading$ | async)"
+        [disabled]="!!(loading$ | async) || items.length === 0 || !items"
         (event)="filter($event)"
       ></dp-filter-by-category>
     </div>

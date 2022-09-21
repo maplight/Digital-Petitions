@@ -32,6 +32,5 @@ import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.
     MatProgressBarModule,
   ],
   exports: [ApproveDialogComponent],
-  providers: [ApprovePetitionService],
 })
 export class ApproveDialogModule {}

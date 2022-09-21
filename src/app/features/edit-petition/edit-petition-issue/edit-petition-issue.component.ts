@@ -9,10 +9,9 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Observable, shareReplay, tap } from 'rxjs';
-import { IssuePetition, Petition } from 'src/app/core/api/API';
+import { Observable, tap } from 'rxjs';
+import { IssuePetition } from 'src/app/core/api/API';
 import { EditPetitionIssueService } from 'src/app/logic/petition/edit-petition-issue.service';
-import { IssuePetitionData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-edit-petition.component';
 
@@ -75,6 +74,7 @@ export class EditPetitionIssueComponent implements OnInit, OnChanges {
         .subscribe();
     }
   }
+
   cancel() {
     this._cancelEvent.emit();
   }

@@ -14,16 +14,12 @@ import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petitio
 @Component({
   selector: 'dp-confirm-withdrawl-petition',
   templateUrl: './confirm-withdrawl-petition.component.html',
+  providers: [WithdrawPetitionService],
 })
 export class ConfirmWithdrawlPetitionComponent implements OnInit {
-  protected result$!: Subscription;
-  protected error: string | undefined;
+  protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
-  protected currentStep$: BehaviorSubject<
-    'loading' | 'empty' | 'contents' | 'error'
-  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
-    'contents'
-  );
+
   public formGroup: FormGroup;
   constructor(
     private _fb: FormBuilder,
@@ -40,20 +36,14 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.result$ = this._withdrawlLogic.result$.subscribe((result) => {
-      if (!!result.result) {
-        this._router.navigate(['/committee/home', this.data.id, result.result]);
-        this._dialog.closeAll();
-      } else {
-        this.error = result.error;
-        this.currentStep$.next('error');
-      }
+    this._withdrawlLogic.success$.subscribe((result) => {
+      this._router.navigate(['/committee/home', this.data.id, result]);
+      this._dialog.closeAll();
     });
     this.loading$ = this._withdrawlLogic.loading$;
   }
 
   submit() {
-    this.currentStep$.next('loading');
     this._withdrawlLogic.withdrawPetition(this.data.id);
   }
 }

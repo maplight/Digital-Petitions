@@ -1,5 +1,5 @@
 <div
-  *ngIf="signatureSummary"
+  *ngIf="status !== 'NEW' && signatureSummary"
   class="flex flex-col gap-4 rounded-xl p-4 bg-[#FFFFFF] border border-[#D7D7D7] shadow-sm"
 >
   <div class="flex flex-row justify-between">
@@ -39,7 +39,7 @@
 </div>
 <!--STATUS:NEW-->
 <div
-  *ngIf="!signatureSummary"
+  *ngIf="status === 'NEW'"
   class="flex flex-col gap-4 rounded-xl p-4 bg-[#FFFFFF] border border-[#D7D7D7] shadow-sm"
 >
   <div class="flex flex-row justify-between">

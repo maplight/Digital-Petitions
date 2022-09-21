@@ -15,6 +15,8 @@ import { RouterModule } from '@angular/router';
 import { ConfirmWithdrawlPetitionModule } from './confirm-withdrawl-petition/confirm-withdrawl-petition.module';
 import { WithdrawlResultModule } from './withdrawl-result/withdrawl-result.module';
 import { PetitionStatusModule } from 'src/app/pipes/petition-status/petition-status.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 
 @NgModule({
   declarations: [ViewPetitionCommitteeComponent],
@@ -33,6 +35,8 @@ import { PetitionStatusModule } from 'src/app/pipes/petition-status/petition-sta
     RouterModule,
     WithdrawlResultModule,
     PetitionStatusModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
 })
 export class ViewPetitionCommitteeModule {}

@@ -27,7 +27,7 @@ export class CurrentResultComponent implements OnInit, OnChanges {
     'h-[26px] bg-[#FF3030] px-4 py-1 text-black  rounded';
 
   constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes?: SimpleChanges): void {
     let { status } = this.data.dataCandidate
       ? this.data.dataCandidate
       : this.data.dataIssue
@@ -35,11 +35,8 @@ export class CurrentResultComponent implements OnInit, OnChanges {
       : { status: undefined };
     this.status = status;
 
-    let { signatureSummary } = this.data.dataCandidate
-      ? this.data.dataCandidate
-      : this.data.dataIssue
-      ? this.data.dataIssue
-      : { signatureSummary: undefined };
+    let { signatureSummary } = this.data.dataCandidate ??
+      this.data.dataIssue ?? { signatureSummary: undefined };
     this.signatureSummary = signatureSummary;
 
     if (status) {
