@@ -16,7 +16,7 @@ import {
   PetitionStatus,
   PetitionType,
 } from 'src/app/core/api/API';
-import { state, states } from 'src/app/core/states';
+import { State, states } from 'src/app/core/states';
 import { EditPetitionCandidateService } from 'src/app/logic/petition/edit-petition-candidate.service';
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -34,7 +34,7 @@ export class EditPetitionCandidateComponent implements OnInit, OnChanges {
 
   @Output() _cancelEvent: EventEmitter<void> = new EventEmitter();
   @Output() _submitEvent: EventEmitter<CandidatePetition> = new EventEmitter();
-  protected localStates: state[] = states;
+  protected localStates: State[] = states;
 
   protected loading$!: Observable<boolean>;
   protected error$!: Observable<string | undefined>;

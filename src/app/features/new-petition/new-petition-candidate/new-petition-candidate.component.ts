@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { Observable, takeUntil, Subject } from 'rxjs';
 
 import { CandidatePetition } from 'src/app/core/api/API';
-import { state, states } from 'src/app/core/states';
+import { State, states } from 'src/app/core/states';
 import { NewPetitionCandidateService } from 'src/app/logic/petition/exports';
 import { CandidatePetitionData } from 'src/app/shared/models/exports';
 
@@ -26,7 +26,7 @@ export class NewPetitionCandidateComponent implements OnInit, OnDestroy {
   protected success$!: Observable<CandidatePetition | undefined>;
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
-  protected localStates: state[] = states;
+  protected localStates: State[] = states;
   private _unSubscribeAll: Subject<void> = new Subject();
   @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
   @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];

@@ -1,8 +1,8 @@
-export type state = {
+export type State = {
   name: string;
   value: string;
 };
-export const states: state[] = [
+export const states: State[] = [
   {
     name: 'Alabama',
     value: 'AL',
