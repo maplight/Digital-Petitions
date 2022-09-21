@@ -12,32 +12,35 @@ import {
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
-import { Result, SignInCredentials } from 'src/app/shared/models/exports';
+import { Result } from 'src/app/shared/models/exports';
+import { __values } from 'tslib';
 
 @Injectable()
-export class SignInService implements OnDestroy {
+export class CompleteNewPasswordService {
   public error$: Observable<string>;
+  public success$: Observable<CognitoUserFacade>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<CognitoUserFacade>>;
-  private _submit: Subject<SignInCredentials> = new Subject();
-  public success$: Observable<CognitoUserFacade>;
+  private submit$: Subject<string> = new Subject();
 
   constructor(
-    private _accountService: AccountService,
+    private _accountLogic: AccountService,
     private _logger: LoggingService
   ) {
-    this.result$ = this._submit.pipe(
-      exhaustMap((data) => this._accountService.signIn(data)),
+    this.result$ = this.submit$.pipe(
+      exhaustMap((newPassword) =>
+        this._accountLogic.completeNewPassword(newPassword)
+      ),
       shareReplay(1)
     );
 
-    const [success$, error$] = partition(
-      this.result$,
-      (value) => !!value.result
+    const [success$, error$] = partition(this.result$, (value) =>
+      value.result ? true : false
     );
 
     this.success$ = success$.pipe(
-      map((value) => value.result!),
+      map(({ result }) => result!),
+      tap((result) => this._logger.log(result)),
       shareReplay(1)
     );
 
@@ -50,26 +53,22 @@ export class SignInService implements OnDestroy {
     const end$ = merge(this.success$, this.error$);
 
     this.loading$ = merge(
-      this._submit.pipe(
+      this.submit$.pipe(
         map((_) => true),
-        tap((_) => this._logger.log('start'))
+        tap(() => this._logger.log('start'))
       ),
       end$.pipe(
         map((_) => false),
-        tap((_) => this._logger.log('end'))
+        tap(() => this._logger.log('end'))
       )
     ).pipe(shareReplay(1));
   }
 
   ngOnDestroy(): void {
-    this._submit.complete();
+    this.submit$.complete();
   }
 
-  /**
-   * This method begins a user's authentication process.
-   * @param value SignInCredentials type object, contains email and password data provided by the user.
-   */
-  requestSignIn(value: SignInCredentials) {
-    this._submit.next(value);
+  setNewPassword(password: string) {
+    this.submit$.next(password);
   }
 }

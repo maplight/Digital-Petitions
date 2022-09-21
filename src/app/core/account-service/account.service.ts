@@ -8,6 +8,7 @@ import {
   Observable,
   of,
   ReplaySubject,
+  throwError,
 } from 'rxjs';
 
 import {
@@ -31,11 +32,15 @@ import { CognitoUserFacade, User } from 'src/app/shared/models/auth/user';
 })
 export class AccountService {
   private privateCurrentUser: ReplaySubject<User | null> = new ReplaySubject();
-  private privateisLoged: BehaviorSubject<boolean> =
+  private isAuthenticatedController: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
   public currentUser$: Observable<User | null> =
     this.privateCurrentUser.asObservable();
-  public isLoged$: Observable<boolean> = this.privateisLoged.asObservable();
+  public isAuthenticated$: Observable<boolean> =
+    this.isAuthenticatedController.asObservable();
+
+  /** The CognitoUser as it comes from the Auth.signIn method. */
+  private _pristineCognitoUser: any;
 
   constructor() {}
 
@@ -70,9 +75,12 @@ export class AccountService {
   ): Observable<Result<CognitoUserFacade>> {
     return from(
       Auth.signIn(data.email, data.password)
-        .then((data: CognitoUserFacade) => {
+        .then((data: any) => {
+          this._pristineCognitoUser = data;
+
           this.updateUser();
-          return { result: data };
+
+          return { result: data as CognitoUserFacade };
         })
         .catch((error) => {
           return { error: error.message };
@@ -97,6 +105,41 @@ export class AccountService {
           });
       })
     );
+  }
+
+  /**
+   * @param password Completes the process of setting a new password for new admin users.
+   * @returns An observable with the success or error result.
+   */
+  public completeNewPassword(
+    password: string
+  ): Observable<Result<CognitoUserFacade>> {
+    if (!this._pristineCognitoUser) {
+      return throwError(() => ({
+        message: 'Please sign in first.',
+      }));
+    }
+
+    // creating a clousure to avoid callback hell, notice this is an Immediately Invoked Function Expression (IIFE)
+    const _tmp = (async () => {
+      try {
+        await Auth.completeNewPassword(
+          this._pristineCognitoUser,
+          password + '',
+          {
+            address: 'Unset',
+            given_name: 'Unset',
+            family_name: 'Unset',
+          }
+        );
+
+        return { result: await Auth.currentAuthenticatedUser() };
+      } catch (error: any) {
+        return { error: error.message };
+      }
+    })();
+
+    return from(_tmp);
   }
 
   public changePersonalDetails(
@@ -236,17 +279,16 @@ export class AccountService {
       });
   }
 
-  public isLoged(): Observable<CognitoUserFacade | undefined> {
+  public getCurrentUser(): Observable<CognitoUserFacade | undefined> {
     return from(
       Auth.currentAuthenticatedUser()
         .then((data) => {
-          this.privateisLoged.next(true);
+          this.isAuthenticatedController.next(true);
           this.updateUser();
-          console.log(data);
-          return data as unknown as CognitoUserFacade;
+          return data as CognitoUserFacade;
         })
         .catch(() => {
-          this.privateisLoged.next(false);
+          this.isAuthenticatedController.next(false);
           return undefined;
         })
     );
