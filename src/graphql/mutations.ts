@@ -11,8 +11,10 @@ export const approvePetition = /* GraphQL */ `
       signatureSummary {
         approved
         deadline
+        rejected
         required
         submitted
+        verified
       }
       signatures {
         items {
@@ -83,8 +85,10 @@ export const editCandidatePetition = /* GraphQL */ `
       signatureSummary {
         approved
         deadline
+        rejected
         required
         submitted
+        verified
       }
       signatures {
         items {
@@ -114,8 +118,10 @@ export const editIssuePetition = /* GraphQL */ `
       signatureSummary {
         approved
         deadline
+        rejected
         required
         submitted
+        verified
       }
       signatures {
         items {
@@ -145,8 +151,10 @@ export const rejectPetition = /* GraphQL */ `
       signatureSummary {
         approved
         deadline
+        rejected
         required
         submitted
+        verified
       }
       signatures {
         items {
@@ -201,8 +209,10 @@ export const submitCandidatePetition = /* GraphQL */ `
       signatureSummary {
         approved
         deadline
+        rejected
         required
         submitted
+        verified
       }
       signatures {
         items {
@@ -232,8 +242,10 @@ export const submitIssuePetition = /* GraphQL */ `
       signatureSummary {
         approved
         deadline
+        rejected
         required
         submitted
+        verified
       }
       signatures {
         items {
@@ -251,6 +263,32 @@ export const submitIssuePetition = /* GraphQL */ `
       type
       updatedAt
       version
+    }
+  }
+`;
+export const submitSignature = /* GraphQL */ `
+  mutation SubmitSignature($data: SignatureVerificationInput!) {
+    submitSignature(data: $data) {
+      address
+      city
+      confirmationRequired
+      error
+      fullName
+      id
+      method
+      methodPayload
+      state
+      title
+      token
+      zipCode
+    }
+  }
+`;
+export const submitVerificationCode = /* GraphQL */ `
+  mutation SubmitVerificationCode($code: ID!) {
+    submitVerificationCode(code: $code) {
+      error
+      message
     }
   }
 `;

@@ -50,10 +50,12 @@ export type AddressData = {
 
 export type SignatureSummary = {
   __typename: "SignatureSummary",
-  approved: number,
+  approved?: number | null,
   deadline?: string | null,
-  required: number,
-  submitted: number,
+  rejected?: number | null,
+  required?: number | null,
+  submitted?: number | null,
+  verified?: number | null,
 };
 
 export type SignatureConnection = {
@@ -182,6 +184,50 @@ export type IssuePetitionInput = {
   title: string,
 };
 
+export type SignatureVerificationInput = {
+  address: string,
+  city: string,
+  fullName: string,
+  id?: string | null,
+  method: VerificationMethod,
+  methodPayload: Array< string | null >,
+  state: string,
+  title?: string | null,
+  token: string,
+  zipCode: string,
+};
+
+export enum VerificationMethod {
+  CALL = "CALL",
+  EMAIL = "EMAIL",
+  POSTAL = "POSTAL",
+  STATE_ID = "STATE_ID",
+  TEXT = "TEXT",
+}
+
+
+export type SignatureVerification = {
+  __typename: "SignatureVerification",
+  address: string,
+  city: string,
+  confirmationRequired: boolean,
+  error?: string | null,
+  fullName: string,
+  id?: string | null,
+  method: VerificationMethod,
+  methodPayload: Array< string | null >,
+  state: string,
+  title?: string | null,
+  token: string,
+  zipCode: string,
+};
+
+export type CodeSubmissionResult = {
+  __typename: "CodeSubmissionResult",
+  error: boolean,
+  message: string,
+};
+
 export type SiteConfigurationInput = {
   buttonColor?: string | null,
   expectedVersion: number,
@@ -300,6 +346,25 @@ export type UserConnection = {
   token?: string | null,
 };
 
+export type VoterRecordMatchInput = {
+  address: string,
+  city: string,
+  fullName: string,
+  state: string,
+  zipCode: string,
+};
+
+export type VoterRecordMatch = {
+  __typename: "VoterRecordMatch",
+  address: string,
+  city: string,
+  fullName: string,
+  methods: Array< string >,
+  state: string,
+  token?: string | null,
+  zipCode: string,
+};
+
 export type ApprovePetitionMutationVariables = {
   data: ApprovePetitionInput,
 };
@@ -312,10 +377,12 @@ export type ApprovePetitionMutation = {
       owner: string,
       signatureSummary?:  {
         __typename: string,
-        approved: number,
+        approved?: number | null,
         deadline?: string | null,
-        required: number,
-        submitted: number,
+        rejected?: number | null,
+        required?: number | null,
+        submitted?: number | null,
+        verified?: number | null,
       } | null,
       signatures:  {
         __typename: string,
@@ -352,10 +419,12 @@ export type ApprovePetitionMutation = {
       owner: string,
       signatureSummary?:  {
         __typename: string,
-        approved: number,
+        approved?: number | null,
         deadline?: string | null,
-        required: number,
-        submitted: number,
+        rejected?: number | null,
+        required?: number | null,
+        submitted?: number | null,
+        verified?: number | null,
       } | null,
       signatures:  {
         __typename: string,
@@ -426,10 +495,12 @@ export type EditCandidatePetitionMutation = {
     party: string,
     signatureSummary?:  {
       __typename: "SignatureSummary",
-      approved: number,
+      approved?: number | null,
       deadline?: string | null,
-      required: number,
-      submitted: number,
+      rejected?: number | null,
+      required?: number | null,
+      submitted?: number | null,
+      verified?: number | null,
     } | null,
     signatures:  {
       __typename: "SignatureConnection",
@@ -464,10 +535,12 @@ export type EditIssuePetitionMutation = {
     owner: string,
     signatureSummary?:  {
       __typename: "SignatureSummary",
-      approved: number,
+      approved?: number | null,
       deadline?: string | null,
-      required: number,
-      submitted: number,
+      rejected?: number | null,
+      required?: number | null,
+      submitted?: number | null,
+      verified?: number | null,
     } | null,
     signatures:  {
       __typename: "SignatureConnection",
@@ -502,10 +575,12 @@ export type RejectPetitionMutation = {
       owner: string,
       signatureSummary?:  {
         __typename: string,
-        approved: number,
+        approved?: number | null,
         deadline?: string | null,
-        required: number,
-        submitted: number,
+        rejected?: number | null,
+        required?: number | null,
+        submitted?: number | null,
+        verified?: number | null,
       } | null,
       signatures:  {
         __typename: string,
@@ -542,10 +617,12 @@ export type RejectPetitionMutation = {
       owner: string,
       signatureSummary?:  {
         __typename: string,
-        approved: number,
+        approved?: number | null,
         deadline?: string | null,
-        required: number,
-        submitted: number,
+        rejected?: number | null,
+        required?: number | null,
+        submitted?: number | null,
+        verified?: number | null,
       } | null,
       signatures:  {
         __typename: string,
@@ -593,10 +670,12 @@ export type SubmitCandidatePetitionMutation = {
     party: string,
     signatureSummary?:  {
       __typename: "SignatureSummary",
-      approved: number,
+      approved?: number | null,
       deadline?: string | null,
-      required: number,
-      submitted: number,
+      rejected?: number | null,
+      required?: number | null,
+      submitted?: number | null,
+      verified?: number | null,
     } | null,
     signatures:  {
       __typename: "SignatureConnection",
@@ -631,10 +710,12 @@ export type SubmitIssuePetitionMutation = {
     owner: string,
     signatureSummary?:  {
       __typename: "SignatureSummary",
-      approved: number,
+      approved?: number | null,
       deadline?: string | null,
-      required: number,
-      submitted: number,
+      rejected?: number | null,
+      required?: number | null,
+      submitted?: number | null,
+      verified?: number | null,
     } | null,
     signatures:  {
       __typename: "SignatureConnection",
@@ -654,6 +735,40 @@ export type SubmitIssuePetitionMutation = {
     type: PetitionType,
     updatedAt: string,
     version: number,
+  },
+};
+
+export type SubmitSignatureMutationVariables = {
+  data: SignatureVerificationInput,
+};
+
+export type SubmitSignatureMutation = {
+  submitSignature:  {
+    __typename: "SignatureVerification",
+    address: string,
+    city: string,
+    confirmationRequired: boolean,
+    error?: string | null,
+    fullName: string,
+    id?: string | null,
+    method: VerificationMethod,
+    methodPayload: Array< string | null >,
+    state: string,
+    title?: string | null,
+    token: string,
+    zipCode: string,
+  },
+};
+
+export type SubmitVerificationCodeMutationVariables = {
+  code: string,
+};
+
+export type SubmitVerificationCodeMutation = {
+  submitVerificationCode:  {
+    __typename: "CodeSubmissionResult",
+    error: boolean,
+    message: string,
   },
 };
 
@@ -699,10 +814,12 @@ export type GetPetitionQuery = {
       owner: string,
       signatureSummary?:  {
         __typename: string,
-        approved: number,
+        approved?: number | null,
         deadline?: string | null,
-        required: number,
-        submitted: number,
+        rejected?: number | null,
+        required?: number | null,
+        submitted?: number | null,
+        verified?: number | null,
       } | null,
       signatures:  {
         __typename: string,
@@ -739,10 +856,12 @@ export type GetPetitionQuery = {
       owner: string,
       signatureSummary?:  {
         __typename: string,
-        approved: number,
+        approved?: number | null,
         deadline?: string | null,
-        required: number,
-        submitted: number,
+        rejected?: number | null,
+        required?: number | null,
+        submitted?: number | null,
+        verified?: number | null,
       } | null,
       signatures:  {
         __typename: string,
@@ -781,10 +900,12 @@ export type GetPetitionsByOwnerQuery = {
         owner: string,
         signatureSummary?:  {
           __typename: string,
-          approved: number,
+          approved?: number | null,
           deadline?: string | null,
-          required: number,
-          submitted: number,
+          rejected?: number | null,
+          required?: number | null,
+          submitted?: number | null,
+          verified?: number | null,
         } | null,
         signatures:  {
           __typename: string,
@@ -812,10 +933,12 @@ export type GetPetitionsByOwnerQuery = {
         owner: string,
         signatureSummary?:  {
           __typename: string,
-          approved: number,
+          approved?: number | null,
           deadline?: string | null,
-          required: number,
-          submitted: number,
+          rejected?: number | null,
+          required?: number | null,
+          submitted?: number | null,
+          verified?: number | null,
         } | null,
         signatures:  {
           __typename: string,
@@ -847,10 +970,12 @@ export type GetPetitionsByTypeQuery = {
         owner: string,
         signatureSummary?:  {
           __typename: string,
-          approved: number,
+          approved?: number | null,
           deadline?: string | null,
-          required: number,
-          submitted: number,
+          rejected?: number | null,
+          required?: number | null,
+          submitted?: number | null,
+          verified?: number | null,
         } | null,
         signatures:  {
           __typename: string,
@@ -878,10 +1003,12 @@ export type GetPetitionsByTypeQuery = {
         owner: string,
         signatureSummary?:  {
           __typename: string,
-          approved: number,
+          approved?: number | null,
           deadline?: string | null,
-          required: number,
-          submitted: number,
+          rejected?: number | null,
+          required?: number | null,
+          submitted?: number | null,
+          verified?: number | null,
         } | null,
         signatures:  {
           __typename: string,
@@ -963,6 +1090,23 @@ export type GetUsersQuery = {
       username: string,
     } >,
     token?: string | null,
+  },
+};
+
+export type GetVoterRecordMatchQueryVariables = {
+  query: VoterRecordMatchInput,
+};
+
+export type GetVoterRecordMatchQuery = {
+  getVoterRecordMatch:  {
+    __typename: "VoterRecordMatch",
+    address: string,
+    city: string,
+    fullName: string,
+    methods: Array< string >,
+    state: string,
+    token?: string | null,
+    zipCode: string,
   },
 };
 

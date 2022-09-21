@@ -41,6 +41,11 @@ type CandidatePetition implements Petition @aws_cognito_user_pools @aws_iam {
   version: Int!
 }
 
+type CodeSubmissionResult @aws_iam {
+  error: Boolean!
+  message: String!
+}
+
 type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
   PK: ID!
   createdAt: AWSDateTime!
@@ -73,6 +78,9 @@ type Mutation {
     @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
   submitIssuePetition(data: IssuePetitionInput!): IssuePetition!
     @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
+  submitSignature(data: SignatureVerificationInput!): SignatureVerification!
+    @aws_iam
+  submitVerificationCode(code: ID!): CodeSubmissionResult! @aws_iam
   updateSiteConfiguration(data: SiteConfigurationInput!): SiteConfiguration!
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   updateUserAccess(data: UpdateUserAccessInput!): User!
@@ -102,6 +110,7 @@ type Query {
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   getUsers(query: SearchUsersInput): UserConnection!
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
+  getVoterRecordMatch(query: VoterRecordMatchInput!): VoterRecordMatch! @aws_iam
   publicEcho(ping: String!): String!
   siteConfiguration: SiteConfiguration! @aws_cognito_user_pools @aws_iam
 }
@@ -126,11 +135,33 @@ type SignatureConnection @aws_cognito_user_pools {
 }
 
 type SignatureSummary @aws_cognito_user_pools @aws_iam {
-  approved: Int!
+  approved: Int
+    @aws_cognito_user_pools(
+      cognito_groups: ["AdminGroup", "CityStaffGroup", "GuestStaffGroup"]
+    )
   deadline: AWSDateTime
-  required: Int!
-  submitted: Int!
-    @aws_cognito_user_pools(cognito_groups: ["AdminGroup", "CityStaffGroup"])
+  rejected: Int
+    @aws_cognito_user_pools(
+      cognito_groups: ["AdminGroup", "CityStaffGroup", "GuestStaffGroup"]
+    )
+  required: Int
+  submitted: Int
+  verified: Int
+}
+
+type SignatureVerification @aws_iam {
+  address: String!
+  city: String!
+  confirmationRequired: Boolean!
+  error: String
+  fullName: String!
+  id: ID
+  method: VerificationMethod!
+  methodPayload: [String]!
+  state: String!
+  title: String
+  token: String!
+  zipCode: String!
 }
 
 type SiteConfiguration @aws_cognito_user_pools @aws_iam {
@@ -159,6 +190,16 @@ type User @aws_cognito_user_pools {
 type UserConnection @aws_cognito_user_pools {
   items: [User!]!
   token: ID
+}
+
+type VoterRecordMatch @aws_iam {
+  address: String!
+  city: String!
+  fullName: String!
+  methods: [String!]!
+  state: String!
+  token: String
+  zipCode: String!
 }
 
 enum AccessLevel {
@@ -226,6 +267,14 @@ enum StaffAccessLevel {
   ADMIN
   GUEST
   STAFF
+}
+
+enum VerificationMethod {
+  CALL
+  EMAIL
+  POSTAL
+  STATE_ID
+  TEXT
 }
 
 input AddressInput {
@@ -306,6 +355,19 @@ input SearchUsersInput {
   searchName: String
 }
 
+input SignatureVerificationInput {
+  address: String!
+  city: String!
+  fullName: String!
+  id: ID
+  method: VerificationMethod!
+  methodPayload: [String]!
+  state: String!
+  title: String
+  token: String!
+  zipCode: String!
+}
+
 input SignaturesByPetitionInput {
   cursor: ID
   limit: Int
@@ -340,4 +402,12 @@ input TargetPetitionInput {
 input UpdateUserAccessInput {
   permissions: AccessLevel!
   username: ID!
+}
+
+input VoterRecordMatchInput {
+  address: String!
+  city: String!
+  fullName: String!
+  state: String!
+  zipCode: String!
 }

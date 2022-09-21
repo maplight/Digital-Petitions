@@ -7,12 +7,15 @@
   >
     <mat-progress-bar
       color="primary"
-      [value]="(signatureSummary.approved / signatureSummary.required) * 100"
-      [bufferValue]="signatureSummary.required"
+      [value]="
+        ((signatureSummary.approved ?? 0) / (signatureSummary.required ?? 1)) *
+        100
+      "
+      [bufferValue]="signatureSummary.required ?? 0"
     ></mat-progress-bar>
     <p class="text-[14px] leading-[18px] font-normal">
-      {{ signatureSummary.approved }} /
-      {{ signatureSummary.required }} Signatures Submited
+      {{ signatureSummary.approved ?? 0 }} /
+      {{ signatureSummary.required ?? 0 }} Signatures Submited
     </p>
   </div>
   <p class="font-bold text-lg leading-6">Sign This Petition</p>

@@ -14,15 +14,15 @@
     <mat-progress-bar
       color="primary"
       [value]="
-        (petition.signatureSummary.approved /
-          petition.signatureSummary.required) *
+        ((petition.signatureSummary.approved ?? 0) /
+          (petition.signatureSummary.required ?? 1)) *
         100
       "
-      [bufferValue]="petition.signatureSummary.required"
+      [bufferValue]="petition.signatureSummary.required ?? 0"
     ></mat-progress-bar>
     <p class="text-[14px] leading-[18px] font-normal">
-      {{ petition.signatureSummary.approved }} /
-      {{ petition.signatureSummary.required }} Signatures Submitted
+      {{ petition.signatureSummary.approved ?? 0 }} /
+      {{ petition.signatureSummary.required ?? 0 }} Signatures Submitted
     </p>
   </div>
 </div>

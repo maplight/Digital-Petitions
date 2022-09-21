@@ -15,7 +15,7 @@ export const getPetition = {
         PK
         owner
         signatureSummary {
-          approved
+          submitted
           deadline
           required
         }
@@ -96,7 +96,7 @@ export const getPetitionsByOwner = /* GraphQL */ `
       items {
         PK
         signatureSummary {
-          approved
+          submitted
           deadline
           required
         }
@@ -138,7 +138,7 @@ export const getPetitionsByType = /* GraphQL */ `
         PK
         owner
         signatureSummary {
-          approved
+          submitted
           deadline
           required
         }
