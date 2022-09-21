@@ -8,7 +8,7 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
-import { state, states } from 'src/app/core/states';
+import { State, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
   protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();
   protected formGroup: FormGroup;
-  protected localStates: state[] = states;
+  protected localStates: State[] = states;
 
   constructor(
     private _fb: FormBuilder,

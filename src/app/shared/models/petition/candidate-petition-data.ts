@@ -1,4 +1,4 @@
-import { state } from 'src/app/core/states';
+import { State } from 'src/app/core/states';
 
 export interface CandidatePetitionData {
   id: number;
@@ -8,7 +8,7 @@ export interface CandidatePetitionData {
   address: string;
   aptNumber: string;
   city: string;
-  state: state;
+  state: State;
   zipCode: string;
   atributes?: {
     type: string;

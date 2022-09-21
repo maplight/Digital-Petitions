@@ -26,6 +26,7 @@ import {
 import { API, Auth } from 'aws-amplify';
 import { SignUpConfirmationCode } from 'src/app/shared/models/auth/sign-up-confirmation-code';
 import { CognitoUserFacade, User } from 'src/app/shared/models/auth/user';
+import { AdminSignUpData } from 'src/app/shared/models/auth/admin-sign-up-data';
 
 @Injectable({
   providedIn: 'root',
@@ -108,11 +109,13 @@ export class AccountService {
   }
 
   /**
-   * @param password Completes the process of setting a new password for new admin users.
+   * Completes the process of setting a new password and personal details for new admin users.
+   *
+   * @param accountDetails Personal details and password of the admin account.
    * @returns An observable with the success or error result.
    */
   public completeNewPassword(
-    password: string
+    accountDetails: AdminSignUpData
   ): Observable<Result<CognitoUserFacade>> {
     if (!this._pristineCognitoUser) {
       return throwError(() => ({
@@ -125,11 +128,11 @@ export class AccountService {
       try {
         await Auth.completeNewPassword(
           this._pristineCognitoUser,
-          password + '',
+          accountDetails.password + '',
           {
-            address: 'Unset',
-            given_name: 'Unset',
-            family_name: 'Unset',
+            address: '""',
+            given_name: accountDetails.firstName,
+            family_name: accountDetails.lastName,
           }
         );
 
