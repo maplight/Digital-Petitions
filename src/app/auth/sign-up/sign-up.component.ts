@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { state, states } from '../../core/states';
+import { State, states } from '../../core/states';
 import { SignUpService } from 'src/app/logic/auth/exports';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
   providers: [SignUpService],
 })
 export class SignUpComponent implements OnInit {
-  protected localStates: state[] = states;
+  protected localStates: State[] = states;
 
   protected hidePassword = true;
 

@@ -11,25 +11,26 @@ import {
 } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
+import { AdminSignUpData } from 'src/app/shared/models/auth/admin-sign-up-data';
 import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 import { Result } from 'src/app/shared/models/exports';
 import { __values } from 'tslib';
 
 @Injectable()
-export class CompleteNewPasswordService {
+export class CompleteAdminSignUpService {
   public error$: Observable<string>;
   public success$: Observable<CognitoUserFacade>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<CognitoUserFacade>>;
-  private submit$: Subject<string> = new Subject();
+  private submit$: Subject<AdminSignUpData> = new Subject();
 
   constructor(
     private _accountLogic: AccountService,
     private _logger: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((newPassword) =>
-        this._accountLogic.completeNewPassword(newPassword)
+      exhaustMap((signUpData) =>
+        this._accountLogic.completeNewPassword(signUpData)
       ),
       shareReplay(1)
     );
@@ -68,7 +69,7 @@ export class CompleteNewPasswordService {
     this.submit$.complete();
   }
 
-  setNewPassword(password: string) {
-    this.submit$.next(password);
+  completeSignUp(signUpData: AdminSignUpData) {
+    this.submit$.next(signUpData);
   }
 }

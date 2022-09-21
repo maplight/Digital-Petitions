@@ -16,9 +16,10 @@ import {
   tap,
 } from 'rxjs';
 import {
-  CompleteNewPasswordService,
+  CompleteAdminSignUpService,
   SignInService,
 } from 'src/app/logic/auth/exports';
+import { AdminSignUpData } from 'src/app/shared/models/auth/admin-sign-up-data';
 import { Attributes, CognitoUserFacade } from 'src/app/shared/models/auth/user';
 
 type SignInForm = {
@@ -30,7 +31,7 @@ type ViewState = 'LOGIN' | 'CHANGE_PASSWORD';
 
 @Component({
   templateUrl: './sign-in.component.html',
-  providers: [SignInService, CompleteNewPasswordService],
+  providers: [SignInService, CompleteAdminSignUpService],
 })
 export class SignInComponent implements OnInit {
   protected formGroup!: FormGroup<SignInForm>;
@@ -44,8 +45,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _router: Router,
-    protected _signInLogic: SignInService,
-    protected _completeNewPasswordLogic: CompleteNewPasswordService
+    protected signInLogic: SignInService,
+    protected completeAdminSignUpLogic: CompleteAdminSignUpService
   ) {}
 
   ngOnInit(): void {
@@ -55,8 +56,8 @@ export class SignInComponent implements OnInit {
     });
 
     this.loading$ = combineLatest([
-      this._signInLogic.loading$.pipe(startWith(false)),
-      this._completeNewPasswordLogic.loading$.pipe(startWith(false)),
+      this.signInLogic.loading$.pipe(startWith(false)),
+      this.completeAdminSignUpLogic.loading$.pipe(startWith(false)),
     ]).pipe(
       map(
         ([signInLoading, setNewPasswordLoading]) =>
@@ -65,7 +66,7 @@ export class SignInComponent implements OnInit {
       shareReplay(1)
     );
 
-    this.viewState$ = this._signInLogic.success$.pipe(
+    this.viewState$ = this.signInLogic.success$.pipe(
       tap((value) => this.onSuccess(value)),
       map((value: CognitoUserFacade) =>
         value?.challengeName === 'NEW_PASSWORD_REQUIRED'
@@ -76,19 +77,19 @@ export class SignInComponent implements OnInit {
       shareReplay(1)
     );
 
-    this._completeNewPasswordLogic.success$
+    this.completeAdminSignUpLogic.success$
       .pipe(take(1))
       .subscribe((user) => (user ? this.onSuccess(user!) : undefined));
   }
 
   submit() {
     if (this.formGroup.valid) {
-      this._signInLogic.requestSignIn(this.formGroup.getRawValue());
+      this.signInLogic.requestSignIn(this.formGroup.getRawValue());
     }
   }
 
-  onChangePassword({ password }: { password: string | null }): void {
-    this._completeNewPasswordLogic.setNewPassword(password!);
+  onSubmitSignUpData(signUpData?: AdminSignUpData): void {
+    this.completeAdminSignUpLogic.completeSignUp(signUpData!);
   }
 
   private readonly onSuccess = (
