@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
+import { Subject, Observable, takeUntil, tap, map } from 'rxjs';
 import {
   CandidatePetition,
   IssuePetition,
@@ -18,10 +18,12 @@ import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/
   templateUrl: './view-petition-committee.component.html',
   providers: [GetCommitteePetitionService],
 })
-export class ViewPetitionCommitteeComponent implements OnInit {
+export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
   protected success$!: Observable<ResponsePetition | undefined>;
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
+  protected id?: string;
+  private _unsubscribeAll: Subject<void> = new Subject();
 
   protected petition: IssuePetition | CandidatePetition | undefined;
   protected StatusStyleCurrent: string = '';
@@ -32,26 +34,33 @@ export class ViewPetitionCommitteeComponent implements OnInit {
   protected StatusStyleRed: string =
     'flex bg-[#FF3030] px-4 py-1 rounded-full items-center justify-center';
   constructor(
-    private _committeeLogic: GetCommitteePetitionService,
+    private _getPetitionLogic: GetCommitteePetitionService,
 
     protected _activatedRoute: ActivatedRoute,
     public _alertDialogRef: MatDialogRef<AlertWithdrawlPetitionComponent>,
     public _confirmDalogRef: MatDialogRef<ConfirmWithdrawlPetitionComponent>,
     public _dialog: MatDialog
   ) {}
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   ngOnInit(): void {
-    this.success$ = this._committeeLogic.success$.pipe(
+    this.success$ = this._getPetitionLogic.success$.pipe(
       tap((result) => {
         this.setState(result);
       })
     );
-
-    this.loading$ = this._committeeLogic.loading$;
-    this.error$ = this._committeeLogic.error$;
-    this._committeeLogic.getPetition(
-      this._activatedRoute.snapshot.params['id']
-    );
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('id')!),
+        tap((id) => (this.id = id))
+      )
+      .subscribe((id) => this._getPetitionLogic.getPetition(id));
+    this.loading$ = this._getPetitionLogic.loading$;
+    this.error$ = this._getPetitionLogic.error$;
   }
   private setState(data: ResponsePetition | undefined) {
     if (data) {
@@ -87,7 +96,7 @@ export class ViewPetitionCommitteeComponent implements OnInit {
             this._dialog.open(ConfirmWithdrawlPetitionComponent, {
               width: '480px',
               data: {
-                id: this._activatedRoute.snapshot.params['id'],
+                id: this.id,
               },
             });
           }
