@@ -12,9 +12,10 @@ import { SingInRoutingModule } from './sign-in-routing.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
-  declarations: [SignInComponent],
+  declarations: [SignInComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     SingInRoutingModule,

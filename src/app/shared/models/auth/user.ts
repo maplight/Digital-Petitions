@@ -15,6 +15,7 @@ export interface User {
 }
 
 export interface CognitoUserFacade {
-  username: string;
   attributes: Attributes;
+  challengeName: 'NEW_PASSWORD_REQUIRED';
+  username: string;
 }

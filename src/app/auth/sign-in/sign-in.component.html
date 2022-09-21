@@ -1,91 +1,113 @@
-<div class="w-full flex justify-center">
+<div class="w-full flex justify-center" *ngIf="viewState$ | async as viewState">
   <div class="flex flex-col max-w-[432px] w-full">
     <h1 class="p-6 font-extrabold">Petition Creators</h1>
-    <form [formGroup]="formGroup" (ngSubmit)="submit()">
-      <dp-basic-card class="w-full">
-        <div class="w-full flex justify-start">
-          <h4 class="font-bold text-lg">Create an account</h4>
-        </div>
-        <dp-error-msg
-          *ngIf="!(loading$ | async) && (error$ | async) as error"
-          [error]="error"
-        >
-        </dp-error-msg>
-        <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
-        <div class="grid grid-cols-1 gap-[16px]">
+    <dp-basic-card class="w-full">
+      <div class="w-full flex justify-start">
+        <h4 class="font-bold text-lg">
+          {{ viewState === "LOGIN" ? "Create an account" : "Change password" }}
+        </h4>
+      </div>
+      <dp-error-msg
+        *ngIf="
+          !(loading$ | async) &&
+          viewState == 'LOGIN' &&
+          (_signInLogic.error$ | async) as error
+        "
+        [error]="error"
+      >
+      </dp-error-msg>
+      <dp-error-msg
+        *ngIf="
+          !(loading$ | async) &&
+          viewState != 'LOGIN' &&
+          (_completeNewPasswordLogic.error$ | async) as error
+        "
+        [error]="error"
+      >
+      </dp-error-msg>
+      <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
+      <form
+        class="grid grid-cols-1 gap-[16px]"
+        [formGroup]="formGroup"
+        (ngSubmit)="submit()"
+        *ngIf="viewState === 'LOGIN'; else changePassword"
+      >
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="text" matInput formControlName="email" />
+          <mat-error *ngIf="formGroup.get('email')!.getError('required')">
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Email is required</span>
+            </div>
+          </mat-error>
+          <mat-error *ngIf="formGroup.get('email')!.getError('email')">
+            <div class="flex flex-row items-center">
+              <mat-icon
+                class="w-[14px] h-[14px]"
+                [svgIcon]="'custom_icons:c_close'"
+              ></mat-icon>
+              <span class="ml-[9px]">Email is incorrect</span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <span class="w-full flex flex-col justify-end">
           <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input type="text" matInput formControlName="email" />
-            <mat-error *ngIf="formGroup.get('email')!.getError('required')">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password"
+            />
+            <mat-error *ngIf="formGroup.get('password')!.getError('required')">
               <div class="flex flex-row items-center">
-                <mat-icon
-                  class="w-[14px] h-[14px]"
-                  [svgIcon]="'custom_icons:c_close'"
-                ></mat-icon>
-                <span class="ml-[9px]">Email is required</span>
+                <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
+                <span class="ml-[9px]">Password is required</span>
               </div>
             </mat-error>
-            <mat-error *ngIf="formGroup.get('email')!.getError('email')">
-              <div class="flex flex-row items-center">
-                <mat-icon
-                  class="w-[14px] h-[14px]"
-                  [svgIcon]="'custom_icons:c_close'"
-                ></mat-icon>
-                <span class="ml-[9px]">Email is incorrect</span>
-              </div>
-            </mat-error>
+            <button
+              type="button"
+              matSuffix
+              mat-icon-button
+              (click)="hidePassword = !hidePassword"
+            >
+              <mat-icon
+                [svgIcon]="
+                  hidePassword ? 'custom_icons:edge' : 'custom_icons:no-edge'
+                "
+              ></mat-icon>
+            </button>
           </mat-form-field>
-          <span class="w-full flex flex-col justify-end">
-            <mat-form-field>
-              <mat-label>Password</mat-label>
-              <input
-                matInput
-                [type]="hidePassword ? 'password' : 'text'"
-                formControlName="password"
-              />
-              <mat-error
-                *ngIf="formGroup.get('password')!.getError('required')"
+          <span class="w-full flex justify-end">
+            <a [routerLink]="'/auth/forgot-password'"
+              ><h4
+                class="font-extrabold text-base tracking-wide text-primary-500"
               >
-                <div class="flex flex-row items-center">
-                  <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
-                  <span class="ml-[9px]">Password is required</span>
-                </div>
-              </mat-error>
-              <button
-                type="button"
-                matSuffix
-                mat-icon-button
-                (click)="hidePassword = !hidePassword"
-              >
-                <mat-icon
-                  [svgIcon]="
-                    hidePassword ? 'custom_icons:edge' : 'custom_icons:no-edge'
-                  "
-                ></mat-icon>
-              </button>
-            </mat-form-field>
-            <span class="w-full flex justify-end">
-              <a [routerLink]="'/auth/forgot-password'"
-                ><h4
-                  class="font-extrabold text-base tracking-wide text-primary-500"
-                >
-                  Forgot Password?
-                </h4></a
-              >
-            </span>
+                Forgot Password?
+              </h4></a
+            >
           </span>
-          <button
-            mat-flat-button
-            type="submit"
-            class="h-10 w-full mt-2"
-            color="primary"
-            [disabled]="loading$ | async"
-          >
-            Log In
-          </button>
-        </div>
-      </dp-basic-card>
-    </form>
+        </span>
+        <button
+          mat-flat-button
+          type="submit"
+          class="h-10 w-full mt-2"
+          color="primary"
+          [disabled]="loading$ | async"
+        >
+          Log In
+        </button>
+      </form>
+      <ng-template #changePassword>
+        <dp-change-password
+          [loading]="loading$ | async"
+          (changePassword)="onChangePassword($event)"
+        ></dp-change-password>
+      </ng-template>
+    </dp-basic-card>
     <div class="my-6 w-full flex flex-row justify-center">
       <h4 class="font-extrabold text-base tracking-wide">
         Don't have an account?
