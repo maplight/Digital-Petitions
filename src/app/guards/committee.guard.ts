@@ -20,7 +20,7 @@ export class CommitteeGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this._auth.isLoged().pipe(
+    return this._auth.getCurrentUser().pipe(
       map((data) => {
         if (data?.attributes['custom:access_group'] === 'petitioner') {
           return true;
