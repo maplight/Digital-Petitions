@@ -28,14 +28,14 @@
           class="w-full"
           [filterName]="'Filter by Category'"
           [filterType]="filterByCategory"
-          [disabled]="!!(loading$ | async)"
+          [disabled]="!!(loading$ | async) || items.length === 0 || !items"
           (event)="filterCategory($event)"
         ></dp-filter-by-category>
         <dp-filter-by-status
           class="w-full"
           [filterName]="'Filter by Status'"
           [filterStatus]="filterByStatus"
-          [disabled]="!!(loading$ | async)"
+          [disabled]="!!(loading$ | async) || items.length === 0 || !items"
           (event)="filterStatus($event)"
         ></dp-filter-by-status>
       </div>
@@ -79,13 +79,13 @@
       <dp-filter-by-category
         [filterName]="'Filter by Category'"
         [filterType]="filterByCategory"
-        [disabled]="!!(loading$ | async)"
+        [disabled]="!!(loading$ | async) || items.length === 0 || !items"
         (event)="filterCategory($event)"
       ></dp-filter-by-category>
       <dp-filter-by-status
         [filterName]="'Filter by Status'"
         [filterStatus]="filterByStatus"
-        [disabled]="!!(loading$ | async)"
+        [disabled]="!!(loading$ | async) || items.length === 0 || !items"
         (event)="filterStatus($event)"
       ></dp-filter-by-status>
     </div>

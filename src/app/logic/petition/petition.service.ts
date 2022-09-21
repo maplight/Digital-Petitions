@@ -28,7 +28,7 @@ import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
-import { approvePetition, rejectPetition } from 'src/graphql/mutations';
+import { rejectPetition } from 'src/graphql/mutations';
 import { getPetitionsByType } from 'src/graphql/queries';
 import { __values } from 'tslib';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
@@ -38,7 +38,9 @@ import {
   getPetitionsByOwner,
   getPetitionsByType as getPetitionsByTypeAn,
 } from 'src/graphql/not-generated/queries';
+import { getPetition as getPetitionCommittee } from 'src/graphql/queries';
 import {
+  approvePetition,
   editCandidatePetition,
   editIssuePetition,
   submitCandidatePetition,
@@ -132,6 +134,35 @@ export class PetitionService {
           PK: id,
         },
         authMode: 'AWS_IAM',
+      }) as Promise<GraphQLResult<GetPetitionQuery>>
+    ).pipe(
+      map((value) => {
+        let petition: ResponsePetition = {};
+        if (value.data) {
+          if (value.data.getPetition?.type === PetitionType.ISSUE) {
+            petition = { dataIssue: value.data.getPetition as IssuePetition };
+          } else if (value.data.getPetition?.type === PetitionType.CANDIDATE) {
+            petition = {
+              dataCandidate: value.data.getPetition as CandidatePetition,
+            };
+          }
+        }
+        return { result: petition };
+      }),
+      catchError((error) => {
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
+  }
+
+  getCommitteePetition(id: string): Observable<Result<ResponsePetition>> {
+    return from(
+      API.graphql({
+        query: getPetition.public,
+        variables: {
+          PK: id,
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetPetitionQuery>>
     ).pipe(
       map((value) => {

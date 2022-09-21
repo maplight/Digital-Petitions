@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [ConfirmWithdrawlPetitionComponent],
@@ -22,8 +24,9 @@ import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petitio
     ReactiveFormsModule,
     MatIconModule,
     MatProgressBarModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   exports: [ConfirmWithdrawlPetitionComponent],
-  providers: [WithdrawPetitionService],
 })
 export class ConfirmWithdrawlPetitionModule {}

@@ -1,12 +1,13 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
+import { Subject, Observable, takeUntil, tap, map } from 'rxjs';
 import {
   CandidatePetition,
   IssuePetition,
   PetitionStatus,
 } from 'src/app/core/api/API';
+import { GetCommitteePetitionService } from 'src/app/logic/petition/get-committee-petition.service';
 import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { AlertWithdrawlPetitionComponent } from './alert-withdrawl-petition/alert-withdrawl-petition.component';
@@ -15,19 +16,15 @@ import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/
 @Component({
   selector: 'dp-view-petition-committee',
   templateUrl: './view-petition-committee.component.html',
-  providers: [GetPublicPetitionService],
+  providers: [GetCommitteePetitionService],
 })
-export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
-  protected id: string = '0';
-  protected resultData: ResponsePetition = {};
-  protected result$!: Subscription;
-  protected error: string | undefined;
+export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
+  protected success$!: Observable<ResponsePetition | undefined>;
+  protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
-  protected currentStep$: BehaviorSubject<
-    'loading' | 'empty' | 'contents' | 'error'
-  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
-    'loading'
-  );
+  protected id?: string;
+  private _unsubscribeAll: Subject<void> = new Subject();
+
   protected petition: IssuePetition | CandidatePetition | undefined;
   protected StatusStyleCurrent: string = '';
   protected StatusStyleWhite: string =
@@ -37,38 +34,38 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
   protected StatusStyleRed: string =
     'flex bg-[#FF3030] px-4 py-1 rounded-full items-center justify-center';
   constructor(
-    private _committeeLogic: GetPublicPetitionService,
+    private _getPetitionLogic: GetCommitteePetitionService,
 
-    private _activatedRoute: ActivatedRoute,
+    protected _activatedRoute: ActivatedRoute,
     public _alertDialogRef: MatDialogRef<AlertWithdrawlPetitionComponent>,
     public _confirmDalogRef: MatDialogRef<ConfirmWithdrawlPetitionComponent>,
     public _dialog: MatDialog
   ) {}
-  ngAfterViewInit(): void {
-    this.id = this._activatedRoute.snapshot.params['id'];
-    this._committeeLogic.getPetition(
-      this._activatedRoute.snapshot.params['id']
-    );
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
+
   ngOnInit(): void {
-    this.result$ = this._committeeLogic.result$.subscribe((result) => {
-      if (!!result.result) {
-        this.resultData = result.result;
-        this.setState(result.result);
-        this.currentStep$.next('contents');
-      } else {
-        this.error = result.error;
-        this.currentStep$.next('error');
-      }
-    });
-    this.loading$ = this._committeeLogic.loading$;
+    this.success$ = this._getPetitionLogic.success$.pipe(
+      tap((result) => {
+        this.setState(result);
+      })
+    );
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('id')!),
+        tap((id) => (this.id = id))
+      )
+      .subscribe((id) => this._getPetitionLogic.getPetition(id));
+    this.loading$ = this._getPetitionLogic.loading$;
+    this.error$ = this._getPetitionLogic.error$;
   }
-  private setState(data: ResponsePetition) {
-    this.petition = this.resultData.dataCandidate
-      ? this.resultData.dataCandidate
-      : this.resultData.dataIssue
-      ? this.resultData.dataIssue
-      : undefined;
+  private setState(data: ResponsePetition | undefined) {
+    if (data) {
+      this.petition = data.dataCandidate ?? data.dataIssue ?? undefined;
+    }
 
     if (this.petition) {
       switch (this.petition.status) {
@@ -99,7 +96,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, AfterViewInit {
             this._dialog.open(ConfirmWithdrawlPetitionComponent, {
               width: '480px',
               data: {
-                id: this._activatedRoute.snapshot.params['id'],
+                id: this.id,
               },
             });
           }
