@@ -5,6 +5,7 @@ import {
   ApprovePetitionMutation,
   CandidatePetition,
   CandidatePetitionInput,
+  CodeSubmissionResult,
   EditCandidatePetitionInput,
   EditCandidatePetitionMutation,
   EditIssuePetitionInput,
@@ -12,15 +13,22 @@ import {
   GetPetitionQuery,
   GetPetitionsByOwnerQuery,
   GetPetitionsByTypeQuery,
+  GetVoterRecordMatchQuery,
   IssuePetition,
   IssuePetitionInput,
   PetitionsByOwnerInput,
   PetitionsByTypeInput,
   PetitionStatusQuery,
   PetitionType,
+  SignatureVerification,
+  SignatureVerificationInput,
   SubmitCandidatePetitionMutation,
   SubmitIssuePetitionMutation,
+  SubmitSignatureMutation,
+  SubmitVerificationCodeMutation,
   TargetPetitionInput,
+  VoterRecordMatch,
+  VoterRecordMatchInput,
 } from 'src/app/core/api/API';
 import { AccountService } from 'src/app/core/account-service/account.service';
 
@@ -28,8 +36,12 @@ import { FilterData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
-import { rejectPetition } from 'src/graphql/mutations';
-import { getPetitionsByType } from 'src/graphql/queries';
+import {
+  rejectPetition,
+  submitSignature,
+  submitVerificationCode,
+} from 'src/graphql/mutations';
+import { getPetitionsByType, getVoterRecordMatch } from 'src/graphql/queries';
 import { __values } from 'tslib';
 import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
@@ -86,12 +98,58 @@ export class PetitionService {
     );
   }
 
-  signPetition(data: SignaturePetitionData): Observable<Result<string>> {
-    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  signPetition(
+    data: SignatureVerificationInput
+  ): Observable<Result<SignatureVerification>> {
+    return from(
+      API.graphql({
+        query: submitSignature,
+        variables: { data },
+        authMode: 'AWS_IAM',
+      }) as Promise<GraphQLResult<SubmitSignatureMutation>>
+    ).pipe(
+      tap((value) => this._loggingService.log(value)),
+      map(({ data }) => ({ result: data?.submitSignature })),
+      catchError((error) => of({ error: error.errors?.[0]?.message }))
+    );
   }
 
-  confirmSignaturePetition(data: string): Observable<Result<string>> {
-    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  getVoterRecordMatch(
+    data: VoterRecordMatchInput
+  ): Observable<Result<VoterRecordMatch>> {
+    return from(
+      API.graphql({
+        query: getVoterRecordMatch,
+        variables: { query: data },
+        authMode: 'AWS_IAM',
+      }) as Promise<GraphQLResult<GetVoterRecordMatchQuery>>
+    ).pipe(
+      tap((value) => this._loggingService.log(value)),
+      map(({ data }) => ({ result: data?.getVoterRecordMatch })),
+      catchError((error) => {
+        console.log(error);
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
+  }
+
+  confirmSignaturePetition(
+    data: string
+  ): Observable<Result<CodeSubmissionResult>> {
+    return from(
+      API.graphql({
+        query: submitVerificationCode,
+        variables: { code: data },
+        authMode: 'AWS_IAM',
+      }) as Promise<GraphQLResult<SubmitVerificationCodeMutation>>
+    ).pipe(
+      tap((value) => this._loggingService.log(value)),
+      map(({ data }) => ({ result: data?.submitVerificationCode })),
+      catchError((error) => {
+        console.log(error);
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
   }
 
   editPetitionIssue(
