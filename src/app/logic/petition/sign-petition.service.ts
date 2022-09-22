@@ -9,6 +9,10 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import {
+  SignatureVerification,
+  SignatureVerificationInput,
+} from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
@@ -17,10 +21,10 @@ import { PetitionService } from './petition.service';
 @Injectable()
 export class SignPetitionService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<string | undefined>;
+  public success$: Observable<SignatureVerification | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
-  private submit$: Subject<SignaturePetitionData> = new Subject();
+  public result$: Observable<Result<SignatureVerification>>;
+  private submit$: Subject<SignatureVerificationInput> = new Subject();
 
   constructor(
     private _petitionService: PetitionService,
@@ -66,7 +70,7 @@ export class SignPetitionService {
   /** This method begins the signing process of a petition
   @param value: SignaturePetitionData type: It contains the user contact data and the firm verification method
   */
-  signPetition(value: SignaturePetitionData) {
+  signPetition(value: SignatureVerificationInput) {
     this.submit$.next(value);
   }
 }

@@ -102,6 +102,12 @@
       <p class="text-xs text-[#5C5C5C] italic">
         Please use the address where you are registered to vote.
       </p>
+      <dp-error-msg
+        *ngIf="!(loading$ | async) && (error$ | async) as error"
+        [error]="error"
+      >
+      </dp-error-msg>
+      <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <div class="flex flex-col justify-center w-full gap-[15px]">
         <button
           class="w-full"

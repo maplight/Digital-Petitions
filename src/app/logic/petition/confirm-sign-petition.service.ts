@@ -9,6 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { CodeSubmissionResult } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';
@@ -16,9 +17,9 @@ import { PetitionService } from './petition.service';
 @Injectable()
 export class ConfirmSignPetitionService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<string | undefined>;
+  public success$: Observable<CodeSubmissionResult | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
+  public result$: Observable<Result<CodeSubmissionResult>>;
   private submit$: Subject<string> = new Subject();
 
   constructor(
