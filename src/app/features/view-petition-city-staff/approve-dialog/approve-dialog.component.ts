@@ -18,8 +18,7 @@ import { ApproveAlertComponent } from '../approve-alert/approve-alert.component'
 export class ApproveDialogComponent implements OnInit {
   protected formGroup: FormGroup;
 
-  protected result$!: Subscription;
-  protected error: string | undefined;
+  protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
 
   constructor(
@@ -30,27 +29,24 @@ export class ApproveDialogComponent implements OnInit {
     public data: ApprovePetitionInput
   ) {
     this.formGroup = this._fb.group({
-      deadline: ['', [Validators.required]],
-      signatures: ['', [Validators.required, Validators.pattern('[0-9]')]],
+      deadline: [Date, [Validators.required]],
+      signatures: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
 
   ngOnInit(): void {
-    this.result$ = this._approvePetitionLogic.result$.subscribe((result) => {
-      if (!!result.result) {
-        this._dialog.open(DialogResultComponent, {
-          width: '520px',
-          data: {
-            title: 'Petition Approved!',
-            message: '',
-            success: true,
-          },
-        });
-      } else {
-        this.error = result.error;
-      }
+    this._approvePetitionLogic.success$.subscribe((_) => {
+      this._dialog.open(DialogResultComponent, {
+        width: '520px',
+        data: {
+          title: 'Petition Approved!',
+          message: '',
+          success: true,
+        },
+      });
     });
     this.loading$ = this._approvePetitionLogic.loading$;
+    this.error$ = this._approvePetitionLogic.error$;
   }
 
   submit() {

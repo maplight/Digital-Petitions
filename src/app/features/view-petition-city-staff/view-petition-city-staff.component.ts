@@ -69,6 +69,9 @@ export class ViewPetitionCityStaffComponent implements OnInit {
       .pipe(takeUntil(this._unSuscribeAll))
       .subscribe((_) => {
         this.openDialog(true);
+        this._getPetitionLogic.getPetition(
+          this._activatedRoute.snapshot.params['id']
+        );
       });
     this._denyPetitionLogic.error$
       .pipe(takeUntil(this._unSuscribeAll))
@@ -83,10 +86,17 @@ export class ViewPetitionCityStaffComponent implements OnInit {
   }
 
   approveDialog(): void {
-    const dialogRef = this._dialog.open(ApproveDialogComponent, {
-      width: '690px',
-      data: this._targetPetitionInput,
-    });
+    const dialogRef = this._dialog
+      .open(ApproveDialogComponent, {
+        width: '690px',
+        data: this._targetPetitionInput,
+      })
+      .afterClosed()
+      .subscribe((_) => {
+        this._getPetitionLogic.getPetition(
+          this._activatedRoute.snapshot.params['id']
+        );
+      });
   }
 
   private openDialog(status: boolean, message?: string) {

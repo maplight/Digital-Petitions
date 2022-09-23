@@ -13,6 +13,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [ApproveDialogComponent],
@@ -30,6 +32,8 @@ import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.
     MatNativeDateModule,
     DialogResultModule,
     MatProgressBarModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   exports: [ApproveDialogComponent],
 })
