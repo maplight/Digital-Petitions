@@ -31,8 +31,8 @@
           >
             <ng-container class="flex" *ngSwitchCase="'NEW'">
               <dp-new-box
-                (approveEvent)="approveDialog()"
-                (denyEvent)="denyAlert()"
+                (approveEvent)="approveDialog(data)"
+                (denyEvent)="denyAlert(data)"
               ></dp-new-box>
             </ng-container>
             <ng-container class="flex" *ngSwitchCase="'QUALIFIED'">
@@ -42,7 +42,7 @@
               <dp-cualified-box></dp-cualified-box>
             </ng-container>
           </ng-container>
-          <dp-loading-bar *ngIf="loadingDeny$ | async"></dp-loading-bar>
+          <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
         </div>
       </div>
     </ng-container>

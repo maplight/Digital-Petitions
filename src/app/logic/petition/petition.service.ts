@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import API, { GraphQLResult } from '@aws-amplify/api';
 import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import {
+  ApprovePetitionInput,
   ApprovePetitionMutation,
   CandidatePetition,
   CandidatePetitionInput,
@@ -20,6 +21,7 @@ import {
   PetitionsByTypeInput,
   PetitionStatusQuery,
   PetitionType,
+  RejectPetitionMutation,
   SignatureVerification,
   SignatureVerificationInput,
   SubmitCandidatePetitionMutation,
@@ -267,7 +269,7 @@ export class PetitionService {
   }
 
   approvePetition(
-    data: TargetPetitionInput
+    data: ApprovePetitionInput
   ): Observable<Result<ResponsePetition>> {
     return from(
       API.graphql({
@@ -305,20 +307,20 @@ export class PetitionService {
         query: rejectPetition,
         variables: { data },
         authMode: 'AMAZON_COGNITO_USER_POOLS',
-      }) as Promise<GraphQLResult<ApprovePetitionMutation>>
+      }) as Promise<GraphQLResult<RejectPetitionMutation>>
     ).pipe(
       map((value) => {
         let petition: ResponsePetition = {};
         if (value.data) {
-          if (value.data.approvePetition?.type === PetitionType.ISSUE) {
+          if (value.data.rejectPetition?.type === PetitionType.ISSUE) {
             petition = {
-              dataIssue: value.data.approvePetition as IssuePetition,
+              dataIssue: value.data.rejectPetition as IssuePetition,
             };
           } else if (
-            value.data.approvePetition?.type === PetitionType.CANDIDATE
+            value.data.rejectPetition?.type === PetitionType.CANDIDATE
           ) {
             petition = {
-              dataCandidate: value.data.approvePetition as CandidatePetition,
+              dataCandidate: value.data.rejectPetition as CandidatePetition,
             };
           }
         }

@@ -7,8 +7,6 @@ import {
   PetitionType,
 } from 'src/app/core/api/API';
 import { CityStaffHomeService } from 'src/app/logic/admin/city-staff-home.service';
-
-import { User } from 'src/app/shared/models/auth/user';
 import {
   FilterByStatus,
   FilterByStatusAny,
@@ -32,7 +30,7 @@ export class CityStaffHomeComponent implements OnInit {
     return !this.loadingUp;
   }
 
-  protected successLogin$!: Observable<User | null>;
+  protected currentUser!: string | undefined;
   protected successPetition$!: Observable<BufferPetition | undefined>;
   protected loading$!: Observable<boolean>;
   protected error$!: Observable<string | undefined>;
@@ -50,7 +48,7 @@ export class CityStaffHomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.successLogin$ = this._accountLogic.currentUser$;
+    this.currentUser = this._accountLogic.currentUser?.attributes.given_name;
     this.successPetition$ = this._cityStaffHomeLogic.success$;
     this.error$ = this._cityStaffHomeLogic.error$;
     this.loading$ = this._cityStaffHomeLogic.loading$;

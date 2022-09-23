@@ -12,7 +12,7 @@ import { AccountService } from '../core/account-service/account.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CityStaffGuard implements CanActivate {
+export class CityStaffAdminGuard implements CanActivate {
   constructor(private _auth: AccountService, private _router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,

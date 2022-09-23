@@ -7,7 +7,6 @@ import {
   partition,
   ReplaySubject,
   shareReplay,
-  Subject,
   tap,
 } from 'rxjs';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
@@ -61,6 +60,7 @@ export class GetStaffPetitionService {
       )
     ).pipe(shareReplay(1));
   }
+
   ngOnDestroy(): void {
     this.submit$.complete();
   }

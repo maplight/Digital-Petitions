@@ -95,11 +95,15 @@ export class SignInComponent implements OnInit {
   private readonly onSuccess = (
     value?: { attributes: Attributes } | CognitoUserFacade
   ): void => {
+    console.log(value?.attributes?.['custom:access_group']);
+
     switch (value?.attributes?.['custom:access_group']) {
       case 'petitioner':
         this._router.navigate(['/committee/home']);
         break;
       case 'admin':
+      case 'city_staff':
+      case 'city_staff_guest':
         this._router.navigate(['/city-staff/home']);
         break;
       //You must add as many conditions as there are roles

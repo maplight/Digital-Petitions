@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { appearance } from './core/dynamic-theme/default-mat-form-field';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { MatDialogRef } from '@angular/material/dialog';
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     {

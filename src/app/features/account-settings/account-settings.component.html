@@ -1,6 +1,6 @@
 <div class="flex justify-center">
   <div class="flex flex-col max-w-[848px] w-full">
-    <div class="mt-8">
+    <div class="mt-8 w-fit">
       <dp-return-link
         [route]="'/committee/home'"
         [text]="'Back to Home'"
@@ -10,7 +10,7 @@
     <p class="mt-[22px]">
       Edit or change your account information and password.
     </p>
-    <dp-basic-card class="mt-8" *ngIf="currentUser$ | async as user">
+    <dp-basic-card class="mt-8" *ngIf="currentUser as user">
       <div class="w-full flex flex-col gap-11">
         <div
           class="w-full flex flex-col md:flex-row justify-between items-center"
@@ -49,7 +49,7 @@
           <button
             mat-flat-button
             color="primary"
-            (click)="openDialogPerosnalDetails()"
+            (click)="openDialogPersonalDetails()"
           >
             Edit
           </button>

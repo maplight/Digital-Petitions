@@ -35,7 +35,9 @@
     <div class="flex flex-row w-full justify-between">
       <p class="text-base leading-5 font-bold">Petition Deadline</p>
       <p class="text-base leading- font-normal">
-        {{ signatureSummary.deadline ?? 0 }}
+        {{
+          signatureSummary.deadline ? (signatureSummary.deadline | date) : "N/A"
+        }}
       </p>
     </div>
   </div>

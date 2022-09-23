@@ -1,28 +1,29 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { SignOutService } from 'src/app/logic/auth/exports';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
+import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 
 @Component({
   selector: 'dp-user-menu',
   templateUrl: './user-menu.component.html',
+  providers: [SignOutService],
 })
 export class UserMenuComponent implements OnInit, OnDestroy {
-  private result$;
   private _unsubscribeAll: Subject<void> = new Subject();
-  protected currentUser$;
+  protected currentUser!: CognitoUserFacade | undefined;
   protected isLoged$;
 
   constructor(
     private _accountLogic: AccountService,
     private _router: Router,
-    private SignOutService: SignOutService,
+    private _signOutLogic: SignOutService,
     public dialog: MatDialog
   ) {
-    this.result$ = this.SignOutService.result$
+    this._signOutLogic.result$
       .pipe(
         tap((result) => {
           if (!!result.result) {
@@ -40,7 +41,9 @@ export class UserMenuComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.currentUser$ = this._accountLogic.currentUser$;
+
+    this.currentUser = this._accountLogic.currentUser;
+
     this.isLoged$ = this._accountLogic.isAuthenticated$;
   }
 
@@ -52,7 +55,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   }
 
   openDialog(title: string, message: string, success: boolean): void {
-    const dialogRef = this.dialog.open(DialogResultComponent, {
+    this.dialog.open(DialogResultComponent, {
       width: '520px',
       data: {
         title: title,
@@ -63,6 +66,6 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   }
 
   signOut() {
-    this.SignOutService.signOut();
+    this._signOutLogic.signOut();
   }
 }

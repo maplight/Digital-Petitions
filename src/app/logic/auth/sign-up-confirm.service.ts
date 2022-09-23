@@ -40,7 +40,7 @@ export class SignUpConfirmService {
       map((value) => value.result),
       tap((value) => {
         this._loggingService.log(value);
-        this._router.navigate(['/committee/account-settings']);
+        this._router.navigate(['/committee/new-petition']);
       }),
       shareReplay(1)
     );

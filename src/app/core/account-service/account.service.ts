@@ -25,18 +25,18 @@ import {
 
 import { API, Auth } from 'aws-amplify';
 import { SignUpConfirmationCode } from 'src/app/shared/models/auth/sign-up-confirmation-code';
-import { CognitoUserFacade, User } from 'src/app/shared/models/auth/user';
+import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 import { AdminSignUpData } from 'src/app/shared/models/auth/admin-sign-up-data';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  private privateCurrentUser: ReplaySubject<User | null> = new ReplaySubject();
+  private userInfo!: SignUpCredentials;
   private isAuthenticatedController: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-  public currentUser$: Observable<User | null> =
-    this.privateCurrentUser.asObservable();
+  public currentUser!: CognitoUserFacade | undefined;
   public isAuthenticated$: Observable<boolean> =
     this.isAuthenticatedController.asObservable();
 
@@ -46,6 +46,7 @@ export class AccountService {
   constructor() {}
 
   public signUp(data: SignUpCredentials): Observable<Result<string>> {
+    this.userInfo = data;
     return from(
       Auth.signUp({
         username: data.email.replace(/[^a-zA-Z0-9]/g, ''),
@@ -219,11 +220,21 @@ export class AccountService {
   public signUpConfirm(
     data: SignUpConfirmationCode
   ): Observable<Result<string>> {
+    console.log(data);
     return from(
       Auth.confirmSignUp(data.username.replace(/[^a-zA-Z0-9]/g, ''), data.code)
-        .then((result) => {
-          this.updateUser();
-          return { result: ':)' };
+        .then((_) => {
+          return Auth.signIn(this.userInfo.email, this.userInfo.password)
+            .then((data: any) => {
+              this._pristineCognitoUser = data;
+
+              this.updateUser();
+
+              return { result: 'SUCCESS' };
+            })
+            .catch((error) => {
+              return { error: error.message };
+            });
         })
         .catch((error) => {
           return { error: error.message };
@@ -235,7 +246,7 @@ export class AccountService {
     return from(
       Auth.signOut()
         .then((data) => {
-          this.privateCurrentUser.next(null);
+          this.currentUser = undefined;
           return { result: 'SUCCESS' };
         })
         .catch(function (error) {
@@ -273,12 +284,12 @@ export class AccountService {
   }
 
   public updateUser() {
-    Auth.currentUserInfo()
-      .then((data: User) => {
-        this.privateCurrentUser.next(data);
+    Auth.currentAuthenticatedUser()
+      .then((data: CognitoUserFacade) => {
+        this.currentUser = data;
       })
-      .catch((error) => {
-        this.privateCurrentUser.next(null);
+      .catch((_) => {
+        this.currentUser = undefined;
       });
   }
 

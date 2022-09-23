@@ -2,38 +2,48 @@
   <ng-container modal-title>Set Qualification Requirements</ng-container>
   <ng-container modal-body class="w-full">
     <form [formGroup]="formGroup" class="flex flex-col w-full gap-6">
-      <mat-progress-bar
-        mode="indeterminate"
-        color="primary"
-        *ngIf="loading$ | async"
-      ></mat-progress-bar>
-      <div *ngIf="error" class="flex flex-row items-center justify-center">
-        <mat-icon
-          class="w-[14px] h-[14px]"
-          [svgIcon]="'custom_icons:c_close'"
-        ></mat-icon>
-        <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
-      </div>
+      <dp-error-msg
+        *ngIf="!(loading$ | async) && (error$ | async) as error"
+        [error]="error"
+      >
+      </dp-error-msg>
+      <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <mat-form-field class="w-full">
         <mat-label>Set Deadline</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="deadline" />
         <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="this.formGroup.get('deadline')?.errors?.['required']">
-          <div class="flex flex-row items-center">
+
+        <mat-error *ngIf="formGroup.get('deadline')!.getError('required')"
+          ><div class="flex flex-row items-center">
             <mat-icon
               class="w-[14px] h-[14px]"
               [svgIcon]="'custom_icons:c_close'"
             ></mat-icon>
-            <span class="ml-[9px]">Set Deadline is required</span>
-          </div>
-        </mat-error>
+            <span class="ml-[9px]">Deadline is required</span>
+          </div></mat-error
+        >
+
+        <mat-error *ngIf="formGroup.get('deadline')!.getError('greaterThan')"
+          ><div class="flex flex-row items-center">
+            <mat-icon
+              class="w-[14px] h-[14px]"
+              [svgIcon]="'custom_icons:c_close'"
+            ></mat-icon>
+            <span class="ml-[9px]">Deadline cannot be a date in the past</span>
+          </div></mat-error
+        >
       </mat-form-field>
       <mat-form-field class="w-full">
         <mat-label>Enter number of Signatures Required</mat-label>
-        <input type="text" matInput formControlName="signatures" />
+        <input
+          type="text"
+          matInput
+          formControlName="requiredSignatures"
+          mask="separator"
+        />
         <mat-error
-          *ngIf="this.formGroup.get('signatures')?.errors?.['required']"
+          *ngIf="this.formGroup.get('requiredSignatures')?.errors?.['required']"
         >
           <div class="flex flex-row items-center">
             <mat-icon
