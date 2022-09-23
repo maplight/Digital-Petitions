@@ -74,7 +74,7 @@ export class SignUpService implements OnDestroy {
   /** This method begins the registration process of a new committee user
   @param value: SignUpCredials type object, contains the necessary registration data to register a new committee user
   */
-  formGroupValue(value: SignUpCredentials) {
+  SignUpCredentials(value: SignUpCredentials) {
     this.submit$.next(value);
     this.email = value.email;
   }

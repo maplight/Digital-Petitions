@@ -3,10 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
 import {
   NoAuthGuard,
-  CityStaffGuard,
   CommitteeGuard,
   AnonimousGuard,
   AccountSettingGuard,
+  CityStaffHomeGuard,
+  CityStaffAdminGuard,
 } from './guards/exports';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'account-setting',
+    component: LayoutComponent,
     canActivate: [AccountSettingGuard],
     loadChildren: () =>
       import('./features/account-settings/account-settings.module').then(
@@ -41,12 +43,12 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'petition/result-confirm-code',
+    path: 'petition/result-confirm-code/:title',
     component: LayoutComponent,
     canActivate: [AnonimousGuard],
     loadChildren: () =>
       import(
-        './features/result-sign-petition/result-sign-petition.module'
+        './features/sign-petition/result-sign-petition/result-sign-petition.module'
       ).then((m) => m.ResultSignPetitionModule),
   },
   {
@@ -55,7 +57,7 @@ const routes: Routes = [
     canActivate: [AnonimousGuard],
     loadChildren: () =>
       import(
-        './features/confirm-sign-petition/confirm-sign-petition.module'
+        './features/sign-petition/confirm-sign-petition/confirm-sign-petition.module'
       ).then((m) => m.ConfirmSignPetitionModule),
   },
   {
@@ -167,12 +169,12 @@ const routes: Routes = [
   },
   {
     path: 'city-staff',
-    canActivate: [CityStaffGuard],
     component: LayoutComponent,
     data: { showMenu: true, showDemo: true },
     children: [
       {
         path: 'home',
+        canActivate: [CityStaffHomeGuard],
         loadChildren: () =>
           import('./features/city-staff-home/city-staff-home.module').then(
             (m) => m.CityStaffHomeModule
@@ -180,6 +182,7 @@ const routes: Routes = [
       },
       {
         path: 'home/:id',
+        canActivate: [CityStaffHomeGuard],
         loadChildren: () =>
           import(
             './features/view-petition-city-staff/view-petition-city-staff.module'
@@ -187,6 +190,7 @@ const routes: Routes = [
       },
       {
         path: 'home/:id/signatures',
+        canActivate: [CityStaffHomeGuard],
         loadChildren: () =>
           import('./features/view-signatures/view-signatures.module').then(
             (m) => m.ViewSignaturesModule
@@ -194,6 +198,7 @@ const routes: Routes = [
       },
       {
         path: 'admin',
+        canActivate: [CityStaffAdminGuard],
         loadChildren: () =>
           import('./features/city-staff-admin/city-staff-admin.module').then(
             (m) => m.CityStaffAdminModule
@@ -201,6 +206,7 @@ const routes: Routes = [
       },
       {
         path: 'permissions',
+        canActivate: [CityStaffAdminGuard],
         loadChildren: () =>
           import(
             './features/city-staff-permissions/city-staff-permissions.module'
@@ -208,6 +214,7 @@ const routes: Routes = [
       },
       {
         path: 'site-design',
+        canActivate: [CityStaffAdminGuard],
         loadChildren: () =>
           import(
             './features/city-staff-site-design/city-staff-site-design.module'

@@ -62,7 +62,7 @@ export class VerifySignComponent implements OnInit {
       } else if (data?.confirmationRequired) {
         this._router.navigate(['/petition/confirm-code']);
       } else {
-        this._router.navigate(['/petition/result-confirm-code']);
+        this._router.navigate(['/petition/result-confirm-code/' + data?.title]);
       }
     });
     this.loading$ = this._signPetitionLogic.loading$;

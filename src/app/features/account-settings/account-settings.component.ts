@@ -5,21 +5,21 @@ import { ChangePasswordModalComponent } from 'src/app/auth/change-password-modal
 import { ChangePersonalDetailsModalComponent } from 'src/app/auth/change-personal-details-modal/change-personal-details-modal.component';
 import { EmailChangeModalComponent } from 'src/app/auth/email-change-modal/email-change-modal.component';
 import { AccountService } from 'src/app/core/account-service/account.service';
-import { User } from 'src/app/shared/models/auth/user';
+import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 
 @Component({
   selector: 'dp-committee-account-settings',
   templateUrl: './account-settings.component.html',
 })
 export class AccountSettingsComponent implements OnInit {
-  protected currentUser$!: Observable<User | null>;
+  protected currentUser!: CognitoUserFacade | undefined;
   constructor(
     private dialog: MatDialog,
     private _accountService: AccountService
   ) {}
 
   ngOnInit(): void {
-    this.currentUser$ = this._accountService.currentUser$;
+    this.currentUser = this._accountService.currentUser;
   }
 
   openDialogPassword(): void {

@@ -8,12 +8,6 @@ export interface Attributes {
   email: string;
 }
 
-export interface User {
-  id: string;
-  username: string;
-  attributes: Attributes;
-}
-
 export interface CognitoUserFacade {
   attributes: Attributes;
   challengeName: 'NEW_PASSWORD_REQUIRED';

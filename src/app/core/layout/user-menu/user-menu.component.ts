@@ -5,6 +5,7 @@ import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { SignOutService } from 'src/app/logic/auth/exports';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
+import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 
 @Component({
   selector: 'dp-user-menu',
@@ -13,7 +14,7 @@ import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-resul
 export class UserMenuComponent implements OnInit, OnDestroy {
   private result$;
   private _unsubscribeAll: Subject<void> = new Subject();
-  protected currentUser$;
+  protected currentUser!: CognitoUserFacade | undefined;
   protected isLoged$;
 
   constructor(
@@ -40,7 +41,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe();
-    this.currentUser$ = this._accountLogic.currentUser$;
+    this.currentUser = this._accountLogic.currentUser;
     this.isLoged$ = this._accountLogic.isAuthenticated$;
   }
 

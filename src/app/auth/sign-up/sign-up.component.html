@@ -73,6 +73,19 @@
               </div>
             </mat-error>
           </mat-form-field>
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input type="text" matInput formControlName="city" />
+            <mat-error *ngIf="this.formGroup.get('city')?.errors?.['required']">
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">City is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>State</mat-label>
             <mat-select formControlName="state">
@@ -159,6 +172,44 @@
                 class="w-[16px] h-[16px]"
                 [svgIcon]="
                   hidePassword ? 'custom_icons:edge' : 'custom_icons:no-edge'
+                "
+              ></mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              [type]="hidecPassword ? 'password' : 'text'"
+              formControlName="cpassword"
+            />
+
+            <mat-error
+              *ngIf="this.formGroup.get('cpassword')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
+                <span class="ml-[9px]">Confirm Password is required</span>
+              </div>
+            </mat-error>
+            <mat-error
+              *ngIf="this.formGroup.get('cpassword')?.errors?.['confirmPasswordValidator']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
+                <span class="ml-[9px]">Passwords do not match</span>
+              </div>
+            </mat-error>
+            <button
+              type="button"
+              matSuffix
+              mat-icon-button
+              (click)="hidecPassword = !hidecPassword"
+            >
+              <mat-icon
+                class="w-[16px] h-[16px]"
+                [svgIcon]="
+                  hidecPassword ? 'custom_icons:edge' : 'custom_icons:no-edge'
                 "
               ></mat-icon>
             </button>
