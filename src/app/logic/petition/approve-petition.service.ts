@@ -9,7 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { TargetPetitionInput } from 'src/app/core/api/API';
+import { ApprovePetitionInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -21,7 +21,7 @@ export class ApprovePetitionService {
   public success$: Observable<ResponsePetition | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<ResponsePetition>>;
-  private submit$: Subject<TargetPetitionInput> = new Subject();
+  private submit$: Subject<ApprovePetitionInput> = new Subject();
 
   constructor(
     private _petitionService: PetitionService,
@@ -60,6 +60,7 @@ export class ApprovePetitionService {
       )
     ).pipe(shareReplay(1));
   }
+
   ngOnDestroy(): void {
     this.submit$.complete();
   }
@@ -67,8 +68,7 @@ export class ApprovePetitionService {
   /** This method begins the process of withdrawal of a petition
   @param id: ID of the petition to withdraw
   */
-
-  approvePetition(data: TargetPetitionInput) {
+  approvePetition(data: ApprovePetitionInput) {
     this.submit$.next(data);
   }
 }

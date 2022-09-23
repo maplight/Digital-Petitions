@@ -14,7 +14,7 @@
         <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
 
-        <mat-error *ngIf="formGroup.controls['deadline'].getError('required')"
+        <mat-error *ngIf="formGroup.get('deadline')!.getError('required')"
           ><div class="flex flex-row items-center">
             <mat-icon
               class="w-[14px] h-[14px]"
@@ -24,8 +24,7 @@
           </div></mat-error
         >
 
-        <mat-error
-          *ngIf="formGroup.controls['deadline'].getError('greaterThan')"
+        <mat-error *ngIf="formGroup.get('deadline')!.getError('greaterThan')"
           ><div class="flex flex-row items-center">
             <mat-icon
               class="w-[14px] h-[14px]"
@@ -40,11 +39,11 @@
         <input
           type="text"
           matInput
-          formControlName="signatures"
+          formControlName="requiredSignatures"
           mask="separator"
         />
         <mat-error
-          *ngIf="this.formGroup.get('signatures')?.errors?.['required']"
+          *ngIf="this.formGroup.get('requiredSignatures')?.errors?.['required']"
         >
           <div class="flex flex-row items-center">
             <mat-icon

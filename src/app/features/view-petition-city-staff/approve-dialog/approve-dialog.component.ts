@@ -4,6 +4,8 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import {
   ApprovePetitionInput,
+  CandidatePetition,
+  IssuePetition,
   TargetPetitionInput,
 } from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
@@ -27,7 +29,7 @@ export class ApproveDialogComponent implements OnInit {
     private _fb: FormBuilder,
     private _approvePetitionLogic: ApprovePetitionService,
     @Inject(MAT_DIALOG_DATA)
-    public data: ApprovePetitionInput
+    public data: CandidatePetition | IssuePetition
   ) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -37,7 +39,7 @@ export class ApproveDialogComponent implements OnInit {
         null,
         [Validators.required, DateValidators.greaterThan(today)],
       ],
-      signatures: ['', [Validators.required]],
+      requiredSignatures: ['', [Validators.required]],
     });
   }
 
@@ -58,15 +60,17 @@ export class ApproveDialogComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-      this.data.deadline = this.formGroup.value.deadline;
-      this.data.requiredSignatures = this.formGroup.value.signatures;
+      const input = { ...this.formGroup.value } as ApprovePetitionInput;
+      input.PK = this.data.PK;
+      input.expectedVersion = this.data.version;
+
       const dialogRef = this._dialog.open(ApproveAlertComponent, {
         width: '480px',
       });
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this._approvePetitionLogic.approvePetition(this.data);
+          this._approvePetitionLogic.approvePetition(input);
         } else {
           this._dialog.closeAll();
         }

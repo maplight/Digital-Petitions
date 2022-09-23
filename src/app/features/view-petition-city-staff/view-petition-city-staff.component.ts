@@ -1,24 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  Subscription,
-  takeUntil,
-  tap,
-} from 'rxjs';
-import {
-  CandidatePetition,
-  IssuePetition,
-  Petition,
-  PetitionStatus,
-  TargetPetitionInput,
-} from 'src/app/core/api/API';
-import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { CandidatePetition, IssuePetition } from 'src/app/core/api/API';
 import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.service';
-import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { GetStaffPetitionService } from 'src/app/logic/petition/get-staff-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
@@ -38,10 +23,8 @@ export class ViewPetitionCityStaffComponent implements OnInit {
   protected loadingDeny$!: Observable<boolean>;
 
   private _unSuscribeAll: Subject<void> = new Subject();
-  private _targetPetitionInput: TargetPetitionInput = {
-    PK: '',
-    expectedVersion: 0,
-  };
+  private _petition?: CandidatePetition | IssuePetition;
+
   constructor(
     private _getPetitionLogic: GetStaffPetitionService,
     private _denyPetitionLogic: DenyPetitionService,
@@ -53,12 +36,10 @@ export class ViewPetitionCityStaffComponent implements OnInit {
     this.success$ = this._getPetitionLogic.success$;
     this.success$.pipe(takeUntil(this._unSuscribeAll)).subscribe((value) => {
       if (value?.dataCandidate) {
-        this._targetPetitionInput.PK = value.dataCandidate.PK;
-        this._targetPetitionInput.expectedVersion = value.dataCandidate.version;
+        this._petition = value.dataCandidate;
       }
       if (value?.dataIssue) {
-        this._targetPetitionInput.PK = value.dataIssue.PK;
-        this._targetPetitionInput.expectedVersion = value.dataIssue.version;
+        this._petition = value.dataIssue;
       }
     });
     this.error$ = this._getPetitionLogic.error$;
@@ -89,7 +70,7 @@ export class ViewPetitionCityStaffComponent implements OnInit {
     const dialogRef = this._dialog
       .open(ApproveDialogComponent, {
         width: '690px',
-        data: this._targetPetitionInput,
+        data: { ...this._petition },
       })
       .afterClosed()
       .subscribe((_) => {
@@ -117,7 +98,10 @@ export class ViewPetitionCityStaffComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._denyPetitionLogic.denyPetition(this._targetPetitionInput);
+        this._denyPetitionLogic.denyPetition({
+          expectedVersion: this._petition!.version,
+          PK: this._petition!.PK,
+        });
       } else {
         this._dialog.closeAll();
       }

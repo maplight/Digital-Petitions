@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import API, { GraphQLResult } from '@aws-amplify/api';
 import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import {
+  ApprovePetitionInput,
   ApprovePetitionMutation,
   CandidatePetition,
   CandidatePetitionInput,
@@ -267,7 +268,7 @@ export class PetitionService {
   }
 
   approvePetition(
-    data: TargetPetitionInput
+    data: ApprovePetitionInput
   ): Observable<Result<ResponsePetition>> {
     return from(
       API.graphql({
