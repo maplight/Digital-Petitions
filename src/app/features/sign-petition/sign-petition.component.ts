@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, merge } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { VoterRecordMatch } from 'src/app/core/api/API';
 import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 

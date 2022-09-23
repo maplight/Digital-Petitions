@@ -30,12 +30,8 @@ import {
   VoterRecordMatch,
   VoterRecordMatchInput,
 } from 'src/app/core/api/API';
-import { AccountService } from 'src/app/core/account-service/account.service';
-
-import { FilterData, Result } from 'src/app/shared/models/exports';
+import { Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
-import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
-
 import {
   rejectPetition,
   submitSignature,
@@ -50,7 +46,6 @@ import {
   getPetitionsByOwner,
   getPetitionsByType as getPetitionsByTypeAn,
 } from 'src/graphql/not-generated/queries';
-import { getPetition as getPetitionCommittee } from 'src/graphql/queries';
 import {
   approvePetition,
   editCandidatePetition,
@@ -61,10 +56,6 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
-  private IssuePetition: 'IssuePetition' = 'IssuePetition';
-  private CandidatePetition: 'CandidatePetition' = 'CandidatePetition';
-  private AddressData: 'AddressData' = 'AddressData';
-  private SignatureSummary: 'SignatureSummary' = 'SignatureSummary';
   constructor(private _loggingService: LoggingService) {}
 
   newIssuePetition(

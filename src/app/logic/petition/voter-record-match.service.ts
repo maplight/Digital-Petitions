@@ -9,12 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import {
-  SignatureVerification,
-  SignatureVerificationInput,
-  VoterRecordMatch,
-  VoterRecordMatchInput,
-} from 'src/app/core/api/API';
+import { VoterRecordMatch, VoterRecordMatchInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';

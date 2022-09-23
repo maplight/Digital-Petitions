@@ -16,9 +16,7 @@ import {
 } from 'src/app/core/api/API';
 import { State, states } from 'src/app/core/states';
 import { VoterRecordMatchService } from 'src/app/logic/petition/voter-record-match.service';
-import { Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
-import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 
 @Component({
   selector: 'dp-sign-this-petition',

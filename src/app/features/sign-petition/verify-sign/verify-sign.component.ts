@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, merge, Observable, Subject, tap } from 'rxjs';
+import { map, merge, Observable, Subject } from 'rxjs';
 import {
   SignatureVerificationInput,
   VerificationMethod,
