@@ -20,6 +20,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-inactive-petitions',
   templateUrl: './inactive-petitions.component.html',
+  providers: [GetPetitionsInactiveService],
 })
 export class InactivePetitionsComponent implements OnInit {
   protected loadingUp: boolean = true;
