@@ -72,9 +72,11 @@ export class GetPetitionsInactiveService {
       )
     ).pipe(shareReplay(1));
   }
+
   ngOnDestroy(): void {
     this.submit$.complete();
   }
+
   /** This method begins the process of obtaining inactive petitions
   @param value: FilterData type: request filtering criteria
   */
