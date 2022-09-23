@@ -52,7 +52,7 @@ export class ApproveDialogComponent implements OnInit {
           success: true,
         },
       });
-      console.log("?", _);
+      console.log('?', _);
       this.data = (_?.dataCandidate ?? _?.dataIssue)!;
     });
     this.loading$ = this._approvePetitionLogic.loading$;

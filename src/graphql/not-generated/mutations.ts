@@ -173,9 +173,9 @@ export const submitIssuePetition = /* GraphQL */ `
 
 /**
  * Update the site's look and feel.
- * 
+ *
  * Requires Admin access level.
- * 
+ *
  * Due to limitations on the implementation of AppSync subscriptions,
  * in order for the site look and feel data to be forwarded to all
  * users immediately after an admin updates it, all of the fields in
@@ -195,9 +195,9 @@ export const updateSiteConfiguration = /* GraphQL */ `
 
 /**
  * Update access level for an administrative user.
- * 
+ *
  * Requires Admin access level.
- * 
+ *
  * Returns the new permission status for the user, as this is
  * the only value modified by this mutation.
  */
