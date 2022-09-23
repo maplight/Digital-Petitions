@@ -35,7 +35,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       address: ['', [Validators.required]],
-      aptNumber: ['', [Validators.required]],
+      aptNumber: [''],
       city: ['', [Validators.required]],
       state: [null, [Validators.required]],
       zipCode: ['', [Validators.required]],

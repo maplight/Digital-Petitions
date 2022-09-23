@@ -34,7 +34,7 @@ export class AccountSettingsComponent implements OnInit {
     });
   }
 
-  openDialogPerosnalDetails(): void {
+  openDialogPersonalDetails(): void {
     const dialogRef = this.dialog.open(ChangePersonalDetailsModalComponent, {
       width: '690px',
     });
