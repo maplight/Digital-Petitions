@@ -1,23 +1,12 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  Subscription,
-  takeUntil,
-  tap,
-} from 'rxjs';
-import {
-  GetPetitionsByTypeQuery,
   PetitionsByTypeInput,
-  PetitionStatus,
   PetitionStatusQuery,
   PetitionType,
 } from 'src/app/core/api/API';
 
-import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
-import { FilterData } from 'src/app/shared/models/exports';
 import {
   FilterByStatus,
   FilterByStatusInactive,
@@ -26,7 +15,6 @@ import {
   FilterByType,
   FilterByTypeData,
 } from 'src/app/shared/models/filter/filter-by-type';
-import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
@@ -60,6 +48,7 @@ export class InactivePetitionsComponent implements OnInit {
     this.loading$ = this._getPetitionsInactiveService.loading$;
     this.getPetitions();
   }
+
   filterCategory(value: PetitionType | undefined | 'ANY') {
     this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;
 
@@ -81,6 +70,7 @@ export class InactivePetitionsComponent implements OnInit {
   private getPetitions() {
     this._getPetitionsInactiveService.getPetitions(this.petitionsByTypeInput);
   }
+
   pageNumber() {
     this.loadingUp = false;
     this.getPetitions();

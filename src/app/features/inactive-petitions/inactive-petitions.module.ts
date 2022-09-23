@@ -28,6 +28,5 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     LoadingBarModule,
     ErrorMsgModule,
   ],
-  providers: [GetPetitionsInactiveService],
 })
 export class InactivePetitionsModule {}
