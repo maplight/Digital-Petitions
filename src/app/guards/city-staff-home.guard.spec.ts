@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CityStaffGuard } from './city-staff.guard';
+import { CityStaffGuard as CityStaffHomeGuard } from './city-staff-home.guard';
 
 describe('CityStaffGuard', () => {
-  let guard: CityStaffGuard;
+  let guard: CityStaffHomeGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(CityStaffGuard);
+    guard = TestBed.inject(CityStaffHomeGuard);
   });
 
   it('should be created', () => {
