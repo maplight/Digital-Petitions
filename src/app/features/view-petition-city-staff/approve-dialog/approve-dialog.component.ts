@@ -1,12 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   ApprovePetitionInput,
   CandidatePetition,
   IssuePetition,
-  TargetPetitionInput,
 } from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
@@ -53,6 +52,8 @@ export class ApproveDialogComponent implements OnInit {
           success: true,
         },
       });
+      console.log("?", _);
+      this.data = (_?.dataCandidate ?? _?.dataIssue)!;
     });
     this.loading$ = this._approvePetitionLogic.loading$;
     this.error$ = this._approvePetitionLogic.error$;

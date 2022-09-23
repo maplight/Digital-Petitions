@@ -12,6 +12,7 @@ export const approvePetition = /* GraphQL */ `
   mutation ApprovePetition($data: ApprovePetitionInput!) {
     approvePetition(data: $data) {
       PK
+      type
       signatureSummary {
         deadline
         required
