@@ -30,7 +30,9 @@ export class ConfirmSignPetitionComponent implements OnInit {
       if (data?.error) {
         this.localError$.next(data.message);
       } else {
-        this._router.navigate(['/petition/result-confirm-code']);
+        this._router.navigate([
+          '/petition/result-confirm-code/' + data?.message,
+        ]);
       }
     });
     this.loading$ = this._confirmSignPetitionLogic.loading$;

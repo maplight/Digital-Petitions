@@ -12,7 +12,7 @@
         </div>
         <div class="flex justify-center">
           <p class="font-bold text-base leading-5 w-full text-center">
-            Petition Title
+            {{ title }}
           </p>
         </div>
         <div class="flex justify-center pt-4 pb-9">
@@ -28,7 +28,7 @@
             type="button"
             mat-flat-button
             color="primary"
-            (click)="submit()"
+            [routerLink]="'/home'"
           >
             Return to Active Petitions
           </button>
