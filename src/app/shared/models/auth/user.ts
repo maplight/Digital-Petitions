@@ -3,7 +3,11 @@ export interface Attributes {
   address: string;
   email_verified: boolean;
   given_name: string;
-  'custom:access_group': string;
+  'custom:access_group':
+    | 'petitioner'
+    | 'admin'
+    | 'city_staff'
+    | 'city_staff_guest';
   family_name: string;
   email: string;
 }
