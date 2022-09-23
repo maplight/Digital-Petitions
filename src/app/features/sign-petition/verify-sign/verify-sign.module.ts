@@ -12,7 +12,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
-import { SignPetitionService } from 'src/app/logic/petition/sign-petition.service';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 

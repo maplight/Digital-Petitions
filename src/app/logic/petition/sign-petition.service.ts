@@ -15,7 +15,6 @@ import {
 } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
-import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
 import { PetitionService } from './petition.service';
 
 @Injectable()

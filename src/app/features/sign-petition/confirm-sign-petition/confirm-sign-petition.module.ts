@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmSignPetitionRoutingModule } from './confirm-sign-petition-routing.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ConfirmSignPetitionService } from 'src/app/logic/petition/confirm-sign-petition.service';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';

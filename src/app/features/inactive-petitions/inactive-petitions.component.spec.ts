@@ -67,6 +67,7 @@ describe('InactivePetitionsComponent', () => {
       })
       .compileComponents();
   });
+
   beforeEach(async () => {
     fixture = TestBed.createComponent(InactivePetitionsComponent);
     component = fixture.componentInstance;
@@ -74,13 +75,12 @@ describe('InactivePetitionsComponent', () => {
       GetPetitionsInactiveService
     );
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should show the loading bar when the petition is loading', () => {
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -96,8 +96,6 @@ describe('InactivePetitionsComponent', () => {
       'get'
     ).and.returnValue(of(false));
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -107,8 +105,6 @@ describe('InactivePetitionsComponent', () => {
   });
 
   it('should show 6 petition card elements when a successful response is received', () => {
-    //component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpPetitionCard =
@@ -118,7 +114,6 @@ describe('InactivePetitionsComponent', () => {
   });
 
   it('should call getPetitionsAnonymous function when a "see more" button is clicked', () => {
-    //component.ngOnInit();
     const getPetitionsSpy = spyOn(_getPetitionsInactiveService, 'getPetitions');
 
     component.pageNumber();
@@ -154,9 +149,7 @@ describe('InactivePetitionsComponent', () => {
     expect(element[0].textContent).toEqual('No petitions to display here');
   });
 
-  it('should show a "see more" button when cursor value', () => {
-    component.ngOnInit();
-
+  it('should show a "see more" button when cursor has value', () => {
     fixture.detectChanges();
 
     const dpPetitionCard =
@@ -178,8 +171,6 @@ describe('InactivePetitionsComponent', () => {
       'get'
     ).and.returnValue(of(false));
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -200,8 +191,6 @@ describe('InactivePetitionsComponent', () => {
       'loading$',
       'get'
     ).and.returnValue(of(true));
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
