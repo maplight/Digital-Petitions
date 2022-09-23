@@ -70,6 +70,14 @@
         <ng-container class="flex w-full" *ngSwitchCase="'verify'">
           <dp-verify-sign
             [dataSignature]="signatureData"
+            [id]="
+              resultData.dataCandidate?.PK || resultData.dataIssue?.PK || ''
+            "
+            [title]="
+              resultData.dataCandidate?.name ||
+              resultData.dataIssue?.title ||
+              ''
+            "
             (cancelEvent)="cancel($event)"
           ></dp-verify-sign>
         </ng-container>

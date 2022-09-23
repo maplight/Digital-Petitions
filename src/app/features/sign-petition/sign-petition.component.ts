@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { VoterRecordMatch } from 'src/app/core/api/API';
 import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
-import { SignPetitionService } from 'src/app/logic/petition/sign-petition.service';
-import { FilterData } from 'src/app/shared/models/exports';
+
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
-import { SignaturePetitionData } from 'src/app/shared/models/petition/signature-petition-data';
-import { SignaturePetitionType } from 'src/app/shared/models/petition/signature-petition-type';
 
 @Component({
   selector: 'dp-sign-petition',
@@ -16,9 +14,10 @@ export class SignPetitionComponent implements OnInit {
   protected success$!: Observable<ResponsePetition | undefined>;
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
+
   protected currentStep$: BehaviorSubject<'verify' | 'view' | 'sign'> =
     new BehaviorSubject<'verify' | 'view' | 'sign'>('view');
-  protected signatureData!: SignaturePetitionData;
+  protected signatureData!: VoterRecordMatch;
 
   constructor(
     private _committeeLogic: GetPublicPetitionService,
@@ -35,14 +34,14 @@ export class SignPetitionComponent implements OnInit {
     );
   }
 
-  protected submitPersonalData(data: SignaturePetitionData) {
+  protected submitPersonalData(data: VoterRecordMatch) {
     this.signatureData = data;
     this.currentStep$.next('verify');
   }
 
   protected cancel(value: 'verify' | 'view' | 'sign') {
     if (value === 'sign') {
-      this.signatureData.verify = { verifyType: '' };
+      this.signatureData.methods = [];
     }
 
     this.currentStep$.next(value);

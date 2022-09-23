@@ -8,131 +8,134 @@
     [text]="'Back To Signing'"
     (click)="cancel('sign')"
   ></dp-return-link>
-  <div class="flex flex-col gap-2 md:px-6">
+  <div
+    class="flex flex-col gap-2 md:px-6"
+    *ngIf="dataSignature.methods.length > 0"
+  >
     <p class="font-bold text-lg leading-6">Verify Your Signature</p>
     <p>Choose how you want to verify your signature</p>
   </div>
-  <ng-container *ngIf="!(loading$ | async)">
-    <ng-container *ngIf="result$ | async as result">
-      <div *ngIf="result.error as error" class="flex flex-row items-center">
-        <mat-icon
-          class="w-[14px] h-[14px]"
-          [svgIcon]="'custom_icons:c_close'"
-        ></mat-icon>
-        <span class="ml-[9px] text-[#FF3030]">{{ error }}</span>
-      </div>
-    </ng-container>
-  </ng-container>
-  <mat-progress-bar
-    mode="indeterminate"
-    color="primary"
-    *ngIf="loading$ | async"
-  ></mat-progress-bar>
-  <mat-radio-group
-    class="flex flex-col w-full gap-4"
-    formControlName="verifyType"
-    color="primary"
+  <dp-error-msg
+    *ngIf="!(loading$ | async) && (error$ | async) as error"
+    [error]="error"
   >
-    <dp-basic-card class="flex flex-col w-full">
-      <mat-radio-button value="license"
-        ><p class="font-bold text-base leading-5">
-          Divers License / State ID
-        </p></mat-radio-button
+  </dp-error-msg>
+  <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
+  <ng-container *ngIf="dataSignature.methods.length > 0; else noMethod">
+    <mat-radio-group
+      class="flex flex-col w-full gap-4"
+      formControlName="verifyType"
+      color="primary"
+    >
+      <dp-basic-card
+        class="flex flex-col w-full"
+        *ngIf="showMethod('STATE_ID')"
       >
-      <form
-        *ngIf="formGroup.value.verifyType === 'license'"
-        [formGroup]="formGroupLicense"
-        class="flex md:flex-row flex-col w-full gap-[26px]"
-      >
-        <mat-form-field class="md:max-w-[385px] w-full">
-          <mat-label>License Number</mat-label>
-          <input type="text" matInput formControlName="licenseNumber" />
-          <mat-error
-            *ngIf="this.formGroupLicense.get('licenseNumber')?.errors?.['required']"
-          >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">License Number is required</span>
-            </div>
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="md:max-w-[170px] w-full">
-          <mat-label>Date Of Birth</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            formControlName="dateOfBirth"
-          />
-          <mat-datepicker-toggle
-            matPrefix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error
-            *ngIf="this.formGroupLicense.get('dateOfBirth')?.errors?.['required']"
-          >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Date Of Birth is required</span>
-            </div>
-          </mat-error>
-          <mat-error *ngIf="!this.formGroupLicense.get('dateOfBirth')?.valid">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Invalid format</span>
-            </div>
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </dp-basic-card>
-    <dp-basic-card class="flex flex-col w-full">
-      <mat-radio-button value="Email"
-        ><p class="font-bold text-base leading-5">Email</p></mat-radio-button
-      >
-      <p>
-        A confirmation code will be sent to the email address on file with your
-        voter registration.
-      </p>
-    </dp-basic-card>
-    <dp-basic-card class="flex flex-col w-full">
-      <mat-radio-button value="Text"
-        ><p class="font-bold text-base leading-5">Text</p></mat-radio-button
-      >
-      <p>
-        A confirmation code will be sent to the mobile number registered on file
-        with your voter registration.
-      </p>
-    </dp-basic-card>
-    <dp-basic-card class="flex flex-col w-full">
-      <mat-radio-button value="Call"
-        ><p class="font-bold text-base leading-5">Call</p></mat-radio-button
-      >
-      <p>
-        You will receive a phone call to the number that is on file with your
-        voter registration.
-      </p>
-    </dp-basic-card>
-    <dp-basic-card class="flex flex-col w-full">
-      <mat-radio-button value="USMail"
-        ><p class="font-bold text-base leading-5">
-          U.S. Mail
-        </p></mat-radio-button
-      >
-      <p>
-        A confirmation code will be mailed to the address on file with your
-        voter registration.
-      </p>
-    </dp-basic-card>
-  </mat-radio-group>
+        <mat-radio-button value="license"
+          ><p class="font-bold text-base leading-5">
+            Divers License / State ID
+          </p></mat-radio-button
+        >
+        <form
+          *ngIf="formGroup.value.verifyType === 'license'"
+          [formGroup]="formGroupLicense"
+          class="flex md:flex-row flex-col w-full gap-[26px]"
+        >
+          <mat-form-field class="md:max-w-[385px] w-full">
+            <mat-label>License Number</mat-label>
+            <input type="text" matInput formControlName="licenseNumber" />
+            <mat-error
+              *ngIf="this.formGroupLicense.get('licenseNumber')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">License Number is required</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="md:max-w-[170px] w-full">
+            <mat-label>Date Of Birth</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dateOfBirth"
+            />
+            <mat-datepicker-toggle
+              matPrefix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="this.formGroupLicense.get('dateOfBirth')?.errors?.['required']"
+            >
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">Date Of Birth is required</span>
+              </div>
+            </mat-error>
+            <mat-error *ngIf="!this.formGroupLicense.get('dateOfBirth')?.valid">
+              <div class="flex flex-row items-center">
+                <mat-icon
+                  class="w-[14px] h-[14px]"
+                  [svgIcon]="'custom_icons:c_close'"
+                ></mat-icon>
+                <span class="ml-[9px]">Invalid format</span>
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </dp-basic-card>
+      <dp-basic-card class="flex flex-col w-full" *ngIf="showMethod('EMAIL')">
+        <mat-radio-button value="Email"
+          ><p class="font-bold text-base leading-5">Email</p></mat-radio-button
+        >
+        <p>
+          A confirmation code will be sent to the email address on file with
+          your voter registration.
+        </p>
+      </dp-basic-card>
+      <dp-basic-card class="flex flex-col w-full" *ngIf="showMethod('TEXT')">
+        <mat-radio-button value="Text"
+          ><p class="font-bold text-base leading-5">Text</p></mat-radio-button
+        >
+        <p>
+          A confirmation code will be sent to the mobile number registered on
+          file with your voter registration.
+        </p>
+      </dp-basic-card>
+      <dp-basic-card class="flex flex-col w-full" *ngIf="showMethod('CALL')">
+        <mat-radio-button value="Call"
+          ><p class="font-bold text-base leading-5">Call</p></mat-radio-button
+        >
+        <p>
+          You will receive a phone call to the number that is on file with your
+          voter registration.
+        </p>
+      </dp-basic-card>
+      <dp-basic-card class="flex flex-col w-full" *ngIf="showMethod('POSTAL')">
+        <mat-radio-button value="USMail"
+          ><p class="font-bold text-base leading-5">
+            U.S. Mail
+          </p></mat-radio-button
+        >
+        <p>
+          A confirmation code will be mailed to the address on file with your
+          voter registration.
+        </p>
+      </dp-basic-card>
+    </mat-radio-group>
+  </ng-container>
+  <ng-template #noMethod
+    ><h3 class="font-bold">
+      We have not found a valid method of verifying your identity
+    </h3></ng-template
+  >
   <div class="hidden md:flex md:flex-row md:w-full md:justify-end md:gap-4">
     <button
       class="hidden md:flex"

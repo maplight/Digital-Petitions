@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [SignThisPetitionComponent],
@@ -21,6 +23,8 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    LoadingBarModule,
+    ErrorMsgModule,
   ],
   exports: [SignThisPetitionComponent],
 })

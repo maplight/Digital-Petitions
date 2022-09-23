@@ -9,27 +9,25 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { CodeSubmissionResult } from 'src/app/core/api/API';
+import { VoterRecordMatch, VoterRecordMatchInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';
 
 @Injectable()
-export class ConfirmSignPetitionService {
+export class VoterRecordMatchService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<CodeSubmissionResult | undefined>;
+  public success$: Observable<VoterRecordMatch | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<CodeSubmissionResult>>;
-  private submit$: Subject<string> = new Subject();
+  public result$: Observable<Result<VoterRecordMatch>>;
+  private submit$: Subject<VoterRecordMatchInput> = new Subject();
 
   constructor(
     private _petitionService: PetitionService,
     private _loggingService: LoggingService
   ) {
     this.result$ = this.submit$.pipe(
-      exhaustMap((data) =>
-        this._petitionService.confirmSignaturePetition(data)
-      ),
+      exhaustMap((data) => this._petitionService.getVoterRecordMatch(data)),
       shareReplay(1)
     );
     const [success$, error$] = partition(this.result$, (value) =>
@@ -64,10 +62,8 @@ export class ConfirmSignPetitionService {
   ngOnDestroy(): void {
     this.submit$.complete();
   }
-  /** This method begins the process of verification of a petition signature
-  @param value: User Verification Code
-  */
-  setConfirmationCode(value: string) {
+
+  getVoterRecordMatch(value: VoterRecordMatchInput) {
     this.submit$.next(value);
   }
 }

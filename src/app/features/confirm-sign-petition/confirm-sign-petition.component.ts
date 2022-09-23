@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable, merge, Subject } from 'rxjs';
 import { ConfirmSignPetitionService } from 'src/app/logic/petition/confirm-sign-petition.service';
 import { Result } from 'src/app/shared/models/exports';
 
@@ -12,8 +12,8 @@ import { Result } from 'src/app/shared/models/exports';
 export class ConfirmSignPetitionComponent implements OnInit {
   public formGroup: FormGroup;
 
-  protected result$!: Observable<Result<string>>;
-  protected error: string | undefined;
+  protected error$!: Observable<string | undefined>;
+  private localError$: Subject<string> = new Subject();
   protected loading$!: Observable<boolean>;
   constructor(
     private _fb: FormBuilder,
@@ -23,22 +23,27 @@ export class ConfirmSignPetitionComponent implements OnInit {
     this.formGroup = this._fb.group({
       code: ['', [Validators.required]],
     });
-    this.result$ = this._confirmSignPetitionLogic.result$.pipe(
-      tap((result) => {
-        if (!!result.result) {
-          this._router.navigate(['/petition/result-confirm-code']);
-        } else {
-          this.error = result.error;
-        }
-      })
-    );
-    this.loading$ = this._confirmSignPetitionLogic.loading$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._confirmSignPetitionLogic.success$.subscribe((data) => {
+      if (data?.error) {
+        this.localError$.next(data.message);
+      } else {
+        this._router.navigate(['/petition/result-confirm-code']);
+      }
+    });
+    this.loading$ = this._confirmSignPetitionLogic.loading$;
+    this.error$ = merge(
+      this._confirmSignPetitionLogic.error$,
+      this.localError$
+    );
+  }
   submit() {
     if (this.formGroup.valid) {
-      this._confirmSignPetitionLogic.setConfirmationCode(this.formGroup.value);
+      this._confirmSignPetitionLogic.setConfirmationCode(
+        this.formGroup.value.code
+      );
     }
   }
   cancel() {
