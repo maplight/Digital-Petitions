@@ -15,6 +15,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [ApproveDialogComponent],
@@ -34,6 +35,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatProgressBarModule,
     LoadingBarModule,
     ErrorMsgModule,
+    NgxMaskModule,
   ],
   exports: [ApproveDialogComponent],
 })

@@ -8,6 +8,7 @@ import {
 } from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
+import { DateValidators } from 'src/app/shared/validators/date-validators';
 import { ApproveAlertComponent } from '../approve-alert/approve-alert.component';
 
 @Component({
@@ -28,9 +29,15 @@ export class ApproveDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: ApprovePetitionInput
   ) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     this.formGroup = this._fb.group({
-      deadline: [Date, [Validators.required]],
-      signatures: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      deadline: [
+        null,
+        [Validators.required, DateValidators.greaterThan(today)],
+      ],
+      signatures: ['', [Validators.required]],
     });
   }
 
