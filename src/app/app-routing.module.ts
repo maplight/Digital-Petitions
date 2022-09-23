@@ -131,13 +131,6 @@ const routes: Routes = [
     data: { showMenu: false, showDemo: true },
     children: [
       {
-        path: 'account-settings',
-        loadChildren: () =>
-          import('./features/account-settings/account-settings.module').then(
-            (m) => m.AccountSettingsModule
-          ),
-      },
-      {
         path: 'new-petition',
         loadChildren: () =>
           import('./features/new-petition/new-petition.module').then(

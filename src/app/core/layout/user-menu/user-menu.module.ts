@@ -23,6 +23,5 @@ import { SignOutService } from 'src/app/logic/auth/exports';
     MatDialogModule,
   ],
   exports: [UserMenuComponent],
-  providers: [SignOutService],
 })
 export class UserMenuModule {}

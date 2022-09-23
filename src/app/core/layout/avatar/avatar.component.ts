@@ -7,17 +7,16 @@ import { AccountService } from 'src/app/core/account-service/account.service';
   templateUrl: './avatar.component.html',
 })
 export class AvatarComponent implements OnInit {
-  protected l_avatar!: string;
-  constructor(private _accountLogic: AccountService) {}
+  protected letters!: string;
+  constructor(private _accountService: AccountService) {}
 
   ngOnInit(): void {
-    console.log(this._accountLogic.currentUser);
-    if (this._accountLogic.currentUser) {
-      this.l_avatar =
-        this._accountLogic.currentUser?.attributes.given_name[0].toUpperCase() +
-        this._accountLogic.currentUser?.attributes.family_name[0].toUpperCase();
+    if (this._accountService.currentUser) {
+      this.letters =
+        this._accountService.currentUser?.attributes.given_name[0].toUpperCase() +
+        this._accountService.currentUser?.attributes.family_name[0].toUpperCase();
     } else {
-      this.l_avatar = 'ML';
+      this.letters = 'ML';
     }
   }
 }
