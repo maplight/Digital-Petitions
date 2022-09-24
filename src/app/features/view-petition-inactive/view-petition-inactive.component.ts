@@ -9,6 +9,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-view-petition',
   templateUrl: './view-petition-inactive.component.html',
+  providers: [GetPublicPetitionService],
 })
 export class ViewPetitionInactiveComponent implements OnInit, AfterViewInit {
   protected resultData: ResponsePetition = {};

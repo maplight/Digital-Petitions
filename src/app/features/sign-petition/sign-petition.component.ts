@@ -9,6 +9,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-sign-petition',
   templateUrl: './sign-petition.component.html',
+  providers: [GetPublicPetitionService],
 })
 export class SignPetitionComponent implements OnInit {
   protected success$!: Observable<ResponsePetition | undefined>;

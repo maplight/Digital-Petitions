@@ -18,6 +18,7 @@ import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-e
 @Component({
   selector: 'dp-edit-petition-issue',
   templateUrl: './edit-petition-issue.component.html',
+  providers: [EditPetitionIssueService],
 })
 export class EditPetitionIssueComponent implements OnInit, OnChanges {
   @Input() formData: ResponsePetition = {};
