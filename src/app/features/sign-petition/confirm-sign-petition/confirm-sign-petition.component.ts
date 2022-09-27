@@ -48,7 +48,4 @@ export class ConfirmSignPetitionComponent implements OnInit {
       );
     }
   }
-  cancel() {
-    this._router.navigate(['/home']);
-  }
 }
