@@ -4,7 +4,6 @@ import { WithdrawlResultComponent } from './withdrawl-result.component';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
@@ -17,6 +16,5 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
   ],
   exports: [WithdrawlResultComponent],
-  providers: [WithdrawPetitionService],
 })
 export class WithdrawlResultModule {}

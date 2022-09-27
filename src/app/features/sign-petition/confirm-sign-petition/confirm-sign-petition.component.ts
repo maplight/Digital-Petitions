@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, merge, Subject } from 'rxjs';
 import { ConfirmSignPetitionService } from 'src/app/logic/petition/confirm-sign-petition.service';
-import { Result } from 'src/app/shared/models/exports';
 
 @Component({
   selector: 'dp-confirm-sign-petition',
   templateUrl: './confirm-sign-petition.component.html',
+  providers: [ConfirmSignPetitionService],
 })
 export class ConfirmSignPetitionComponent implements OnInit {
   public formGroup: FormGroup;
