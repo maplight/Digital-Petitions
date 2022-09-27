@@ -18,8 +18,8 @@ export class VerifySignComponent implements OnInit {
   @Input() dataSignature!: VoterRecordMatch;
   @Input() title!: string;
   @Input() id!: string;
-  protected formGroup: FormGroup;
-  protected formGroupLicense: FormGroup;
+  formGroup: FormGroup;
+  formGroupLicense: FormGroup;
   protected isContinue$: Observable<boolean>;
   protected error$!: Observable<string | undefined>;
   private localError$: Subject<string> = new Subject();
