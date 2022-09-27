@@ -6,15 +6,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import {
-  from,
-  merge,
-  Observable,
-  of,
-  Subject,
-  Subscription,
-  takeUntil,
-} from 'rxjs';
+import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { ApproveSignatureService } from 'src/app/logic/signature/approve-signature.service';
 import { DenySignatureService } from 'src/app/logic/signature/deny-signature.service';
 import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.service';
@@ -24,6 +16,11 @@ import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data
 @Component({
   selector: 'dp-view-signatures',
   templateUrl: './view-signatures.component.html',
+  providers: [
+    GetSignaturesService,
+    ApproveSignatureService,
+    DenySignatureService,
+  ],
 })
 export class ViewSignaturesComponent
   implements OnInit, AfterViewInit, OnChanges, OnDestroy

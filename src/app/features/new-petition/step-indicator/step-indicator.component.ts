@@ -5,6 +5,7 @@ import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.serv
 @Component({
   selector: 'dp-step-indicator',
   templateUrl: './step-indicator.component.html',
+  providers: [StepIndicatorService],
 })
 export class StepIndicatorComponent implements OnInit, OnDestroy {
   private basicStyleElement: string =
