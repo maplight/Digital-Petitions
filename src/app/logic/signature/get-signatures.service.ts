@@ -5,10 +5,15 @@ import {
   merge,
   Observable,
   partition,
+  ReplaySubject,
   shareReplay,
   Subject,
   tap,
 } from 'rxjs';
+import {
+  SignatureConnection,
+  SignaturesByPetitionInput,
+} from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { FilterData, Result } from 'src/app/shared/models/exports';
 import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
@@ -17,10 +22,11 @@ import { SignatureService } from './signature.service';
 @Injectable()
 export class GetSignaturesService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<SignaturesData[] | undefined>;
+  public success$: Observable<SignatureConnection | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<SignaturesData[]>>;
-  private submit$: Subject<FilterData[]> = new Subject();
+  public result$: Observable<Result<SignatureConnection>>;
+  private submit$: ReplaySubject<SignaturesByPetitionInput> =
+    new ReplaySubject();
 
   constructor(
     private _signatureService: SignatureService,
@@ -67,7 +73,7 @@ export class GetSignaturesService {
   @param filter: filter criteria for signatures
   */
 
-  getSignatures(filter: FilterData[]) {
+  getSignatures(filter: SignaturesByPetitionInput) {
     this.submit$.next(filter);
   }
 }

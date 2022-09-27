@@ -6,11 +6,23 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable, Subject, Subscription, takeUntil, tap } from 'rxjs';
+import {
+  PetitionStatusQuery,
+  Signature,
+  SignaturesByPetitionInput,
+  SignatureStatus,
+  SignatureStatusQuery,
+} from 'src/app/core/api/API';
 import { ApproveSignatureService } from 'src/app/logic/signature/approve-signature.service';
 import { DenySignatureService } from 'src/app/logic/signature/deny-signature.service';
 import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.service';
 import { FilterData } from 'src/app/shared/models/exports';
+import {
+  FilterByStatus,
+  FilterByStatusSignatures,
+} from 'src/app/shared/models/filter/filter-by-status';
 import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
 
 @Component({
@@ -22,9 +34,7 @@ import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data
     DenySignatureService,
   ],
 })
-export class ViewSignaturesComponent
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy
-{
+export class ViewSignaturesComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<void> = new Subject();
 
   protected showAlert: boolean = false;
@@ -32,18 +42,12 @@ export class ViewSignaturesComponent
   protected messageAlert: string = '';
   protected disabledFilter: boolean = false;
   protected disabledSeeMore: boolean = false;
-  private currentFilter: FilterData[] = [
-    {
-      property: 'Status',
-      value: 'All',
-      page: 0,
-    },
-    {
-      property: 'Search',
-      value: '',
-      page: 0,
-    },
-  ];
+  protected id?: string;
+
+  private _signaturesByPetitionInput: SignaturesByPetitionInput = {
+    petition: '',
+    status: null,
+  };
   protected sortBy: {
     name: string;
     value: 'signer_name' | 'signer_date' | 'address' | 'email' | 'registered';
@@ -55,135 +59,109 @@ export class ViewSignaturesComponent
     { name: 'Email', value: 'email', active: false },
     { name: 'Status', value: 'registered', active: false },
   ];
-  protected filterByStatus: {
-    name: string;
-    value: string;
-    active: boolean;
-  }[] = [
-    { name: 'All types', value: 'all', active: true },
-    { name: 'Registered', value: 'registered', active: false },
-    { name: 'Approved', value: 'approved', active: false },
-    { name: 'Denied', value: 'denied', active: false },
-  ];
-  protected resultData: SignaturesData[] = [];
-  protected signaturesSelected: SignaturesData[] = [];
+  protected filterByStatus: FilterByStatus[] = FilterByStatusSignatures;
+
+  protected items: Signature[] = [];
+  protected signaturesSelected: Signature[] = [];
   protected result$!: Subscription;
   protected error: string | undefined;
   protected loadingGetSignatures$!: Observable<boolean>;
   protected loadingApprove$!: Observable<boolean>;
   protected loadingDeny$!: Observable<boolean>;
   constructor(
+    private _activatedRoute: ActivatedRoute,
     private _getSignatureLogic: GetSignaturesService,
     private _approveLogic: ApproveSignatureService,
     private _denyLogic: DenySignatureService
   ) {}
-  ngOnChanges(changes: SimpleChanges): void {}
-  ngAfterViewInit(): void {
-    this._getSignatureLogic.getSignatures(this.currentFilter);
-  }
 
   ngOnInit(): void {
     //get signatures
-    this._getSignatureLogic.result$
+    this._getSignatureLogic.success$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         this.disabledFilter = false;
 
-        if (!!result.result) {
-          this.resultData = this.resultData.concat(result.result);
-          this.typeAlert = 'alert';
-          this.messageAlert =
-            this.resultData.length > 1
-              ? 'You have ' +
-                this.resultData.length +
-                ' signature that need review'
-              : 'You have ' +
-                this.resultData.length +
-                ' signatures that need review';
-          this.showAlert = true;
-        }
+        this.items = this.items.concat(result?.items ?? []);
+        this.typeAlert = 'alert';
+        this.messageAlert =
+          this.items.length > 1
+            ? 'You have ' + this.items.length + ' signature that need review'
+            : 'You have ' + this.items.length + ' signatures that need review';
+        this.showAlert = true;
       });
     //approve signature
-    this._approveLogic.result$
+    this._approveLogic.success$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         this.disabledFilter = false;
-
-        if (!!result.result) {
-          this.typeAlert = 'success';
-          this.messageAlert =
-            result.result + ' Signatures Successfully Approved';
-          this.showAlert = true;
-          this.resultData = [];
-          this.signaturesSelected = [];
-          this._getSignatureLogic.getSignatures(this.currentFilter);
-        } else {
-          this.typeAlert = 'error';
-          this.messageAlert = 'Error: ' + result.error;
-          this.showAlert = true;
-        }
+        this.typeAlert = 'success';
+        this.messageAlert = result + ' Signatures Successfully Approved';
+        this.showAlert = true;
+        this.items = [];
+        this.signaturesSelected = [];
+        this.getSignatures();
       });
     //deny signature
-    this._denyLogic.result$
+    this._denyLogic.success$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         this.disabledFilter = false;
 
-        if (!!result.result) {
-          this.typeAlert = 'success';
-          this.messageAlert = result.result + ' Signatures Successfully Denied';
-          this.showAlert = true;
-          this.resultData = [];
-          this.signaturesSelected = [];
-          this._getSignatureLogic.getSignatures(this.currentFilter);
-        } else {
-          this.typeAlert = 'error';
-          this.messageAlert = 'Error: ' + result.error;
-          this.showAlert = true;
-        }
+        this.typeAlert = 'success';
+        this.messageAlert = result + ' Signatures Successfully Denied';
+        this.showAlert = true;
+        this.items = [];
+        this.signaturesSelected = [];
+        this.getSignatures();
       });
     this.loadingGetSignatures$ = this._getSignatureLogic.loading$;
     this.loadingApprove$ = this._approveLogic.loading$;
     this.loadingDeny$ = this._denyLogic.loading$;
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('id')!),
+        tap((id) => (this._signaturesByPetitionInput.petition = id))
+      )
+      .subscribe(() => this.getSignatures());
   }
-  setSignaturesSelected(data: SignaturesData[]) {
+  setSignaturesSelected(data: Signature[]) {
     this.signaturesSelected = data;
   }
   approve() {
+    /*
     this._approveLogic.approveSignature(
-      this.signaturesSelected.map((value) => value.id)
-    );
+      this.signaturesSelected.map((value) => value.)
+    );*/
   }
   deny() {
+    /*
     this._denyLogic.denySignature(
       this.signaturesSelected.map((value) => value.id)
     );
+    */
   }
 
   sort(
     value: 'signer_name' | 'signer_date' | 'address' | 'email' | 'registered'
   ) {
-    this.resultData = [
-      ...this.resultData.sort((a, b) => {
+    /*
+    this.items = [
+      ...this.items.sort((a, b) => {
         return a[value] > b[value] ? 1 : a[value] < b[value] ? -1 : 0;
       }),
-    ];
+    ];*/
   }
 
-  filterStatus(value: string) {
-    this.disabledFilter = true;
-    this.disabledSeeMore = true;
-    this.currentFilter[1].value = value;
-    this._getSignatureLogic.getSignatures(this.currentFilter);
+  filterStatus(value: SignatureStatusQuery | PetitionStatusQuery) {
+    this.items = [];
+    this._signaturesByPetitionInput.status = value as SignatureStatusQuery;
+    this.getSignatures();
   }
 
   pageNumber() {
-    this.disabledFilter = true;
-    this.disabledSeeMore = true;
-    this.currentFilter[0].page += 1;
-    this.currentFilter[1].page += 1;
-    this.currentFilter[2].page += 1;
-    this._getSignatureLogic.getSignatures(this.currentFilter);
+    this.getSignatures();
   }
 
   ngOnDestroy(): void {
@@ -191,12 +169,9 @@ export class ViewSignaturesComponent
     this._unsubscribeAll.complete();
   }
 
-  search(value: string) {
-    if (value.length > 0) {
-      this.disabledFilter = true;
-      this.disabledSeeMore = true;
-      this.currentFilter[1].value = value;
-      this._getSignatureLogic.getSignatures(this.currentFilter);
-    }
+  private getSignatures() {
+    this._getSignatureLogic.getSignatures(this._signaturesByPetitionInput);
   }
+
+  search(value: string) {}
 }

@@ -4,6 +4,7 @@ import {
   PetitionsByTypeInput,
   PetitionStatusQuery,
   PetitionType,
+  SignatureStatusQuery,
 } from 'src/app/core/api/API';
 
 import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
@@ -59,8 +60,8 @@ export class InactivePetitionsComponent implements OnInit {
     this.getPetitions();
   }
 
-  filterStatus(value: PetitionStatusQuery | undefined) {
-    this.petitionsByTypeInput.status = value;
+  filterStatus(value: PetitionStatusQuery | SignatureStatusQuery) {
+    this.petitionsByTypeInput.status = value as PetitionStatusQuery;
 
     this.loadingUp = true;
     this.items = [];

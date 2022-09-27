@@ -5,6 +5,7 @@ import {
   PetitionsByTypeInput,
   PetitionStatusQuery,
   PetitionType,
+  SignatureStatusQuery,
 } from 'src/app/core/api/API';
 import { CityStaffHomeService } from 'src/app/logic/admin/city-staff-home.service';
 import {
@@ -64,8 +65,8 @@ export class CityStaffHomeComponent implements OnInit {
     this.getPetitions(true);
   }
 
-  filterStatus(value: PetitionStatusQuery | undefined) {
-    this.petitionsByTypeInput.status = value;
+  filterStatus(value: PetitionStatusQuery | SignatureStatusQuery) {
+    this.petitionsByTypeInput.status = value as PetitionStatusQuery;
     this.loadingUp = true;
 
     this.getPetitions(true);

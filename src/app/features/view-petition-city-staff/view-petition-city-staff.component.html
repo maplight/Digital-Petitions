@@ -35,11 +35,17 @@
                 (denyEvent)="denyAlert(data)"
               ></dp-new-box>
             </ng-container>
-            <ng-container class="flex" *ngSwitchCase="'QUALIFIED'">
+            <ng-container class="flex" *ngSwitchCase="'ACTIVE'">
               <dp-cualified-box [showDownloadPacket]="true"></dp-cualified-box>
             </ng-container>
             <ng-container class="flex" *ngSwitchCase="'CANCELED'">
-              <dp-cualified-box></dp-cualified-box>
+              <dp-cualified-box [showDownloadPacket]="true"></dp-cualified-box>
+            </ng-container>
+            <ng-container class="flex" *ngSwitchCase="'NOT_QUALIFIED'">
+              <dp-cualified-box [showDownloadPacket]="true"></dp-cualified-box>
+            </ng-container>
+            <ng-container class="flex" *ngSwitchCase="'QUALIFIED'">
+              <dp-cualified-box [showDownloadPacket]="true"></dp-cualified-box>
             </ng-container>
           </ng-container>
           <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
