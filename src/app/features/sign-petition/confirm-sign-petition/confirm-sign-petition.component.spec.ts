@@ -85,29 +85,7 @@ describe('ConfirmSignPetitionComponent', () => {
     component.submit();
     expect(callSpy).toHaveBeenCalledOnceWith('123345');
   });
-  /*
-  it('should show the error element if the code provided is wrong', () => {
-    spyOnProperty(
-      _getConfirmSignPetitionService,
-      'success$',
-      'get'
-    ).and.returnValue(
-      of({
-        __typename: 'CodeSubmissionResult',
-        error: true,
-        message: 'error',
-      })
-    );
-    component.ngOnInit();
 
-    fixture.detectChanges();
-
-    const dpErrorMsg =
-      fixture.debugElement.nativeElement.querySelector('dp-error-msg');
-
-    expect(dpErrorMsg.textContent).toEqual('error');
-  });
-*/
   it('should show the loading bar when the petition is loading', () => {
     component.ngOnInit();
 
