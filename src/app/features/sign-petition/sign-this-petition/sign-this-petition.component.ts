@@ -40,14 +40,12 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
   protected localStates: State[] = states;
   private localError$: Subject<string> = new Subject();
 
-  @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
-  @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
-
   @Output() cancelEvent: EventEmitter<'verify' | 'view' | 'sign'> =
     new EventEmitter<'verify' | 'view' | 'sign'>();
   @Output() submitEvent: EventEmitter<VoterRecordMatch> =
     new EventEmitter<VoterRecordMatch>();
   protected signatureSummary: SignatureSummary | null | undefined;
+
   constructor(
     private _fb: FormBuilder,
     private _getVoterRecordMatchLogic: VoterRecordMatchService
@@ -92,11 +90,18 @@ export class SignThisPetitionComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes?: SimpleChanges): void {
     this.signatureSummary = this.data.dataCandidate
       ? this.data.dataCandidate.signatureSummary
       : this.data.dataIssue
       ? this.data.dataIssue.signatureSummary
       : undefined;
+    this.formGroup = this._fb.group({
+      fullName: [this.dataSignature.fullName, [Validators.required]],
+      address: [this.dataSignature.address, [Validators.required]],
+      city: [this.dataSignature.city, [Validators.required]],
+      state: [this.dataSignature.state, [Validators.required]],
+      zipCode: [this.dataSignature.zipCode, [Validators.required]],
+    });
   }
 }
