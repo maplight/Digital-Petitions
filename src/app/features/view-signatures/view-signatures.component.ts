@@ -136,11 +136,9 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     );*/
   }
   deny() {
-    /*
     this._denyLogic.denySignature(
-      this.signaturesSelected.map((value) => value.id)
+      this.signaturesSelected.map((value) => value.signer)
     );
-    */
   }
 
   sort(

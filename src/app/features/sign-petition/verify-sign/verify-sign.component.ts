@@ -91,7 +91,9 @@ export class VerifySignComponent implements OnInit {
           _signatureVerificationInput.method = VerificationMethod.STATE_ID;
           _signatureVerificationInput.methodPayload = [
             this.formGroupLicense.value.licenseNumber,
-            this.formGroupLicense.value.dateOfBirth,
+            (this.formGroupLicense.value.dateOfBirth as Date)
+              .toISOString()
+              .split('T')[0],
           ];
         } else {
           this.formGroupLicense.markAllAsTouched();
