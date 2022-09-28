@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  map,
+  Observable,
+  Subject,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import { VoterRecordMatch } from 'src/app/core/api/API';
 import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 
@@ -11,28 +18,37 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   templateUrl: './sign-petition.component.html',
   providers: [GetPublicPetitionService],
 })
-export class SignPetitionComponent implements OnInit {
+export class SignPetitionComponent implements OnInit, OnDestroy {
   protected success$!: Observable<ResponsePetition | undefined>;
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
-
+  private _unsubscribeAll: Subject<void> = new Subject();
+  protected id?: string;
   protected currentStep$: BehaviorSubject<'verify' | 'view' | 'sign'> =
     new BehaviorSubject<'verify' | 'view' | 'sign'>('view');
   protected signatureData!: VoterRecordMatch;
 
   constructor(
-    private _committeeLogic: GetPublicPetitionService,
+    private _getPetitionLogic: GetPublicPetitionService,
 
     private _activatedRoute: ActivatedRoute
   ) {}
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   ngOnInit(): void {
-    this.success$ = this._committeeLogic.success$;
-    this.loading$ = this._committeeLogic.loading$;
-    this.error$ = this._committeeLogic.error$;
-    this._committeeLogic.getPetition(
-      this._activatedRoute.snapshot.params['id']
-    );
+    this.success$ = this._getPetitionLogic.success$;
+    this.loading$ = this._getPetitionLogic.loading$;
+    this.error$ = this._getPetitionLogic.error$;
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('id')!),
+        tap((id) => (this.id = id))
+      )
+      .subscribe((id) => this._getPetitionLogic.getPetition(id));
   }
 
   protected submitPersonalData(data: VoterRecordMatch) {
