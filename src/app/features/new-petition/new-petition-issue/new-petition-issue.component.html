@@ -30,7 +30,12 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Petition Text</mat-label>
-          <textarea matInput formControlName="detail"></textarea>
+          <textarea
+            matInput
+            formControlName="detail"
+            class="min-h-[50px] max-h-[150px]"
+            (keyup)="autoGrowTextZone($event)"
+          ></textarea>
           <mat-error>
             <div class="flex flex-row items-center">
               <mat-icon

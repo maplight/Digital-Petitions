@@ -49,6 +49,14 @@ export class CityStaffHomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.filterByCategory.forEach((item) => {
+      item.value === 'ANY' ? (item.active = true) : (item.active = false);
+    });
+    this.filterByStatus.forEach((item) => {
+      (item.value as PetitionStatusQuery) === 'ANY'
+        ? (item.active = true)
+        : (item.active = false);
+    });
     this.currentUser = this._accountLogic.currentUser?.attributes.given_name;
     this.successPetition$ = this._cityStaffHomeLogic.success$;
     this.error$ = this._cityStaffHomeLogic.error$;

@@ -66,4 +66,9 @@ export class NewPetitionIssueComponent implements OnInit, OnDestroy {
   cancel() {
     this.cancelEvent.emit('type');
   }
+
+  autoGrowTextZone(e: any) {
+    e.target.style.height = '0px';
+    e.target.style.height = e.target.scrollHeight + 25 + 'px';
+  }
 }
