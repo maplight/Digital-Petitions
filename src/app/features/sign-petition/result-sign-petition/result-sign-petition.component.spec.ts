@@ -42,9 +42,7 @@ describe('ResultSignPetitionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('must show the title received as a parameter in the route', () => {
-
     activatedRoute.setParamMap({ title: 'Example title' });
     fixture.detectChanges();
     const elements = fixture.debugElement.nativeElement.querySelectorAll('p');
