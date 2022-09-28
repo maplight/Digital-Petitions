@@ -9,7 +9,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { BehaviorSubject, of, ReplaySubject, Subject, takeUntil } from 'rxjs';
-import { PetitionStatusQuery } from 'src/app/core/api/API';
+import {
+  PetitionStatusQuery,
+  SignatureStatus,
+  SignatureStatusQuery,
+} from 'src/app/core/api/API';
 import { FilterByStatus } from '../models/filter/filter-by-status';
 
 @Component({
@@ -21,12 +25,14 @@ export class FilterByStatusComponent implements OnInit, OnDestroy {
   @Input() disabled: boolean = false;
   @Input() filterName: string = '';
   @Input() filterStatus: FilterByStatus[] = [];
-  @Output() event: EventEmitter<PetitionStatusQuery> = new EventEmitter();
+  @Output() event: EventEmitter<PetitionStatusQuery | SignatureStatusQuery> =
+    new EventEmitter();
   protected cursor: string = this.disabled ? 'cursor-auto' : 'cursor-pointer';
   protected activeStyle: string = `border-solid border border-primary-500  bg-primany-100 font-extrabold text-primary-500 ${this.cursor}`;
   protected inActiveStyle: string = `border-solid border border-gray-400 bg-white  font-bold  text-gray-500 ${this.cursor}`;
-  protected itemActive$: ReplaySubject<PetitionStatusQuery | undefined> =
-    new ReplaySubject();
+  protected itemActive$: ReplaySubject<
+    PetitionStatusQuery | SignatureStatusQuery | undefined
+  > = new ReplaySubject();
   protected _unSuscribeAll: Subject<void> = new Subject();
   constructor() {}
   ngOnDestroy(): void {

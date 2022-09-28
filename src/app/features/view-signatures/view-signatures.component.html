@@ -19,6 +19,8 @@
       [filterName]="'Filter by Status'"
       [disabled]="disabledFilter"
       [mode]="'Select'"
+      [filterStatus]="filterByStatus"
+      (event)="filterStatus($event)"
     ></dp-filter-by-status>
   </div>
 
@@ -83,7 +85,7 @@
     "
   ></dp-loading-bar>
   <dp-view-signatures-table
-    [dataSource]="resultData"
+    [dataSource]="items"
     (emitSignaturesSelected)="setSignaturesSelected($event)"
     class="overflow-x-auto"
   ></dp-view-signatures-table>

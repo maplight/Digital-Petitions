@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Signature } from 'src/app/core/api/API';
 import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
 
 @Component({
@@ -15,9 +16,9 @@ import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data
 })
 export class ViewSignaturesTableComponent implements OnInit {
   tableStyle = 'w-full';
-  @Input() dataSource: SignaturesData[] = [];
-  protected signaturesSelected: SignaturesData[] = [];
-  @Output() emitSignaturesSelected: EventEmitter<SignaturesData[]> =
+  @Input() dataSource: Signature[] = [];
+  protected signaturesSelected: Signature[] = [];
+  @Output() emitSignaturesSelected: EventEmitter<Signature[]> =
     new EventEmitter();
   displayedColumns: string[] = [
     'check',
@@ -30,9 +31,20 @@ export class ViewSignaturesTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-  event(value: SignaturesData) {
-    value.selected = !value.selected;
-    this.signaturesSelected = this.dataSource.filter((value) => value.selected);
+
+  event(value: Signature) {
+    let pos = this.signaturesSelected.indexOf(value);
+    if (pos > -1) {
+      this.signaturesSelected = this.signaturesSelected.filter(
+        (element) => element !== value
+      );
+    } else {
+      this.signaturesSelected = this.signaturesSelected.concat(value);
+    }
     this.emitSignaturesSelected.emit(this.signaturesSelected);
+  }
+
+  elementChecked(value: Signature): boolean {
+    return this.signaturesSelected.indexOf(value) > -1;
   }
 }
