@@ -65,7 +65,7 @@ export class ConfirmChangeEmailService implements OnDestroy {
   /** This method begins the process to confirm an email previously changed by the user
   @param value: Confirmation code received by the user in their email
   */
-  formGroupValue(value: ConfirmationCode) {
+  setConfirmationCode(value: ConfirmationCode) {
     this.submit$.next(value);
   }
 }
