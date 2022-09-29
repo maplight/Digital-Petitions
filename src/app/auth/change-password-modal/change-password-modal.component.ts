@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ChangePasswordService } from 'src/app/logic/auth/exports';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
@@ -29,8 +28,7 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
     private _fb: FormBuilder,
     private dialogRef: MatDialogRef<BasicModalComponent>,
     private dialog: MatDialog,
-    private _changePasswordLogic: ChangePasswordService,
-    private _router: Router
+    private _changePasswordLogic: ChangePasswordService
   ) {
     this.formGroup = this._fb.group({
       oldPassword: ['', [Validators.required]],
@@ -49,7 +47,7 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((error) => {
         this.dialogRef.close();
-        this.openDialog('An error has occurred', error ? error : '', false);
+        this.openDialog('An error has occurred', error ?? '', false);
       });
     this.loading$ = this._changePasswordLogic.loading$;
   }
@@ -60,7 +58,7 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._changePasswordLogic.formGroupValue(this.formGroup.value);
+      this._changePasswordLogic.setPaswwordData(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }
