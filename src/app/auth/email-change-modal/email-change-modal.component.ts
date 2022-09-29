@@ -28,7 +28,7 @@ export class EmailChangeModalComponent implements OnInit, OnDestroy {
     private _changeEmailLogic: ChangeEmailService
   ) {
     this.formGroup = this._fb.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -58,7 +58,7 @@ export class EmailChangeModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._changeEmailLogic.formGroupValue(this.formGroup.value);
+      this._changeEmailLogic.setChangeEmailData(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }
