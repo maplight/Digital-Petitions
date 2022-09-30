@@ -74,7 +74,7 @@ export class SetNewPasswordService implements OnDestroy {
   /** This method begins the process of verification of the user's recovery mail through a forgotten password code and change
   @param value: NewPassworddata object: contains a verification code and the new password supplied by the user
   */
-  formGroupValue(value: NewPasswordData) {
+  NewPasswordData(value: NewPasswordData) {
     this.submit$.next(value);
   }
 }
