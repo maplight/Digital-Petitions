@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserTestingModule } from '@angular/platform-browser/testing';
 import { Observable, of } from 'rxjs';
 import { ConfirmChangeEmailService } from 'src/app/logic/auth/confirm-change-email.service';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
@@ -132,8 +131,6 @@ describe('ConfirmEmailChangeModalComponent', () => {
       'get'
     ).and.returnValue(of(false));
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -142,6 +139,7 @@ describe('ConfirmEmailChangeModalComponent', () => {
     expect(dpLoadingBars.length).toBe(0);
   });
 });
+
 class MockedConfirmChangeEmailService {
   public get error$(): Observable<string | undefined> {
     return new Observable();
