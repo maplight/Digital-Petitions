@@ -123,11 +123,9 @@ describe('ChangePersonalDetailsModalComponent', () => {
       zipCode: 'mock text',
     });
 
-
     fixture.detectChanges();
 
     component.submit();
-
 
     expect(functionSpy).toHaveBeenCalledOnceWith({
       firstName: 'mock text',
@@ -141,7 +139,6 @@ describe('ChangePersonalDetailsModalComponent', () => {
   });
 
   it('should show the loading bar when the petition is loading', () => {
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -156,7 +153,6 @@ describe('ChangePersonalDetailsModalComponent', () => {
       'loading$',
       'get'
     ).and.returnValue(of(false));
-
 
     fixture.detectChanges();
 
