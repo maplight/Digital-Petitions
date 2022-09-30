@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { SetNewPasswordService } from 'src/app/logic/auth/exports';
+import { NewPasswordData } from 'src/app/shared/models/exports';
 
 @Component({
   selector: 'dp-set-new-password',
@@ -16,15 +17,15 @@ export class SetNewPasswordComponent implements OnInit, OnDestroy {
   protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();
   public formGroup: FormGroup;
+  protected email?: string;
 
   constructor(
     private _router: Router,
-    private _data: ActivatedRoute,
+    private _activatedRoute: ActivatedRoute,
     private _fb: FormBuilder,
     private _setNewPasswordLogic: SetNewPasswordService
   ) {
     this.formGroup = this._fb.group({
-      username: [this._data.snapshot.params['email']],
       code: ['', [Validators.required]],
       newPassword: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
@@ -34,6 +35,12 @@ export class SetNewPasswordComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.error$ = this._setNewPasswordLogic.error$;
     this.loading$ = this._setNewPasswordLogic.loading$;
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('email')!)
+      )
+      .subscribe((email) => (this.email = email));
   }
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
@@ -42,7 +49,12 @@ export class SetNewPasswordComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._setNewPasswordLogic.formGroupValue(this.formGroup.value);
+      let _newPasswordData: NewPasswordData = {
+        username: this.email ?? '',
+        code: this.formGroup.value.code,
+        newPassword: this.formGroup.value.newPassword,
+      };
+      this._setNewPasswordLogic.newPasswordData(_newPasswordData);
     }
   }
 }
