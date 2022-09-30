@@ -138,7 +138,6 @@ describe('ChangePersonalDetailsModalComponent', () => {
   });
 
   it('should show the loading bar when the petition is loading', () => {
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -153,7 +152,6 @@ describe('ChangePersonalDetailsModalComponent', () => {
       'loading$',
       'get'
     ).and.returnValue(of(false));
-
 
     fixture.detectChanges();
 
