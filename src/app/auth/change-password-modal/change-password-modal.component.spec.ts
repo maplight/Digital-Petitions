@@ -98,6 +98,7 @@ describe('ChangePasswordModalComponent', () => {
   it('should call the funcion "setPasswordData" in the service when submit function is called in the component and the form is valid', () => {
     const functionSpy = spyOn(_changePasswordService, 'setPaswwordData');
 
+
     component.formGroup.setValue({
       oldPassword: 'testOldPass',
       newPassword: 'testNewPass',
@@ -111,7 +112,6 @@ describe('ChangePasswordModalComponent', () => {
   });
 
   it('should show the loading bar when the petition is loading', () => {
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -126,8 +126,6 @@ describe('ChangePasswordModalComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -136,6 +134,7 @@ describe('ChangePasswordModalComponent', () => {
     expect(dpLoadingBars.length).toBe(0);
   });
 });
+
 class MockedChangePasswordService {
   public get error$(): Observable<string | undefined> {
     return new Observable();
@@ -151,6 +150,7 @@ class MockedChangePasswordService {
 
   setPaswwordData(value: ChangePasswordData) {}
 }
+
 const dialogMock = {
   close: () => {},
 };
