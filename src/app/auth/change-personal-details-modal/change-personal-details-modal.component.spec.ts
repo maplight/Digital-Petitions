@@ -124,6 +124,7 @@ describe('ChangePersonalDetailsModalComponent', () => {
     });
 
     fixture.detectChanges();
+
     component.submit();
 
     expect(functionSpy).toHaveBeenCalledOnceWith({

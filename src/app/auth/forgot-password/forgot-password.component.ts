@@ -28,7 +28,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private _router: Router
   ) {
     this.formGroup = this._fb.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -43,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._forgotPasswordLogic.formGroupValue(this.formGroup.value);
+      this._forgotPasswordLogic.recoverPasswordData(this.formGroup.value);
     }
   }
 }
