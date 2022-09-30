@@ -29,7 +29,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
     private _router: Router
   ) {
     this.formGroup = this._fb.group({
-      code: new FormControl('', [Validators.required]),
+      code: ['', [Validators.required]],
     });
   }
 
@@ -55,7 +55,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._confirmChangeEmailLogic.formGroupValue(this.formGroup.value);
+      this._confirmChangeEmailLogic.setConfirmationCode(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }
