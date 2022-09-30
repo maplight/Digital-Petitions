@@ -1,21 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { State, states } from '../../core/states';
 import { SignUpService } from 'src/app/logic/auth/exports';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmPasswordValidator } from './password-match';
+import { SignUpCredentials } from 'src/app/shared/models/exports';
 
 @Component({
   selector: 'dp-sign-up',
@@ -63,8 +54,20 @@ export class SignUpComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.formGroup.valid);
+
     if (this.formGroup.valid) {
-      this._signUpLogic.SignUpCredentials(this.formGroup.value);
+      let _signUpCredentials: SignUpCredentials = {
+        firstName: this.formGroup.value.firstName,
+        lastName: this.formGroup.value.lastName,
+        address: this.formGroup.value.address,
+        aptNumber: this.formGroup.value.aptNumber,
+        state: this.formGroup.value.state,
+        zipCode: this.formGroup.value.zipCode,
+        email: this.formGroup.value.email,
+        password: this.formGroup.value.password,
+      };
+      this._signUpLogic.SignUpCredentials(_signUpCredentials);
     }
   }
 }
