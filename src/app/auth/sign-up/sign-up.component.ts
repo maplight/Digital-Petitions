@@ -54,8 +54,6 @@ export class SignUpComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.formGroup.valid);
-
     if (this.formGroup.valid) {
       let _signUpCredentials: SignUpCredentials = {
         firstName: this.formGroup.value.firstName,

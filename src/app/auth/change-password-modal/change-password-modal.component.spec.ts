@@ -96,7 +96,7 @@ describe('ChangePasswordModalComponent', () => {
   });
 
   it('should call the funcion "setPasswordData" in the service when submit function is called in the component and the form is valid', () => {
-    const functionSpy = spyOn(_changePasswordService, 'setPaswwordData');
+    const functionSpy = spyOn(_changePasswordService, 'setPasswordData');
 
     component.formGroup.setValue({
       oldPassword: 'testOldPass',
