@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
   protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();
-  protected formGroup: FormGroup;
+  formGroup: FormGroup;
   protected localStates: State[] = states;
 
   constructor(
@@ -63,7 +63,9 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
   }
   submit() {
     if (this.formGroup.valid) {
-      this._changePersonalDetailsLogic.formGroupValue(this.formGroup.value);
+      this._changePersonalDetailsLogic.setPersonalDetailsToUpdate(
+        this.formGroup.value
+      );
     } else {
       this.formGroup.markAllAsTouched();
     }
