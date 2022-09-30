@@ -119,8 +119,6 @@ describe('EmailChangeModalComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -129,6 +127,7 @@ describe('EmailChangeModalComponent', () => {
     expect(dpLoadingBars.length).toBe(0);
   });
 });
+
 class MockedChangeEmailService {
   public get error$(): Observable<string | undefined> {
     return new Observable();

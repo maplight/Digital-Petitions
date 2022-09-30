@@ -76,7 +76,7 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should call the funcion "RecoverPasswordData" in the service when submit function is called in the component and the form is valid', () => {
-    const functionSpy = spyOn(_forgotPasswordService, 'RecoverPasswordData');
+    const functionSpy = spyOn(_forgotPasswordService, 'recoverPasswordData');
 
     component.formGroup.setValue({
       email: 'example@test.com',
@@ -89,8 +89,6 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should show the loading bar when the component is waiting a response from service', () => {
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -103,8 +101,6 @@ describe('ForgotPasswordComponent', () => {
     spyOnProperty(_forgotPasswordService, 'loading$', 'get').and.returnValue(
       of(false)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -122,8 +118,6 @@ describe('ForgotPasswordComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -140,8 +134,6 @@ describe('ForgotPasswordComponent', () => {
     spyOnProperty(_forgotPasswordService, 'loading$', 'get').and.returnValue(
       of(true)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -165,5 +157,5 @@ class MockedForgotPasswordService {
     return of(true);
   }
 
-  RecoverPasswordData(value: RecoverPasswordData) {}
+  recoverPasswordData(value: RecoverPasswordData) {}
 }

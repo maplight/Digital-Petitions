@@ -102,8 +102,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should show the loading bar when the component is waiting a response from service', () => {
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -114,8 +112,6 @@ describe('SignUpComponent', () => {
 
   it('should not show the loading bar when the component is not waiting a response from service', () => {
     spyOnProperty(_signUpService, 'loading$', 'get').and.returnValue(of(false));
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -129,8 +125,6 @@ describe('SignUpComponent', () => {
 
     spyOnProperty(_signUpService, 'loading$', 'get').and.returnValue(of(false));
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -143,8 +137,6 @@ describe('SignUpComponent', () => {
     spyOnProperty(_signUpService, 'error$', 'get').and.returnValue(of('error'));
 
     spyOnProperty(_signUpService, 'loading$', 'get').and.returnValue(of(true));
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
