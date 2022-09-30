@@ -43,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._forgotPasswordLogic.RecoverPasswordData(this.formGroup.value);
+      this._forgotPasswordLogic.recoverPasswordData(this.formGroup.value);
     }
   }
 }
