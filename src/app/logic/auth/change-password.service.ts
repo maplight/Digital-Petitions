@@ -66,7 +66,6 @@ export class ChangePasswordService implements OnDestroy {
   */
 
   setPaswwordData(value: ChangePasswordData) {
-
     this.submit$.next(value);
   }
 }

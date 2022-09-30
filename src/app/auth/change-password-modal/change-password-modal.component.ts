@@ -58,9 +58,7 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-
       this._changePasswordLogic.setPasswordData(this.formGroup.value);
-
     } else {
       this.formGroup.markAllAsTouched();
     }
