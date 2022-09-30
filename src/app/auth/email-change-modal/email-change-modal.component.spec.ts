@@ -119,7 +119,6 @@ describe('EmailChangeModalComponent', () => {
       of(false)
     );
 
-
     fixture.detectChanges();
 
     const dpLoadingBars =
