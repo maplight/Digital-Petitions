@@ -79,7 +79,7 @@ describe('SetNewPasswordComponent', () => {
   });
 
   it('should call the funcion "SignUpConfirmationCode" in the service when submit function is called in the component and the form is valid', () => {
-    const functionSpy = spyOn(_setNewPasswordService, 'NewPasswordData');
+    const functionSpy = spyOn(_setNewPasswordService, 'newPasswordData');
 
     component.formGroup.setValue({
       code: 'exampleTest',
@@ -96,8 +96,6 @@ describe('SetNewPasswordComponent', () => {
   });
 
   it('should show the loading bar when the component is waiting a response from service', () => {
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -110,8 +108,6 @@ describe('SetNewPasswordComponent', () => {
     spyOnProperty(_setNewPasswordService, 'loading$', 'get').and.returnValue(
       of(false)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -129,8 +125,6 @@ describe('SetNewPasswordComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -147,8 +141,6 @@ describe('SetNewPasswordComponent', () => {
     spyOnProperty(_setNewPasswordService, 'loading$', 'get').and.returnValue(
       of(true)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -171,5 +163,5 @@ class MockedSetNewPasswordService {
     return of(true);
   }
 
-  NewPasswordData(value: NewPasswordData) {}
+  newPasswordData(value: NewPasswordData) {}
 }

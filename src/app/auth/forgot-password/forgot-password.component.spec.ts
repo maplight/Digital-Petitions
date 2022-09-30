@@ -157,5 +157,5 @@ class MockedForgotPasswordService {
     return of(true);
   }
 
-  RecoverPasswordData(value: RecoverPasswordData) {}
+  recoverPasswordData(value: RecoverPasswordData) {}
 }

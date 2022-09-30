@@ -1,14 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  map,
-  Observable,
-  Subject,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { SetNewPasswordService } from 'src/app/logic/auth/exports';
 import { NewPasswordData } from 'src/app/shared/models/exports';
 
@@ -61,7 +54,7 @@ export class SetNewPasswordComponent implements OnInit, OnDestroy {
         code: this.formGroup.value.code,
         newPassword: this.formGroup.value.newPassword,
       };
-      this._setNewPasswordLogic.NewPasswordData(_newPasswordData);
+      this._setNewPasswordLogic.newPasswordData(_newPasswordData);
     }
   }
 }
