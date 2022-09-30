@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { Observable, of } from 'rxjs';
 import { ConfirmChangeEmailService } from 'src/app/logic/auth/confirm-change-email.service';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
