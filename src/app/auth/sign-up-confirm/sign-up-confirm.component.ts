@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { merge, Observable, shareReplay, tap } from 'rxjs';
+import {
+  map,
+  merge,
+  Observable,
+  shareReplay,
+  Subject,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import { SignUpConfirmService } from 'src/app/logic/auth/sign-up-confirm.service';
 import { SignUpResendCodeService } from 'src/app/logic/auth/sign-up-resend-code.service';
 import { SignUpService } from 'src/app/logic/auth/sign-up.service';
@@ -11,12 +19,14 @@ import { SignUpService } from 'src/app/logic/auth/sign-up.service';
   templateUrl: './sign-up-confirm.component.html',
   providers: [SignUpConfirmService],
 })
-export class SignUpConfirmComponent implements OnInit {
+export class SignUpConfirmComponent implements OnInit, OnDestroy {
   protected error$!: Observable<string | undefined>;
 
   protected loading$!: Observable<boolean>;
 
   protected successResend$!: Observable<string | undefined>;
+  private _unsubscribeAll: Subject<void> = new Subject();
+  protected email?: string;
 
   public formGroup: FormGroup;
 
@@ -24,12 +34,10 @@ export class SignUpConfirmComponent implements OnInit {
     private _fb: FormBuilder,
     private _signUpConfirmLogic: SignUpConfirmService,
     private _signUpResendCodeLogic: SignUpResendCodeService,
-    private _router: Router,
     private _activatedRoute: ActivatedRoute
   ) {
     this.formGroup = this._fb.group({
       code: ['', [Validators.required]],
-      username: [this._activatedRoute.snapshot.params['email']],
     });
   }
   ngOnInit(): void {
@@ -42,16 +50,28 @@ export class SignUpConfirmComponent implements OnInit {
       this._signUpConfirmLogic.loading$,
       this._signUpResendCodeLogic.loading$
     );
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('email')!)
+      )
+      .subscribe((email) => (this.email = email));
   }
 
   submit() {
     if (this.formGroup.valid) {
-      this._signUpConfirmLogic.formGroupValue(this.formGroup.value);
+      this._signUpConfirmLogic.signUpConfirmationCode({
+        code: this.formGroup.value.code,
+        username: this.email ?? '',
+      });
     }
   }
   resendCode() {
-    this._signUpResendCodeLogic.formGroupValue(
-      this._activatedRoute.snapshot.params['email']
-    );
+    this._signUpResendCodeLogic.formGroupValue(this.email ?? '');
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

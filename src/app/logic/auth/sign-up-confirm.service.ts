@@ -71,7 +71,7 @@ export class SignUpConfirmService {
   /** This method begins the registration process of a new committee user
   @param value: Confirmation code received by the user in the contact email by providing
   */
-  formGroupValue(value: SignUpConfirmationCode) {
+  signUpConfirmationCode(value: SignUpConfirmationCode) {
     this.submit$.next(value);
   }
 }
