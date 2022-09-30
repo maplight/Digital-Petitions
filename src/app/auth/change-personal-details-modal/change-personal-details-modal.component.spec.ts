@@ -73,12 +73,15 @@ describe('ChangePersonalDetailsModalComponent', () => {
 
   it('should call the result dialog and display a successful response if the "success" element emits', () => {
     const functionSpy = spyOn(component, 'openDialog');
+
     spyOnProperty(
       _changePersonalDetailsService,
       'success$',
       'get'
     ).and.returnValue(of('SUCCESS'));
+
     fixture.detectChanges();
+
     expect(functionSpy).toHaveBeenCalledOnceWith(
       'Password Successfully Changed!',
       '',
@@ -88,12 +91,15 @@ describe('ChangePersonalDetailsModalComponent', () => {
 
   it('should call the output dialog and display an error response if the "error" element emits', () => {
     const functionSpy = spyOn(component, 'openDialog');
+
     spyOnProperty(
       _changePersonalDetailsService,
       'error$',
       'get'
     ).and.returnValue(of('Some error'));
+
     fixture.detectChanges();
+
     expect(functionSpy).toHaveBeenCalledOnceWith(
       'An error has occurred',
       'Some error',
@@ -116,8 +122,10 @@ describe('ChangePersonalDetailsModalComponent', () => {
       state: 'mock text',
       zipCode: 'mock text',
     });
+
     fixture.detectChanges();
     component.submit();
+
     expect(functionSpy).toHaveBeenCalledOnceWith({
       firstName: 'mock text',
       lastName: 'mock text',
@@ -130,7 +138,6 @@ describe('ChangePersonalDetailsModalComponent', () => {
   });
 
   it('should show the loading bar when the petition is loading', () => {
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -147,7 +154,6 @@ describe('ChangePersonalDetailsModalComponent', () => {
       'get'
     ).and.returnValue(of(false));
 
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -157,6 +163,7 @@ describe('ChangePersonalDetailsModalComponent', () => {
     expect(dpLoadingBars.length).toBe(0);
   });
 });
+
 class MockedChangePersonalDetailsService {
   public get error$(): Observable<string | undefined> {
     return new Observable();
@@ -172,6 +179,7 @@ class MockedChangePersonalDetailsService {
 
   setPersonalDetailsToUpdate(value: PersonalDetailsToUpdate) {}
 }
+
 const dialogMock = {
   close: () => {},
 };
