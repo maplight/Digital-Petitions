@@ -132,7 +132,6 @@ describe('ConfirmEmailChangeModalComponent', () => {
       'get'
     ).and.returnValue(of(false));
 
-
     fixture.detectChanges();
 
     const dpLoadingBars =
