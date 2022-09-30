@@ -77,7 +77,7 @@ describe('SignUpConfirmComponent', () => {
   });
 
   it('should call the funcion "SignUpConfirmationCode" in the service when submit function is called in the component and the form is valid', () => {
-    const functionSpy = spyOn(_signUpConfirmService, 'SignUpConfirmationCode');
+    const functionSpy = spyOn(_signUpConfirmService, 'signUpConfirmationCode');
 
     component.formGroup.setValue({
       code: '123345',
@@ -91,8 +91,6 @@ describe('SignUpConfirmComponent', () => {
   });
 
   it('should show the loading bar when the component is waiting a response from service', () => {
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -105,8 +103,6 @@ describe('SignUpConfirmComponent', () => {
     spyOnProperty(_signUpConfirmService, 'loading$', 'get').and.returnValue(
       of(false)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -124,8 +120,6 @@ describe('SignUpConfirmComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -142,8 +136,6 @@ describe('SignUpConfirmComponent', () => {
     spyOnProperty(_signUpConfirmService, 'loading$', 'get').and.returnValue(
       of(true)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
@@ -166,5 +158,5 @@ class MockedSignUpConfirmService {
     return of(true);
   }
 
-  SignUpConfirmationCode(value: SignUpConfirmationCode) {}
+  signUpConfirmationCode(value: SignUpConfirmationCode) {}
 }

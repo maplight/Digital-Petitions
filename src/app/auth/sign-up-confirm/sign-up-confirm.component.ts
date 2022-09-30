@@ -60,7 +60,7 @@ export class SignUpConfirmComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.formGroup.valid) {
-      this._signUpConfirmLogic.SignUpConfirmationCode({
+      this._signUpConfirmLogic.signUpConfirmationCode({
         code: this.formGroup.value.code,
         username: this.email ?? '',
       });
