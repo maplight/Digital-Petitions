@@ -98,7 +98,6 @@ describe('ChangePasswordModalComponent', () => {
   it('should call the funcion "setPasswordData" in the service when submit function is called in the component and the form is valid', () => {
     const functionSpy = spyOn(_changePasswordService, 'setPaswwordData');
 
-
     component.formGroup.setValue({
       oldPassword: 'testOldPass',
       newPassword: 'testNewPass',
@@ -112,7 +111,6 @@ describe('ChangePasswordModalComponent', () => {
   });
 
   it('should show the loading bar when the petition is loading', () => {
-
     fixture.detectChanges();
 
     const dpLoadingBars =

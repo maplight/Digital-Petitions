@@ -65,7 +65,6 @@ export class ChangePasswordService implements OnDestroy {
   @param value: New user password
   */
   setPaswwordData(value: ChangePasswordData) {
-
     this.submit$.next(value);
   }
 }
