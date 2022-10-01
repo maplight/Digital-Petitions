@@ -35,4 +35,26 @@ describe('SuccessChangeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display an "h1" element with the text Petition Creator', () => {
+    let element = fixture.debugElement.nativeElement.querySelector('h1');
+    expect(element.textContent).toEqual('Petition Creators');
+  });
+
+  it('should display an "h4" element with the text Password Reset', () => {
+    let element = fixture.debugElement.nativeElement.querySelector('h4');
+    expect(element.textContent).toEqual('Password Reset');
+  });
+
+  it('should display an "p" element', () => {
+    let element = fixture.debugElement.nativeElement.querySelector('p');
+    expect(element.textContent).toEqual(
+      ' Your password has been successfully reset. Click continue to login. '
+    );
+  });
+
+  it('should display an "a" element', () => {
+    let element = fixture.debugElement.nativeElement.querySelector('a');
+    expect(element).toBeTruthy();
+  });
 });
