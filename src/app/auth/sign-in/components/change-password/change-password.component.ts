@@ -12,7 +12,7 @@ export class ChangePasswordComponent implements OnInit {
 
   protected hidePassword = true;
 
-  protected formGroup!: FormGroup<any>;
+  formGroup!: FormGroup<any>;
 
   constructor(private _fb: FormBuilder) {}
 
