@@ -13,6 +13,7 @@ import { ThemingService } from 'src/app/core/dynamic-theme/theming.service';
 @Component({
   selector: 'dp-city-staff-site-design',
   templateUrl: './city-staff-site-design.component.html',
+  providers: [SetSiteDesignService],
 })
 export class CityStaffSiteDesignComponent implements OnInit {
   protected mockPetition: ResponsePetition = {

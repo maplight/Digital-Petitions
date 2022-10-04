@@ -1,6 +1,14 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  map,
+  Observable,
+  Subject,
+  Subscription,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
 import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { FilterData } from 'src/app/shared/models/exports';
@@ -11,16 +19,13 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   templateUrl: './view-petition-inactive.component.html',
   providers: [GetPublicPetitionService],
 })
-export class ViewPetitionInactiveComponent implements OnInit, AfterViewInit {
-  protected resultData: ResponsePetition = {};
-  protected result$!: Subscription;
-  protected error: string | undefined;
+export class ViewPetitionInactiveComponent implements OnInit, OnDestroy {
+  protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
-  protected currentStep$: BehaviorSubject<
-    'loading' | 'empty' | 'contents' | 'error'
-  > = new BehaviorSubject<'loading' | 'empty' | 'contents' | 'error'>(
-    'loading'
-  );
+  protected success$!: Observable<ResponsePetition | undefined>;
+  protected id?: string;
+  private _unsubscribeAll: Subject<void> = new Subject();
+
   private currentFilter: FilterData[] = [
     {
       property: '',
@@ -33,22 +38,20 @@ export class ViewPetitionInactiveComponent implements OnInit, AfterViewInit {
     private _committeeLogic: GetPublicPetitionService,
     private _activatedRoute: ActivatedRoute
   ) {}
-  ngAfterViewInit(): void {
-    this._committeeLogic.getPetition(
-      this._activatedRoute.snapshot.params['id']
-    );
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
   ngOnInit(): void {
-    this.result$ = this._committeeLogic.result$.subscribe((result) => {
-      if (!!result.result) {
-        this.resultData = result.result;
-
-        this.currentStep$.next('contents');
-      } else {
-        this.error = result.error;
-        this.currentStep$.next('error');
-      }
-    });
+    this.success$ = this._committeeLogic.success$;
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('id')!),
+        tap((id) => (this.id = id))
+      )
+      .subscribe((id) => this._committeeLogic.getPetition(id));
     this.loading$ = this._committeeLogic.loading$;
+    this.error$ = this._committeeLogic.error$;
   }
 }
