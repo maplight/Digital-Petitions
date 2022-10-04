@@ -17,9 +17,7 @@ import {
 } from 'src/app/core/api/API';
 import { Result } from 'src/app/shared/models/exports';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SetSiteDesignService {
   public error$: Observable<string | undefined>;
   public success$: Observable<SiteConfiguration | undefined>;

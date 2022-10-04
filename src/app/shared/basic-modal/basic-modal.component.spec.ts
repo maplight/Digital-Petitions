@@ -1,4 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BasicModalComponent } from './basic-modal.component';
 
@@ -8,9 +13,21 @@ describe('BasicModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BasicModalComponent ]
-    })
-    .compileComponents();
+      declarations: [BasicModalComponent],
+      imports: [
+        CommonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatButtonModule,
+        BrowserAnimationsModule,
+      ],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: dialogMock,
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BasicModalComponent);
     component = fixture.componentInstance;
@@ -21,3 +38,6 @@ describe('BasicModalComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+const dialogMock = {
+  close: () => {},
+};

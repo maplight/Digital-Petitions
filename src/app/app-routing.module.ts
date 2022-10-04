@@ -22,7 +22,7 @@ const routes: Routes = [
     component: LayoutComponent,
     canActivate: [AccountSettingGuard],
     loadChildren: () =>
-      import('./features/account-settings/account-settings.module').then(
+      import('./auth/account-settings/account-settings.module').then(
         (m) => m.AccountSettingsModule
       ),
   },

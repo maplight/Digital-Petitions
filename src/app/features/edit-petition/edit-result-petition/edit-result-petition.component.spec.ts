@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PetitionStatus, PetitionType } from 'src/app/core/api/API';
 import { CutModule } from 'src/app/pipes/cut/cut.module';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 
 import { EditResultPetitionComponent } from './edit-result-petition.component';
 
-describe('ResultPetitionComponent', () => {
+describe('EditResultPetitionComponent', () => {
   let component: EditResultPetitionComponent;
   let fixture: ComponentFixture<EditResultPetitionComponent>;
 
@@ -22,6 +22,7 @@ describe('ResultPetitionComponent', () => {
         RouterModule,
         CutModule,
       ],
+      providers: [{ provide: ActivatedRoute, useValue: {} }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditResultPetitionComponent);

@@ -1,5 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PetitionStatus, PetitionType } from 'src/app/core/api/API';
+import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 
 import { ResultPetitionComponent } from './result-petition.component';
 
@@ -10,6 +14,8 @@ describe('ResultPetitionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ResultPetitionComponent],
+      imports: [CommonModule, BasicCardModule, MatButtonModule, RouterModule],
+      providers: [{ provide: ActivatedRoute, useValue: {} }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ResultPetitionComponent);
