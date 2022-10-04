@@ -34,7 +34,7 @@ type ViewState = 'LOGIN' | 'CHANGE_PASSWORD';
   providers: [SignInService, CompleteAdminSignUpService],
 })
 export class SignInComponent implements OnInit {
-  protected formGroup!: FormGroup<SignInForm>;
+  formGroup!: FormGroup<SignInForm>;
 
   protected hidePassword = true;
 
@@ -95,8 +95,6 @@ export class SignInComponent implements OnInit {
   private readonly onSuccess = (
     value?: { attributes: Attributes } | CognitoUserFacade
   ): void => {
-    console.log(value?.attributes?.['custom:access_group']);
-
     switch (value?.attributes?.['custom:access_group']) {
       case 'petitioner':
         this._router.navigate(['/committee/home']);
