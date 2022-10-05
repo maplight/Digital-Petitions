@@ -35,7 +35,7 @@ export class PetitionCardComponent implements OnInit, OnChanges {
   @Input() basicRoute: string = '';
   @Input() disabled: boolean = false;
   constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes?: SimpleChanges): void {
     let { status } = this.data.dataCandidate
       ? this.data.dataCandidate
       : this.data.dataIssue
