@@ -16,7 +16,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
   selector: 'dp-petition-view',
   templateUrl: './petition-view.component.html',
 })
-export class PetitionViewComponent implements OnInit, OnChanges {
+export class PetitionViewComponent implements OnChanges {
   @Input() data: ResponsePetition = {};
   @Input() showStatus: boolean = false;
   protected petition: IssuePetition | CandidatePetition | undefined;
@@ -28,7 +28,7 @@ export class PetitionViewComponent implements OnInit, OnChanges {
   protected StatusStyleGray: string =
     'flex bg-[#8A8A8A] px-2 py-1 rounded-full items-center justify-center w-fit';
   constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes?: SimpleChanges): void {
     this.petition = this.data.dataCandidate
       ? this.data.dataCandidate
       : this.data.dataIssue
@@ -49,6 +49,4 @@ export class PetitionViewComponent implements OnInit, OnChanges {
       }
     }
   }
-
-  ngOnInit(): void {}
 }
