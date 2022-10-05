@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import {
   combineLatest,
   map,
+  tap,
   Observable,
   shareReplay,
   startWith,
@@ -28,10 +29,12 @@ import { DenyAlertComponent } from './deny-alert/deny-alert.component';
     ApprovePetitionService,
   ],
 })
-export class ViewPetitionCityStaffComponent implements OnInit {
+export class ViewPetitionCityStaffComponent implements OnInit, OnDestroy {
   protected success$!: Observable<ResponsePetition | undefined>;
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
+  protected id?: string;
+  private _unsubscribeAll: Subject<void> = new Subject();
 
   protected loadingDeny$!: Observable<boolean>;
 
@@ -61,7 +64,10 @@ export class ViewPetitionCityStaffComponent implements OnInit {
       : _?.type === 'ISSUE'
       ? { dataIssue: _ as IssuePetition }
       : undefined;
-
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
   ngOnInit(): void {
     this.error$ = this._getPetitionLogic.error$;
 
@@ -119,9 +125,13 @@ export class ViewPetitionCityStaffComponent implements OnInit {
 
     this.loadingDeny$ = this._denyPetitionLogic.loading$;
 
-    this._getPetitionLogic.getPetition(
-      this._activatedRoute.snapshot.params['id']
-    );
+    this._activatedRoute.paramMap
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        map((params) => params.get('id')!),
+        tap((id) => (this.id = id))
+      )
+      .subscribe((id) => this._getPetitionLogic.getPetition(id));
   }
 
   approveDialog(data: ResponsePetition): void {
