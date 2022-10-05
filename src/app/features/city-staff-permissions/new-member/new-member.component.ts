@@ -60,7 +60,7 @@ export class NewMemberComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-      this._newMemberLogic.formGroupValue(this.formGroup.value);
+      this._newMemberLogic.newStaffUser(this.formGroup.value);
     } else {
       this.formGroup.markAllAsTouched();
     }

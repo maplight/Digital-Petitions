@@ -65,7 +65,7 @@ describe('CurrentResultComponent', () => {
           approved: 100,
           required: 1000,
           submitted: 150,
-          deadline: '22/06/1993',
+          deadline: '06/22/1993',
         },
         status: PetitionStatus.ACTIVE,
         title: '',
@@ -79,7 +79,7 @@ describe('CurrentResultComponent', () => {
     const element = fixture.debugElement.nativeElement.querySelectorAll('p');
     expect(element[4].textContent).toEqual(' 100 ');
     expect(element[6].textContent).toEqual(' 1000 ');
-    expect(element[8].textContent).toEqual(' 22/06/1993 ');
+    expect(element[8].textContent).toEqual(' Jun 22, 1993 ');
     expect(element[2].textContent).toEqual(' 150 ');
   });
 });

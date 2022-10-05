@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
@@ -46,6 +46,10 @@ describe('ViewPetitionCityStaffComponent', () => {
         {
           provide: MatDialogRef,
           useValue: dialogMock,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {},
         },
       ],
     }).compileComponents();

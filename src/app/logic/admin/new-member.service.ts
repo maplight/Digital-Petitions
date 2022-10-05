@@ -66,7 +66,7 @@ export class NewMemberService {
   /** This method begins the process of password change for the user of the committee currently authenticated
   @param value: New user data
   */
-  formGroupValue(value: StaffUserInput) {
+  newStaffUser(value: StaffUserInput) {
     this.submit$.next(value);
   }
 }
