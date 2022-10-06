@@ -4,8 +4,6 @@ import { Component, OnInit } from '@angular/core';
   selector: 'dp-admin',
   templateUrl: './city-staff-admin.component.html',
 })
-export class CityStaffAdminComponent implements OnInit {
+export class CityStaffAdminComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
