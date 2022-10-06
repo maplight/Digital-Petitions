@@ -65,7 +65,7 @@ export class GetImageDataService {
     this.submit$.complete();
   }
 
-  formGroupValue(value: ListResourcesInput) {
+  setListResources(value: ListResourcesInput) {
     this.submit$.next(value);
   }
 }
