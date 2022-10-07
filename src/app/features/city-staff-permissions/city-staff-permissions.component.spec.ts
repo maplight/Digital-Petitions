@@ -168,8 +168,6 @@ describe('CityStaffPermissionsComponent', () => {
       of(true)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
