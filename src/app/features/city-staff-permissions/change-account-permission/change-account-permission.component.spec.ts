@@ -166,8 +166,6 @@ describe('ChangeAccountPermissionComponent', () => {
       'get'
     ).and.returnValue(of(false));
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -188,8 +186,6 @@ describe('ChangeAccountPermissionComponent', () => {
       'loading$',
       'get'
     ).and.returnValue(of(true));
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 

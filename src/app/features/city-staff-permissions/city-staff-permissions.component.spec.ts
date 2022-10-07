@@ -149,8 +149,6 @@ describe('CityStaffPermissionsComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -167,8 +165,6 @@ describe('CityStaffPermissionsComponent', () => {
     spyOnProperty(_getAllUsersService, 'loading$', 'get').and.returnValue(
       of(true)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
