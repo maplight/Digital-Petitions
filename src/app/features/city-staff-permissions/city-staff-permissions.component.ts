@@ -43,6 +43,7 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
     this._getAllUserLogic.success$.subscribe((data) => {
       if (data?.items) {
         this.items = this.items.concat(data.items);
+        console.log(this.items);
       }
       this.cursor = data?.token ? true : false;
     });
