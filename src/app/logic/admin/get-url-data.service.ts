@@ -65,7 +65,7 @@ export class GetUrlDataService {
     this.submit$.complete();
   }
 
-  formGroupValue() {
+  getURL() {
     this.submit$.next();
   }
 }

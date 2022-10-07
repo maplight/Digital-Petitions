@@ -36,7 +36,7 @@ export class ImagePickerComponent implements OnInit {
   }
 
   onFileChange(event: Event) {
-    this._getUrlLogic.formGroupValue();
+    this._getUrlLogic.getURL();
     this._getUrlLogic.success$.subscribe((url) => {
       const input = event.target as HTMLInputElement;
 
@@ -79,7 +79,7 @@ export class ImagePickerComponent implements OnInit {
     );
 
     this._setImgLogic.success$.subscribe((_) => {
-      this._getImgLogic.formGroupValue({ type: AssetType.LOGO });
+      this._getImgLogic.setListResources({ type: AssetType.LOGO });
     });
 
     this._getImgLogic.success$.subscribe((data) => {
@@ -88,7 +88,7 @@ export class ImagePickerComponent implements OnInit {
       }
     });
 
-    this._getImgLogic.formGroupValue({ type: AssetType.LOGO });
+    this._getImgLogic.setListResources({ type: AssetType.LOGO });
 
     this.imageSrc.forEach((value) => {
       if (value.active) {
