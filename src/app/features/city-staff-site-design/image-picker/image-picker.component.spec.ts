@@ -202,7 +202,5 @@ class MockedSetImageDataService {
   public get loading$(): Observable<boolean> {
     return new Observable();
   }
-  setImageData(value: { url: string; img: File | Blob | ArrayBuffer }) {
-    console.log(value);
-  }
+  setImageData(value: { url: string; img: File | Blob | ArrayBuffer }) {}
 }
