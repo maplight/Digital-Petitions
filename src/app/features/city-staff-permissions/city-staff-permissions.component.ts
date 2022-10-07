@@ -1,16 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-import { merge, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { AccessLevel, User, UserConnection } from 'src/app/core/api/API';
+import { Observable, Subject } from 'rxjs';
+import { AccessLevel, User } from 'src/app/core/api/API';
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';
 import { RemoveMemberService } from 'src/app/logic/admin/remove-member.service';
-import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
-import { Member } from 'src/app/shared/models/admin/member';
 
 import { ChangeAccountPermissionComponent } from './change-account-permission/change-account-permission.component';
 import { NewMemberComponent } from './new-member/new-member.component';
-import { RemoveMemberComponent } from './remove-member/remove-member.component';
 
 @Component({
   selector: 'dp-city-staff-permissions',
@@ -46,6 +43,7 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
     this._getAllUserLogic.success$.subscribe((data) => {
       if (data?.items) {
         this.items = this.items.concat(data.items);
+        console.log(this.items);
       }
       this.cursor = data?.token ? true : false;
     });
@@ -62,13 +60,15 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
   }
 
   openDialogChangeAccountPermission(id: string, access: AccessLevel): void {
-    const dialogRef = this._dialog.open(ChangeAccountPermissionComponent, {
-      width: '690px',
-      data: { id: id, access: access },
-    });
-    dialogRef.afterClosed().subscribe((_) => {
-      this.getUsers(false);
-    });
+    this._dialog
+      .open(ChangeAccountPermissionComponent, {
+        width: '690px',
+        data: { id: id, access: access },
+      })
+      .afterClosed()
+      .subscribe((_) => {
+        this.getUsers(false);
+      });
   }
 
   getUsers(cursorFlag: boolean) {
