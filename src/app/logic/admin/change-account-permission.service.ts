@@ -65,7 +65,7 @@ export class ChangeAccountPermissionService {
   /** This method begins the process of password change for the user of the committee currently authenticated
   @param value: New user password
   */
-  formGroupValue(value: UpdateUserAccessInput) {
+  updateUserAccessInput(value: UpdateUserAccessInput) {
     this.submit$.next(value);
   }
 }
