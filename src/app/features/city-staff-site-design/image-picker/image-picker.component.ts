@@ -39,7 +39,6 @@ export class ImagePickerComponent implements OnInit {
     this._getUrlLogic.getURL();
     this._getUrlLogic.success$.subscribe((url) => {
       const input = event.target as HTMLInputElement;
-      console.log((event.target as HTMLInputElement).files);
 
       if (!!input?.files?.length && typeof url === 'string') {
         const img = input.files.item(0);

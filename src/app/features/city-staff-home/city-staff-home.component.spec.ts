@@ -87,8 +87,6 @@ describe('CityStaffHomeComponent', () => {
   });
 
   it('should show the loading bar when the petition is loading', () => {
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -102,8 +100,6 @@ describe('CityStaffHomeComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -113,8 +109,6 @@ describe('CityStaffHomeComponent', () => {
   });
 
   it('should show 6 petition card elements when a successful response is received', () => {
-    //component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpPetitionCard =
@@ -124,7 +118,6 @@ describe('CityStaffHomeComponent', () => {
   });
 
   it('should call getPetitionsAnonymous function when a "see more" button is clicked', () => {
-    //component.ngOnInit();
     const getPetitionsSpy = spyOn(_cityStaffHomeService, 'getPetitions');
 
     component.pageNumber();
@@ -186,8 +179,6 @@ describe('CityStaffHomeComponent', () => {
   });
 
   it('should show 8 buttons when a successful response is received', () => {
-    //component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpPetitionCard =
@@ -197,8 +188,6 @@ describe('CityStaffHomeComponent', () => {
   });
 
   it('should show a "see more" button when cursor value', () => {
-    //component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpPetitionCard =
@@ -234,8 +223,6 @@ describe('CityStaffHomeComponent', () => {
     spyOnProperty(_cityStaffHomeService, 'loading$', 'get').and.returnValue(
       of(true)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
