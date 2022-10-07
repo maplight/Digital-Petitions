@@ -75,9 +75,10 @@ describe('CityStaffPermissionsComponent', () => {
     component = fixture.componentInstance;
     _getAllUsersService = fixture.debugElement.injector.get(GetAllUsersService);
     _matDialog = fixture.debugElement.injector.get(MatDialog);
-    dialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue(
-      dialogRefSpyObj
-    );
+    dialogSpy = spyOn(
+      fixture.debugElement.injector.get(MatDialog),
+      'open'
+    ).and.returnValue(dialogRefSpyObj);
   });
 
   it('should create', () => {
@@ -148,8 +149,6 @@ describe('CityStaffPermissionsComponent', () => {
     spyOnProperty(_getAllUsersService, 'loading$', 'get').and.returnValue(
       of(false)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
