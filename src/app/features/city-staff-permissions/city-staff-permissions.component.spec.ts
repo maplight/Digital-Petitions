@@ -80,7 +80,6 @@ describe('CityStaffPermissionsComponent', () => {
       fixture.debugElement.injector.get(MatDialog),
       'open'
     ).and.returnValue(dialogRefSpyObj);
-
   });
 
   it('should create', () => {
@@ -151,7 +150,6 @@ describe('CityStaffPermissionsComponent', () => {
     spyOnProperty(_getAllUsersService, 'loading$', 'get').and.returnValue(
       of(false)
     );
-
 
     fixture.detectChanges();
 
