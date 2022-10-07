@@ -41,12 +41,6 @@ export class ChangeAccountPermissionComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         this.dialogRef.close();
-        /*
-        this.openDialog(
-          'Invitation Sent!',
-          'Your new member will be able to acees your account once they click on the invitation link and set up their account.',
-          true
-        );*/
       });
 
     this.error$ = this._changeAccountPermissionLogic.error$;
@@ -60,23 +54,12 @@ export class ChangeAccountPermissionComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-      this._changeAccountPermissionLogic.formGroupValue({
+      this._changeAccountPermissionLogic.updateUserAccessInput({
         username: this.data.id,
         permissions: this.formGroup.value.type,
       });
     } else {
       this.formGroup.markAllAsTouched();
     }
-  }
-
-  openDialog(title: string, message: string, success: boolean): void {
-    const dialogRef = this.dialog.open(DialogResultComponent, {
-      width: '520px',
-      data: {
-        title: title,
-        message: message,
-        success: success,
-      },
-    });
   }
 }
