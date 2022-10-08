@@ -9,6 +9,7 @@ import { Observable, merge } from 'rxjs';
 @Component({
   selector: 'dp-image-picker',
   templateUrl: './image-picker.component.html',
+  providers: [GetUrlDataService, GetImageDataService, SetImageDataService],
 })
 export class ImagePickerComponent implements OnInit {
   protected formGroup: FormGroup;
