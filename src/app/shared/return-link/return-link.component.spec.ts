@@ -19,4 +19,11 @@ describe('ReturnLinkComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should show the text received', () => {
+    component.text = 'exampleText';
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelector('p').textContent
+    ).toEqual('exampleText');
+  });
 });
