@@ -19,4 +19,18 @@ describe('RemoveMemberComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show two buttons', () => {
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelectorAll('button').length
+    ).toEqual(2);
+  });
+
+  it('should show two buttons', () => {
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelectorAll('button').length
+    ).toEqual(2);
+  });
 });
