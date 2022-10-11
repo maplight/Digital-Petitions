@@ -4,9 +4,4 @@ import { Component, OnInit } from '@angular/core';
   selector: 'dp-remove-member',
   templateUrl: './remove-member.component.html',
 })
-export class RemoveMemberComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-  submit() {}
-}
+export class RemoveMemberComponent {}
