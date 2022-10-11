@@ -5,10 +5,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   selector: 'dp-basic-alert',
   templateUrl: './basic-alert.component.html',
 })
-export class BasicAlertComponent implements OnInit {
+export class BasicAlertComponent {
   constructor(public dialogRef: MatDialogRef<BasicAlertComponent>) {}
-
-  ngOnInit(): void {}
 
   onCancelClick(): void {
     this.dialogRef.close();
