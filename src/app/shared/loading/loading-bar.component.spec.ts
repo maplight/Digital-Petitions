@@ -19,4 +19,12 @@ describe('LoadingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show title received', () => {
+    component.title = 'Loading';
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelector('h3').textContent
+    ).toEqual('Loading');
+  });
 });

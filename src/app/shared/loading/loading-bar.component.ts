@@ -5,10 +5,6 @@ import { Observable } from 'rxjs';
   selector: 'dp-loading-bar',
   templateUrl: './loading-bar.component.html',
 })
-export class LoadingBarComponent implements OnInit {
+export class LoadingBarComponent {
   @Input() title: string | undefined;
-  @Input() show$!: Observable<boolean>;
-  constructor() {}
-
-  ngOnInit(): void {}
 }
