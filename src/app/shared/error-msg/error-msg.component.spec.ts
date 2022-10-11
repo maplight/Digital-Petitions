@@ -8,9 +8,8 @@ describe('ErrorMsgComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ErrorMsgComponent ]
-    })
-    .compileComponents();
+      declarations: [ErrorMsgComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorMsgComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,13 @@ describe('ErrorMsgComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show data received', () => {
+    component.error = 'exampleError';
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelector('span').textContent
+    ).toEqual('exampleError');
   });
 });
