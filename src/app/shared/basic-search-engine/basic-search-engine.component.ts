@@ -10,7 +10,7 @@ import {
   selector: 'dp-basic-search-engine',
   templateUrl: './basic-search-engine.component.html',
 })
-export class BasicSearchEngineComponent implements OnInit {
+export class BasicSearchEngineComponent {
   @Input() disabled: boolean = false;
   @Output() event: EventEmitter<string> = new EventEmitter();
   public formGroup: FormGroup;
@@ -26,6 +26,4 @@ export class BasicSearchEngineComponent implements OnInit {
       this.event.emit(this.formGroup.value.keyword);
     }
   }
-
-  ngOnInit(): void {}
 }
