@@ -14,9 +14,7 @@ import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { AdminService } from './admin.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SetImageDataService {
   public error$: Observable<string | undefined>;
   public success$: Observable<null | undefined>;

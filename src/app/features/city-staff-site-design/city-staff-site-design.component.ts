@@ -7,7 +7,6 @@ import {
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { merge, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { SetSiteDesignService } from 'src/app/logic/admin/set-site-design.service';
-import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
 import { ThemingService } from 'src/app/core/dynamic-theme/theming.service';
 
 @Component({
@@ -48,14 +47,14 @@ export class CityStaffSiteDesignComponent implements OnInit {
   constructor(
     private _setSiteDesignLogic: SetSiteDesignService,
     private _themeLogic: ThemingService
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.error$ = merge(this._setSiteDesignLogic.error$, this.localError);
     this.loading$ = this._setSiteDesignLogic.loading$;
     this.firstLoading$ = this._themeLogic.loading$;
     this.success$ = this._themeLogic.theme$;
   }
 
-  ngOnInit(): void {}
   submit() {
     if (
       this.buttonColor &&
@@ -74,8 +73,5 @@ export class CityStaffSiteDesignComponent implements OnInit {
     } else {
       this.localError.next('There are invalid or empty fields');
     }
-  }
-  setColor(data: string | null) {
-    console.log(data);
   }
 }
