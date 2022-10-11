@@ -4,14 +4,10 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'dp-return-link',
   templateUrl: './return-link.component.html',
 })
-export class ReturnLinkComponent implements OnInit {
+export class ReturnLinkComponent {
   @Input()
   route!: string;
 
   @Input()
   text: string = '';
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
