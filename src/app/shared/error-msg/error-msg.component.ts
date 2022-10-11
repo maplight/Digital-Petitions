@@ -4,9 +4,6 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'dp-error-msg',
   templateUrl: './error-msg.component.html',
 })
-export class ErrorMsgComponent implements OnInit {
+export class ErrorMsgComponent {
   @Input() error!: string;
-  constructor() {}
-
-  ngOnInit(): void {}
 }
