@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { By } from '@angular/platform-browser';
 import { BasicModalModule } from '../basic-modal/basic-modal.module';
 
 import { DialogResultComponent } from './dialog-result.component';
@@ -20,6 +21,14 @@ describe('DialogResultComponent', () => {
           provide: MatDialogRef,
           useValue: dialogMock,
         },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            title: 'exampleTitle',
+            message: 'exampleMessage',
+            success: true,
+          },
+        },
       ],
     }).compileComponents();
 
@@ -30,6 +39,15 @@ describe('DialogResultComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should show data received', () => {
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelector('h4').textContent
+    ).toEqual(' exampleTitle ');
+    expect(
+      fixture.debugElement.nativeElement.querySelector('p').textContent
+    ).toEqual(' exampleMessage ');
   });
 });
 const dialogMock = {
