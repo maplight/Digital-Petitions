@@ -148,8 +148,6 @@ describe('NewMemberComponent', () => {
       of(false)
     );
 
-    component.ngOnInit();
-
     fixture.detectChanges();
 
     const dpErrorMsg =
@@ -166,8 +164,6 @@ describe('NewMemberComponent', () => {
     spyOnProperty(_newMemberService, 'loading$', 'get').and.returnValue(
       of(true)
     );
-
-    component.ngOnInit();
 
     fixture.detectChanges();
 
