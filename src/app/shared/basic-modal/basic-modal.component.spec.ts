@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BasicModalComponent } from './basic-modal.component';
@@ -36,6 +37,32 @@ describe('BasicModalComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show three buttons', () => {
+    let element = fixture.debugElement.nativeElement.querySelectorAll('button');
+    expect(element.length).toEqual(3);
+  });
+
+  it('should call a dialogRef close function when the close button is clicked', () => {
+    let spyfunction = spyOn(dialogMock, 'close');
+    let element = fixture.debugElement.query(By.css('button'));
+    element.triggerEventHandler('click');
+    expect(spyfunction).toHaveBeenCalled();
+  });
+  it('should call a dialogRef close function when the cancel button is clicked', () => {
+    let spyfunction = spyOn(dialogMock, 'close');
+    let element = fixture.debugElement.queryAll(By.css('button'));
+    element[1].triggerEventHandler('click');
+    expect(spyfunction).toHaveBeenCalled();
+  });
+
+  it('sendEvent should emit when the send button is clicked', () => {
+    component.sendEvent.asObservable().subscribe(() => {
+      expect(true).toBeTrue();
+    });
+    let element = fixture.debugElement.queryAll(By.css('button'));
+    element[2].triggerEventHandler('click');
   });
 });
 const dialogMock = {
