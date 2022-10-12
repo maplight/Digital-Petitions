@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { AdminService } from './admin.service';
@@ -6,7 +7,13 @@ describe('AdminService', () => {
   let service: AdminService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        AdminService,
+
+        { provide: HttpClient, useClass: HttpClientTestingModule },
+      ],
+    });
     service = TestBed.inject(AdminService);
   });
 
@@ -14,3 +21,4 @@ describe('AdminService', () => {
     expect(service).toBeTruthy();
   });
 });
+class HttpClientTestingModule {}

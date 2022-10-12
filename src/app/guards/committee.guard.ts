@@ -9,7 +9,9 @@ import {
 import { map, Observable, tap } from 'rxjs';
 import { AccountService } from '../core/account-service/account.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CommitteeGuard implements CanActivate {
   constructor(private _auth: AccountService, private _router: Router) {}
   canActivate(

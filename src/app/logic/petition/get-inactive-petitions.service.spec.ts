@@ -2,21 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { MockedLoggingService } from 'src/testing/mocked-logging-service';
 import { MockedPetitionService } from 'src/testing/mocked-pettition-service';
-import { GetCommitteePetitionService } from './get-committee-petition.service';
+
+import { GetInactivePetitionsService } from './get-inactive-petitions.service';
 import { PetitionService } from './petition.service';
 
-describe('GetCommitteePetitionService', () => {
-  let service: GetCommitteePetitionService;
+describe('GetInactivePetitionsService', () => {
+  let service: GetInactivePetitionsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        GetCommitteePetitionService,
+        GetInactivePetitionsService,
         { provide: PetitionService, useClass: MockedPetitionService },
         { provide: LoggingService, useClass: MockedLoggingService },
       ],
     });
-    service = TestBed.inject(GetCommitteePetitionService);
+    service = TestBed.inject(GetInactivePetitionsService);
   });
 
   it('should be created', () => {
