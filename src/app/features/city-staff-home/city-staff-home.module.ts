@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { CityStaffHomeComponent } from './city-staff-home.component';
 import { CityStaffHomeRoutingModule } from './city-staff-home-routing.module';
 import { BasicSearchEngineModule } from 'src/app/shared/basic-search-engine/basic-search-engine.module';
-import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
