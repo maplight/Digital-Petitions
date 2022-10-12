@@ -9,7 +9,6 @@ import {
   takeUntil,
   tap,
 } from 'rxjs';
-import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
 import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
 import { FilterData } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';

@@ -4,11 +4,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaskModule } from 'ngx-mask';
+import {
+  CandidatePetition,
+  PetitionStatus,
+  PetitionType,
+} from 'src/app/core/api/API';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
@@ -40,12 +50,17 @@ describe('AproveDialogComponent', () => {
         MatProgressBarModule,
         LoadingBarModule,
         ErrorMsgModule,
-        NgxMaskModule,
+        NgxMaskModule.forRoot(),
+        BrowserAnimationsModule,
       ],
       providers: [
         {
           provide: MatDialogRef,
           useValue: dialogMock,
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: mockedCandiadate,
         },
       ],
     }).compileComponents();
@@ -61,4 +76,30 @@ describe('AproveDialogComponent', () => {
 });
 const dialogMock = {
   close: () => {},
+};
+const mockedCandiadate: CandidatePetition = {
+  __typename: 'CandidatePetition',
+  PK: '',
+  address: {
+    __typename: 'AddressData',
+    address: '',
+    city: undefined,
+    number: undefined,
+    state: '',
+    zipCode: undefined,
+  },
+  createdAt: '',
+  name: '',
+  office: '',
+  owner: '',
+  party: '',
+  signatures: {
+    __typename: 'SignatureConnection',
+    items: [],
+    token: undefined,
+  },
+  status: PetitionStatus.ACTIVE,
+  type: PetitionType.CANDIDATE,
+  updatedAt: '',
+  version: 0,
 };

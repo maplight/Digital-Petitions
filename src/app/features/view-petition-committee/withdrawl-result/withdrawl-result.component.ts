@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
 
 @Component({
@@ -7,14 +7,10 @@ import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petitio
   templateUrl: './withdrawl-result.component.html',
   providers: [WithdrawPetitionService],
 })
-export class WithdrawlResultComponent implements OnInit {
+export class WithdrawlResultComponent {
   @Input() data: string = '';
 
-  constructor(private _router: Router, _activatedRoute: ActivatedRoute) {
-    this.data = _activatedRoute.snapshot.params['petition'];
-  }
-
-  ngOnInit(): void {}
+  constructor(private _router: Router) {}
 
   submit() {
     this._router.navigate(['/committee/home']);

@@ -6,13 +6,13 @@ import {
   PetitionsByOwnerInput,
   PetitionStatusQuery,
 } from 'src/app/core/api/API';
-import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
+import { GetCommitteePetitionsService } from 'src/app/logic/petition/get-committee-petitions.service';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-committee-home',
   templateUrl: './committee-home.component.html',
-  providers: [GetPetitionsCommitteeService],
+  providers: [GetCommitteePetitionsService],
 })
 export class CommitteeHomeComponent implements OnInit {
   protected loadingUp: boolean = true;
@@ -25,7 +25,7 @@ export class CommitteeHomeComponent implements OnInit {
     owner: '',
   };
 
-  constructor(private _committeeLogic: GetPetitionsCommitteeService) {}
+  constructor(private _committeeLogic: GetCommitteePetitionsService) {}
 
   ngOnInit(): void {
     this._committeeLogic.success$.subscribe((data) => {

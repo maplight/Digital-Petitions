@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
-import { GetPetitionsCommitteeService } from 'src/app/logic/committee/getPetitionsCommitteeService.service';
+import { GetCommitteePetitionsService } from 'src/app/logic/petition/get-committee-petitions.service';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { PetitionCardModule } from 'src/app/shared/petition-card/petition-card.module';
@@ -26,7 +26,7 @@ import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions'
 describe('CommitteeHomeComponent', () => {
   let component: CommitteeHomeComponent;
   let fixture: ComponentFixture<CommitteeHomeComponent>;
-  let _getPetitionsCommitteeService: GetPetitionsCommitteeService;
+  let _getPetitionsCommitteeService: GetCommitteePetitionsService;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -54,7 +54,7 @@ describe('CommitteeHomeComponent', () => {
         set: {
           providers: [
             {
-              provide: GetPetitionsCommitteeService,
+              provide: GetCommitteePetitionsService,
               useClass: MockedGetPetitionsCommitteeService,
             },
           ],
@@ -67,7 +67,7 @@ describe('CommitteeHomeComponent', () => {
     fixture = TestBed.createComponent(CommitteeHomeComponent);
     component = fixture.componentInstance;
     _getPetitionsCommitteeService = fixture.debugElement.injector.get(
-      GetPetitionsCommitteeService
+      GetCommitteePetitionsService
     );
   });
 

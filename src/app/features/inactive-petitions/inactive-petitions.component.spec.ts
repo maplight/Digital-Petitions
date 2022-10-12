@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
+import { GetInactivePetitionsService } from 'src/app/logic/petition/get-inactive-petitions.service';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
 import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-status.module';
@@ -29,7 +29,7 @@ import {
 describe('InactivePetitionsComponent', () => {
   let component: InactivePetitionsComponent;
   let fixture: ComponentFixture<InactivePetitionsComponent>;
-  let _getPetitionsInactiveService: GetPetitionsInactiveService;
+  let _getPetitionsInactiveService: GetInactivePetitionsService;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -59,7 +59,7 @@ describe('InactivePetitionsComponent', () => {
         set: {
           providers: [
             {
-              provide: GetPetitionsInactiveService,
+              provide: GetInactivePetitionsService,
               useClass: MockedGetPetitionsInactiveService,
             },
           ],
@@ -72,7 +72,7 @@ describe('InactivePetitionsComponent', () => {
     fixture = TestBed.createComponent(InactivePetitionsComponent);
     component = fixture.componentInstance;
     _getPetitionsInactiveService = fixture.debugElement.injector.get(
-      GetPetitionsInactiveService
+      GetInactivePetitionsService
     );
   });
 
