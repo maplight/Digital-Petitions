@@ -4,12 +4,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   selector: 'dp-new-box',
   templateUrl: './new-box.component.html',
 })
-export class NewBoxComponent implements OnInit {
+export class NewBoxComponent {
   @Output() approveEvent = new EventEmitter<void>();
 
   @Output() denyEvent = new EventEmitter<void>();
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
