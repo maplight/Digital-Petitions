@@ -19,4 +19,15 @@ describe('AproveAlertComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('evaluates that the "dp-basic-alert" component exists', () => {
+    const element =
+      fixture.debugElement.nativeElement.querySelector('dp-basic-alert');
+    expect(element).toBeTruthy();
+  });
+
+  it('evaluates that two are three buttons', () => {
+    const element =
+      fixture.debugElement.nativeElement.querySelectorAll('button');
+    expect(element.length).toBe(2);
+  });
 });

@@ -4,10 +4,4 @@ import { Component, OnInit } from '@angular/core';
   selector: 'dp-aprove-alert',
   templateUrl: './approve-alert.component.html',
 })
-export class ApproveAlertComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  submit() {}
-}
+export class ApproveAlertComponent {}
