@@ -1,10 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import {
+  IssuePetition,
+  PetitionStatus,
+  PetitionType,
+} from 'src/app/core/api/API';
 import { ApprovePetitionService } from 'src/app/logic/petition/approve-petition.service';
 import { DenyPetitionService } from 'src/app/logic/petition/deny-petition.service';
 import { GetStaffPetitionService } from 'src/app/logic/petition/get-staff-petition.service';
@@ -14,6 +19,7 @@ import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { PetitionViewModule } from 'src/app/shared/petition-view/petition-view.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
+import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { ApproveDialogModule } from './approve-dialog/approve-dialog.module';
 import { CualifiedBoxModule } from './cualified-box/cualified-box.module';
 import { CurrentResultCityStaffModule } from './current-result-city-staff/current-result-city-staff.module';
@@ -29,6 +35,7 @@ describe('ViewPetitionCityStaffComponent', () => {
   let _getPetitionService: GetStaffPetitionService;
   let _approvePetitionService: ApprovePetitionService;
   let _denyPetitionService: DenyPetitionService;
+  const activatedRoute = new ActivatedRouteStub({ id: 'id' });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -50,20 +57,22 @@ describe('ViewPetitionCityStaffComponent', () => {
         ErrorMsgModule,
         LoadingBarModule,
       ],
-      providers: [
-        {
-          provide: MatDialogRef,
-          useValue: dialogMock,
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: {},
-        },
-      ],
     })
       .overrideComponent(ViewPetitionCityStaffComponent, {
         set: {
           providers: [
+            {
+              provide: MatDialogRef,
+              useValue: dialogMock,
+            },
+            {
+              provide: MatDialog,
+              useValue: dialogMock,
+            },
+            {
+              provide: ActivatedRoute,
+              useValue: activatedRoute,
+            },
             {
               provide: GetStaffPetitionService,
               useClass: MockedGetPetitionService,
@@ -98,9 +107,102 @@ describe('ViewPetitionCityStaffComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  //loading petition
+  it('should show the loading bar when the petition is loading', () => {
+    spyOnProperty(_getPetitionService, 'loading$', 'get').and.returnValue(
+      of(true)
+    );
+
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(1);
+  });
+
+  it('should not show the loading bar if the petition is not loading', () => {
+    spyOnProperty(_getPetitionService, 'loading$', 'get').and.returnValue(
+      of(false)
+    );
+
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(0);
+  });
+
+  it('should not show the loading bar if the approve proccess is not loading', () => {
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(0);
+  });
+
+  it('should not show the loading bar if the deny proccess is not loading', () => {
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(0);
+  });
+
+  it('should show the "Cualified Box" element when a successful response is received and petition status is diferent of "NEW"', () => {
+    let modifiedMockedIssue = mockedIssue;
+    modifiedMockedIssue.status = PetitionStatus.CANCELED;
+    spyOnProperty(_getPetitionService, 'success$', 'get').and.returnValue(
+      of({ dataIssue: mockedIssue })
+    );
+    fixture.detectChanges();
+
+    const dpEditPetitionIssue =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-cualified-box');
+
+    expect(dpEditPetitionIssue.length).toBe(1);
+  });
+
+  it('should show the error element if an error ocurred and is not loading', () => {
+    spyOnProperty(_getPetitionService, 'error$', 'get').and.returnValue(
+      of('error')
+    );
+
+    spyOnProperty(_getPetitionService, 'loading$', 'get').and.returnValue(
+      of(false)
+    );
+
+    fixture.detectChanges();
+
+    const dpErrorMsg =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-error-msg');
+
+    expect(dpErrorMsg.length).toBe(1);
+  });
+
+  it('should not show the error element if an error ocurred and the component is loading', () => {
+    spyOnProperty(_getPetitionService, 'error$', 'get').and.returnValue(
+      of('error')
+    );
+
+    spyOnProperty(_getPetitionService, 'loading$', 'get').and.returnValue(
+      of(true)
+    );
+
+    fixture.detectChanges();
+
+    const dpErrorMsg =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-error-msg');
+
+    expect(dpErrorMsg.length).toBe(0);
+  });
 });
 const dialogMock = {
   close: () => {},
+  open: () => {},
 };
 class MockedGetPetitionService {
   public get error$(): Observable<string | undefined> {
@@ -149,3 +251,20 @@ class MockedDenyPetitionService {
 
   denyPetition(id: string[]) {}
 }
+const mockedIssue: IssuePetition = {
+  __typename: 'IssuePetition',
+  PK: '1',
+  createdAt: '',
+  detail: 'Text',
+  owner: '',
+  signatures: {
+    __typename: 'SignatureConnection',
+    items: [],
+    token: undefined,
+  },
+  status: PetitionStatus.NEW,
+  title: 'Title',
+  type: PetitionType.ISSUE,
+  updatedAt: '',
+  version: 0,
+};

@@ -114,6 +114,8 @@ export class ViewPetitionCityStaffComponent implements OnInit, OnDestroy {
     this._denyPetitionLogic.success$
       .pipe(takeUntil(this._unSuscribeAll))
       .subscribe((_) => {
+        console.log('aqui');
+
         this.openDialog(true);
       });
 
