@@ -62,10 +62,6 @@ describe('ViewPetitionCityStaffComponent', () => {
         set: {
           providers: [
             {
-              provide: MatDialogRef,
-              useValue: dialogMock,
-            },
-            {
               provide: MatDialog,
               useValue: dialogMock,
             },
@@ -112,7 +108,6 @@ describe('ViewPetitionCityStaffComponent', () => {
     spyOnProperty(_getPetitionService, 'loading$', 'get').and.returnValue(
       of(true)
     );
-
     fixture.detectChanges();
 
     const dpLoadingBars =
@@ -134,6 +129,23 @@ describe('ViewPetitionCityStaffComponent', () => {
     expect(dpLoadingBars.length).toBe(0);
   });
 
+  //loading approve
+  it('should show the loading bar when the approve proccess is loading', () => {
+    component.ngOnInit();
+    spyOnProperty(_approvePetitionService, 'loading$', 'get').and.returnValue(
+      of(true)
+    );
+    spyOnProperty(_getPetitionService, 'loading$', 'get').and.returnValue(
+      of(false)
+    );
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(1);
+  });
+
   it('should not show the loading bar if the approve proccess is not loading', () => {
     fixture.detectChanges();
 
@@ -141,6 +153,41 @@ describe('ViewPetitionCityStaffComponent', () => {
       fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
 
     expect(dpLoadingBars.length).toBe(0);
+  });
+
+  //loading deny
+  it('should show the loading bar when the deny proccess is loading', () => {
+    spyOnProperty(_denyPetitionService, 'loading$', 'get').and.returnValue(
+      of(true)
+    );
+    spyOnProperty(_getPetitionService, 'loading$', 'get').and.returnValue(
+      of(false)
+    );
+    fixture.detectChanges();
+
+    const dpLoadingBars =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-loading-bar');
+
+    expect(dpLoadingBars.length).toBe(1);
+  });
+
+  it('should call denyPetition function when deny button is clicked and afterClosed method return a valid value', () => {
+    let spyFunc = spyOn(_denyPetitionService, 'denyPetition');
+    spyOn(mockedDialogRef, 'afterClosed').and.returnValue(of('success'));
+    fixture.detectChanges();
+    component.denyAlert({ dataIssue: mockedIssue });
+    expect(spyFunc).toHaveBeenCalledOnceWith({
+      expectedVersion: mockedIssue.version,
+      PK: mockedIssue.PK,
+    });
+  });
+
+  it('should call denyPetition function when deny button is clicked and afterClosed method return undefined', () => {
+    let spyFunc = spyOn(dialogMock, 'closeAll');
+    spyOn(mockedDialogRef, 'afterClosed').and.returnValue(of(undefined));
+    fixture.detectChanges();
+    component.denyAlert({ dataIssue: mockedIssue });
+    expect(spyFunc).toHaveBeenCalled();
   });
 
   it('should not show the loading bar if the deny proccess is not loading', () => {
@@ -152,11 +199,55 @@ describe('ViewPetitionCityStaffComponent', () => {
     expect(dpLoadingBars.length).toBe(0);
   });
 
+  it('should call "open" function in MatDialog when ApprovePetitionService emit a successful response', () => {
+    let spyFunc = spyOn(dialogMock, 'open');
+    let modifiedMockedIssue = mockedIssue;
+    modifiedMockedIssue.status = PetitionStatus.REJECTED;
+
+    spyOnProperty(_getPetitionService, 'success$', 'get').and.returnValue(
+      of({ dataIssue: mockedIssue })
+    );
+
+    spyOnProperty(_denyPetitionService, 'success$', 'get').and.returnValue(
+      of({ dataIssue: modifiedMockedIssue })
+    );
+
+    fixture.detectChanges();
+
+    expect(spyFunc).toHaveBeenCalled();
+  });
+
+  it('should show the petition view element when a successful response is received', () => {
+    spyOnProperty(_getPetitionService, 'success$', 'get').and.returnValue(
+      of({ dataIssue: mockedIssue })
+    );
+    fixture.detectChanges();
+
+    const dpEditPetitionIssue =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-petition-view');
+
+    expect(dpEditPetitionIssue.length).toBe(1);
+  });
+
+  it('should show the "New Box" element when a successful response is received and petition status is "NEW"', () => {
+    let modifiedMockedIssue = mockedIssue;
+    modifiedMockedIssue.status = PetitionStatus.NEW;
+    spyOnProperty(_getPetitionService, 'success$', 'get').and.returnValue(
+      of({ dataIssue: modifiedMockedIssue })
+    );
+    fixture.detectChanges();
+
+    const dpEditPetitionIssue =
+      fixture.debugElement.nativeElement.querySelectorAll('dp-new-box');
+
+    expect(dpEditPetitionIssue.length).toBe(1);
+  });
+
   it('should show the "Cualified Box" element when a successful response is received and petition status is diferent of "NEW"', () => {
     let modifiedMockedIssue = mockedIssue;
     modifiedMockedIssue.status = PetitionStatus.CANCELED;
     spyOnProperty(_getPetitionService, 'success$', 'get').and.returnValue(
-      of({ dataIssue: mockedIssue })
+      of({ dataIssue: modifiedMockedIssue })
     );
     fixture.detectChanges();
 
@@ -202,7 +293,15 @@ describe('ViewPetitionCityStaffComponent', () => {
 });
 const dialogMock = {
   close: () => {},
-  open: () => {},
+  open: () => mockedDialogRef,
+  closeAll(): Observable<string | undefined> {
+    return new Observable();
+  },
+};
+const mockedDialogRef = {
+  afterClosed(): Observable<string | undefined> {
+    return new Observable();
+  },
 };
 class MockedGetPetitionService {
   public get error$(): Observable<string | undefined> {

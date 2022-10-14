@@ -8,14 +8,12 @@ import {
 import { merge, Observable, Subject, takeUntil } from 'rxjs';
 import { AccessLevel } from 'src/app/core/api/API';
 import { ChangeAccountPermissionService } from 'src/app/logic/admin/change-account-permission.service';
-import { GetAccountPermissionService } from 'src/app/logic/admin/get-account-permission.service';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';
-import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 
 @Component({
   selector: 'dp-change-account-permission',
   templateUrl: './change-account-permission.component.html',
-  providers: [ChangeAccountPermissionService, GetAccountPermissionService],
+  providers: [ChangeAccountPermissionService],
 })
 export class ChangeAccountPermissionComponent implements OnInit {
   protected loading$!: Observable<boolean>;
