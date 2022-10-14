@@ -44,8 +44,6 @@ export class ApproveDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this._approvePetitionLogic.success$.subscribe((_) => {
-      console.log('aqui');
-
       this._dialog.open(DialogResultComponent, {
         width: '520px',
         data: {
@@ -61,9 +59,6 @@ export class ApproveDialogComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.formGroup.valid);
-    console.log(this.formGroup.value);
-
     if (this.formGroup.valid) {
       const input = { ...this.formGroup.value } as ApprovePetitionInput;
       input.PK = this.data.PK;
