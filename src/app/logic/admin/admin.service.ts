@@ -51,8 +51,11 @@ export class AdminService {
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetUsersQuery>>
     ).pipe(
+      tap((value) => {
+        console.log(value);
+      }),
       map(({ data }) => ({ result: data?.getUsers })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error?.errors[0]?.message }))
     );
   }
 
@@ -65,7 +68,7 @@ export class AdminService {
       }) as Promise<GraphQLResult<CreateStaffUserMutation>>
     ).pipe(
       map(({ data }) => ({ result: data?.createStaffUser })),
-      catchError((error) => of({ error: error?.errors[0].message }))
+      catchError((error) => of({ error: error?.errors[0]?.message }))
     );
   }
 
@@ -82,11 +85,6 @@ export class AdminService {
       map(({ data }) => ({ result: data?.updateUserAccess })),
       catchError((error) => of({ error: error?.errors[0].message }))
     );
-  }
-  getAccountPermission(id: string): Observable<Result<string>> {
-    return of({
-      result: 'member',
-    }).pipe(delay(3000));
   }
 
   removeMember(id: string): Observable<Result<string>> {
@@ -117,7 +115,7 @@ export class AdminService {
       }) as Promise<GraphQLResult<GetResourceUploadURLQuery>>
     ).pipe(
       map(({ data }) => ({ result: data?.getResourceUploadURL })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error?.errors[0]?.message }))
     );
   }
 
@@ -141,7 +139,7 @@ export class AdminService {
       }) as Promise<GraphQLResult<GetSiteResourcesQuery>>
     ).pipe(
       map(({ data }) => ({ result: data?.getSiteResources })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error?.errors[0]?.message }))
     );
   }
 
@@ -154,7 +152,9 @@ export class AdminService {
     ).pipe(
       map(({ data }) => ({ result: data?.siteConfiguration })),
       catchError(
-        (error) => (console.log(error), of({ error: error?.[0]?.message }))
+        (error) => (
+          console.log(error), of({ error: error?.errors[0]?.message })
+        )
       )
     );
   }
