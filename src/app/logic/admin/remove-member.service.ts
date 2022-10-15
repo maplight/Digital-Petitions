@@ -64,7 +64,7 @@ export class RemoveMemberService {
   /** This method begins the process of password change for the user of the committee currently authenticated
   @param id: User ID
   */
-  formGroupValue(id: string) {
+  removeMemeber(id: string) {
     this.submit$.next(id);
   }
 }
