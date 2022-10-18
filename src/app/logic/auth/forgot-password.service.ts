@@ -72,7 +72,7 @@ export class ForgotPasswordService {
   @param value: Recovery email of the user proportionate
   */
   recoverPasswordData(value: RecoverPasswordData) {
-    this.submit$.next(value);
     this.email = value.email;
+    this.submit$.next(value);
   }
 }
