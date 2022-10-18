@@ -73,7 +73,7 @@ describe('SignUpComponent', () => {
   });
 
   it('should call the funcion "SignUpCredentials" in the service when submit function is called in the component and the form is valid', () => {
-    const functionSpy = spyOn(_signUpService, 'SignUpCredentials');
+    const functionSpy = spyOn(_signUpService, 'signUpCredentials');
 
     component.formGroup.setValue({
       firstName: 'textExample',

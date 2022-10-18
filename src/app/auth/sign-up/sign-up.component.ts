@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
         email: this.formGroup.value.email,
         password: this.formGroup.value.password,
       };
-      this._signUpLogic.SignUpCredentials(_signUpCredentials);
+      this._signUpLogic.signUpCredentials(_signUpCredentials);
     }
   }
 }
