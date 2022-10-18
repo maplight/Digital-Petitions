@@ -67,7 +67,7 @@ export class SignUpConfirmComponent implements OnInit, OnDestroy {
     }
   }
   resendCode() {
-    this._signUpResendCodeLogic.formGroupValue(this.email ?? '');
+    this._signUpResendCodeLogic.resendCode(this.email ?? '');
   }
 
   ngOnDestroy(): void {
