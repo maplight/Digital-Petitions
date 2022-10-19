@@ -18,12 +18,16 @@ export const approvePetition = /* GraphQL */ `
       }
       signatures {
         items {
+          PK
           address
           createdAt
+          isVerified
+          method
           name
           signer
           status
           updatedAt
+          verifiedAt
         }
         token
       }
@@ -47,6 +51,22 @@ export const approvePetition = /* GraphQL */ `
         detail
         title
       }
+    }
+  }
+`;
+export const approveSignature = /* GraphQL */ `
+  mutation ApproveSignature($data: TargetSignatureInput!) {
+    approveSignature(data: $data) {
+      PK
+      address
+      createdAt
+      isVerified
+      method
+      name
+      signer
+      status
+      updatedAt
+      verifiedAt
     }
   }
 `;
@@ -92,12 +112,16 @@ export const editCandidatePetition = /* GraphQL */ `
       }
       signatures {
         items {
+          PK
           address
           createdAt
+          isVerified
+          method
           name
           signer
           status
           updatedAt
+          verifiedAt
         }
         token
       }
@@ -125,12 +149,16 @@ export const editIssuePetition = /* GraphQL */ `
       }
       signatures {
         items {
+          PK
           address
           createdAt
+          isVerified
+          method
           name
           signer
           status
           updatedAt
+          verifiedAt
         }
         token
       }
@@ -158,12 +186,16 @@ export const rejectPetition = /* GraphQL */ `
       }
       signatures {
         items {
+          PK
           address
           createdAt
+          isVerified
+          method
           name
           signer
           status
           updatedAt
+          verifiedAt
         }
         token
       }
@@ -188,6 +220,27 @@ export const rejectPetition = /* GraphQL */ `
         title
       }
     }
+  }
+`;
+export const rejectSignature = /* GraphQL */ `
+  mutation RejectSignature($data: TargetSignatureInput!) {
+    rejectSignature(data: $data) {
+      PK
+      address
+      createdAt
+      isVerified
+      method
+      name
+      signer
+      status
+      updatedAt
+      verifiedAt
+    }
+  }
+`;
+export const requestUserVerificationCodeResend = /* GraphQL */ `
+  mutation RequestUserVerificationCodeResend($email: String!) {
+    requestUserVerificationCodeResend(email: $email)
   }
 `;
 export const submitCandidatePetition = /* GraphQL */ `
@@ -216,12 +269,16 @@ export const submitCandidatePetition = /* GraphQL */ `
       }
       signatures {
         items {
+          PK
           address
           createdAt
+          isVerified
+          method
           name
           signer
           status
           updatedAt
+          verifiedAt
         }
         token
       }
@@ -249,12 +306,16 @@ export const submitIssuePetition = /* GraphQL */ `
       }
       signatures {
         items {
+          PK
           address
           createdAt
+          isVerified
+          method
           name
           signer
           status
           updatedAt
+          verifiedAt
         }
         token
       }

@@ -66,13 +66,26 @@ export type SignatureConnection = {
 
 export type Signature = {
   __typename: "Signature",
+  PK: string,
   address: string,
   createdAt: string,
+  isVerified: boolean,
+  method: VerificationMethod,
   name: string,
   signer: string,
   status: SignatureStatus,
   updatedAt: string,
+  verifiedAt?: string | null,
 };
+
+export enum VerificationMethod {
+  CALL = "CALL",
+  EMAIL = "EMAIL",
+  POSTAL = "POSTAL",
+  STATE_ID = "STATE_ID",
+  TEXT = "TEXT",
+}
+
 
 export enum SignatureStatus {
   APPROVED = "APPROVED",
@@ -112,6 +125,10 @@ export type IssuePetition = {
   type: PetitionType,
   updatedAt: string,
   version: number,
+};
+
+export type TargetSignatureInput = {
+  signatureId: string,
 };
 
 export type StaffUserInput = {
@@ -196,15 +213,6 @@ export type SignatureVerificationInput = {
   token: string,
   zipCode: string,
 };
-
-export enum VerificationMethod {
-  CALL = "CALL",
-  EMAIL = "EMAIL",
-  POSTAL = "POSTAL",
-  STATE_ID = "STATE_ID",
-  TEXT = "TEXT",
-}
-
 
 export type SignatureVerification = {
   __typename: "SignatureVerification",
@@ -306,8 +314,13 @@ export type SignaturesByPetitionInput = {
 export enum SignatureStatusQuery {
   ANY = "ANY",
   APPROVED = "APPROVED",
+  APPROVED_AND_VERIFIED = "APPROVED_AND_VERIFIED",
+  APPROVED_VERIFICATION_PENDING = "APPROVED_VERIFICATION_PENDING",
   REJECTED = "REJECTED",
+  REJECTED_AND_VERIFIED = "REJECTED_AND_VERIFIED",
+  REJECTED_VERIFICATION_PENDING = "REJECTED_VERIFICATION_PENDING",
   SUBMITTED = "SUBMITTED",
+  VERIFICATION_PENDING = "VERIFICATION_PENDING",
   VERIFIED = "VERIFIED",
 }
 
@@ -388,12 +401,16 @@ export type ApprovePetitionMutation = {
         __typename: string,
         items:  Array< {
           __typename: string,
+          PK: string,
           address: string,
           createdAt: string,
+          isVerified: boolean,
+          method: VerificationMethod,
           name: string,
           signer: string,
           status: SignatureStatus,
           updatedAt: string,
+          verifiedAt?: string | null,
         } >,
         token?: string | null,
       },
@@ -430,12 +447,16 @@ export type ApprovePetitionMutation = {
         __typename: string,
         items:  Array< {
           __typename: string,
+          PK: string,
           address: string,
           createdAt: string,
+          isVerified: boolean,
+          method: VerificationMethod,
           name: string,
           signer: string,
           status: SignatureStatus,
           updatedAt: string,
+          verifiedAt?: string | null,
         } >,
         token?: string | null,
       },
@@ -447,6 +468,26 @@ export type ApprovePetitionMutation = {
       title: string,
     }
   ) | null,
+};
+
+export type ApproveSignatureMutationVariables = {
+  data: TargetSignatureInput,
+};
+
+export type ApproveSignatureMutation = {
+  approveSignature?:  {
+    __typename: "Signature",
+    PK: string,
+    address: string,
+    createdAt: string,
+    isVerified: boolean,
+    method: VerificationMethod,
+    name: string,
+    signer: string,
+    status: SignatureStatus,
+    updatedAt: string,
+    verifiedAt?: string | null,
+  } | null,
 };
 
 export type CreateStaffUserMutationVariables = {
@@ -506,12 +547,16 @@ export type EditCandidatePetitionMutation = {
       __typename: "SignatureConnection",
       items:  Array< {
         __typename: "Signature",
+        PK: string,
         address: string,
         createdAt: string,
+        isVerified: boolean,
+        method: VerificationMethod,
         name: string,
         signer: string,
         status: SignatureStatus,
         updatedAt: string,
+        verifiedAt?: string | null,
       } >,
       token?: string | null,
     },
@@ -546,12 +591,16 @@ export type EditIssuePetitionMutation = {
       __typename: "SignatureConnection",
       items:  Array< {
         __typename: "Signature",
+        PK: string,
         address: string,
         createdAt: string,
+        isVerified: boolean,
+        method: VerificationMethod,
         name: string,
         signer: string,
         status: SignatureStatus,
         updatedAt: string,
+        verifiedAt?: string | null,
       } >,
       token?: string | null,
     },
@@ -586,12 +635,16 @@ export type RejectPetitionMutation = {
         __typename: string,
         items:  Array< {
           __typename: string,
+          PK: string,
           address: string,
           createdAt: string,
+          isVerified: boolean,
+          method: VerificationMethod,
           name: string,
           signer: string,
           status: SignatureStatus,
           updatedAt: string,
+          verifiedAt?: string | null,
         } >,
         token?: string | null,
       },
@@ -628,12 +681,16 @@ export type RejectPetitionMutation = {
         __typename: string,
         items:  Array< {
           __typename: string,
+          PK: string,
           address: string,
           createdAt: string,
+          isVerified: boolean,
+          method: VerificationMethod,
           name: string,
           signer: string,
           status: SignatureStatus,
           updatedAt: string,
+          verifiedAt?: string | null,
         } >,
         token?: string | null,
       },
@@ -645,6 +702,34 @@ export type RejectPetitionMutation = {
       title: string,
     }
   ) | null,
+};
+
+export type RejectSignatureMutationVariables = {
+  data: TargetSignatureInput,
+};
+
+export type RejectSignatureMutation = {
+  rejectSignature?:  {
+    __typename: "Signature",
+    PK: string,
+    address: string,
+    createdAt: string,
+    isVerified: boolean,
+    method: VerificationMethod,
+    name: string,
+    signer: string,
+    status: SignatureStatus,
+    updatedAt: string,
+    verifiedAt?: string | null,
+  } | null,
+};
+
+export type RequestUserVerificationCodeResendMutationVariables = {
+  email: string,
+};
+
+export type RequestUserVerificationCodeResendMutation = {
+  requestUserVerificationCodeResend: boolean,
 };
 
 export type SubmitCandidatePetitionMutationVariables = {
@@ -681,12 +766,16 @@ export type SubmitCandidatePetitionMutation = {
       __typename: "SignatureConnection",
       items:  Array< {
         __typename: "Signature",
+        PK: string,
         address: string,
         createdAt: string,
+        isVerified: boolean,
+        method: VerificationMethod,
         name: string,
         signer: string,
         status: SignatureStatus,
         updatedAt: string,
+        verifiedAt?: string | null,
       } >,
       token?: string | null,
     },
@@ -721,12 +810,16 @@ export type SubmitIssuePetitionMutation = {
       __typename: "SignatureConnection",
       items:  Array< {
         __typename: "Signature",
+        PK: string,
         address: string,
         createdAt: string,
+        isVerified: boolean,
+        method: VerificationMethod,
         name: string,
         signer: string,
         status: SignatureStatus,
         updatedAt: string,
+        verifiedAt?: string | null,
       } >,
       token?: string | null,
     },
@@ -825,12 +918,16 @@ export type GetPetitionQuery = {
         __typename: string,
         items:  Array< {
           __typename: string,
+          PK: string,
           address: string,
           createdAt: string,
+          isVerified: boolean,
+          method: VerificationMethod,
           name: string,
           signer: string,
           status: SignatureStatus,
           updatedAt: string,
+          verifiedAt?: string | null,
         } >,
         token?: string | null,
       },
@@ -867,12 +964,16 @@ export type GetPetitionQuery = {
         __typename: string,
         items:  Array< {
           __typename: string,
+          PK: string,
           address: string,
           createdAt: string,
+          isVerified: boolean,
+          method: VerificationMethod,
           name: string,
           signer: string,
           status: SignatureStatus,
           updatedAt: string,
+          verifiedAt?: string | null,
         } >,
         token?: string | null,
       },
@@ -1051,12 +1152,16 @@ export type GetSignaturesByPetitionQuery = {
     __typename: "SignatureConnection",
     items:  Array< {
       __typename: "Signature",
+      PK: string,
       address: string,
       createdAt: string,
+      isVerified: boolean,
+      method: VerificationMethod,
       name: string,
       signer: string,
       status: SignatureStatus,
       updatedAt: string,
+      verifiedAt?: string | null,
     } >,
     token?: string | null,
   },

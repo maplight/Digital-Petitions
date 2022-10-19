@@ -18,12 +18,16 @@ export const getPetition = /* GraphQL */ `
       }
       signatures {
         items {
+          PK
           address
           createdAt
+          isVerified
+          method
           name
           signer
           status
           updatedAt
+          verifiedAt
         }
         token
       }
@@ -150,12 +154,16 @@ export const getSignaturesByPetition = /* GraphQL */ `
   query GetSignaturesByPetition($query: SignaturesByPetitionInput) {
     getSignaturesByPetition(query: $query) {
       items {
+        PK
         address
         createdAt
+        isVerified
+        method
         name
         signer
         status
         updatedAt
+        verifiedAt
       }
       token
     }
