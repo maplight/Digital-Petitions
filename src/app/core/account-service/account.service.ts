@@ -226,7 +226,7 @@ export class AccountService {
           return Auth.signIn(this.userInfo.email, this.userInfo.password)
             .then((data: any) => {
               this._pristineCognitoUser = data;
-
+              console.log('aqui');
               this.updateUser();
 
               return { result: 'SUCCESS' };
@@ -276,10 +276,6 @@ export class AccountService {
           return { error: error.message };
         })
     );
-  }
-
-  public checkTokenFP(data: ConfirmationCode): Observable<Result<string>> {
-    return of({ result: ':)' }).pipe(delay(3000));
   }
 
   public updateUser() {

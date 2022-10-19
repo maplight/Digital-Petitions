@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { API, APIClass } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import {
   AccessLevel,
   AssetType,
