@@ -28,7 +28,7 @@ export class SignatureService {
       }) as Promise<GraphQLResult<GetSignaturesByPetitionQuery>>
     ).pipe(
       map(({ data }) => ({ result: data?.getSignaturesByPetition })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error?.errors[0]?.message }))
     );
   }
   approveSignature(id: string[]): Observable<Result<string>> {
