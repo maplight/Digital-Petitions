@@ -55,7 +55,7 @@ describe('SignatureService', () => {
   });
 
   //denySignature
-  it('approveSignature should return a string value when the promise it succesful resolve', (done) => {
+  it('denySignature should return a string value when the promise it succesful resolve', (done) => {
     service.denySignature([]).subscribe((data) => {
       expect(data.result).toEqual('0');
       done();
