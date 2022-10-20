@@ -4,9 +4,6 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'dp-cualified-box',
   templateUrl: './cualified-box.component.html',
 })
-export class CualifiedBoxComponent implements OnInit {
+export class CualifiedBoxComponent {
   @Input() showDownloadPacket: boolean = false;
-  constructor() {}
-
-  ngOnInit(): void {}
 }
