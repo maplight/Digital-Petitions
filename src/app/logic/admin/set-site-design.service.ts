@@ -54,11 +54,11 @@ export class SetSiteDesignService {
     this.loading$ = merge(
       this.submit$.pipe(
         map(() => true),
-        tap(() => console.log('start'))
+        tap(() => this._loggingService.log('start'))
       ),
       end$.pipe(
         map(() => false),
-        tap(() => console.log('end'))
+        tap(() => this._loggingService.log('end'))
       )
     ).pipe(shareReplay(1));
   }

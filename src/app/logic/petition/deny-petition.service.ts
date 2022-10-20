@@ -52,11 +52,11 @@ export class DenyPetitionService {
     this.loading$ = merge(
       this.submit$.pipe(
         map((v) => true),
-        tap(() => console.log('start'))
+        tap(() => this._loggingService.log('start'))
       ),
       end$.pipe(
         map((v) => false),
-        tap(() => console.log('end'))
+        tap(() => this._loggingService.log('end'))
       )
     ).pipe(shareReplay(1));
   }
