@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.service';
 
 import { StepIndicatorComponent } from './step-indicator.component';
@@ -9,39 +9,38 @@ describe('StepIndicatorComponent', () => {
   let fixture: ComponentFixture<StepIndicatorComponent>;
 
   let _stepIndicatorService: StepIndicatorService;
+
   class MockStepIndicatorService {
-    private _currentStep$: BehaviorSubject<
+    public get _publicCurrentStep$(): Observable<
       'type' | 'issue' | 'candidate' | 'result'
-    > = new BehaviorSubject<'type' | 'issue' | 'candidate' | 'result'>('type');
-    public _publicCurrentStep$: Observable<
-      'type' | 'issue' | 'candidate' | 'result'
-    > = this._currentStep$.asObservable();
-    constructor() {}
-    ngOnDestroy(): void {
-      this._currentStep$.complete();
+    > {
+      return new Observable();
     }
-    setCurrentStep(step: 'type' | 'issue' | 'candidate' | 'result') {
-      this._currentStep$.next(step);
-    }
+
+    setCurrentStep(step: 'type' | 'issue' | 'candidate' | 'result') {}
   }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [StepIndicatorComponent],
-      providers: [
-        StepIndicatorComponent,
-        {
-          provide: StepIndicatorService,
-          useClass: MockStepIndicatorService,
+    })
+      .overrideComponent(StepIndicatorComponent, {
+        set: {
+          providers: [
+            {
+              provide: StepIndicatorService,
+              useClass: MockStepIndicatorService,
+            },
+          ],
         },
-      ],
-    }).compileComponents();
-
-    _stepIndicatorService = TestBed.inject(StepIndicatorService);
-    component = TestBed.inject(StepIndicatorComponent);
+      })
+      .compileComponents();
+  });
+  beforeEach(async () => {
     fixture = TestBed.createComponent(StepIndicatorComponent);
-
-    fixture.detectChanges();
+    component = fixture.componentInstance;
+    _stepIndicatorService =
+      fixture.debugElement.injector.get(StepIndicatorService);
   });
 
   it('should create', () => {
@@ -49,14 +48,16 @@ describe('StepIndicatorComponent', () => {
   });
 
   it('evaluates the colors of the elements in the "type" step', () => {
+    spyOnProperty(_stepIndicatorService, '_publicCurrentStep$').and.returnValue(
+      of('type')
+    );
     const activeBgColor: string = 'bg-[#ECF0FF]';
     const activeTextColor: string = 'text-[#2D5BFF]';
     const inActiveBgColor: string = 'bg-[#EFEFEF]';
     const inActiveTextColor: string = 'text-[#8A8A8A]';
+    fixture.detectChanges();
     const element: HTMLElement[] =
       fixture.debugElement.nativeElement.querySelectorAll('div');
-    _stepIndicatorService.setCurrentStep('type');
-    fixture.detectChanges();
 
     //circle 1
     expect(element[1].className).toContain(activeBgColor);
@@ -72,15 +73,19 @@ describe('StepIndicatorComponent', () => {
     expect(element[5].className).toContain(inActiveBgColor);
     expect(element[5].className).toContain(inActiveTextColor);
   });
+
   it('evaluates the colors of the elements in the "issue" step', () => {
+    spyOnProperty(_stepIndicatorService, '_publicCurrentStep$').and.returnValue(
+      of('issue')
+    );
     const activeBgColor: string = 'bg-[#ECF0FF]';
     const activeTextColor: string = 'text-[#2D5BFF]';
     const inActiveBgColor: string = 'bg-[#EFEFEF]';
     const inActiveTextColor: string = 'text-[#8A8A8A]';
+    fixture.detectChanges();
     const element: HTMLElement[] =
       fixture.debugElement.nativeElement.querySelectorAll('div');
     _stepIndicatorService.setCurrentStep('issue');
-    fixture.detectChanges();
 
     //circle 1
     expect(element[1].className).toContain(activeBgColor);
@@ -96,15 +101,19 @@ describe('StepIndicatorComponent', () => {
     expect(element[5].className).toContain(inActiveBgColor);
     expect(element[5].className).toContain(inActiveTextColor);
   });
+
   it('evaluates the colors of the elements in the "candidate" step', () => {
+    spyOnProperty(_stepIndicatorService, '_publicCurrentStep$').and.returnValue(
+      of('candidate')
+    );
     const activeBgColor: string = 'bg-[#ECF0FF]';
     const activeTextColor: string = 'text-[#2D5BFF]';
     const inActiveBgColor: string = 'bg-[#EFEFEF]';
     const inActiveTextColor: string = 'text-[#8A8A8A]';
+    fixture.detectChanges();
     const element: HTMLElement[] =
       fixture.debugElement.nativeElement.querySelectorAll('div');
     _stepIndicatorService.setCurrentStep('candidate');
-    fixture.detectChanges();
 
     //circle 1
     expect(element[1].className).toContain(activeBgColor);
@@ -120,15 +129,19 @@ describe('StepIndicatorComponent', () => {
     expect(element[5].className).toContain(inActiveBgColor);
     expect(element[5].className).toContain(inActiveTextColor);
   });
+
   it('evaluates the colors of the elements in the "result" step', () => {
+    spyOnProperty(_stepIndicatorService, '_publicCurrentStep$').and.returnValue(
+      of('result')
+    );
     const activeBgColor: string = 'bg-[#ECF0FF]';
     const activeTextColor: string = 'text-[#2D5BFF]';
     const inActiveBgColor: string = 'bg-[#EFEFEF]';
     const inActiveTextColor: string = 'text-[#8A8A8A]';
+    fixture.detectChanges();
     const element: HTMLElement[] =
       fixture.debugElement.nativeElement.querySelectorAll('div');
     _stepIndicatorService.setCurrentStep('result');
-    fixture.detectChanges();
 
     //circle 1
     expect(element[1].className).toContain(activeBgColor);

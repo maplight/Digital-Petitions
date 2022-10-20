@@ -15,7 +15,7 @@ import {
   PetitionStatusQuery,
   PetitionType,
 } from 'src/app/core/api/API';
-import { GetAnonymousPetitionsActiveService } from 'src/app/logic/committee/getAnonymousPetitionsActiveService..service';
+import { GetPublicPetitionsActiveService } from 'src/app/logic/petition/get-public-petitions-active.service';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
@@ -29,7 +29,7 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  let _getAnonymousPetitionsActiveService: GetAnonymousPetitionsActiveService;
+  let _getAnonymousPetitionsActiveService: GetPublicPetitionsActiveService;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -58,7 +58,7 @@ describe('HomeComponent', () => {
         set: {
           providers: [
             {
-              provide: GetAnonymousPetitionsActiveService,
+              provide: GetPublicPetitionsActiveService,
               useClass: MockedGetAnonymousPetitionsActiveService,
             },
           ],
@@ -71,7 +71,7 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     _getAnonymousPetitionsActiveService = fixture.debugElement.injector.get(
-      GetAnonymousPetitionsActiveService
+      GetPublicPetitionsActiveService
     );
   });
 

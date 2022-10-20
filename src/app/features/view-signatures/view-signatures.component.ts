@@ -18,12 +18,10 @@ import {
 import { ApproveSignatureService } from 'src/app/logic/signature/approve-signature.service';
 import { DenySignatureService } from 'src/app/logic/signature/deny-signature.service';
 import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.service';
-import { FilterData } from 'src/app/shared/models/exports';
 import {
   FilterByStatus,
   FilterByStatusSignatures,
 } from 'src/app/shared/models/filter/filter-by-status';
-import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data';
 
 @Component({
   selector: 'dp-view-signatures',

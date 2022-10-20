@@ -7,7 +7,7 @@ import {
   SignatureStatusQuery,
 } from 'src/app/core/api/API';
 
-import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
+import { GetInactivePetitionsService } from 'src/app/logic/petition/get-inactive-petitions.service';
 import {
   FilterByStatus,
   FilterByStatusInactive,
@@ -21,7 +21,7 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-inactive-petitions',
   templateUrl: './inactive-petitions.component.html',
-  providers: [GetPetitionsInactiveService],
+  providers: [GetInactivePetitionsService],
 })
 export class InactivePetitionsComponent implements OnInit {
   protected loadingUp: boolean = true;
@@ -38,7 +38,7 @@ export class InactivePetitionsComponent implements OnInit {
   protected filterByStatus: FilterByStatus[] = FilterByStatusInactive;
 
   constructor(
-    private _getPetitionsInactiveService: GetPetitionsInactiveService
+    private _getPetitionsInactiveService: GetInactivePetitionsService
   ) {}
 
   ngOnInit(): void {

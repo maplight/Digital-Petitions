@@ -7,7 +7,6 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { GetPetitionsInactiveService } from 'src/app/logic/committee/getPetitionsInactiveService.service';
 import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
 import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-status.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';

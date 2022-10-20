@@ -1,12 +1,22 @@
 import { TestBed } from '@angular/core/testing';
+import { LoggingService } from 'src/app/core/logging/loggin.service';
+import { MockedLoggingService } from 'src/testing/mocked-logging-service';
+import { MockedPetitionService } from 'src/testing/mocked-pettition-service';
 
 import { ConfirmSignPetitionService } from './confirm-sign-petition.service';
+import { PetitionService } from './petition.service';
 
 describe('ConfirmSignPetitionService', () => {
   let service: ConfirmSignPetitionService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        ConfirmSignPetitionService,
+        { provide: PetitionService, useClass: MockedPetitionService },
+        { provide: LoggingService, useClass: MockedLoggingService },
+      ],
+    });
     service = TestBed.inject(ConfirmSignPetitionService);
   });
 

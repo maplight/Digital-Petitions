@@ -5,20 +5,18 @@ import {
   PetitionStatusQuery,
   PetitionType,
 } from 'src/app/core/api/API';
-import { GetAnonymousPetitionsActiveService } from 'src/app/logic/committee/getAnonymousPetitionsActiveService..service';
-import { GetPetitionsActiveService } from 'src/app/logic/committee/getPetitionsActiveService.service';
+import { GetPublicPetitionsActiveService } from 'src/app/logic/petition/get-public-petitions-active.service';
 
 import {
   FilterByType,
   FilterByTypeData,
 } from 'src/app/shared/models/filter/filter-by-type';
-import { BufferPetition } from 'src/app/shared/models/petition/buffer-petitions';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-home',
   templateUrl: './home.component.html',
-  providers: [GetAnonymousPetitionsActiveService],
+  providers: [GetPublicPetitionsActiveService],
 })
 export class HomeComponent implements OnInit {
   protected loadingUp: boolean = true;
@@ -34,7 +32,7 @@ export class HomeComponent implements OnInit {
   protected filterByCategory: FilterByType[] = FilterByTypeData;
 
   constructor(
-    private _getPetitionsActiveLogic: GetAnonymousPetitionsActiveService
+    private _getPetitionsActiveLogic: GetPublicPetitionsActiveService
   ) {}
 
   ngOnInit(): void {
