@@ -8,9 +8,9 @@ import { SiteConfiguration } from '../../api/API';
 })
 export class HeaderComponent implements OnInit {
   protected theme$!: Observable<SiteConfiguration | null | undefined>;
-  constructor(private _themingService: ThemingService) {
+  constructor(private _themingService: ThemingService) {}
+
+  ngOnInit(): void {
     this.theme$ = this._themingService.theme$;
   }
-
-  ngOnInit(): void {}
 }
