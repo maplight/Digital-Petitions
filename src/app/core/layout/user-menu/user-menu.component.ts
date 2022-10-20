@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { AccountService } from 'src/app/core/account-service/account.service';
 import { SignOutService } from 'src/app/logic/auth/exports';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
@@ -15,39 +15,33 @@ import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 export class UserMenuComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<void> = new Subject();
   protected currentUser!: CognitoUserFacade | undefined;
-  protected isLoged$;
+  protected isLoged$!: Observable<boolean>;
 
   constructor(
     private _accountLogic: AccountService,
     private _router: Router,
     private _signOutLogic: SignOutService,
     public dialog: MatDialog
-  ) {
-    this._signOutLogic.result$
-      .pipe(
-        tap((result) => {
-          if (!!result.result) {
-            this._router.navigate(['/auth/login']);
-            this._accountLogic.getCurrentUser();
-          } else {
-            //I'm not sure this is the best way to handle errors here
-            this.openDialog(
-              'An error has occurred',
-              result.error ? result.error : '',
-              false
-            );
-          }
-        }),
-        takeUntil(this._unsubscribeAll)
-      )
-      .subscribe();
+  ) {}
+
+  ngOnInit(): void {
+    this._signOutLogic.success$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this._router.navigate(['/auth/login']);
+        this._accountLogic.getCurrentUser();
+      });
+
+    this._signOutLogic.error$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((error) => {
+        this.openDialog('An error has occurred', error ?? '', false);
+      });
 
     this.currentUser = this._accountLogic.currentUser;
 
     this.isLoged$ = this._accountLogic.isAuthenticated$;
   }
-
-  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
