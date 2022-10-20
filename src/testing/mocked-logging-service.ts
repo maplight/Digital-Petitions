@@ -1,1 +1,3 @@
-export class MockedLoggingService {}
+export class MockedLoggingService {
+  log(value: any) {}
+}

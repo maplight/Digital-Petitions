@@ -5,6 +5,7 @@ import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.servic
 import { Observable, firstValueFrom, ReplaySubject } from 'rxjs';
 import { SiteConfiguration } from '../api/API';
 import { GetThemeDataService } from 'src/app/logic/admin/get-theme-data.service';
+import { LoggingService } from '../logging/loggin.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class ThemingService {
   public version: number | undefined;
   constructor(
     private _getSiteDesignLogic: GetSiteDesignService,
-    private _getThemeDataService: GetThemeDataService
+    private _getThemeDataService: GetThemeDataService,
+    private _loggingService: LoggingService
   ) {
     this.error$ = this._getSiteDesignLogic.error$;
     this.loading$ = this._getSiteDesignLogic.loading$;
