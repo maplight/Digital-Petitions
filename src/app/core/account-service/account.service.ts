@@ -220,7 +220,6 @@ export class AccountService {
   public signUpConfirm(
     data: SignUpConfirmationCode
   ): Observable<Result<string>> {
-    console.log(data);
     return from(
       Auth.confirmSignUp(data.username.replace(/[^a-zA-Z0-9]/g, ''), data.code)
         .then((_) => {

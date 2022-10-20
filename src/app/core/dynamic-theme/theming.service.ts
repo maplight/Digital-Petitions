@@ -67,9 +67,7 @@ export class ThemingService {
       this.theme.next(data);
       this.setupMainPalettes(theme);
       this.version = data?.version;
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 
   /**

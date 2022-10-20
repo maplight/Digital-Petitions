@@ -18,7 +18,7 @@ import { ApproveAlertComponent } from '../approve-alert/approve-alert.component'
   providers: [ApprovePetitionService],
 })
 export class ApproveDialogComponent implements OnInit {
-  protected formGroup: FormGroup;
+  formGroup: FormGroup;
 
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
