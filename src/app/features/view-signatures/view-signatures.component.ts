@@ -127,19 +127,6 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
   setSignaturesSelected(data: Signature[]) {
     this.signaturesSelected = data;
   }
-  approve() {
-    /*
-    this._approveLogic.approveSignature(
-      this.signaturesSelected.map((value) => value.)
-    );*/
-  }
-  deny() {
-    /*
-    this._denyLogic.denySignature(
-      this.signaturesSelected.map((value) => value.signer)
-    );
-    */
-  }
 
   sort(
     value: 'signer_name' | 'signer_date' | 'address' | 'email' | 'registered'
@@ -170,6 +157,4 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
   private getSignatures() {
     this._getSignatureLogic.getSignatures(this._signaturesByPetitionInput);
   }
-
-  search(value: string) {}
 }
