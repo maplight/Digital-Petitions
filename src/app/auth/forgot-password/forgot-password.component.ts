@@ -15,8 +15,6 @@ import { ForgotPasswordService } from 'src/app/logic/auth/exports';
   providers: [ForgotPasswordService],
 })
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
-  protected hide_password = true;
-
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
   private _unsubscribeAll: Subject<void> = new Subject();

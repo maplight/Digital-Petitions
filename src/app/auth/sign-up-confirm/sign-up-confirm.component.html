@@ -25,6 +25,15 @@
                 the code to confirm your new account
               </p></ng-template
             >
+            <p class="text-xs cursor-pointer">
+              Your email is: <span class="font-bold">{{ email }}</span>
+              <a
+                class="text-accent-500"
+                [routerLink]="'/auth/return-code-form'"
+              >
+                change email?</a
+              >
+            </p>
           </ng-container>
 
           <mat-form-field>
