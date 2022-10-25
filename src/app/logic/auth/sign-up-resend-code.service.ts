@@ -21,7 +21,7 @@ export class SignUpResendCodeService {
   public error$: Observable<string | undefined>;
   public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
+  public result$: Observable<Result<boolean>>;
   private submit$: Subject<string> = new Subject();
 
   constructor(
@@ -37,7 +37,11 @@ export class SignUpResendCodeService {
     );
 
     this.success$ = success$.pipe(
-      map(() => 'A new code has been sent to your email'),
+      map((_) =>
+        _
+          ? 'A new code has been sent to your email'
+          : 'There was an error sending your new code, please try again'
+      ),
       tap((value) => this._loggingService.log(value)),
       shareReplay(1)
     );

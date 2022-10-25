@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
 
 import {
   BehaviorSubject,
   catchError,
   delay,
   from,
+  map,
   Observable,
   of,
   ReplaySubject,
@@ -28,6 +30,8 @@ import { SignUpConfirmationCode } from 'src/app/shared/models/auth/sign-up-confi
 import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 import { AdminSignUpData } from 'src/app/shared/models/auth/admin-sign-up-data';
 import { Router } from '@angular/router';
+import { requestUserVerificationCodeResend } from 'src/graphql/mutations';
+import { RequestUserVerificationCodeResendMutation } from '../api/API';
 
 @Injectable({
   providedIn: 'root',
@@ -204,16 +208,18 @@ export class AccountService {
     );
   }
 
-  public resendSignUp(email: string): Observable<Result<string>> {
+  public resendSignUp(email: string): Observable<Result<boolean>> {
     return from(
-      Auth.resendSignUp(email)
-        .then((result) => {
-          this.updateUser();
-          return { result: 'SUCCESS' };
-        })
-        .catch((error) => {
-          return { error: error.message };
-        })
+      API.graphql({
+        query: requestUserVerificationCodeResend,
+        variables: { email },
+        authMode: 'AWS_IAM',
+      }) as Promise<GraphQLResult<RequestUserVerificationCodeResendMutation>>
+    ).pipe(
+      map(({ data }) => ({ result: data?.requestUserVerificationCodeResend })),
+      catchError((error) => {
+        return of({ error: error?.errors[0]?.message });
+      })
     );
   }
 
@@ -223,16 +229,20 @@ export class AccountService {
     return from(
       Auth.confirmSignUp(data.username.replace(/[^a-zA-Z0-9]/g, ''), data.code)
         .then((_) => {
-          return Auth.signIn(this.userInfo.email, this.userInfo.password)
-            .then((data: any) => {
-              this._pristineCognitoUser = data;
-              this.updateUser();
+          if (this.userInfo) {
+            return Auth.signIn(this.userInfo.email, this.userInfo.password)
+              .then((data: any) => {
+                this._pristineCognitoUser = data;
+                this.updateUser();
 
-              return { result: 'SUCCESS' };
-            })
-            .catch((error) => {
-              return { error: error.message };
-            });
+                return { result: 'SUCCESS' };
+              })
+              .catch((error) => {
+                return { error: error.message };
+              });
+          } else {
+            return { result: 'GO_TO_LOGIN' };
+          }
         })
         .catch((error) => {
           return { error: error.message };
