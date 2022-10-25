@@ -48,9 +48,16 @@ export class SignatureService {
       catchError((error) => of({ error: error?.errors[0]?.message }))
     );
   }
-  denySignature(id: string[]): Observable<Result<string>> {
-    return of({
-      result: id.length.toString(),
-    }).pipe(delay(3000));
+  denySignature(data: TargetSignatureInput): Observable<Result<Signature>> {
+    return from(
+      API.graphql({
+        query: rejectSignature,
+        variables: { data: data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<RejectSignatureMutation>>
+    ).pipe(
+      map(({ data }) => ({ result: data?.rejectSignature as Signature })),
+      catchError((error) => of({ error: error?.errors[0]?.message }))
+    );
   }
 }

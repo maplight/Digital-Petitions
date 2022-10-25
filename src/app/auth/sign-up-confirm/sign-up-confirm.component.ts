@@ -12,7 +12,6 @@ import {
 } from 'rxjs';
 import { SignUpConfirmService } from 'src/app/logic/auth/sign-up-confirm.service';
 import { SignUpResendCodeService } from 'src/app/logic/auth/sign-up-resend-code.service';
-import { SignUpService } from 'src/app/logic/auth/sign-up.service';
 
 @Component({
   selector: 'dp-sign-up-confirm',
