@@ -48,14 +48,14 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
   };
   protected sortBy: {
     name: string;
-    value: 'signer_name' | 'signer_date' | 'address' | 'email' | 'registered';
+    value: 'name' | 'createdAt' | 'address' | 'signer' | 'status';
     active: boolean;
   }[] = [
-    { name: 'Signer Name', value: 'signer_name', active: false },
-    { name: 'Signer Date', value: 'signer_date', active: false },
+    { name: 'Signer Name', value: 'name', active: false },
+    { name: 'Signer Date', value: 'createdAt', active: false },
     { name: 'Address', value: 'address', active: false },
-    { name: 'Email', value: 'email', active: false },
-    { name: 'Status', value: 'registered', active: false },
+    { name: 'Signer', value: 'signer', active: false },
+    { name: 'Status', value: 'status', active: false },
   ];
   protected filterByStatus: FilterByStatus[] = FilterByStatusSignatures;
 
@@ -128,15 +128,12 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     this.signaturesSelected = data;
   }
 
-  sort(
-    value: 'signer_name' | 'signer_date' | 'address' | 'email' | 'registered'
-  ) {
-    /*
+  sort(value: 'name' | 'createdAt' | 'address' | 'signer' | 'status') {
     this.items = [
       ...this.items.sort((a, b) => {
         return a[value] > b[value] ? 1 : a[value] < b[value] ? -1 : 0;
       }),
-    ];*/
+    ];
   }
 
   filterStatus(value: SignatureStatusQuery | PetitionStatusQuery) {
