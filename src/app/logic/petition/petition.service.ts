@@ -396,7 +396,6 @@ export class PetitionService {
         return { result: { cursor: cursor, items: petitions } };
       }),
       catchError((error) => {
-        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );
