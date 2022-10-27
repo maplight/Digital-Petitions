@@ -1,0 +1,13 @@
+{
+  "data": {
+    "getVoterRecordMatch": {
+      "address": "Betancourt 14, El Santo",
+      "city": "Encrucijada",
+      "fullName": "Laura White",
+      "methods": ["STATE_ID", "CALL", "EMAIL", "POSTAL", "TEXT"],
+      "state": "{name=Alabama, value=AL}",
+      "token": "lwhite5961-7739-C",
+      "zipCode": "52400"
+    }
+  }
+}
