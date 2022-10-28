@@ -1,0 +1,4 @@
+{
+  "__type": "InvalidPasswordException",
+  "message": "Password did not conform with policy: Password must have numeric characters"
+}
