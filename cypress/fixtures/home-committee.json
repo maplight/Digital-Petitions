@@ -1,0 +1,22 @@
+{
+  "data": {
+    "getPetitionsByOwner": {
+      "items": [
+        {
+          "PK": "dc8135ee-3b77-4f20-9a29-569dbf2c641f",
+          "signatureSummary": {
+            "submitted": 0,
+            "deadline": null,
+            "required": 0
+          },
+          "status": "REJECTED",
+          "type": "ISSUE",
+          "version": 3,
+          "detail": "Example Mod",
+          "title": "Title"
+        }
+      ],
+      "token": null
+    }
+  }
+}

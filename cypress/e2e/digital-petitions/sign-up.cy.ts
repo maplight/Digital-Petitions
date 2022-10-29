@@ -16,6 +16,61 @@ describe('empty spec', () => {
     cy.get('mat-error').should('have.length', '9');
   });
 
+  it('should navigate to login view when login link is clicked', () => {
+    cy.get('a').should(($a) => {
+      $a[0].click();
+    });
+    cy.get('h1').should(($h1) => {
+      expect($h1[0].textContent).equal('Log in');
+    });
+  });
+
+  it('should navigate to "Enter Email" form when "Already Registered?" link is clicked', () => {
+    cy.get('a').should(($a) => {
+      $a[2].click();
+    });
+    cy.get('h4').should(($h4) => {
+      expect($h4[0].textContent).equal(
+        ' Enter the email that is linked to your account '
+      );
+    });
+  });
+
+  it('should show one mat-error element when the form is submitted and it is invalid ("Enter Email" view)', () => {
+    cy.get('a').should(($a) => {
+      $a[2].click();
+    });
+    cy.get('h4').should(($h4) => {
+      expect($h4[0].textContent).equal(
+        ' Enter the email that is linked to your account '
+      );
+    });
+    cy.get('button').should(($button) => {
+      $button[0].click();
+    });
+    cy.get('mat-error').should('have.length', '1');
+  });
+
+  it('should show "enter code" form when the form is submitted and it is valid ("Enter Email" view)', () => {
+    cy.get('a').should(($a) => {
+      $a[2].click();
+    });
+    cy.get('h4').should(($h4) => {
+      expect($h4[0].textContent).equal(
+        ' Enter the email that is linked to your account '
+      );
+    });
+    cy.get('input[formcontrolname="email"]', { timeout: 10000 }).type(
+      'test@example.com'
+    );
+    cy.get('button').should(($button) => {
+      $button[0].click();
+    });
+    cy.get('h4').should(($h4) => {
+      expect($h4[0].textContent).equal('Confirm your account');
+    });
+  });
+
   it('should show confirmation code form when the sign-up process finished successfully', () => {
     cy.intercept('https://cognito-idp.us-east-1.amazonaws.com/', (req: any) => {
       console.log(req);
