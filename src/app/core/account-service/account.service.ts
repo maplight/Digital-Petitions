@@ -226,7 +226,6 @@ export class AccountService {
           return Auth.signIn(this.userInfo.email, this.userInfo.password)
             .then((data: any) => {
               this._pristineCognitoUser = data;
-              console.log('aqui');
               this.updateUser();
 
               return { result: 'SUCCESS' };

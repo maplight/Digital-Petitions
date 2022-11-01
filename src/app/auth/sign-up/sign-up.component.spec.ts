@@ -72,7 +72,7 @@ describe('SignUpComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call the funcion "SignUpCredentials" in the service when submit function is called in the component and the form is valid', () => {
+  it('should call the funcion "signUpCredentials" in the service when submit function is called in the component and the form is valid', () => {
     const functionSpy = spyOn(_signUpService, 'signUpCredentials');
 
     component.formGroup.setValue({
@@ -160,5 +160,5 @@ class MockedSignUpService {
     return of(true);
   }
 
-  SignUpCredentials(value: SignUpCredentials) {}
+  signUpCredentials(value: SignUpCredentials) {}
 }

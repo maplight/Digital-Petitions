@@ -3,10 +3,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
+  Signature,
   SignatureConnection,
   SignaturesByPetitionInput,
+  SignatureStatus,
+  SignatureStatusQuery,
+  VerificationMethod,
 } from 'src/app/core/api/API';
 import { BasicSearchEngineModule } from 'src/app/shared/basic-search-engine/basic-search-engine.module';
 import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
@@ -23,6 +27,8 @@ import { DenySignatureService } from 'src/app/logic/signature/deny-signature.ser
 import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.service';
 
 import { ViewSignaturesComponent } from './view-signatures.component';
+import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ViewSignaturesComponent', () => {
   let component: ViewSignaturesComponent;
@@ -30,6 +36,7 @@ describe('ViewSignaturesComponent', () => {
   let _getSignaturesService: GetSignaturesService;
   let _approveSignatureService: ApproveSignatureService;
   let _denySignatureService: DenySignatureService;
+  const activatedRoute = new ActivatedRouteStub({ id: 'id' });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -47,6 +54,7 @@ describe('ViewSignaturesComponent', () => {
         LoadingBarModule,
         MatButtonModule,
         SortSignaturesModule,
+        BrowserAnimationsModule,
       ],
       providers: [{ provide: ActivatedRoute, useValue: {} }],
     })
@@ -64,6 +72,10 @@ describe('ViewSignaturesComponent', () => {
             {
               provide: DenySignatureService,
               useClass: MockedDenySignatureService,
+            },
+            {
+              provide: ActivatedRoute,
+              useValue: activatedRoute,
             },
           ],
         },
@@ -84,6 +96,55 @@ describe('ViewSignaturesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should add items received when "success$" (GetSignatureService) successful emit', () => {
+    spyOnProperty(_getSignaturesService, 'success$', 'get').and.returnValue(
+      of({ __typename: 'SignatureConnection', items: _signatures })
+    );
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelectorAll('tr').length
+    ).toEqual(9);
+  });
+
+  it('should call getSignatures function when "success$" (ApproveSignatureService) successful emit', () => {
+    spyOnProperty(_approveSignatureService, 'success$', 'get').and.returnValue(
+      of('SUCCESS')
+    );
+    let spyFunc = spyOn(_getSignaturesService, 'getSignatures');
+    fixture.detectChanges();
+
+    expect(spyFunc).toHaveBeenCalledWith({ petition: 'id', status: null });
+  });
+
+  it('should call getSignatures function when "success$" (DenySignatureService) successful emit', () => {
+    spyOnProperty(_denySignatureService, 'success$', 'get').and.returnValue(
+      of('SUCCESS')
+    );
+    let spyFunc = spyOn(_getSignaturesService, 'getSignatures');
+    fixture.detectChanges();
+
+    expect(spyFunc).toHaveBeenCalledWith({ petition: 'id', status: null });
+  });
+
+  it('should call getSignatures function when "show more" option is clicked', () => {
+    let spyFunc = spyOn(_getSignaturesService, 'getSignatures');
+    fixture.detectChanges();
+    component.pageNumber();
+
+    expect(spyFunc).toHaveBeenCalledWith({ petition: 'id', status: null });
+  });
+
+  it('should call getSignatures function when some filter is selected (should include filter value)', () => {
+    let spyFunc = spyOn(_getSignaturesService, 'getSignatures');
+    fixture.detectChanges();
+    component.filterStatus(SignatureStatusQuery.APPROVED);
+
+    expect(spyFunc).toHaveBeenCalledWith({
+      petition: 'id',
+      status: SignatureStatusQuery.APPROVED,
+    });
   });
 });
 class MockedGetSignaturesService {
@@ -133,3 +194,37 @@ class MockedDenySignatureService {
 
   denySignature(id: string[]) {}
 }
+const _item: Signature = {
+  __typename: 'Signature',
+  PK: '1',
+  address: '',
+  createdAt: '',
+  isVerified: false,
+  method: VerificationMethod.CALL,
+  name: '',
+  signer: '',
+  status: SignatureStatus.APPROVED,
+  updatedAt: '',
+};
+const _item2: Signature = {
+  __typename: 'Signature',
+  PK: '2',
+  address: '',
+  createdAt: '',
+  isVerified: false,
+  method: VerificationMethod.CALL,
+  name: '',
+  signer: '',
+  status: SignatureStatus.APPROVED,
+  updatedAt: '',
+};
+const _signatures: Signature[] = [
+  _item,
+  _item2,
+  _item2,
+  _item2,
+  _item2,
+  _item2,
+  _item2,
+  _item2,
+];

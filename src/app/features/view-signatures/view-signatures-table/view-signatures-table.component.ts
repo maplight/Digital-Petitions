@@ -14,7 +14,7 @@ import { SignaturesData } from 'src/app/shared/models/signatures/signatures-data
   templateUrl: './view-signatures-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ViewSignaturesTableComponent implements OnInit {
+export class ViewSignaturesTableComponent {
   tableStyle = 'w-full';
   @Input() dataSource: Signature[] = [];
   protected signaturesSelected: Signature[] = [];
@@ -28,9 +28,6 @@ export class ViewSignaturesTableComponent implements OnInit {
     'email',
     'status',
   ];
-  constructor() {}
-
-  ngOnInit(): void {}
 
   event(value: Signature) {
     let pos = this.signaturesSelected.indexOf(value);
