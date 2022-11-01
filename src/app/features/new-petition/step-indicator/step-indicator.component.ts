@@ -5,7 +5,6 @@ import { StepIndicatorService } from 'src/app/logic/petition/step-indicator.serv
 @Component({
   selector: 'dp-step-indicator',
   templateUrl: './step-indicator.component.html',
-  providers: [StepIndicatorService],
 })
 export class StepIndicatorComponent implements OnInit, OnDestroy {
   private basicStyleElement: string =
@@ -39,33 +38,34 @@ export class StepIndicatorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._stepLogic._publicCurrentStep$
-      .pipe(
-        tap((step) => {
-          this.setDefaultStyle();
-          switch (step) {
-            case 'type':
-              this.styleElement1 = this.accentStyleElement;
-              break;
-            case 'issue':
-              this.styleElement1 = this.accentStyleElement;
-              this.styleLine1 = this.accentStyleLine;
-              this.styleElement2 = this.accentStyleElement;
-              break;
-            case 'candidate':
-              this.styleElement1 = this.accentStyleElement;
-              this.styleLine1 = this.accentStyleLine;
-              this.styleElement2 = this.accentStyleElement;
-              break;
-            case 'result':
-              this.styleElement1 = this.accentStyleElement;
-              this.styleLine1 = this.accentStyleLine;
-              this.styleElement2 = this.accentStyleElement;
-              this.styleLine2 = this.accentStyleLine;
-              this.styleElement3 = this.accentStyleElement;
-          }
-        }),
-        takeUntil(this._unsubscribeAll)
-      )
-      .subscribe();
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((step) => {
+        console.log(step);
+
+        switch (step) {
+          case 'type':
+            this.styleElement1 = this.accentStyleElement;
+            this.styleLine1 = this.basicStyleLine;
+            this.styleElement2 = this.basicStyleElement;
+            this.styleLine2 = this.basicStyleLine;
+            this.styleElement3 = this.basicStyleElement;
+            break;
+          case 'issue':
+          case 'candidate':
+            this.styleElement1 = this.accentStyleElement;
+            this.styleLine1 = this.accentStyleLine;
+            this.styleElement2 = this.accentStyleElement;
+            this.styleLine2 = this.basicStyleLine;
+            this.styleElement3 = this.basicStyleElement;
+            break;
+
+          case 'result':
+            this.styleElement1 = this.accentStyleElement;
+            this.styleLine1 = this.accentStyleLine;
+            this.styleElement2 = this.accentStyleElement;
+            this.styleLine2 = this.accentStyleLine;
+            this.styleElement3 = this.accentStyleElement;
+        }
+      });
   }
 }
