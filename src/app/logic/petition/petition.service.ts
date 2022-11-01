@@ -120,7 +120,6 @@ export class PetitionService {
       tap((value) => this._loggingService.log(value)),
       map(({ data }) => ({ result: data?.getVoterRecordMatch })),
       catchError((error) => {
-        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );
@@ -139,7 +138,6 @@ export class PetitionService {
       tap((value) => this._loggingService.log(value)),
       map(({ data }) => ({ result: data?.submitVerificationCode })),
       catchError((error) => {
-        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );
@@ -343,7 +341,6 @@ export class PetitionService {
       }) as Promise<GraphQLResult<GetPetitionsByOwnerQuery>>
     ).pipe(
       map((value) => {
-        console.log(value);
         let petitions: ResponsePetition[] = [];
         let cursor: string | undefined = value.data?.getPetitionsByOwner.token
           ? value.data?.getPetitionsByOwner.token
@@ -378,8 +375,6 @@ export class PetitionService {
       }) as Promise<GraphQLResult<GetPetitionsByTypeQuery>>
     ).pipe(
       map((value) => {
-        console.log(value);
-
         let petitions: ResponsePetition[] = [];
         let cursor: string | undefined = value.data?.getPetitionsByType.token
           ? value.data?.getPetitionsByType.token
@@ -468,7 +463,6 @@ export class PetitionService {
         return { result: { cursor: cursor, items: petitions } };
       }),
       catchError((error) => {
-        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );
@@ -503,7 +497,6 @@ export class PetitionService {
         return { result: { cursor: cursor, items: petitions } };
       }),
       catchError((error) => {
-        console.log(error);
         return of({ error: error.errors?.[0]?.message });
       })
     );
