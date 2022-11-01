@@ -51,9 +51,6 @@ export class AdminService {
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetUsersQuery>>
     ).pipe(
-      tap((value) => {
-        console.log(value);
-      }),
       map(({ data }) => ({ result: data?.getUsers })),
       catchError((error) => of({ error: error?.errors[0]?.message }))
     );
