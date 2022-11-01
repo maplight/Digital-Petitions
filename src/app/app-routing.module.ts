@@ -90,6 +90,13 @@ const routes: Routes = [
           import('./auth/sign-up/sign-up.module').then((m) => m.SignUpModule),
       },
       {
+        path: 'return-code-form',
+        loadChildren: () =>
+          import('./auth/return-code-form/return-code-form.module').then(
+            (m) => m.ReturnCodeFormModule
+          ),
+      },
+      {
         path: 'sign-up/:email',
         loadChildren: () =>
           import('./auth/sign-up-confirm/sign-up-confirm.module').then(

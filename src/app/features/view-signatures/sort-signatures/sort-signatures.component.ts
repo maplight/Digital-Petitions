@@ -10,11 +10,11 @@ export class SortSignaturesComponent implements OnInit {
   @Input() filterName: string = '';
   @Input() elements: {
     name: string;
-    value: 'signer_name' | 'signer_date' | 'address' | 'email' | 'registered';
+    value: 'name' | 'createdAt' | 'address' | 'signer' | 'status';
     active: boolean;
   }[] = [];
   @Output() event: EventEmitter<
-    'signer_name' | 'signer_date' | 'address' | 'email' | 'registered'
+    'name' | 'createdAt' | 'address' | 'signer' | 'status'
   > = new EventEmitter();
   protected cursor: string = this.disabled ? 'cursor-auto' : 'cursor-pointer';
   protected activeStyle: string = `border-solid border border-primary-500  bg-primany-100 font-extrabold text-primary-500 ${this.cursor}`;
@@ -26,7 +26,7 @@ export class SortSignaturesComponent implements OnInit {
 
   protected sendFilter(value: {
     name: string;
-    value: 'signer_name' | 'signer_date' | 'address' | 'email' | 'registered';
+    value: 'name' | 'createdAt' | 'address' | 'signer' | 'status';
     active: boolean;
   }) {
     if (!this.disabled) {
