@@ -1,0 +1,19 @@
+{
+  "data": {
+    "submitSignature": {
+      "__typename": "SignatureVerification",
+      "address": "Adress",
+      "city": "City",
+      "confirmationRequired": true,
+      "error": null,
+      "fullName": "Name",
+      "id": "id",
+      "method": "EMAIL",
+      "methodPayload": [],
+      "state": "AL",
+      "title": "Title example",
+      "token": "token",
+      "zipCode": "5200"
+    }
+  }
+}
