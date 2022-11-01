@@ -13,7 +13,9 @@ export class SideMenuComponent implements OnInit {
 
   protected activatedRoute$!: Observable<string>;
 
-  constructor(private _router: Router, private _accountLogic: AccountService) {
+  constructor(private _router: Router, private _accountLogic: AccountService) {}
+
+  ngOnInit(): void {
     this.items.push({
       icon: 'custom_icons:home',
       route: '/city-staff/home',
@@ -29,9 +31,6 @@ export class SideMenuComponent implements OnInit {
         text: 'Site Admin',
       });
     }
-  }
-
-  ngOnInit(): void {
     this.activatedRoute$ = this._router.events.pipe(
       startWith(null),
       filter((event) => event === null || event instanceof NavigationEnd),
