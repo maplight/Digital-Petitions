@@ -51,9 +51,6 @@ export class AdminService {
         authMode: 'AMAZON_COGNITO_USER_POOLS',
       }) as Promise<GraphQLResult<GetUsersQuery>>
     ).pipe(
-      tap((value) => {
-        console.log(value);
-      }),
       map(({ data }) => ({ result: data?.getUsers })),
       catchError((error) => of({ error: error?.errors[0]?.message }))
     );
@@ -151,11 +148,7 @@ export class AdminService {
       }) as Promise<GraphQLResult<SiteConfigurationQuery>>
     ).pipe(
       map(({ data }) => ({ result: data?.siteConfiguration })),
-      catchError(
-        (error) => (
-          console.log(error), of({ error: error?.errors[0]?.message })
-        )
-      )
+      catchError((error) => of({ error: error?.[0]?.message }))
     );
   }
 }
