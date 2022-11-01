@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'dp-cualified-box',
-  templateUrl: './cualified-box.component.html',
+  templateUrl: './qualified-box.component.html',
 })
-export class CualifiedBoxComponent {
+export class QualifiedBoxComponent {
   @Input() showDownloadPacket: boolean = false;
 }
