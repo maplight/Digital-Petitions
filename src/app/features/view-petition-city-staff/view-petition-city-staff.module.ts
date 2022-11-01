@@ -9,7 +9,7 @@ import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module'
 import { RouterModule } from '@angular/router';
 import { ViewPetitionCityStaffRoutingModule } from './view-petition-city-staff-routing.module';
 import { NewBoxModule } from './new-box/new-box.module';
-import { CualifiedBoxModule } from './cualified-box/cualified-box.module';
+import { CualifiedBoxModule } from './qualified-box/qualified-box.module';
 import { ApproveDialogModule } from './approve-dialog/approve-dialog.module';
 import { DenyAlertModule } from './deny-alert/deny-alert.module';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';

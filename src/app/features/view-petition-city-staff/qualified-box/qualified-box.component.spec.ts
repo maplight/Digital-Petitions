@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { CualifiedBoxComponent } from './cualified-box.component';
+import { QualifiedBoxComponent } from './qualified-box.component';
 
-describe('CualifiedBoxComponent', () => {
-  let component: CualifiedBoxComponent;
-  let fixture: ComponentFixture<CualifiedBoxComponent>;
+describe('QualifiedBoxComponent', () => {
+  let component: QualifiedBoxComponent;
+  let fixture: ComponentFixture<QualifiedBoxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CualifiedBoxComponent],
+      declarations: [QualifiedBoxComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CualifiedBoxComponent);
+    fixture = TestBed.createComponent(QualifiedBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

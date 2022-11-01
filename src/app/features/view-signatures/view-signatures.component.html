@@ -39,8 +39,17 @@
         *ngIf="signaturesSelected.length > 0"
         class="flex flex-row gap-[10px] w-full justify-center"
       >
-        <button type="button" mat-flat-button color="primary">Approve</button>
-        <button type="button" mat-button color="primary">Deny</button>
+        <button
+          type="button"
+          mat-flat-button
+          color="primary"
+          (click)="approve()"
+        >
+          Approve
+        </button>
+        <button type="button" mat-button color="primary" (click)="deny()">
+          Deny
+        </button>
       </div>
     </div>
 
