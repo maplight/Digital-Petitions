@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CualifiedBoxComponent } from './cualified-box.component';
+import { QualifiedBoxComponent } from './qualified-box.component';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [CualifiedBoxComponent],
+  declarations: [QualifiedBoxComponent],
   imports: [CommonModule, BasicCardModule, MatButtonModule, RouterModule],
-  exports: [CualifiedBoxComponent],
+  exports: [QualifiedBoxComponent],
 })
 export class CualifiedBoxModule {}
