@@ -39,23 +39,13 @@
         *ngIf="signaturesSelected.length > 0"
         class="flex flex-row gap-[10px] w-full justify-center"
       >
-        <button
-          type="button"
-          mat-flat-button
-          color="primary"
-          (click)="approve()"
-        >
-          Approve
-        </button>
-        <button type="button" mat-button color="primary" (click)="deny()">
-          Deny
-        </button>
+        <button type="button" mat-flat-button color="primary">Approve</button>
+        <button type="button" mat-button color="primary">Deny</button>
       </div>
     </div>
 
     <div class="flex flex-col md:flex-row gap-[10px] max-w-[439px] w-full">
       <dp-basic-search-engine
-        (event)="search($event)"
         [disabled]="disabledFilter"
         class="w-full min-w-[100px]"
       ></dp-basic-search-engine>
