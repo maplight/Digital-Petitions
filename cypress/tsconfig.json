@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["**/*.ts", "utils/graphql-test-utils.js"],
+  "compilerOptions": {
+    "sourceMap": false,
+    "types": ["cypress"]
+  }
+}

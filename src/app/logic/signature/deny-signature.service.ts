@@ -9,6 +9,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { Signature, TargetSignatureInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { SignatureService } from './signature.service';
@@ -16,10 +17,10 @@ import { SignatureService } from './signature.service';
 @Injectable()
 export class DenySignatureService {
   public error$: Observable<string | undefined>;
-  public success$: Observable<string | undefined>;
+  public success$: Observable<Signature | undefined>;
   public loading$: Observable<boolean>;
-  public result$: Observable<Result<string>>;
-  private submit$: Subject<string[]> = new Subject();
+  public result$: Observable<Result<Signature>>;
+  private submit$: Subject<TargetSignatureInput> = new Subject();
 
   constructor(
     private _signatureService: SignatureService,
@@ -50,11 +51,11 @@ export class DenySignatureService {
     this.loading$ = merge(
       this.submit$.pipe(
         map((v) => true),
-        tap(() => console.log('start'))
+        tap(() => this._loggingService.log('start'))
       ),
       end$.pipe(
         map((v) => false),
-        tap(() => console.log('end'))
+        tap(() => this._loggingService.log('end'))
       )
     ).pipe(shareReplay(1));
   }
@@ -66,7 +67,7 @@ export class DenySignatureService {
   @param id: The requested request ID
   */
 
-  denySignature(id: string[]) {
+  denySignature(id: TargetSignatureInput) {
     this.submit$.next(id);
   }
 }
