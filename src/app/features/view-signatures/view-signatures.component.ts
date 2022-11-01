@@ -136,6 +136,18 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     ];
   }
 
+  approve() {
+    this._approveLogic.approveSignature({
+      signatureId: this.signaturesSelected[0].PK,
+    });
+  }
+
+  deny() {
+    this._denyLogic.denySignature({
+      signatureId: this.signaturesSelected[0].PK,
+    });
+  }
+
   filterStatus(value: SignatureStatusQuery | PetitionStatusQuery) {
     this.items = [];
     this._signaturesByPetitionInput.status = value as SignatureStatusQuery;

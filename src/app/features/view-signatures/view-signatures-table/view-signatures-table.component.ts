@@ -30,6 +30,7 @@ export class ViewSignaturesTableComponent {
   ];
 
   event(value: Signature) {
+    /*
     let pos = this.signaturesSelected.indexOf(value);
     if (pos > -1) {
       this.signaturesSelected = this.signaturesSelected.filter(
@@ -38,6 +39,8 @@ export class ViewSignaturesTableComponent {
     } else {
       this.signaturesSelected = this.signaturesSelected.concat(value);
     }
+    */
+    this.signaturesSelected = [value];
     this.emitSignaturesSelected.emit(this.signaturesSelected);
   }
 
