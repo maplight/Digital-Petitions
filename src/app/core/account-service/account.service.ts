@@ -229,13 +229,11 @@ export class AccountService {
     return from(
       Auth.confirmSignUp(data.username.replace(/[^a-zA-Z0-9]/g, ''), data.code)
         .then((_) => {
-
           if (this.userInfo) {
             return Auth.signIn(this.userInfo.email, this.userInfo.password)
               .then((data: any) => {
                 this._pristineCognitoUser = data;
                 this.updateUser();
-
 
                 return { result: 'SUCCESS' };
               })
