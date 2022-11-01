@@ -1,0 +1,12 @@
+{
+  "UserAttributes": [
+    { "Name": "sub", "Value": "fd36f168-747c-4ec5-ab00-ed03e8c60ba1" },
+    { "Name": "address", "Value": "{}" },
+    { "Name": "email_verified", "Value": "true" },
+    { "Name": "given_name", "Value": "Admin" },
+    { "Name": "custom:access_group", "Value": "petitioner" },
+    { "Name": "family_name", "Value": "MapLight" },
+    { "Name": "email", "Value": "david.rodriguez@ntsprint.com" }
+  ],
+  "Username": "RootUser-Z2v9Rz85rW7m"
+}
