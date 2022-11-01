@@ -99,14 +99,8 @@ describe('EditPetitionCandidateComponent', () => {
       const end$ = merge(this.success$, this.error$);
 
       this.loading$ = merge(
-        this.submit$.pipe(
-          map((_v) => true),
-          tap(() => console.log('start'))
-        ),
-        end$.pipe(
-          map((_v) => false),
-          tap(() => console.log('end'))
-        )
+        this.submit$.pipe(map((_v) => true)),
+        end$.pipe(map((_v) => false))
       ).pipe(shareReplay(1));
     }
     ngOnDestroy(): void {
