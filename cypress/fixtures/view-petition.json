@@ -1,0 +1,26 @@
+{
+  "data": {
+    "getPetition": {
+      "PK": "8ba7cc41-4ae1-4cc4-b735-4848487c0ad9",
+      "owner": "d47aef0a-32c0-47aa-9fd9-9c7a71049ba0",
+      "signatureSummary": {
+        "submitted": 6,
+        "deadline": "2022-09-16T04:00:00.000Z",
+        "required": 1
+      },
+      "status": "ACTIVE",
+      "type": "CANDIDATE",
+      "version": 2,
+      "address": {
+        "address": "123 Main",
+        "city": "Berkeley",
+        "number": "Apt. 1",
+        "state": "CA",
+        "zipCode": "94704"
+      },
+      "name": "James Duncan",
+      "office": "Office-3",
+      "party": "Party-2"
+    }
+  }
+}
