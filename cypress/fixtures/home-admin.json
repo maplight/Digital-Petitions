@@ -1,0 +1,249 @@
+{
+  "data": {
+    "getPetitionsByType": {
+      "items": [
+        {
+          "PK": "4de7f14c-ccf2-48b1-ae28-a097a75001af",
+          "createdAt": "2022-10-14T17:59:15.233Z",
+          "owner": "a081e588-35ba-4a06-b5b4-1dc2389a4bbb",
+          "signatureSummary": {
+            "approved": 1,
+            "deadline": "2022-11-29T04:00:00.000Z",
+            "rejected": 2,
+            "required": 1000,
+            "submitted": 3,
+            "verified": 3
+          },
+          "signatures": { "token": null },
+          "status": "ACTIVE",
+          "type": "ISSUE",
+          "updatedAt": "2022-10-18T13:37:44.247Z",
+          "version": 2,
+          "detail": "A simple matter",
+          "title": "The meaning of life"
+        },
+        {
+          "PK": "91ab2b9e-3c67-435f-b04e-fbb7b7e7aa00",
+          "createdAt": "2022-09-23T18:53:22.665Z",
+          "owner": "a081e588-35ba-4a06-b5b4-1dc2389a4bbb",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": "2022-09-30T04:00:00.000Z",
+            "rejected": 0,
+            "required": 500,
+            "submitted": 0,
+            "verified": 0
+          },
+          "signatures": { "token": null },
+          "status": "ACTIVE",
+          "type": "ISSUE",
+          "updatedAt": "2022-09-23T18:53:46.374Z",
+          "version": 2,
+          "detail": "Test Petition!",
+          "title": "Yet Another"
+        },
+        {
+          "PK": "d3f16b82-2afc-45c7-9826-466965e74c6a",
+          "createdAt": "2022-09-16T20:17:14.978Z",
+          "owner": "e3fe5df4-dc90-4802-a37a-106797e713ea",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": null,
+            "rejected": 0,
+            "required": 0,
+            "submitted": 0,
+            "verified": 0
+          },
+          "signatures": { "token": null },
+          "status": "REJECTED",
+          "type": "CANDIDATE",
+          "updatedAt": "2022-09-16T20:45:23.588Z",
+          "version": 2,
+          "address": {
+            "address": "345 Main",
+            "city": "Berkeley",
+            "number": "",
+            "state": "CA",
+            "zipCode": "94704"
+          },
+          "name": "Bob Barker",
+          "office": "Office-2",
+          "party": "Party-2"
+        },
+        {
+          "PK": "dc8135ee-3b77-4f20-9a29-569dbf2c641f",
+          "createdAt": "2022-09-23T19:36:56.369Z",
+          "owner": "d322dc64-ae75-4f1e-82ff-dbf1513393c1",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": null,
+            "rejected": 0,
+            "required": 0,
+            "submitted": 0,
+            "verified": 0
+          },
+          "signatures": { "token": null },
+          "status": "REJECTED",
+          "type": "ISSUE",
+          "updatedAt": "2022-09-23T19:46:38.088Z",
+          "version": 3,
+          "detail": "Example Mod",
+          "title": "Title"
+        },
+        {
+          "PK": "d74f81be-29a6-4ee5-84e0-31e2b3d9c560",
+          "createdAt": "2022-10-26T15:53:17.207Z",
+          "owner": "e01bc396-43a8-4e76-9780-ebbf7d2e0c29",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": "2022-10-31T04:00:00.000Z",
+            "rejected": 0,
+            "required": 20,
+            "submitted": 0,
+            "verified": 0
+          },
+          "signatures": { "token": null },
+          "status": "ACTIVE",
+          "type": "CANDIDATE",
+          "updatedAt": "2022-10-26T16:49:08.564Z",
+          "version": 2,
+          "address": {
+            "address": "ane",
+            "city": "Anaheim",
+            "number": "",
+            "state": "CA",
+            "zipCode": "92806"
+          },
+          "name": "Alejandro Affleck",
+          "office": "Office-3",
+          "party": "Party-3"
+        },
+        {
+          "PK": "18f5b5ec-bcac-44cb-9462-b24eece32c67",
+          "createdAt": "2022-08-30T17:31:39.946Z",
+          "owner": "85eb9405-af0a-477d-8c49-71dfd140abd6",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": null,
+            "rejected": 0,
+            "required": 0,
+            "submitted": 0,
+            "verified": 0
+          },
+          "signatures": { "token": null },
+          "status": "REJECTED",
+          "type": "CANDIDATE",
+          "updatedAt": "2022-09-16T19:48:12.217Z",
+          "version": 4,
+          "address": {
+            "address": "address candidate 222",
+            "city": "city 222",
+            "number": "suite 222",
+            "state": "CO",
+            "zipCode": "zip code 222"
+          },
+          "name": "Candidate 2 name ",
+          "office": "Office-2",
+          "party": "Party-2"
+        },
+        {
+          "PK": "9d5881d1-7c01-4ef8-9b94-392926666f0a",
+          "createdAt": "2022-09-27T00:46:14.906Z",
+          "owner": "85eb9405-af0a-477d-8c49-71dfd140abd6",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": null,
+            "rejected": 0,
+            "required": 0,
+            "submitted": 0,
+            "verified": 0
+          },
+          "signatures": { "token": null },
+          "status": "REJECTED",
+          "type": "ISSUE",
+          "updatedAt": "2022-09-27T01:17:57.165Z",
+          "version": 2,
+          "detail": "pedro issue",
+          "title": "pedro issue"
+        },
+        {
+          "PK": "77d382c7-447d-4f08-a937-577fff9ab9f3",
+          "createdAt": "2022-08-26T14:21:34.052Z",
+          "owner": "272faa39-af54-4fcb-b238-bc35084545cc",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": null,
+            "rejected": 0,
+            "required": 0,
+            "submitted": 2,
+            "verified": 2
+          },
+          "signatures": { "token": null },
+          "status": "ACTIVE",
+          "type": "ISSUE",
+          "updatedAt": "2022-09-02T13:53:30.300Z",
+          "version": 2,
+          "detail": "World",
+          "title": "Hello"
+        },
+        {
+          "PK": "8ba7cc41-4ae1-4cc4-b735-4848487c0ad9",
+          "createdAt": "2022-09-14T19:59:29.976Z",
+          "owner": "d47aef0a-32c0-47aa-9fd9-9c7a71049ba0",
+          "signatureSummary": {
+            "approved": 2,
+            "deadline": "2022-09-16T04:00:00.000Z",
+            "rejected": 0,
+            "required": 1,
+            "submitted": 6,
+            "verified": 2
+          },
+          "signatures": { "token": null },
+          "status": "ACTIVE",
+          "type": "CANDIDATE",
+          "updatedAt": "2022-09-16T20:05:48.647Z",
+          "version": 2,
+          "address": {
+            "address": "123 Main",
+            "city": "Berkeley",
+            "number": "Apt. 1",
+            "state": "CA",
+            "zipCode": "94704"
+          },
+          "name": "James Duncan",
+          "office": "Office-3",
+          "party": "Party-2"
+        },
+        {
+          "PK": "28c8f2be-8dfc-47b4-a843-b6f0c2d73fb0",
+          "createdAt": "2022-08-27T02:10:49.325Z",
+          "owner": "2ba835ba-49c1-44b8-a896-fff0fc82f39b",
+          "signatureSummary": {
+            "approved": 0,
+            "deadline": null,
+            "rejected": 0,
+            "required": 0,
+            "submitted": 0,
+            "verified": 0
+          },
+          "signatures": { "token": null },
+          "status": "REJECTED",
+          "type": "CANDIDATE",
+          "updatedAt": "2022-09-16T19:49:21.072Z",
+          "version": 3,
+          "address": {
+            "address": "Betancourt 14, El Santo",
+            "city": "Encrucijada",
+            "number": "1",
+            "state": "AL",
+            "zipCode": "52400"
+          },
+          "name": "Denismay Concepcion Rosa",
+          "office": "Office-4",
+          "party": "Party-1"
+        }
+      ],
+      "token": "eyJ2ZXJzaW9uIjoyLCJ0b2tlbiI6IkFRSUNBSGg5OUIvN3BjWU41eE96NDZJMW5GeGM4WUNGeG1acmFOMUpqajZLWkFDQ25BRjg2eVRwS3NyTVdYNzZ6NVZlckxPeUFBQUNEekNDQWdzR0NTcUdTSWIzRFFFSEJxQ0NBZnd3Z2dINEFnRUFNSUlCOFFZSktvWklodmNOQVFjQk1CNEdDV0NHU0FGbEF3UUJMakFSQkF5SkxoSjllTThTL0RpanBqRUNBUkNBZ2dIQ2wvSGIrVEVQbThURWhTZVpxY3V1cHBRNllHRnJWY0EzWmhZbmdrMS9HaGVzWHduUldSck15MkNTcFI5RnRlWWtuSTEzY1NrMHh1VHBxTVVKdWNHMHQ3Q01QOHp0ZUx0c1VLUXhjWE90WWtEc3p0eDluZ095a2JoMWdZY0Vvd2dCR2FRNHIzZXlDT1Y0VjBUMlRobDRYbHJ5bWEzWUpNb3NycjNNRk9jWTRHR3FNbGxOYkVJejUxRUE2amZnK1pzSXA5WlBhY2tpcWNWT2lwbUh3YWN4Y3EybVluUU0vVFhhU0JuUWVxMXQzcU4rY3hjWi9lN3hMZHhYblV3MlczZC92bGZhTTVNbys2eVlQMzJXYmpZUFdWc2hGL3BJQnFlT09jNC9Dd3pzc2oyWHdDV3haeTMxZTlta01OOFFGaTlpY0VDamNNNUZUYVhVcTlVQUVNdmUyTi9uS01oYk5uT2x0b3NpOEFHMFdTQy9IaS9lakFkYk9ObmNNMWhVNXNpYStOYTdQdVg5czJKZnllQW43emJYbW5idm00REhoaHlCTUhXVEszWlVnNE9JZE9SZUtraHdDTzRGM0p5dmxhK0N4eGt0WUJPeEd1N3VuYk8xNjBYUERiRXdROGM3MllWSG85Rkl4MFQ2SGN3Vlh5QS82WjdxcnEvSHdzZFpDeWpvbEFRRDRGcFpMSldHQnBaVEhxRlJPZFR0Zi9aOGhORW1GZ1BoU0duWXVHS090eTZiNmJDQVllc2pkNDBtWEVyaDh3R2twU1cxdFVmbmtSU3dmYjFZczFpVyJ9"
+    }
+  }
+}

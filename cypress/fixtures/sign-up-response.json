@@ -1,0 +1,9 @@
+{
+  "CodeDeliveryDetails": {
+    "AttributeName": "email",
+    "DeliveryMedium": "EMAIL",
+    "Destination": "e***@t***"
+  },
+  "UserConfirmed": false,
+  "UserSub": "5cf658be-9850-4b02-bdd1-f09199059499"
+}
