@@ -64,6 +64,8 @@ type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
 type Mutation {
   approvePetition(data: ApprovePetitionInput!): Petition
     @aws_cognito_user_pools(cognito_groups: ["CityStaffGroup", "AdminGroup"])
+  approveSignature(data: TargetSignatureInput!): Signature
+    @aws_cognito_user_pools(cognito_groups: ["CityStaffGroup", "AdminGroup"])
   createStaffUser(data: StaffUserInput!): User!
     @aws_cognito_user_pools(cognito_groups: ["AdminGroup"])
   deleteStaffUser(username: ID!): Boolean!
@@ -74,6 +76,9 @@ type Mutation {
     @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
   rejectPetition(data: TargetPetitionInput!): Petition
     @aws_cognito_user_pools(cognito_groups: ["CityStaffGroup", "AdminGroup"])
+  rejectSignature(data: TargetSignatureInput!): Signature
+    @aws_cognito_user_pools(cognito_groups: ["CityStaffGroup", "AdminGroup"])
+  requestUserVerificationCodeResend(email: String!): Boolean! @aws_iam
   submitCandidatePetition(data: CandidatePetitionInput!): CandidatePetition!
     @aws_cognito_user_pools(cognito_groups: ["PetitionerGroup"])
   submitIssuePetition(data: IssuePetitionInput!): IssuePetition!
@@ -121,12 +126,16 @@ type ResourceConnection @aws_cognito_user_pools @aws_iam {
 }
 
 type Signature @aws_cognito_user_pools {
+  PK: ID!
   address: String!
   createdAt: AWSDateTime!
+  isVerified: Boolean!
+  method: VerificationMethod!
   name: String!
   signer: ID!
   status: SignatureStatus!
   updatedAt: AWSDateTime!
+  verifiedAt: AWSDateTime
 }
 
 type SignatureConnection @aws_cognito_user_pools {
@@ -258,8 +267,13 @@ enum SignatureStatus {
 enum SignatureStatusQuery {
   ANY
   APPROVED
+  APPROVED_AND_VERIFIED
+  APPROVED_VERIFICATION_PENDING
   REJECTED
+  REJECTED_AND_VERIFIED
+  REJECTED_VERIFICATION_PENDING
   SUBMITTED
+  VERIFICATION_PENDING
   VERIFIED
 }
 
@@ -397,6 +411,10 @@ input StaffUserInput {
 input TargetPetitionInput {
   PK: ID!
   expectedVersion: Int!
+}
+
+input TargetSignatureInput {
+  signatureId: ID!
 }
 
 input UpdateUserAccessInput {

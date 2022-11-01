@@ -23,4 +23,11 @@ describe('StepIndicatorService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('"_publicCurrentStep$" should emit the received value when "setCurrentStep" is called', () => {
+    service._publicCurrentStep$.subscribe((data) => {
+      expect(data).toEqual('type');
+    });
+    service.setCurrentStep('type');
+  });
 });
