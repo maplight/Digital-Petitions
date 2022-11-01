@@ -21,7 +21,7 @@ import { PetitionViewModule } from 'src/app/shared/petition-view/petition-view.m
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { ApproveDialogModule } from './approve-dialog/approve-dialog.module';
-import { CualifiedBoxModule } from './cualified-box/cualified-box.module';
+import { CualifiedBoxModule } from './qualified-box/qualified-box.module';
 import { CurrentResultCityStaffModule } from './current-result-city-staff/current-result-city-staff.module';
 import { DenyAlertModule } from './deny-alert/deny-alert.module';
 import { NewBoxModule } from './new-box/new-box.module';
