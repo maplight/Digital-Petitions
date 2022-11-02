@@ -1,0 +1,10 @@
+{
+  "data": {
+    "editIssuePetition": {
+      "PK": "b1adc5c9-1e20-4d09-a63d-112d49b69365",
+      "detail": "Example text",
+      "title": "Example titile edited",
+      "version": 3
+    }
+  }
+}

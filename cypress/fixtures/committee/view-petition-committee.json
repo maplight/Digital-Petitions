@@ -1,0 +1,14 @@
+{
+  "data": {
+    "getPetition": {
+      "PK": "b1adc5c9-1e20-4d09-a63d-112d49b69365",
+      "owner": "d322dc64-ae75-4f1e-82ff-dbf1513393c1",
+      "signatureSummary": { "submitted": 0, "deadline": null, "required": 0 },
+      "status": "NEW",
+      "type": "ISSUE",
+      "version": 2,
+      "detail": "Example text",
+      "title": "Example titile edited"
+    }
+  }
+}
