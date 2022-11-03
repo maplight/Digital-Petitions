@@ -20,7 +20,7 @@ describe('login process', () => {
       (req: any) => {
         console.log(req.body.query);
         if (req.body.query.search('query GetPetitionsByType') == 0) {
-          req.reply({ fixture: 'home-admin.json' });
+          req.reply({ fixture: 'staff/home-admin.json' });
         }
       }
     );
