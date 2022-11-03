@@ -1,0 +1,12 @@
+{
+  "data": {
+    "submitIssuePetition": {
+      "PK": "b89b66d8-7373-45ba-b29a-a90e70d509d1",
+      "detail": "text",
+      "title": "title",
+      "status": "NEW",
+      "type": "ISSUE",
+      "version": 1
+    }
+  }
+}
