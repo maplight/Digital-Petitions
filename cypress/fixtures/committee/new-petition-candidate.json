@@ -1,0 +1,20 @@
+{
+  "data": {
+    "submitCandidatePetition": {
+      "PK": "3cd3c412-8556-4807-95cb-9cf6cbec641e",
+      "address": {
+        "address": "address",
+        "city": "city",
+        "number": "",
+        "state": "AR",
+        "zipCode": "52400"
+      },
+      "name": "may",
+      "office": "Office-3",
+      "party": "Party-2",
+      "status": "NEW",
+      "type": "CANDIDATE",
+      "version": 1
+    }
+  }
+}
