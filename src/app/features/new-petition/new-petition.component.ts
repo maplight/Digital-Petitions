@@ -18,30 +18,32 @@ import { ResponsePetition } from 'src/app/shared/models/petition/response-petiti
 @Component({
   selector: 'dp-new-petition',
   templateUrl: './new-petition.component.html',
-  providers: [StepIndicatorService],
 })
 export class NewPetitionComponent implements OnInit {
   protected dataResponse: ResponsePetition = {};
 
-  protected currentStep: 'type' | 'issue' | 'candidate' | 'result' = 'type';
-
   protected dataResponseIssue!: IssuePetitionInput;
   protected dataResponseCandidate!: CandidatePetitionInput;
-  protected currentStep$: Observable<'type' | 'issue' | 'candidate' | 'result'>;
+  protected currentStep$!: Observable<
+    'type' | 'issue' | 'candidate' | 'result'
+  >;
   constructor(
     private _stepLogic: StepIndicatorService,
     private _router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.currentStep$ = this._stepLogic._publicCurrentStep$;
     this._stepLogic.setCurrentStep('type');
   }
 
-  ngOnInit(): void {}
-
   cancel(step?: 'type' | 'issue' | 'candidate' | 'result') {
-    step
-      ? this._stepLogic.setCurrentStep(step)
-      : this._router.navigate(['/committee/home']);
+    if (step) {
+      this._stepLogic.setCurrentStep(step);
+    } else {
+      this._stepLogic.setCurrentStep('type');
+      this._router.navigate(['/committee/home']);
+    }
   }
 
   submitType(data: string) {

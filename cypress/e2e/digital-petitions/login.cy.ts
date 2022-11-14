@@ -217,7 +217,7 @@ describe('login process', () => {
       (req: any) => {
         console.log(req.body.query);
         if (req.body.query.search('query GetPetitionsByOwner') == 0) {
-          req.reply({ fixture: 'home-committee.json' });
+          req.reply({ fixture: 'committee/home-committee.json' });
         }
       }
     );
