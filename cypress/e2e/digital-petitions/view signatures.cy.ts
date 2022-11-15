@@ -83,4 +83,16 @@ describe('empty spec', () => {
     cy.get('mat-checkbox[id="mat-checkbox-2"]', { timeout: 10000 }).click();
     cy.get('button').should('have.length', '5');
   });
+
+  it('should show loading bar when the "Approve" button is clicked', () => {
+    cy.get('mat-checkbox[id="mat-checkbox-2"]', { timeout: 10000 }).click();
+    cy.get('button').contains('Approve').trigger('click');
+    cy.get('dp-loading-bar').should('have.length', '1');
+  });
+
+  it('should show loading bar when the "Deny" button is clicked', () => {
+    cy.get('mat-checkbox[id="mat-checkbox-2"]', { timeout: 10000 }).click();
+    cy.get('button').contains('Deny').trigger('click');
+    cy.get('dp-loading-bar').should('have.length', '1');
+  });
 });
