@@ -1,0 +1,19 @@
+{
+  "data": {
+    "getPetition": {
+      "PK": "4de7f14c-ccf2-48b1-ae28-a097a75001af",
+      "owner": "a081e588-35ba-4a06-b5b4-1dc2389a4bbb",
+      "signatureSummary": {
+        "approved": 1,
+        "deadline": "2022-11-29T04:00:00.000Z",
+        "required": 1000,
+        "submitted": 3
+      },
+      "status": "NEW",
+      "type": "ISSUE",
+      "version": 2,
+      "detail": "A simple matter",
+      "title": "The meaning of life"
+    }
+  }
+}
