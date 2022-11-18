@@ -21,7 +21,7 @@ describe('SortSignaturesComponent', () => {
   });
 
   it('should show one mat-option element for each item received', () => {
-    component.elements = [{ active: true, name: 'email', value: 'email' }];
+    component.elements = [{ active: true, name: 'name', value: 'name' }];
 
     fixture.detectChanges();
     expect(
@@ -30,7 +30,7 @@ describe('SortSignaturesComponent', () => {
   });
 
   it('should show the name of filter recived from container component', () => {
-    component.elements = [{ active: true, name: 'email', value: 'email' }];
+    component.elements = [{ active: true, name: 'name', value: 'name' }];
     component.filterName = 'Filter Example';
 
     fixture.detectChanges();
@@ -41,9 +41,9 @@ describe('SortSignaturesComponent', () => {
 
   it('should emit a value selected in select element when it is clicked', () => {
     component.event.asObservable().subscribe((data) => {
-      expect(data).toEqual('email');
+      expect(data).toEqual('name');
     });
-    component.elements = [{ active: true, name: 'email', value: 'email' }];
+    component.elements = [{ active: true, name: 'name', value: 'name' }];
     component.filterName = 'Filter Example';
 
     fixture.detectChanges();

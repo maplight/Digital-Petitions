@@ -110,7 +110,7 @@ describe('ViewSignaturesComponent', () => {
 
   it('should call getSignatures function when "success$" (ApproveSignatureService) successful emit', () => {
     spyOnProperty(_approveSignatureService, 'success$', 'get').and.returnValue(
-      of('SUCCESS')
+      of(_item)
     );
     let spyFunc = spyOn(_getSignaturesService, 'getSignatures');
     fixture.detectChanges();
@@ -120,7 +120,7 @@ describe('ViewSignaturesComponent', () => {
 
   it('should call getSignatures function when "success$" (DenySignatureService) successful emit', () => {
     spyOnProperty(_denySignatureService, 'success$', 'get').and.returnValue(
-      of('SUCCESS')
+      of(_item)
     );
     let spyFunc = spyOn(_getSignaturesService, 'getSignatures');
     fixture.detectChanges();

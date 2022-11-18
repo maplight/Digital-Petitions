@@ -1,6 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { API } from 'aws-amplify';
-import { GetSignaturesByPetitionQuery } from 'src/app/core/api/API';
+import {
+  ApproveSignatureMutation,
+  GetSignaturesByPetitionQuery,
+  RejectSignatureMutation,
+  Signature,
+  SignatureStatus,
+  VerificationMethod,
+} from 'src/app/core/api/API';
 
 import { SignatureService } from './signature.service';
 
@@ -48,16 +55,26 @@ describe('SignatureService', () => {
 
   //approveSignature
   it('approveSignature should return a string value when the promise it succesful resolve', (done) => {
-    service.approveSignature([]).subscribe((data) => {
-      expect(data.result).toEqual('0');
+    API.graphql = jasmine.createSpy().and.returnValue(
+      new Promise((resolve, reject) => {
+        resolve({ data: approve });
+      })
+    );
+    service.approveSignature({ signatureId: '0' }).subscribe((data) => {
+      expect(data.result).toEqual(_signature);
       done();
     });
   });
 
   //denySignature
   it('denySignature should return a string value when the promise it succesful resolve', (done) => {
-    service.denySignature([]).subscribe((data) => {
-      expect(data.result).toEqual('0');
+    API.graphql = jasmine.createSpy().and.returnValue(
+      new Promise((resolve, reject) => {
+        resolve({ data: deny });
+      })
+    );
+    service.denySignature({ signatureId: '0' }).subscribe((data) => {
+      expect(data.result).toEqual(_signature);
       done();
     });
   });
@@ -69,4 +86,23 @@ const _getSignaturesByPetitionQuery: GetSignaturesByPetitionQuery = {
     items: [],
     token: undefined,
   },
+};
+const _signature: Signature = {
+  __typename: 'Signature',
+  PK: '',
+  address: '',
+  createdAt: '',
+  isVerified: false,
+  method: VerificationMethod.CALL,
+  name: '',
+  signer: '',
+  status: SignatureStatus.APPROVED,
+  updatedAt: '',
+};
+const approve: ApproveSignatureMutation = {
+  approveSignature: _signature,
+};
+
+const deny: RejectSignatureMutation = {
+  rejectSignature: _signature,
 };

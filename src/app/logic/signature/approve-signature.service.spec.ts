@@ -7,6 +7,11 @@ import { PetitionService } from '../petition/petition.service';
 
 import { ApproveSignatureService } from './approve-signature.service';
 import { SignatureService } from './signature.service';
+import {
+  Signature,
+  SignatureStatus,
+  VerificationMethod,
+} from 'src/app/core/api/API';
 
 describe('ApproveSignatureService', () => {
   let service: ApproveSignatureService;
@@ -34,29 +39,29 @@ describe('ApproveSignatureService', () => {
   it('"result$" should emit a Result<string> value when approveSignature emit a correct value', () => {
     valueServiceSpy.approveSignature.and.returnValue(
       of({
-        result: 'success',
+        result: _signature,
       })
     );
 
     service.result$.subscribe((data) => {
       expect(data).toEqual({
-        result: 'success',
+        result: _signature,
       });
     });
-    service.approveSignature([]);
+    service.approveSignature({ signatureId: '0' });
   });
 
   it('"success$" should emit a <string> value when approveSignature emit a correct value', () => {
     valueServiceSpy.approveSignature.and.returnValue(
       of({
-        result: 'success',
+        result: _signature,
       })
     );
 
     service.success$.subscribe((data) => {
-      expect(data).toEqual('success');
+      expect(data).toEqual(_signature);
     });
-    service.approveSignature([]);
+    service.approveSignature({ signatureId: '0' });
   });
 
   it('"error$" should emit "string" value when approveSignature emit a error value', () => {
@@ -69,7 +74,7 @@ describe('ApproveSignatureService', () => {
     service.error$.subscribe((data) => {
       expect(data).toEqual('some error');
     });
-    service.approveSignature([]);
+    service.approveSignature({ signatureId: '0' });
   });
 
   it('"loading$" should emit a "boolean" value when approveSignature emit any value', () => {
@@ -83,6 +88,18 @@ describe('ApproveSignatureService', () => {
       data ? expect(data).toEqual(true) : expect(data).toEqual(false);
     });
 
-    service.approveSignature([]);
+    service.approveSignature({ signatureId: '0' });
   });
 });
+const _signature: Signature = {
+  __typename: 'Signature',
+  PK: '',
+  address: '',
+  createdAt: '',
+  isVerified: false,
+  method: VerificationMethod.CALL,
+  name: '',
+  signer: '',
+  status: SignatureStatus.APPROVED,
+  updatedAt: '',
+};

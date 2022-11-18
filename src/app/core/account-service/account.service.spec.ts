@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { Auth } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
+import { RequestUserVerificationCodeResendMutation } from '../api/API';
 
 import { AccountService } from './account.service';
 
@@ -293,29 +294,29 @@ describe('AccountService', () => {
   });
 
   //resendSignUp
-  it('resendSignUp function should return a "SUCCESS" string when the promise it successful resolve', (done) => {
+  it('resendSignUp function should return a boolean value when the promise it successful resolve', (done) => {
     service.updateUser = jasmine.createSpy();
-    Auth.resendSignUp = jasmine.createSpy().and.returnValue(
+    API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
-        resolve('');
+        resolve({ data: codeResend });
       })
     );
     service.resendSignUp('').subscribe((data) => {
-      expect(data.result).toEqual('SUCCESS');
+      expect(data.result).toEqual(true);
       done();
     });
   });
 
   it('resendSignUp function should return a error message when the promise it rejected', (done) => {
     service.updateUser = jasmine.createSpy();
-    Auth.resendSignUp = jasmine.createSpy().and.returnValue(
+    API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
-        reject({ message: 'Example Error' });
+        reject({ errors: [{ message: 'example' }] });
       })
     );
 
     service.resendSignUp('').subscribe((data) => {
-      expect(data.error).toEqual('Example Error');
+      expect(data.error).toEqual('example');
       done();
     });
   });
@@ -559,4 +560,8 @@ const user: CognitoUserFacade = {
   },
   challengeName: 'NEW_PASSWORD_REQUIRED',
   username: '',
+};
+
+const codeResend: RequestUserVerificationCodeResendMutation = {
+  requestUserVerificationCodeResend: true,
 };
