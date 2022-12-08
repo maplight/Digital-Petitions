@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Observable, tap } from 'rxjs';
 import { IssuePetition } from 'src/app/core/api/API';
 import { EditPetitionIssueService } from 'src/app/logic/petition/edit-petition-issue.service';

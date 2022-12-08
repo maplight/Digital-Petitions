@@ -2,15 +2,15 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import {
-  MatDialog,
-  MatDialogModule,
-  MatDialogRef,
-  _MatDialogContainerBase,
-} from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTableModule } from '@angular/material/table';
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogModule as MatDialogModule,
+  MatLegacyDialogRef as MatDialogRef,
+  _MatLegacyDialogContainerBase as _MatDialogContainerBase,
+} from '@angular/material/legacy-dialog';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { Observable, of } from 'rxjs';
 import { AccessLevel, UserConnection } from 'src/app/core/api/API';
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';

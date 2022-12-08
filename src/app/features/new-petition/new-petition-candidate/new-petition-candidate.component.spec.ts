@@ -7,11 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSelectModule } from '@angular/material/select';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import {

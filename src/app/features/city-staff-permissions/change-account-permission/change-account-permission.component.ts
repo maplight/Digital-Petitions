@@ -1,10 +1,10 @@
 import { Component, Inject, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogRef as MatDialogRef,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
 import { merge, Observable, Subject, takeUntil } from 'rxjs';
 import { AccessLevel } from 'src/app/core/api/API';
 import { ChangeAccountPermissionService } from 'src/app/logic/admin/change-account-permission.service';
