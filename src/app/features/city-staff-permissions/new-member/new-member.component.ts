@@ -33,7 +33,7 @@ export class NewMemberComponent implements OnInit {
   ) {
     this.formGroup = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
-      permissions: [StaffAccessLevel, [Validators.required]],
+      permissions: [null, [Validators.required]],
     });
   }
 
