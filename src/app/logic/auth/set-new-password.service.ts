@@ -43,7 +43,7 @@ export class SetNewPasswordService implements OnDestroy {
       map((value) => value.result),
       tap((value) => {
         this._loggingService.log(value);
-        this._router.navigate(['/auth/success-change-password']);
+        //this._router.navigate(['/auth/success-change-password']);
       }),
       shareReplay(1)
     );

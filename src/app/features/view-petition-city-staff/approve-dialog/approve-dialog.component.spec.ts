@@ -119,7 +119,7 @@ describe('AproveDialogComponent', () => {
     fixture.detectChanges();
     fixture.debugElement
       .query(By.css('dp-basic-modal'))
-      .triggerEventHandler('event');
+      .triggerEventHandler('sendEvent');
     expect(functionSpy).toHaveBeenCalled();
   });
 

@@ -7,6 +7,11 @@ import { PetitionService } from '../petition/petition.service';
 
 import { DenySignatureService } from './deny-signature.service';
 import { SignatureService } from './signature.service';
+import {
+  Signature,
+  SignatureStatus,
+  VerificationMethod,
+} from 'src/app/core/api/API';
 
 describe('DenySignatureService', () => {
   let service: DenySignatureService;
@@ -30,32 +35,33 @@ describe('DenySignatureService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
   it('"result$" should emit a Result<string> value when denySignature emit a correct value', () => {
     valueServiceSpy.denySignature.and.returnValue(
       of({
-        result: 'success',
+        result: _signature,
       })
     );
 
     service.result$.subscribe((data) => {
       expect(data).toEqual({
-        result: 'success',
+        result: _signature,
       });
     });
-    service.denySignature([]);
+    service.denySignature({ signatureId: '0' });
   });
 
   it('"success$" should emit a <string> value when denySignature emit a correct value', () => {
     valueServiceSpy.denySignature.and.returnValue(
       of({
-        result: 'success',
+        result: _signature,
       })
     );
 
     service.success$.subscribe((data) => {
-      expect(data).toEqual('success');
+      expect(data).toEqual(_signature);
     });
-    service.denySignature([]);
+    service.denySignature({ signatureId: '0' });
   });
 
   it('"error$" should emit "string" value when denySignature emit a error value', () => {
@@ -68,7 +74,7 @@ describe('DenySignatureService', () => {
     service.error$.subscribe((data) => {
       expect(data).toEqual('some error');
     });
-    service.denySignature([]);
+    service.denySignature({ signatureId: '0' });
   });
 
   it('"loading$" should emit a "boolean" value when denySignature emit any value', () => {
@@ -82,6 +88,19 @@ describe('DenySignatureService', () => {
       data ? expect(data).toEqual(true) : expect(data).toEqual(false);
     });
 
-    service.denySignature([]);
+    service.denySignature({ signatureId: '0' });
   });
 });
+
+const _signature: Signature = {
+  __typename: 'Signature',
+  PK: '',
+  address: '',
+  createdAt: '',
+  isVerified: false,
+  method: VerificationMethod.CALL,
+  name: '',
+  signer: '',
+  status: SignatureStatus.APPROVED,
+  updatedAt: '',
+};
