@@ -33,13 +33,13 @@ describe('SignUpResendCodeService', () => {
   it('"result$" should emit a Result<string> value when resendSignUp emit a correct value', () => {
     valueServiceSpy.resendSignUp.and.returnValue(
       of({
-        result: 'success',
+        result: true,
       })
     );
 
     service.result$.subscribe((data) => {
       expect(data).toEqual({
-        result: 'success',
+        result: true,
       });
     });
     service.resendCode('');
@@ -48,7 +48,7 @@ describe('SignUpResendCodeService', () => {
   it('"success$" should emit a <string> value when resendSignUp emit a correct value', () => {
     valueServiceSpy.resendSignUp.and.returnValue(
       of({
-        result: 'success',
+        result: true,
       })
     );
 

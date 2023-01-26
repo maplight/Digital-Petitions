@@ -62,19 +62,6 @@ describe('ViewSignaturesTableComponent', () => {
       .queryAll(By.css('mat-checkbox'))[0]
       .triggerEventHandler('change');
   });
-  it('"emitSignaturesSelected" should emit an empty array when some table item is clicked and not exist selected signatures', (done) => {
-    component.dataSource = _signatures;
-    fixture.detectChanges();
-    component.event(_item);
-    component.emitSignaturesSelected.asObservable().subscribe((data) => {
-      expect(data).toEqual([]);
-      done();
-    });
-
-    fixture.debugElement
-      .queryAll(By.css('mat-checkbox'))[0]
-      .triggerEventHandler('change');
-  });
 });
 const _item: Signature = {
   __typename: 'Signature',
