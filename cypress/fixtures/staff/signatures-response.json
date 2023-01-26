@@ -1,0 +1,81 @@
+{
+  "data": {
+    "getSignaturesByPetition": {
+      "items": [
+        {
+          "PK": "f1289884-e51b-4474-94c1-576f1b399cf5",
+          "address": "3Redacted",
+          "createdAt": "4023-10-18T16:52:47.705Z",
+          "isVerified": true,
+          "method": "STATE_ID",
+          "name": "3Mary Smith",
+          "signer": "3msmith4507-4609-Z",
+          "status": "REJECTED",
+          "updatedAt": "2022-10-18T16:52:47.705Z",
+          "verifiedAt": "2022-10-18T16:52:47.705Z"
+        },
+        {
+          "PK": "65761e45-ddec-4947-a4ee-e68ac7751129",
+          "address": "4X",
+          "createdAt": "2024-10-18T15:07:40.658Z",
+          "isVerified": true,
+          "method": "STATE_ID",
+          "name": "4Alejandro Affleck",
+          "signer": "4aaffleck6502-8479-A",
+          "status": "APPROVED",
+          "updatedAt": "2022-10-18T15:07:40.658Z",
+          "verifiedAt": "2022-10-18T15:07:40.658Z"
+        },
+        {
+          "PK": "f720ea87-ee80-4590-a545-7c5f469af930",
+          "address": "5Redacted",
+          "createdAt": "2025-10-18T13:43:51.454Z",
+          "isVerified": true,
+          "method": "EMAIL",
+          "name": "5Lynn Smith",
+          "signer": "5lsmith1111-7219-C",
+          "status": "REJECTED",
+          "updatedAt": "2022-10-18T13:43:51.454Z",
+          "verifiedAt": "3022-10-18T15:20:03.444Z"
+        },
+        {
+          "PK": "65761e45-ddec-4947-a4ee-e68ac7751129",
+          "address": "1X",
+          "createdAt": "2021-10-18T15:07:40.658Z",
+          "isVerified": true,
+          "method": "STATE_ID",
+          "name": "6Alejandro Affleck",
+          "signer": "1aaffleck6502-8479-A",
+          "status": "APPROVED",
+          "updatedAt": "2022-10-18T15:07:40.658Z",
+          "verifiedAt": "2022-10-18T15:07:40.658Z"
+        },
+        {
+          "PK": "f720ea87-ee80-4590-a545-7c5f469af930",
+          "address": "2Redacted",
+          "createdAt": "2022-10-18T13:43:51.454Z",
+          "isVerified": true,
+          "method": "EMAIL",
+          "name": "2Lynn Smith",
+          "signer": "6lsmith1111-7219-C",
+          "status": "REJECTED",
+          "updatedAt": "2022-10-18T13:43:51.454Z",
+          "verifiedAt": "2022-10-18T15:20:03.444Z"
+        },
+        {
+          "PK": "f1289884-e51b-4474-94c1-576f1b399cf5",
+          "address": "6Redacted",
+          "createdAt": "2026-10-18T16:52:47.705Z",
+          "isVerified": true,
+          "method": "STATE_ID",
+          "name": "1Mary Smith",
+          "signer": "2msmith4507-4609-Z",
+          "status": "REJECTED",
+          "updatedAt": "2022-10-18T16:52:47.705Z",
+          "verifiedAt": "2022-10-18T16:52:47.705Z"
+        }
+      ],
+      "token": "null"
+    }
+  }
+}
