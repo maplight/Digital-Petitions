@@ -148,7 +148,7 @@ export class AdminService {
       }) as Promise<GraphQLResult<SiteConfigurationQuery>>
     ).pipe(
       map(({ data }) => ({ result: data?.siteConfiguration })),
-      catchError((error) => of({ error: error?.[0]?.message }))
+      catchError((error) => of({ error: error?.errors[0]?.message }))
     );
   }
 }

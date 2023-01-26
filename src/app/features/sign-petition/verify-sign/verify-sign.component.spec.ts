@@ -9,12 +9,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
 import {
   SignatureVerification,
   SignatureVerificationInput,
   VerificationMethod,
 } from 'src/app/core/api/API';
+import { LayoutComponent } from 'src/app/core/layout/layout.component';
+import { AnonimousGuard } from 'src/app/guards/anonimous.guard';
 import { SignPetitionService } from 'src/app/logic/petition/sign-petition.service';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
@@ -44,9 +47,18 @@ describe('VerifySignComponent', () => {
         MatNativeDateModule,
         ReturnLinkModule,
         MatProgressBarModule,
-        RouterModule,
         LoadingBarModule,
         ErrorMsgModule,
+        RouterTestingModule.withRoutes([
+          {
+            path: 'petition/result-confirm-code/:title',
+            component: VerifySignComponent,
+          },
+          {
+            path: 'petition/confirm-code',
+            component: VerifySignComponent,
+          },
+        ]),
       ],
       providers: [
         {
@@ -266,13 +278,14 @@ class MockedSignPetitionService {
       __typename: 'SignatureVerification',
       address: '',
       city: '',
-      confirmationRequired: false,
+      confirmationRequired: true,
       fullName: '',
       method: VerificationMethod.EMAIL,
       methodPayload: [],
       state: '',
       token: '',
       zipCode: '',
+      title: 'Example',
     });
   }
   public get loading$(): Observable<boolean> {

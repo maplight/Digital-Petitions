@@ -1,0 +1,79 @@
+{
+  "data": {
+    "getUsers": {
+      "items": [
+        {
+          "email": "11yoha@yopmail.com",
+          "firstName": "prueba",
+          "lastName": "prueba",
+          "permissions": "ADMIN",
+          "username": "11yoha_yopmail_com_1837cc05be2"
+        },
+        {
+          "email": "2guestyoha11117@yopmail.com",
+          "firstName": "adminy",
+          "lastName": "adminy",
+          "permissions": "STAFF",
+          "username": "2guestyoha11117_yopmail_com_1836b2ab6bb"
+        },
+        {
+          "email": "david.rodriguez@ntsprint.com",
+          "firstName": "Admin",
+          "lastName": "MapLight",
+          "permissions": "ADMIN",
+          "username": "RootUser-Z2v9Rz85rW7m"
+        },
+        {
+          "email": "admin111admin@yopmail.com",
+          "firstName": "admin111admin",
+          "lastName": "yoha",
+          "permissions": "GUEST",
+          "username": "admin111admin_yopmail_com_1836b9aa9e5"
+        },
+        {
+          "email": "amandabaker@yopmail.com",
+          "firstName": "Amanda",
+          "lastName": "Baker",
+          "permissions": "PETITIONER",
+          "username": "amandabakeryopmailcom"
+        },
+        {
+          "email": "annagable@yopmail.com",
+          "firstName": "Anna",
+          "lastName": "Gable",
+          "permissions": "PETITIONER",
+          "username": "annagableyopmailcom"
+        },
+        {
+          "email": "augustus.pierce@yopmail.com",
+          "firstName": "Augustus",
+          "lastName": "Pierce",
+          "permissions": "PETITIONER",
+          "username": "augustuspierceyopmailcom"
+        },
+        {
+          "email": "brefocdf345dsfsdf42343@yopmail.com",
+          "firstName": "Denismay",
+          "lastName": "Rosa",
+          "permissions": "PETITIONER",
+          "username": "brefocdf345dsfsdf42343yopmailcom"
+        },
+        {
+          "email": "brefocdf3asdff42343@yopmail.com",
+          "firstName": "Denismay",
+          "lastName": "Rosa",
+          "permissions": "PETITIONER",
+          "username": "brefocdf3asdff42343yopmailcom"
+        },
+        {
+          "email": "brefocdfdsfsdf42343@yopmail.com",
+          "firstName": "Denismay",
+          "lastName": "Rosa",
+          "permissions": "PETITIONER",
+          "username": "brefocdfdsfsdf42343yopmailcom"
+        }
+      ],
+      "token": "CAISmQIIARLyAQgDEu0BAKpbyNSYsCt+d1phWsdPZrSVi9WkgOrDEOPQClcW2UvDeyJAbiI6IlBhZ2luYXRpb25Db250aW51YXRpb25EVE8iLCJuZXh0S2V5IjoiQUFBQUFBQUFBek04QVFFQktNSnBsaGNqU3lpRnR6eG1hdmpreEZOa3VHcDkxRW10ajN1RHFTVk14TmxsYm1ZN1luSmxabTlqWkdaa2MyWnpaR1o1YjNCdFlXbHNZMjl0T3c9PSIsInBhZ2luYXRpb25EZXB0aCI6MTAsInByZXZpb3VzUmVxdWVzdFRpbWUiOjE2Njg1NDIzNjI0MTN9GiD9V8r+F/Gq/yCasBCyOgUyb6dltPdkX34zBXsVkuMGUw=="
+    }
+  }
+}

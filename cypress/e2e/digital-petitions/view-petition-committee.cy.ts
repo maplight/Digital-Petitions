@@ -1,4 +1,4 @@
-describe('empty spec', () => {
+describe('view petitions committee spec', () => {
   beforeEach(() => {
     cy.intercept(
       'POST',
