@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SideMenuComponent } from './side-menu.component';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 
 @NgModule({
   declarations: [SideMenuComponent],
