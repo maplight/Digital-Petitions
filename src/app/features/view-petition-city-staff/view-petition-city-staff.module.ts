@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewPetitionCityStaffComponent } from './view-petition-city-staff.component';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PetitionViewModule } from 'src/app/shared/petition-view/petition-view.module';
 import { CurrentResultCityStaffModule } from './current-result-city-staff/current-result-city-staff.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
