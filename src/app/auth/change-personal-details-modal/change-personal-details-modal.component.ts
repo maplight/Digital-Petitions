@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
 import { State, states } from 'src/app/core/states';

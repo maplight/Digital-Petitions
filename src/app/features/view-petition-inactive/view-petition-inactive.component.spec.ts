@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';

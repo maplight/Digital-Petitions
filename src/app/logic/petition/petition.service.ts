@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import API, { GraphQLResult } from '@aws-amplify/api';
+
 import { catchError, delay, from, map, Observable, of, tap } from 'rxjs';
 import {
   ApprovePetitionInput,
@@ -55,6 +55,8 @@ import {
   submitCandidatePetition,
   submitIssuePetition,
 } from 'src/graphql/not-generated/mutations';
+import { API } from 'aws-amplify';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
