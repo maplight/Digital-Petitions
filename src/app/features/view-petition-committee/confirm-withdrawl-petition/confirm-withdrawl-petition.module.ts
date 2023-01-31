@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BasicAlertModule } from 'src/app/shared/basic-alert/basic-alert.module';
 import { MatInputModule } from '@angular/material/input';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -22,6 +23,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatIconModule,
     MatProgressBarModule,
     LoadingBarModule,

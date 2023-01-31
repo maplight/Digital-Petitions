@@ -21,22 +21,10 @@
             <mat-error
               *ngIf="this.formGroup.get('email')?.errors?.['required']"
             >
-              <div class="flex flex-row items-center">
-                <mat-icon
-                  class="w-[14px] h-[14px]"
-                  [svgIcon]="'custom_icons:c_close'"
-                ></mat-icon>
-                <span class="ml-[9px]">Email is required</span>
-              </div>
+              <dp-input-error [message]="'Email is required'"></dp-input-error>
             </mat-error>
             <mat-error *ngIf="this.formGroup.get('email')?.errors?.['email']">
-              <div class="flex flex-row items-center">
-                <mat-icon
-                  class="w-[14px] h-[14px]"
-                  [svgIcon]="'custom_icons:c_close'"
-                ></mat-icon>
-                <span class="ml-[9px]">Email is incorrect</span>
-              </div>
+              <dp-input-error [message]="'Email is incorrect'"></dp-input-error>
             </mat-error>
           </mat-form-field>
 

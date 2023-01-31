@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmSignPetitionComponent } from './confirm-sign-petition.component';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +19,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     BasicCardModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatButtonModule,
     MatInputModule,
     MatIconModule,

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SignInComponent } from './sign-in.component';
 import { MatInputModule } from '@angular/material/input';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +22,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     SingInRoutingModule,
     MatInputModule,
     FormsModule,
+    InputErrorModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatSelectModule,
     MatIconModule,
     MatButtonModule,

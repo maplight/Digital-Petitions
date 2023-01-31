@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { ForgotPasswordService } from 'src/app/logic/auth/exports';
@@ -25,6 +26,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     ReturnLinkModule,
     LoadingBarModule,
     ErrorMsgModule,

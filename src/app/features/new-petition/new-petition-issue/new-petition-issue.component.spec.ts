@@ -4,6 +4,7 @@ import {
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
+  ErrorMsgModule,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,6 +44,7 @@ describe('NewPetitionIssueComponent', () => {
         RouterModule,
         FormsModule,
         ReactiveFormsModule,
+        ErrorMsgModule,
         MatInputModule,
         MatIconModule,
         MatProgressBarModule,

@@ -47,13 +47,9 @@
             <mat-error
               *ngIf="this.formGroupLicense.get('licenseNumber')?.errors?.['required']"
             >
-              <div class="flex flex-row items-center">
-                <mat-icon
-                  class="w-[14px] h-[14px]"
-                  [svgIcon]="'custom_icons:c_close'"
-                ></mat-icon>
-                <span class="ml-[9px]">License Number is required</span>
-              </div>
+              <dp-input-error
+                [message]="'License Number is required'"
+              ></dp-input-error>
             </mat-error>
           </mat-form-field>
           <mat-form-field class="md:max-w-[170px] w-full">
@@ -71,22 +67,12 @@
             <mat-error
               *ngIf="this.formGroupLicense.get('dateOfBirth')?.errors?.['required']"
             >
-              <div class="flex flex-row items-center">
-                <mat-icon
-                  class="w-[14px] h-[14px]"
-                  [svgIcon]="'custom_icons:c_close'"
-                ></mat-icon>
-                <span class="ml-[9px]">Date Of Birth is required</span>
-              </div>
+              <dp-input-error
+                [message]="'Date Of Birth is required'"
+              ></dp-input-error>
             </mat-error>
             <mat-error *ngIf="!this.formGroupLicense.get('dateOfBirth')?.valid">
-              <div class="flex flex-row items-center">
-                <mat-icon
-                  class="w-[14px] h-[14px]"
-                  [svgIcon]="'custom_icons:c_close'"
-                ></mat-icon>
-                <span class="ml-[9px]">Invalid format</span>
-              </div>
+              <dp-input-error [message]="'Invalid format'"></dp-input-error>
             </mat-error>
           </mat-form-field>
         </form>

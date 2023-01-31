@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ErrorMsgModule,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';

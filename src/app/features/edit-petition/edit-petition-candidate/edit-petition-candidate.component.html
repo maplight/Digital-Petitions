@@ -22,13 +22,7 @@
             }}</mat-option>
           </mat-select>
           <mat-error *ngIf="this.formGroup.get('office')?.errors?.['required']">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Office required</span>
-            </div>
+            <dp-input-error [message]="'Office required'"></dp-input-error>
           </mat-error>
         </mat-form-field>
 
@@ -41,13 +35,9 @@
             }}</mat-option>
           </mat-select>
           <mat-error *ngIf="this.formGroup.get('party')?.errors?.['required']">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Political Party is required</span>
-            </div>
+            <dp-input-error
+              [message]="'Political Party is required'"
+            ></dp-input-error>
           </mat-error>
         </mat-form-field>
         <h4 class="font-bold leading-5">
@@ -59,13 +49,7 @@
           <mat-error
             *ngIf="this.formGroup.get('address')?.errors?.['required']"
           >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Address is required</span>
-            </div>
+            <dp-input-error [message]="'Address is required'"></dp-input-error>
           </mat-error>
         </mat-form-field>
 
@@ -75,13 +59,9 @@
           <mat-error
             *ngIf="this.formGroup.get('aptNumber')?.errors?.['required']"
           >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Apt, Suite, Etc. is required</span>
-            </div>
+            <dp-input-error
+              [message]="'Apt, Suite, Etc. is required'"
+            ></dp-input-error>
           </mat-error>
         </mat-form-field>
 
@@ -89,13 +69,7 @@
           <mat-label>City</mat-label>
           <input type="text" matInput formControlName="city" />
           <mat-error *ngIf="this.formGroup.get('city')?.errors?.['required']">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">City is required</span>
-            </div>
+            <dp-input-error [message]="'City is required'"></dp-input-error>
           </mat-error>
         </mat-form-field>
 
@@ -110,13 +84,7 @@
             >
           </mat-select>
           <mat-error *ngIf="this.formGroup.get('state')?.errors?.['required']">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">State is required</span>
-            </div>
+            <dp-input-error [message]="'State is required'"></dp-input-error>
           </mat-error>
         </mat-form-field>
 
@@ -126,13 +94,7 @@
           <mat-error
             *ngIf="this.formGroup.get('zipCode')?.errors?.['required']"
           >
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Zip Code is required</span>
-            </div>
+            <dp-input-error [message]="'Zip Code is required'"></dp-input-error>
           </mat-error>
         </mat-form-field>
       </div>

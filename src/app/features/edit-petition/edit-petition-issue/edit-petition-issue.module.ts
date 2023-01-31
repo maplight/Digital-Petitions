@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditPetitionIssueComponent } from './edit-petition-issue.component';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +17,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     BasicCardModule,
     MatInputModule,
     MatIconModule,

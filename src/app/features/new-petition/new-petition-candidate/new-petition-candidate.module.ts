@@ -4,6 +4,7 @@ import { NewPetitionCandidateComponent } from './new-petition-candidate.componen
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +22,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     BasicCardModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatInputModule,
     MatButtonModule,
     MatSelectModule,

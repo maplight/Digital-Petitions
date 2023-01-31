@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangePasswordModalComponent } from './change-password-modal.component';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +19,7 @@ import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
     BasicModalModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatIconModule,
     MatInputModule,
     MatButtonModule,

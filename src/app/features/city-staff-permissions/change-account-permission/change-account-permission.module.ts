@@ -7,6 +7,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
@@ -24,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     DialogModule,
     DialogResultModule,
     MatSelectModule,

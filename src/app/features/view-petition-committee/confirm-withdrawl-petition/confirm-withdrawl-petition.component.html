@@ -17,16 +17,10 @@
         <mat-label>Type "YES" to confirm</mat-label>
         <input type="text" matInput formControlName="code" />
         <mat-error *ngIf="this.formGroup.get('code')?.errors?.['required']">
-          <div class="flex flex-row items-center">
-            <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
-            <span class="ml-[9px]">This field is required</span>
-          </div>
+          <dp-input-error [message]="'This field is required'"></dp-input-error>
         </mat-error>
         <mat-error *ngIf="this.formGroup.get('code')?.errors?.['pattern']">
-          <div class="flex flex-row items-center">
-            <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
-            <span class="ml-[9px]">type "YES" to confirm</span>
-          </div>
+          <dp-input-error [message]="'type YES to confirm'"></dp-input-error>
         </mat-error>
       </mat-form-field>
     </form>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangePersonalDetailsModalComponent } from './change-personal-details-modal.component';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
@@ -18,6 +19,7 @@ import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     DialogResultModule,
     BasicModalModule,
     MatInputModule,

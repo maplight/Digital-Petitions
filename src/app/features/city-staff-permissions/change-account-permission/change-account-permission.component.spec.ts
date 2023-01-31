@@ -2,6 +2,7 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -37,6 +38,7 @@ describe('ChangeAccountPermissionComponent', () => {
         MatInputModule,
         FormsModule,
         ReactiveFormsModule,
+        ErrorMsgModule,
         DialogModule,
         DialogResultModule,
         MatSelectModule,

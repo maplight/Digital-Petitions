@@ -6,6 +6,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmEditPetitionModule } from '../confirm-edit-petition/confirm-edit-petition.module';
@@ -26,6 +27,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatSelectModule,
     ConfirmEditPetitionModule,
     MatDialogModule,

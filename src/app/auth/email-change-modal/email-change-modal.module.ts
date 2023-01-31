@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmailChangeModalComponent } from './email-change-modal.component';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +19,7 @@ import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     ConfirmEmailChangeModalModule,
     DialogResultModule,
     BasicModalModule,

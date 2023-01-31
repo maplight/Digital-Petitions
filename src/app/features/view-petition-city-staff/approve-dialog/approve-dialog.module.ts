@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ApproveDialogComponent } from './approve-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,6 +26,7 @@ import { NgxMaskModule } from 'ngx-mask';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     BasicModalModule,
     MatDialogModule,
     ApproveAlertModule,

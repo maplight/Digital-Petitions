@@ -5,6 +5,7 @@ import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -25,6 +26,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,

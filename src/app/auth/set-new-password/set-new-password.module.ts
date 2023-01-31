@@ -8,6 +8,7 @@ import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
@@ -25,6 +26,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     LoadingBarModule,
     ErrorMsgModule,
   ],

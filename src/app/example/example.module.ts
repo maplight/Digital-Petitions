@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ExampleRoutingModule } from './example-routing.module';
 import { ExampleComponent } from './example.component';
 
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogExampleComponent } from './dialog-example/dialog-example.component';
 
@@ -34,6 +35,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
   ],
 })
 export class ExampleModule {}
