@@ -1,6 +1,6 @@
 <form
   [formGroup]="formGroup"
-  class="flex flex-col w-full max-w-[632px] gap-6"
+  class="flex flex-col w-full max-w-[632px] gap-1"
   (submit)="submit()"
 >
   <dp-return-link
@@ -39,7 +39,7 @@
         <form
           *ngIf="formGroup.value.verifyType === 'license'"
           [formGroup]="formGroupLicense"
-          class="flex md:flex-row flex-col w-full gap-[26px]"
+          class="flex md:flex-row flex-col w-full gap-1"
         >
           <mat-form-field class="md:max-w-[385px] w-full">
             <mat-label>License Number</mat-label>

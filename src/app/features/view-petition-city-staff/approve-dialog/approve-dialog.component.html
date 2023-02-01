@@ -1,7 +1,7 @@
 <dp-basic-modal (sendEvent)="submit()">
   <ng-container modal-title>Set Qualification Requirements</ng-container>
   <ng-container modal-body class="w-full">
-    <form [formGroup]="formGroup" class="flex flex-col w-full gap-6">
+    <form [formGroup]="formGroup" class="flex flex-col w-full gap-1">
       <dp-error-msg
         *ngIf="!(loading$ | async) && (error$ | async) as error"
         [error]="error"

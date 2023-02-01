@@ -5,7 +5,7 @@
       We’ve sent a confirmation code to the new email address. Enter the code to
       confirm your new email
     </p>
-    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-1">
       <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <mat-form-field>
         <mat-label>Confirmation Code</mat-label>

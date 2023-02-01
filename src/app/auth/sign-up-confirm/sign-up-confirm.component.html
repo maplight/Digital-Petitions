@@ -14,7 +14,7 @@
         </dp-error-msg>
 
         <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
-        <div class="grid grid-cols-1 gap-[16px]">
+        <div class="grid grid-cols-1 gap-1">
           <ng-container *ngIf="!(loading$ | async)">
             <p *ngIf="successResend$ | async as msg; else message">
               {{ msg }}

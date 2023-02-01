@@ -1,10 +1,12 @@
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-1">
   <div mat-dialog-title>
-    <ng-content select="[modal-title]"></ng-content>
+    <div class="flex flex-row justify-between items-center w-full">
+      <ng-content select="[modal-title]"></ng-content>
 
-    <button mat-icon-button (click)="onCancelClick()">
-      <mat-icon [svgIcon]="'custom_icons:close'"></mat-icon>
-    </button>
+      <button mat-icon-button (click)="onCancelClick()">
+        <mat-icon [svgIcon]="'custom_icons:close'"></mat-icon>
+      </button>
+    </div>
   </div>
 
   <div mat-dialog-content>

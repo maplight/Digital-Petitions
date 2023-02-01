@@ -12,7 +12,7 @@
     </dp-error-msg>
     <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
 
-    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-1">
       <mat-form-field>
         <mat-label>Type "YES" to confirm</mat-label>
         <input type="text" matInput formControlName="code" />
