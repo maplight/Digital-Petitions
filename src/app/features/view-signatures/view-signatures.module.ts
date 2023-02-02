@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SortSignaturesModule } from './sort-signatures/sort-signatures.module';
 import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
 import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-status.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [ViewSignaturesComponent],
@@ -28,6 +29,7 @@ import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-
     LoadingBarModule,
     MatButtonModule,
     SortSignaturesModule,
+    ErrorMsgModule,
   ],
 })
 export class ViewSignaturesModule {}
