@@ -31,7 +31,11 @@
       <div
         class="flex border border-[#D7D7D7] rounded-lg bg-[#FFFFFF] px-2 justify-center items-center w-fit min-h-[50px] min-w-[150px]"
       >
-        <mat-checkbox color="primary" class="flex flex-row items-center"
+        <mat-checkbox
+          color="primary"
+          class="flex flex-row items-center"
+          [checked]="showing100"
+          (change)="show100()"
           ><p class="text-xs font-bold">Showing 100</p></mat-checkbox
         >
       </div>

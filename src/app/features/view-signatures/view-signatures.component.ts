@@ -169,6 +169,15 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     }
   }
 
+  show100() {
+    this.showing100 = !this.showing100;
+    this.showing100
+      ? (this._signaturesByPetitionInput.limit = 100)
+      : (this._signaturesByPetitionInput.limit = 10);
+    this.items = [];
+    this.getSignatures();
+  }
+
   filterStatus(value: SignatureStatusQuery | PetitionStatusQuery) {
     this.items = [];
     this._signaturesByPetitionInput.status = value as SignatureStatusQuery;
