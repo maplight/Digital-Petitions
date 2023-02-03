@@ -82,7 +82,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         this.dialogRef.close();
-        this.openDialog('Password Successfully Changed!', '', true);
+        this.openDialog('Personal Data successfully changed!', '', true);
       });
     this._changePersonalDetailsLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))
