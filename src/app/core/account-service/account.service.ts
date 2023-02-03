@@ -163,6 +163,7 @@ export class AccountService {
             state: data.state,
             aptNumber: data.aptNumber,
             zipCode: data.zipCode,
+            city: data.city,
           }),
         })
           .then((result) => {
