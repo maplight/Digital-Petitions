@@ -84,7 +84,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = this.items.concat(result?.items ?? []);
         this.typeAlert = 'alert';
         this.messageAlert =
-          this.items.length > 1
+          this.items.length == 1
             ? 'You have ' + this.items.length + ' signature that need review'
             : 'You have ' + this.items.length + ' signatures that need review';
         this.showAlert = true;
@@ -95,7 +95,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       .subscribe((result) => {
         this.disabledFilter = false;
         this.typeAlert = 'success';
-        this.messageAlert = result + ' Signatures Successfully Approved';
+        this.messageAlert = 'One signature successfully approved';
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
@@ -108,7 +108,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.disabledFilter = false;
 
         this.typeAlert = 'success';
-        this.messageAlert = result + ' Signatures Successfully Denied';
+        this.messageAlert = 'One signature successfully denied';
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
