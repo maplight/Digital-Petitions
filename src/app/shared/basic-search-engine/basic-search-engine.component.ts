@@ -12,6 +12,7 @@ import {
 })
 export class BasicSearchEngineComponent {
   @Input() disabled: boolean = false;
+  @Input() name: string = 'Search';
   @Output() event: EventEmitter<string> = new EventEmitter();
   public formGroup: FormGroup;
 

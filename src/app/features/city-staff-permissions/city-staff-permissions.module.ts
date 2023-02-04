@@ -15,6 +15,9 @@ import { ChangeAccountPermissionModule } from './change-account-permission/chang
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { RemoveMemberModule } from './remove-member/remove-member.module';
+import { BasicSearchEngineModule } from 'src/app/shared/basic-search-engine/basic-search-engine.module';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [CityStaffPermissionsComponent],
@@ -26,12 +29,13 @@ import { RemoveMemberModule } from './remove-member/remove-member.module';
     MatMenuModule,
     LoadingBarModule,
     ErrorMsgModule,
-
+    BasicSearchEngineModule,
     DialogModule,
     DialogResultModule,
     NewMemberModule,
     ChangeAccountPermissionModule,
-
+    MatInputModule,
+    MatSelectModule,
     MatDialogModule,
     RemoveMemberModule,
   ],

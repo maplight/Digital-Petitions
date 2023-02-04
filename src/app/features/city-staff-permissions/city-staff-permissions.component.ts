@@ -2,7 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { AccessLevel, User } from 'src/app/core/api/API';
+import {
+  AccessLevel,
+  AccessLevelQuery,
+  SearchUsersInput,
+  User,
+} from 'src/app/core/api/API';
 import { GetAllUsersService } from 'src/app/logic/admin/get-all-users.service';
 import { RemoveMemberService } from 'src/app/logic/admin/remove-member.service';
 
@@ -21,7 +26,7 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
   protected loading$!: Observable<boolean>;
   private _unSuscribeAll: Subject<void> = new Subject();
   protected loadingUp: boolean = true;
-
+  private searchUsersInput: SearchUsersInput = {};
   protected displayedColumns: string[] = [
     'member',
     'email',
@@ -29,6 +34,12 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
     'option',
   ];
   tableStyle = 'w-full';
+  protected filterAccesLevel: { name: string; value: AccessLevelQuery }[] = [
+    { name: 'Guest', value: AccessLevelQuery.GUEST },
+    { name: 'Admin', value: AccessLevelQuery.ADMIN },
+    { name: 'Petitioner', value: AccessLevelQuery.PETITIONER },
+    { name: 'Staff', value: AccessLevelQuery.STAFF },
+  ];
 
   constructor(
     private _getAllUserLogic: GetAllUsersService,
@@ -75,10 +86,29 @@ export class CityStaffPermissionsComponent implements OnInit, OnDestroy {
       this.items = [];
     }
     this.loadingUp = !cursorFlag;
-    this._getAllUserLogic.getMembers(cursorFlag);
+
+    this._getAllUserLogic.getMembers(this.searchUsersInput, cursorFlag);
   }
 
   pageNumber() {
     this.getUsers(true);
+  }
+
+  searchName(key: string) {
+    this.items = [];
+    this.searchUsersInput.searchName = key;
+    this._getAllUserLogic.getMembers(this.searchUsersInput, false);
+  }
+  searchEmail(key: string) {
+    this.items = [];
+    this.searchUsersInput.searchEmail = key;
+    this._getAllUserLogic.getMembers(this.searchUsersInput, false);
+  }
+  searchAccessLevel(key: AccessLevelQuery | 'Any') {
+    key == 'Any'
+      ? (this.searchUsersInput.searchGroup = null)
+      : (this.searchUsersInput.searchGroup = key);
+    this.items = [];
+    this._getAllUserLogic.getMembers(this.searchUsersInput, false);
   }
 }
