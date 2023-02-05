@@ -1,5 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogRef as MatDialogRef,
+} from '@angular/material/legacy-dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, Observable, takeUntil, tap, map } from 'rxjs';
 import {
@@ -97,6 +100,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
               width: '480px',
               data: {
                 id: this.id,
+                title: 'name',
               },
             });
           }

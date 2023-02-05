@@ -6,7 +6,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
@@ -24,7 +27,7 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _withdrawlLogic: WithdrawPetitionService,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number },
+    @Inject(MAT_DIALOG_DATA) public data: { id: number; title: string },
     private _dialog: MatDialog,
     private _router: Router
   ) {
@@ -34,6 +37,7 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
         Validators.pattern('YES'),
       ]),
     });
+    console.log('data', this.data);
   }
   ngOnInit(): void {
     this._withdrawlLogic.success$.subscribe((result) => {
@@ -41,6 +45,7 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
       this._dialog.closeAll();
     });
     this.loading$ = this._withdrawlLogic.loading$;
+    console.log('data', this.data);
   }
 
   submit() {

@@ -10,7 +10,9 @@ import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petitio
 export class WithdrawlResultComponent {
   @Input() data: string = '';
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router) {
+    console.log('data', this.data);
+  }
 
   submit() {
     this._router.navigate(['/committee/home']);
