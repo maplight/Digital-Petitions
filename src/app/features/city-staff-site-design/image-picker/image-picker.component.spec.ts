@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRippleModule } from '@angular/material/core';
 import { By } from '@angular/platform-browser';

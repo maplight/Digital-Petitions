@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VerifySignComponent } from './verify-sign.component';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
-import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
@@ -25,6 +26,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,

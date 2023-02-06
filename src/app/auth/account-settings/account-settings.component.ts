@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordModalComponent } from 'src/app/auth/change-password-modal/change-password-modal.component';
 import { ChangePersonalDetailsModalComponent } from 'src/app/auth/change-personal-details-modal/change-personal-details-modal.component';
 import { EmailChangeModalComponent } from 'src/app/auth/email-change-modal/email-change-modal.component';
