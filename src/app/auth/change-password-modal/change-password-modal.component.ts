@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ChangePasswordService } from 'src/app/logic/auth/exports';
 import { BasicModalComponent } from 'src/app/shared/basic-modal/basic-modal.component';

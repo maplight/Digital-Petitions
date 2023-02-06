@@ -84,8 +84,8 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.typeAlert = 'alert';
         this.messageAlert =
           this.items.length > 1
-            ? 'You have ' + this.items.length + ' signature that need review'
-            : 'You have ' + this.items.length + ' signatures that need review';
+            ? 'You have ' + this.items.length + ' signatures that need review'
+            : 'You have ' + this.items.length + ' signature that need review';
         this.showAlert = true;
       });
     //approve signature
@@ -94,7 +94,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       .subscribe((result) => {
         this.disabledFilter = false;
         this.typeAlert = 'success';
-        this.messageAlert = result + ' Signatures Successfully Approved';
+        this.messageAlert = result + ' Signature Successfully Approved';
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
@@ -107,7 +107,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.disabledFilter = false;
 
         this.typeAlert = 'success';
-        this.messageAlert = result + ' Signatures Successfully Denied';
+        this.messageAlert = result + ' Signature Successfully Denied';
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
