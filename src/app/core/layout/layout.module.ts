@@ -4,14 +4,14 @@ import { LayoutComponent } from './layout.component';
 import { HeaderModule } from './header/header.module';
 import { RouterModule } from '@angular/router';
 import { SideMenuModule } from 'src/app/core/layout/side-menu/side-menu.module';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { BasicModalModule } from 'src/app/shared/basic-modal/basic-modal.module';
 import { ChangePasswordModalModule } from 'src/app/auth/change-password-modal/change-password-modal.module';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { EmailChangeModalModule } from 'src/app/auth/email-change-modal/email-change-modal.module';
 import { ChangePersonalDetailsModalModule } from 'src/app/auth/change-personal-details-modal/change-personal-details-modal.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { DialogResultModule } from 'src/app/shared/dialog-result/dialog-result.module';
 
 @NgModule({

@@ -5,8 +5,8 @@ import { PetitionCardModule } from 'src/app/shared/petition-card/petition-card.m
 import { InactivePetitionsRoutingModule } from './inactive-petitions-routing.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
 import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
 import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-status.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';

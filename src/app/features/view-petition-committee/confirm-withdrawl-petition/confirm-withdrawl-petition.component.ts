@@ -6,10 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  MatLegacyDialog as MatDialog,
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-} from '@angular/material/legacy-dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';

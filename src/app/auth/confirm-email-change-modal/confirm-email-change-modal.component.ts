@@ -5,10 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  MatLegacyDialog as MatDialog,
-  MatLegacyDialogRef as MatDialogRef,
-} from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 import { Router } from '@angular/router';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
