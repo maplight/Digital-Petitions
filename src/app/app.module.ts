@@ -8,9 +8,9 @@ import { ThemingService } from './core/dynamic-theme/theming.service';
 import { LayoutModule } from './core/layout/layout.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_LEGACY_FORM_FIELD_DEFAULT_OPTIONS as MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/legacy-form-field';
 import { appearance } from './core/dynamic-theme/default-mat-form-field';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
