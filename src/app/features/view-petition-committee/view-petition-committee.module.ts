@@ -17,9 +17,11 @@ import { WithdrawlResultModule } from './withdrawl-result/withdrawl-result.modul
 import { PetitionStatusModule } from 'src/app/pipes/petition-status/petition-status.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
+import { ViewPetitionNameService } from 'src/app/logic/petition/view-petition-name.service';
 
 @NgModule({
   declarations: [ViewPetitionCommitteeComponent],
+  providers: [ViewPetitionNameService],
   imports: [
     CommonModule,
     ViewPetitionCommitteeRoutingModule,

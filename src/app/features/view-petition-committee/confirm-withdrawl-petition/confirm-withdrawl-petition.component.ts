@@ -1,4 +1,3 @@
-import { DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -11,7 +10,7 @@ import {
   MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
 } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
 
 @Component({
@@ -37,7 +36,6 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
         Validators.pattern('YES'),
       ]),
     });
-    console.log('data', this.data);
   }
   ngOnInit(): void {
     this._withdrawlLogic.success$.subscribe((result) => {
@@ -45,7 +43,6 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
       this._dialog.closeAll();
     });
     this.loading$ = this._withdrawlLogic.loading$;
-    console.log('data', this.data);
   }
 
   submit() {
