@@ -4,7 +4,10 @@ import { ForgotPasswordComponent } from './forgot-password.component';
 import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyButton as MatButton, MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import {
+  MatLegacyButton as MatButton,
+  MatLegacyButtonModule as MatButtonModule,
+} from '@angular/material/legacy-button';
 import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

@@ -2,7 +2,10 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogModule as MatDialogModule,
+} from '@angular/material/legacy-dialog';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
