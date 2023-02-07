@@ -83,7 +83,7 @@ describe('NewPetitionComponent', () => {
   it('evaluate that type selector component is default loaded', () => {
     const element = fixture.debugElement.nativeElement.querySelector('h4');
     expect(element.textContent).toEqual(
-      ' Choose the type of petiton you will be submitting '
+      ' Choose the type of petition you will be submitting '
     );
   });
 
