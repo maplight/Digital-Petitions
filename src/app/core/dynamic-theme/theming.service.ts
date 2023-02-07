@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ColorConfig, ThemeConfig, ThemeMainColorType } from './theme-config';
-import * as tinycolor from 'tinycolor2';
+// import * as tinycolor from 'tinycolor2';
+import tinycolor from 'tinycolor2';
 import { GetSiteDesignService } from 'src/app/logic/admin/get-site-design.service';
 import { Observable, firstValueFrom, ReplaySubject } from 'rxjs';
 import { SiteConfiguration } from '../api/API';
