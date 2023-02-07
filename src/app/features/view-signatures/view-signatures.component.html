@@ -1,10 +1,9 @@
 <div class="flex flex-col w-full gap-[10px] md:gap-6">
   <dp-view-signatures-alert
-    [show]="showAlert"
     class="flex w-full justify-center"
-    [type]="typeAlert"
-    [message]="messageAlert"
+    [data]="{ type: typeAlert, message: messageAlert }"
   ></dp-view-signatures-alert>
+
   <div class="flex flex-col w-full gap-[43px]">
     <dp-return-link
       class="w-fit"
