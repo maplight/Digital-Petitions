@@ -39,7 +39,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         this.dialogRef.close();
-        this.openDialog('Password Successfully Changed!', '', true);
+        this.openDialog('Email successfully changed!', '', true);
       });
     this._confirmChangeEmailLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))
