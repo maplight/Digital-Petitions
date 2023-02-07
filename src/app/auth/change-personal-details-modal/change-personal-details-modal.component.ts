@@ -13,6 +13,7 @@ import { State, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/core/account-service/account.service';
 
 @Component({
   selector: 'dp-change-personal-details-modal',
@@ -30,16 +31,50 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<ChangePersonalDetailsModalComponent>,
     public dialog: MatDialog,
     private _changePersonalDetailsLogic: ChangePersonalDetailsService,
-    private _router: Router
+    private _router: Router,
+    private _accountLogic: AccountService
   ) {
+    console.log(_accountLogic.currentUser?.attributes.address);
+
     this.formGroup = this._fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      aptNumber: [''],
-      city: ['', [Validators.required]],
-      state: [null, [Validators.required]],
-      zipCode: ['', [Validators.required]],
+      firstName: [
+        _accountLogic.currentUser?.attributes.given_name,
+        [Validators.required],
+      ],
+      lastName: [
+        _accountLogic.currentUser?.attributes.family_name,
+        [Validators.required],
+      ],
+      address: [
+        JSON.parse(
+          _accountLogic.currentUser?.attributes.address ?? '{address:""}'
+        ).address,
+        [Validators.required],
+      ],
+      aptNumber: [
+        JSON.parse(
+          _accountLogic.currentUser?.attributes.address ?? '{aptNumber:""}'
+        ).aptNumber,
+      ],
+      city: [
+        JSON.parse(_accountLogic.currentUser?.attributes.address ?? '{city:""}')
+          .city,
+        [Validators.required],
+      ],
+      state: [
+        (
+          JSON.parse(
+            _accountLogic.currentUser?.attributes.address ?? '{state:null}'
+          ).state as State
+        ).value,
+        [Validators.required],
+      ],
+      zipCode: [
+        JSON.parse(
+          _accountLogic.currentUser?.attributes.address ?? '{zipCode:""}'
+        ).zipCode,
+        [Validators.required],
+      ],
     });
   }
 
