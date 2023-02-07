@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SignThisPetitionComponent } from './sign-this-petition.component';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
@@ -22,6 +23,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     RouterModule,
     LoadingBarModule,
     ErrorMsgModule,

@@ -44,6 +44,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
 
   private _signaturesByPetitionInput: SignaturesByPetitionInput = {
     petition: '',
+    limit: 10,
     status: null,
   };
   protected sortBy: {
@@ -58,7 +59,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     { name: 'Status', value: 'status', active: false },
   ];
   protected filterByStatus: FilterByStatus[] = FilterByStatusSignatures;
-
+  protected showing100: boolean = false;
   protected items: Signature[] = [];
   protected signaturesSelected: Signature[] = [];
   protected result$!: Subscription;
@@ -83,9 +84,10 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = this.items.concat(result?.items ?? []);
         this.typeAlert = 'alert';
         this.messageAlert =
-          this.items.length > 1
+          this.items.length == 1
             ? 'You have ' + this.items.length + ' signature that need review'
             : 'You have ' + this.items.length + ' signatures that need review';
+
         this.showAlert = true;
       });
     //approve signature
@@ -94,7 +96,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       .subscribe((result) => {
         this.disabledFilter = false;
         this.typeAlert = 'success';
-        this.messageAlert = result + ' Signatures Successfully Approved';
+        this.messageAlert = 'One signature successfully approved';
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
@@ -107,7 +109,8 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.disabledFilter = false;
 
         this.typeAlert = 'success';
-        this.messageAlert = result + ' Signatures Successfully Denied';
+        this.messageAlert = 'One signature successfully denied';
+
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
@@ -137,15 +140,44 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
   }
 
   approve() {
-    this._approveLogic.approveSignature({
-      signatureId: this.signaturesSelected[0].PK,
-    });
+    if (
+      this.signaturesSelected.filter(
+        (x) => x.status != 'APPROVED' && x.status != 'REJECTED'
+      ).length > 0
+    ) {
+      this.error = undefined;
+      this._approveLogic.approveSignature({
+        signatureId: this.signaturesSelected[0].PK,
+      });
+    } else {
+      this.error =
+        'Your selection contains one or more signatures that have already been previously approved or denied. Please make sure that your selection only contains pending signatures.';
+    }
   }
 
   deny() {
-    this._denyLogic.denySignature({
-      signatureId: this.signaturesSelected[0].PK,
-    });
+    if (
+      this.signaturesSelected.filter(
+        (x) => x.status != 'APPROVED' && x.status != 'REJECTED'
+      ).length > 0
+    ) {
+      this.error = undefined;
+      this._denyLogic.denySignature({
+        signatureId: this.signaturesSelected[0].PK,
+      });
+    } else {
+      this.error =
+        'Your selection contains one or more signatures that have already been previously approved or denied. Please make sure that your selection only contains pending signatures.';
+    }
+  }
+
+  show100() {
+    this.showing100 = !this.showing100;
+    this.showing100
+      ? (this._signaturesByPetitionInput.limit = 100)
+      : (this._signaturesByPetitionInput.limit = 10);
+    this.items = [];
+    this.getSignatures();
   }
 
   filterStatus(value: SignatureStatusQuery | PetitionStatusQuery) {

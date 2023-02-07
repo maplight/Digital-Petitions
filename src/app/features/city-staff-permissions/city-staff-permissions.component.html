@@ -1,7 +1,36 @@
 <div class="flex flex-col gap-4 w-full">
   <h2 class="font-extrabold">Permissions and Administrators</h2>
   <p class="mb-8">Manage, invite and grant permissions for your team.</p>
-  <div class="flex flex-row w-full justify-end">
+  <div class="flex flex-row w-full justify-between">
+    <div class="flex flex-row gap-3">
+      <dp-basic-search-engine
+        name="Search by Email"
+        (event)="searchEmail($event)"
+        [disabled]="!!(loading$ | async)"
+        class="w-full max-w-[300px]"
+      ></dp-basic-search-engine>
+      <dp-basic-search-engine
+        name="Search by Name"
+        (event)="searchName($event)"
+        [disabled]="!!(loading$ | async)"
+        class="w-full max-w-[300px]"
+      ></dp-basic-search-engine>
+      <div class="w-full max-w-[300px] hide-mat-error">
+        <mat-form-field appearance="fill">
+          <mat-label>Search by Access Level</mat-label>
+          <mat-select>
+            <mat-option (click)="searchAccessLevel('Any')">Any</mat-option>
+            <mat-option
+              *ngFor="let item of filterAccesLevel"
+              [value]="item.value"
+              (click)="searchAccessLevel(item.value)"
+              >{{ item.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
     <button
       type="submit"
       mat-flat-button

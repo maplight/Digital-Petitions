@@ -1,6 +1,9 @@
-<form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+<form
+  [formGroup]="formGroup"
+  class="w-full grid grid-cols-1 gap-1 hide-mat-error"
+>
   <mat-form-field class="border border-[#D7D7D7] rounded-lg">
-    <mat-label>Search</mat-label>
+    <mat-label>{{ name }}</mat-label>
     <input
       type="text"
       matInput

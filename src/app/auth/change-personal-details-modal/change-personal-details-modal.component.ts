@@ -5,13 +5,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ChangePersonalDetailsService } from 'src/app/logic/auth/exports';
 import { State, states } from 'src/app/core/states';
 import { DialogResultComponent } from 'src/app/shared/dialog-result/dialog-result.component';
 
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/core/account-service/account.service';
 
 @Component({
   selector: 'dp-change-personal-details-modal',
@@ -29,16 +31,44 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<ChangePersonalDetailsModalComponent>,
     public dialog: MatDialog,
     private _changePersonalDetailsLogic: ChangePersonalDetailsService,
-    private _router: Router
+    private _router: Router,
+    private _accountLogic: AccountService
   ) {
+    let state: State = JSON.parse(
+      _accountLogic.currentUser?.attributes.address ?? '{state:null}'
+    ).state as State;
     this.formGroup = this._fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      aptNumber: [''],
-      city: ['', [Validators.required]],
-      state: [null, [Validators.required]],
-      zipCode: ['', [Validators.required]],
+      firstName: [
+        _accountLogic.currentUser?.attributes.given_name,
+        [Validators.required],
+      ],
+      lastName: [
+        _accountLogic.currentUser?.attributes.family_name,
+        [Validators.required],
+      ],
+      address: [
+        JSON.parse(
+          _accountLogic.currentUser?.attributes.address ?? '{address:""}'
+        ).address,
+        [Validators.required],
+      ],
+      aptNumber: [
+        JSON.parse(
+          _accountLogic.currentUser?.attributes.address ?? '{aptNumber:""}'
+        ).aptNumber,
+      ],
+      city: [
+        JSON.parse(_accountLogic.currentUser?.attributes.address ?? '{city:""}')
+          .city,
+        [Validators.required],
+      ],
+      state: [state ? state.value : null, [Validators.required]],
+      zipCode: [
+        JSON.parse(
+          _accountLogic.currentUser?.attributes.address ?? '{zipCode:""}'
+        ).zipCode,
+        [Validators.required],
+      ],
     });
   }
 
@@ -47,7 +77,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         this.dialogRef.close();
-        this.openDialog('Password Successfully Changed!', '', true);
+        this.openDialog('Personal Data successfully changed!', '', true);
       });
     this._changePersonalDetailsLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))
