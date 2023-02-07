@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
+
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { SignOutService } from 'src/app/logic/auth/sign-out.service';
