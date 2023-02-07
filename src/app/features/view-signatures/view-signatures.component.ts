@@ -87,6 +87,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
           this.items.length == 1
             ? 'You have ' + this.items.length + ' signature that need review'
             : 'You have ' + this.items.length + ' signatures that need review';
+
         this.showAlert = true;
       });
     //approve signature
@@ -109,6 +110,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
 
         this.typeAlert = 'success';
         this.messageAlert = 'One signature successfully denied';
+
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
