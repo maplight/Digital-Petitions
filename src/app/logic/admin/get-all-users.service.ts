@@ -70,8 +70,10 @@ export class GetAllUsersService {
     this.submit$.complete();
   }
 
-  getMembers(cursorFlag: boolean) {
-    let data: SearchUsersInput = { cursor: cursorFlag ? this.cursor : null };
-    this.submit$.next(data);
+  getMembers(searchUsersInput: SearchUsersInput, cursorFlag: boolean) {
+    if (cursorFlag) {
+      searchUsersInput.cursor = this.cursor;
+    }
+    this.submit$.next(searchUsersInput);
   }
 }

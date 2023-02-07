@@ -34,8 +34,9 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _accountLogic: AccountService
   ) {
-    console.log(_accountLogic.currentUser?.attributes.address);
-
+    let state: State = JSON.parse(
+      _accountLogic.currentUser?.attributes.address ?? '{state:null}'
+    ).state as State;
     this.formGroup = this._fb.group({
       firstName: [
         _accountLogic.currentUser?.attributes.given_name,
@@ -61,14 +62,7 @@ export class ChangePersonalDetailsModalComponent implements OnInit, OnDestroy {
           .city,
         [Validators.required],
       ],
-      state: [
-        (
-          JSON.parse(
-            _accountLogic.currentUser?.attributes.address ?? '{state:null}'
-          ).state as State
-        ).value,
-        [Validators.required],
-      ],
+      state: [state ? state.value : null, [Validators.required]],
       zipCode: [
         JSON.parse(
           _accountLogic.currentUser?.attributes.address ?? '{zipCode:""}'
