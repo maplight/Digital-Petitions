@@ -40,7 +40,12 @@ export class ViewSignaturesTableComponent {
       this.signaturesSelected = this.signaturesSelected.concat(value);
     }
     */
-    this.signaturesSelected = [value];
+    if (this.signaturesSelected[0] == value) {
+      this.signaturesSelected = [];
+    } else {
+      this.signaturesSelected = [value];
+    }
+
     this.emitSignaturesSelected.emit(this.signaturesSelected);
   }
 
