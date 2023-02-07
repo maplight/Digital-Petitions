@@ -84,7 +84,6 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = this.items.concat(result?.items ?? []);
         this.typeAlert = 'alert';
         this.messageAlert =
-
           this.items.length == 1
             ? 'You have ' + this.items.length + ' signature that need review'
             : 'You have ' + this.items.length + ' signatures that need review';
