@@ -1,10 +1,12 @@
 <div class="w-full flex justify-center" *ngIf="viewState$ | async as viewState">
   <div class="flex flex-col max-w-[432px] w-full">
-    <h1 class="p-6 font-extrabold">Log in</h1>
+    <h1 class="p-6 font-extrabold">Admin Portal</h1>
     <dp-basic-card class="w-full">
       <div class="w-full flex justify-start">
         <h4 class="font-bold text-lg">
-          {{ viewState === "LOGIN" ? "Create an account" : "Complete sign up" }}
+          {{
+            viewState === "LOGIN" ? "Log in with account" : "Complete sign up"
+          }}
         </h4>
       </div>
       <dp-error-msg
