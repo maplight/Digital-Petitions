@@ -8,13 +8,13 @@
     <mat-progress-bar
       color="primary"
       [value]="
-        ((signatureSummary.approved ?? 0) / (signatureSummary.required ?? 1)) *
+        (signatureSummary.submitted ?? 0 / (signatureSummary.required ?? 1)) *
         100
       "
       [bufferValue]="signatureSummary.required ?? 0"
     ></mat-progress-bar>
     <p class="text-[14px] leading-[18px] font-normal">
-      {{ signatureSummary.approved ?? 0 }} /
+      {{ signatureSummary.submitted ?? 0 }} /
       {{ signatureSummary.required ?? 0 }} Signatures Submitted
     </p>
   </div>
