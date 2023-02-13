@@ -65,7 +65,6 @@ export class CityStaffHomeComponent implements OnInit {
   }
 
   search(value: string) {
-    console.log('value', value);
     this.loadingUp = true;
     //this.petitions(true);
   }
