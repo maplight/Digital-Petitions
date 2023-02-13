@@ -14,6 +14,7 @@ import { Observable, takeUntil, Subject } from 'rxjs';
 import { CandidatePetition } from 'src/app/core/api/API';
 import { State, states } from 'src/app/core/states';
 import { NewPetitionCandidateService } from 'src/app/logic/petition/exports';
+import { OFFICES, PARTIES } from 'src/app/shared/models/common/default_values';
 import { CandidatePetitionData } from 'src/app/shared/models/exports';
 
 @Component({
@@ -28,8 +29,8 @@ export class NewPetitionCandidateComponent implements OnInit, OnDestroy {
   protected loading$!: Observable<boolean>;
   protected localStates: State[] = states;
   private _unSubscribeAll: Subject<void> = new Subject();
-  @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
-  @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
+  @Input() offices: string[] = OFFICES;
+  @Input() parties: string[] = PARTIES;
 
   @Output() cancelEvent: EventEmitter<
     'type' | 'issue' | 'candidate' | 'result'

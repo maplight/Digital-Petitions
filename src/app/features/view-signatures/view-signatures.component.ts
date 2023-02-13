@@ -15,6 +15,7 @@ import {
   SignatureStatus,
   SignatureStatusQuery,
 } from 'src/app/core/api/API';
+import { GetStaffPetitionService } from 'src/app/logic/petition/get-staff-petition.service';
 import { ApproveSignatureService } from 'src/app/logic/signature/approve-signature.service';
 import { DenySignatureService } from 'src/app/logic/signature/deny-signature.service';
 import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.service';
@@ -22,6 +23,7 @@ import {
   FilterByStatus,
   FilterByStatusSignatures,
 } from 'src/app/shared/models/filter/filter-by-status';
+import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 
 @Component({
   selector: 'dp-view-signatures',
@@ -30,6 +32,7 @@ import {
     GetSignaturesService,
     ApproveSignatureService,
     DenySignatureService,
+    GetStaffPetitionService,
   ],
 })
 export class ViewSignaturesComponent implements OnInit, OnDestroy {
@@ -67,11 +70,13 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
   protected loadingGetSignatures$!: Observable<boolean>;
   protected loadingApprove$!: Observable<boolean>;
   protected loadingDeny$!: Observable<boolean>;
+  protected successPetition$!: Observable<ResponsePetition | undefined>;
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _getSignatureLogic: GetSignaturesService,
     private _approveLogic: ApproveSignatureService,
-    private _denyLogic: DenySignatureService
+    private _denyLogic: DenySignatureService,
+    private _getPetitionLogic: GetStaffPetitionService
   ) {}
 
   ngOnInit(): void {
@@ -119,13 +124,19 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     this.loadingGetSignatures$ = this._getSignatureLogic.loading$;
     this.loadingApprove$ = this._approveLogic.loading$;
     this.loadingDeny$ = this._denyLogic.loading$;
+
+    this.successPetition$ = this._getPetitionLogic.success$;
+
     this._activatedRoute.paramMap
       .pipe(
         takeUntil(this._unsubscribeAll),
         map((params) => params.get('id')!),
-        tap((id) => (this._signaturesByPetitionInput.petition = id))
+        tap((id) => (this._signaturesByPetitionInput.petition = id)),
+        tap((id) => this._getPetitionLogic.getPetition(id))
       )
-      .subscribe(() => this.getSignatures());
+      .subscribe((_) => {
+        this.getSignatures();
+      });
   }
   setSignaturesSelected(data: Signature[]) {
     this.signaturesSelected = data;
