@@ -106,6 +106,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = [];
         this.signaturesSelected = [];
         this.getSignatures();
+        console.log('RESULT', result);
       });
     //deny signature
     this._denyLogic.success$
@@ -120,6 +121,21 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = [];
         this.signaturesSelected = [];
         this.getSignatures();
+        console.log('DENIED', result);
+      });
+
+    this._approveLogic.error$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        console.log(data);
+        this.error = data;
+      });
+
+    this._denyLogic.error$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        console.log(data);
+        this.error = data;
       });
     this.loadingGetSignatures$ = this._getSignatureLogic.loading$;
     this.loadingApprove$ = this._approveLogic.loading$;
@@ -153,7 +169,8 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
   approve() {
     if (
       this.signaturesSelected.filter(
-        (x) => x.status != 'APPROVED' && x.status != 'REJECTED'
+        (x) => x.status != 'APPROVED'
+        // && x.status != 'REJECTED'
       ).length > 0
     ) {
       this.error = undefined;
@@ -162,14 +179,16 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       });
     } else {
       this.error =
-        'Your selection contains one or more signatures that have already been previously approved or denied. Please make sure that your selection only contains pending signatures.';
+        'Your selection contains one or more signatures that have already been previously approved. Please make sure that your selection only contains pending or denied signatures.';
     }
   }
 
   deny() {
     if (
       this.signaturesSelected.filter(
-        (x) => x.status != 'APPROVED' && x.status != 'REJECTED'
+        (x) =>
+          // x.status != 'APPROVED' &&
+          x.status != 'REJECTED'
       ).length > 0
     ) {
       this.error = undefined;
@@ -178,7 +197,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       });
     } else {
       this.error =
-        'Your selection contains one or more signatures that have already been previously approved or denied. Please make sure that your selection only contains pending signatures.';
+        'Your selection contains one or more signatures that have already been previously denied. Make sure your selection only contains pending or approved signatures.';
     }
   }
 
