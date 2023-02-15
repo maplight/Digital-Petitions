@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { Observable } from 'rxjs';
 import {
@@ -28,6 +32,7 @@ export class ApproveDialogComponent implements OnInit {
     public _dialog: MatDialog,
     private _fb: FormBuilder,
     private _approvePetitionLogic: ApprovePetitionService,
+    public dialogRef: MatDialogRef<ApproveDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: CandidatePetition | IssuePetition
   ) {
@@ -45,14 +50,19 @@ export class ApproveDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this._approvePetitionLogic.success$.subscribe((_) => {
-      this._dialog.open(DialogResultComponent, {
-        width: '520px',
-        data: {
-          title: 'Petition Approved!',
-          message: '',
-          success: true,
-        },
-      });
+      this._dialog
+        .open(DialogResultComponent, {
+          width: '520px',
+          data: {
+            title: 'Petition Approved!',
+            message: '',
+            success: true,
+          },
+        })
+        .afterClosed()
+        .subscribe(() => {
+          this.dialogRef.close();
+        });
       this.data = (_?.dataCandidate ?? _?.dataIssue)!;
     });
     this.loading$ = this._approvePetitionLogic.loading$;
