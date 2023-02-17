@@ -37,6 +37,7 @@ export class DenySignatureService {
     this.success$ = success$.pipe(
       map((value) => value.result),
       tap((value) => this._loggingService.log(value)),
+      tap((_) => console.log('REQUEST', _)),
       shareReplay(1)
     );
 
@@ -51,7 +52,7 @@ export class DenySignatureService {
     this.loading$ = merge(
       this.submit$.pipe(
         map((v) => true),
-        tap(() => this._loggingService.log('start'))
+        tap(() => this._loggingService.log('start end'))
       ),
       end$.pipe(
         map((v) => false),

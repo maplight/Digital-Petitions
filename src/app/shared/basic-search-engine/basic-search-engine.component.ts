@@ -5,6 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  merge,
+  Observable,
+  Subject,
+} from 'rxjs';
 
 @Component({
   selector: 'dp-basic-search-engine',
@@ -13,9 +20,16 @@ import {
 export class BasicSearchEngineComponent {
   @Input() disabled: boolean = false;
   @Input() name: string = 'Search';
-  @Output() event: EventEmitter<string> = new EventEmitter();
-  public formGroup: FormGroup;
 
+  private readonly _event = new EventEmitter<string>();
+  searchUpdate = new Subject<string>();
+
+  @Output() event: Observable<string> = merge(
+    this._event,
+    this.searchUpdate.pipe(debounceTime(400), distinctUntilChanged())
+  );
+
+  public formGroup: FormGroup;
   constructor(private _fb: FormBuilder) {
     this.formGroup = this._fb.group({
       keyword: [''],
@@ -24,7 +38,11 @@ export class BasicSearchEngineComponent {
 
   protected sendFilter() {
     if (!this.disabled) {
-      this.event.emit(this.formGroup.value.keyword);
+      this._event.emit(this.formGroup.value.keyword);
     }
+  }
+
+  protected submit(event: any) {
+    this.searchUpdate.next(event.target.value);
   }
 }

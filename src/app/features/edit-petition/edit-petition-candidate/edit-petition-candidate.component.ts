@@ -19,6 +19,7 @@ import {
 } from 'src/app/core/api/API';
 import { State, states } from 'src/app/core/states';
 import { EditPetitionCandidateService } from 'src/app/logic/petition/edit-petition-candidate.service';
+import { OFFICES, PARTIES } from 'src/app/shared/models/common/default_values';
 import { CandidatePetitionData, Result } from 'src/app/shared/models/exports';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-edit-petition.component';
@@ -30,8 +31,8 @@ import { ConfirmEditPetitionComponent } from '../confirm-edit-petition/confirm-e
 })
 export class EditPetitionCandidateComponent implements OnInit, OnChanges {
   @Input() formData: ResponsePetition = {};
-  @Input() offices: string[] = ['Office-1', 'Office-2', 'Office-3', 'Office-4'];
-  @Input() parties: string[] = ['Party-1', 'Party-2', 'Party-3', 'Party-4'];
+  @Input() offices: string[] = OFFICES;
+  @Input() parties: string[] = PARTIES;
 
   @Output() _cancelEvent: EventEmitter<void> = new EventEmitter();
   @Output() _submitEvent: EventEmitter<CandidatePetition> = new EventEmitter();

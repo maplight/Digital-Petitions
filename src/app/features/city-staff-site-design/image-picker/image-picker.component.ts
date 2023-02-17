@@ -4,7 +4,7 @@ import { AssetType } from 'src/app/core/api/API';
 import { GetImageDataService } from 'src/app/logic/admin/get-image-data.service';
 import { GetUrlDataService } from 'src/app/logic/admin/get-url-data.service';
 import { SetImageDataService } from 'src/app/logic/admin/set-image-data.service';
-import { Observable, merge } from 'rxjs';
+import { Observable, merge, tap, map } from 'rxjs';
 
 @Component({
   selector: 'dp-image-picker',
@@ -71,6 +71,12 @@ export class ImagePickerComponent implements OnInit {
       this._getImgLogic.error$,
       this._setImgLogic.error$,
       this._getUrlLogic.error$
+    ).pipe(
+      map((item: any) =>
+        typeof item === 'string'
+          ? item
+          : 'It seems that something happened. Please try again'
+      )
     );
 
     this.loading$ = merge(

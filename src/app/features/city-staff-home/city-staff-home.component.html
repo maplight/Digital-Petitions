@@ -45,7 +45,7 @@
       [data]="item"
       [disabled]="!!(loading$ | async)"
       [showType]="true"
-      [showStatus]="true"
+      [showStatus]="false"
       [showExtraDates]="true"
       [characters]="250"
       [basicRoute]="'/city-staff/home/'"
@@ -58,7 +58,7 @@
       <h3 class="leading-7 font-extrabold">You still have no petitions</h3>
     </div>
 
-    <dp-loading-bar *ngIf="(loading$ | async) && loadingDown"></dp-loading-bar>
+    <!-- <dp-loading-bar *ngIf="(loading$ | async) && loadingDown"></dp-loading-bar> -->
 
     <button
       mat-button
