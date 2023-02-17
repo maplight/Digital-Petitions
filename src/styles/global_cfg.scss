@@ -136,6 +136,12 @@ p {
 
 .mdc-menu-surface--open {
   background-color: white !important;
+  box-shadow: 0px 0px 10px rgba(132, 132, 132, 0.15);
+  border-radius: 4px;
+  .mat-mdc-option.mdc-list-item:hover {
+    background-color: var(--theme-primary-color-300);
+    color: var(--theme-primary-color-contrast-300);
+  }
 }
 .mat-mdc-chip-set .mdc-evolution-chip-set__chips {
   justify-content: end !important;
@@ -336,6 +342,10 @@ $table-border: #d7d7d7;
     height: auto !important;
   }
 
+  .mdc-text-field .mdc-floating-label {
+    top: 22px !important;
+  }
+
   .mat-mdc-form-field-flex {
     @apply flex items-center border-solid border-1 rounded-lg border-transparent bg-gray-200 #{!important};
     padding: 0px 0px !important;
@@ -346,6 +356,7 @@ $table-border: #d7d7d7;
     padding: 6px 16px !important;
     .mat-mdc-form-field-input-control {
       margin-top: 10px;
+      font-family: "Mulish";
     }
   }
   .mat-mdc-select-value {
