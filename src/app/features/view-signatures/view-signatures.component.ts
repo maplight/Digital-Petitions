@@ -1,10 +1,7 @@
 import {
-  AfterViewInit,
   Component,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject, Subscription, takeUntil, tap } from 'rxjs';
@@ -12,7 +9,6 @@ import {
   PetitionStatusQuery,
   Signature,
   SignaturesByPetitionInput,
-  SignatureStatus,
   SignatureStatusQuery,
 } from 'src/app/core/api/API';
 import { GetStaffPetitionService } from 'src/app/logic/petition/get-staff-petition.service';
@@ -164,7 +160,6 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     if (
       this.signaturesSelected.filter(
         (x) => x.status != 'APPROVED'
-        // && x.status != 'REJECTED'
       ).length > 0
     ) {
       this.error = undefined;
@@ -181,7 +176,6 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
     if (
       this.signaturesSelected.filter(
         (x) =>
-          // x.status != 'APPROVED' &&
           x.status != 'REJECTED'
       ).length > 0
     ) {
