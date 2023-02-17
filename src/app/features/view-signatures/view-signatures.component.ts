@@ -106,35 +106,29 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = [];
         this.signaturesSelected = [];
         this.getSignatures();
-        console.log('RESULT', result);
       });
     //deny signature
     this._denyLogic.success$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         this.disabledFilter = false;
-
         this.typeAlert = 'success';
         this.messageAlert = 'One signature successfully denied';
-
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
         this.getSignatures();
-        console.log('DENIED', result);
       });
 
     this._approveLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        console.log(data);
         this.error = data;
       });
 
     this._denyLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        console.log(data);
         this.error = data;
       });
     this.loadingGetSignatures$ = this._getSignatureLogic.loading$;
