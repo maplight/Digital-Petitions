@@ -121,6 +121,18 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.signaturesSelected = [];
         this.getSignatures();
       });
+
+    this._approveLogic.error$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.error = data;
+      });
+
+    this._denyLogic.error$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.error = data;
+      });
     this.loadingGetSignatures$ = this._getSignatureLogic.loading$;
     this.loadingApprove$ = this._approveLogic.loading$;
     this.loadingDeny$ = this._denyLogic.loading$;
@@ -152,9 +164,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
 
   approve() {
     if (
-      this.signaturesSelected.filter(
-        (x) => x.status != 'APPROVED' && x.status != 'REJECTED'
-      ).length > 0
+      this.signaturesSelected.filter((x) => x.status != 'APPROVED').length > 0
     ) {
       this.error = undefined;
       this._approveLogic.approveSignature({
@@ -162,15 +172,13 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       });
     } else {
       this.error =
-        'Your selection contains one or more signatures that have already been previously approved or denied. Please make sure that your selection only contains pending signatures.';
+        'Your selection contains one or more signatures that have already been previously approved. Please make sure that your selection only contains pending or denied signatures.';
     }
   }
 
   deny() {
     if (
-      this.signaturesSelected.filter(
-        (x) => x.status != 'APPROVED' && x.status != 'REJECTED'
-      ).length > 0
+      this.signaturesSelected.filter((x) => x.status != 'REJECTED').length > 0
     ) {
       this.error = undefined;
       this._denyLogic.denySignature({
@@ -178,7 +186,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       });
     } else {
       this.error =
-        'Your selection contains one or more signatures that have already been previously approved or denied. Please make sure that your selection only contains pending signatures.';
+        'Your selection contains one or more signatures that have already been previously denied. Make sure your selection only contains pending or approved signatures.';
     }
   }
 
