@@ -27,6 +27,7 @@ export class ApproveDialogComponent implements OnInit {
 
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
+  minDate = new Date(2023, 2, 17);
 
   constructor(
     public _dialog: MatDialog,
