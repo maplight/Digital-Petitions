@@ -106,7 +106,6 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = [];
         this.signaturesSelected = [];
         this.getSignatures();
-        console.log('RESULT', result);
       });
     //deny signature
     this._denyLogic.success$
@@ -121,20 +120,17 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
         this.items = [];
         this.signaturesSelected = [];
         this.getSignatures();
-        console.log('DENIED', result);
       });
 
     this._approveLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        console.log(data);
         this.error = data;
       });
 
     this._denyLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        console.log(data);
         this.error = data;
       });
     this.loadingGetSignatures$ = this._getSignatureLogic.loading$;
@@ -168,10 +164,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
 
   approve() {
     if (
-      this.signaturesSelected.filter(
-        (x) => x.status != 'APPROVED'
-        // && x.status != 'REJECTED'
-      ).length > 0
+      this.signaturesSelected.filter((x) => x.status != 'APPROVED').length > 0
     ) {
       this.error = undefined;
       this._approveLogic.approveSignature({
@@ -185,11 +178,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
 
   deny() {
     if (
-      this.signaturesSelected.filter(
-        (x) =>
-          // x.status != 'APPROVED' &&
-          x.status != 'REJECTED'
-      ).length > 0
+      this.signaturesSelected.filter((x) => x.status != 'REJECTED').length > 0
     ) {
       this.error = undefined;
       this._denyLogic.denySignature({
