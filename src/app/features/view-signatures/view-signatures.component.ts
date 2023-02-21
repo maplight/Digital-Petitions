@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import {
@@ -158,9 +154,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
 
   approve() {
     if (
-      this.signaturesSelected.filter(
-        (x) => x.status != 'APPROVED'
-      ).length > 0
+      this.signaturesSelected.filter((x) => x.status != 'APPROVED').length > 0
     ) {
       this.error = undefined;
       this._approveLogic.approveSignature({
@@ -174,10 +168,7 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
 
   deny() {
     if (
-      this.signaturesSelected.filter(
-        (x) =>
-          x.status != 'REJECTED'
-      ).length > 0
+      this.signaturesSelected.filter((x) => x.status != 'REJECTED').length > 0
     ) {
       this.error = undefined;
       this._denyLogic.denySignature({
