@@ -10,7 +10,12 @@
       <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <mat-form-field class="w-full">
         <mat-label>Set Deadline</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="deadline" />
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [min]="minDate"
+          formControlName="deadline"
+        />
         <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
 

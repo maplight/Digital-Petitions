@@ -1,18 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import {
   PetitionStatusQuery,
   Signature,
   SignaturesByPetitionInput,
-  SignatureStatus,
   SignatureStatusQuery,
 } from 'src/app/core/api/API';
 import { GetStaffPetitionService } from 'src/app/logic/petition/get-staff-petition.service';
@@ -112,10 +104,8 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((result) => {
         this.disabledFilter = false;
-
         this.typeAlert = 'success';
         this.messageAlert = 'One signature successfully denied';
-
         this.showAlert = true;
         this.items = [];
         this.signaturesSelected = [];
