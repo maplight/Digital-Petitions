@@ -29,6 +29,7 @@ import { GetSignaturesService } from 'src/app/logic/signature/get-signatures.ser
 import { ViewSignaturesComponent } from './view-signatures.component';
 import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GetStaffPetitionService } from 'src/app/logic/petition/get-staff-petition.service';
 
 describe('ViewSignaturesComponent', () => {
   let component: ViewSignaturesComponent;
@@ -37,6 +38,7 @@ describe('ViewSignaturesComponent', () => {
   let _approveSignatureService: ApproveSignatureService;
   let _denySignatureService: DenySignatureService;
   const activatedRoute = new ActivatedRouteStub({ id: 'id' });
+  let getStaffPetitionService: GetStaffPetitionService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -76,6 +78,10 @@ describe('ViewSignaturesComponent', () => {
             {
               provide: ActivatedRoute,
               useValue: activatedRoute,
+            },
+            {
+              provide: GetStaffPetitionService,
+              useValue: getStaffPetitionService,
             },
           ],
         },
