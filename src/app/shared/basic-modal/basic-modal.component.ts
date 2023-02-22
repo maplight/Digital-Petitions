@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'dp-basic-modal',
@@ -11,7 +11,6 @@ export class BasicModalComponent {
   onCancelClick(): void {
     this.dialogRef.close();
   }
-
   @Output()
   sendEvent = new EventEmitter<void>();
 

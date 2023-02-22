@@ -1,10 +1,12 @@
 <div class="w-full flex justify-center" *ngIf="viewState$ | async as viewState">
   <div class="flex flex-col max-w-[432px] w-full">
-    <h1 class="p-6 font-extrabold">Log in</h1>
+    <h1 class="p-6 font-extrabold">Admin Portal</h1>
     <dp-basic-card class="w-full">
       <div class="w-full flex justify-start">
         <h4 class="font-bold text-lg">
-          {{ viewState === "LOGIN" ? "Create an account" : "Complete sign up" }}
+          {{
+            viewState === "LOGIN" ? "Log in with account" : "Complete sign up"
+          }}
         </h4>
       </div>
       <dp-error-msg
@@ -27,7 +29,7 @@
       </dp-error-msg>
       <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <form
-        class="grid grid-cols-1 gap-[16px]"
+        class="grid grid-cols-1 gap-1"
         [formGroup]="formGroup"
         (ngSubmit)="submit()"
         *ngIf="viewState === 'LOGIN'; else changePassword"
@@ -36,22 +38,10 @@
           <mat-label>Email</mat-label>
           <input type="text" matInput formControlName="email" />
           <mat-error *ngIf="formGroup.get('email')!.getError('required')">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Email is required</span>
-            </div>
+            <dp-input-error [message]="'Email is required'"></dp-input-error>
           </mat-error>
           <mat-error *ngIf="formGroup.get('email')!.getError('email')">
-            <div class="flex flex-row items-center">
-              <mat-icon
-                class="w-[14px] h-[14px]"
-                [svgIcon]="'custom_icons:c_close'"
-              ></mat-icon>
-              <span class="ml-[9px]">Email is incorrect</span>
-            </div>
+            <dp-input-error [message]="'Email is incorrect'"></dp-input-error>
           </mat-error>
         </mat-form-field>
         <span class="w-full flex flex-col justify-end">
@@ -63,10 +53,9 @@
               formControlName="password"
             />
             <mat-error *ngIf="formGroup.get('password')!.getError('required')">
-              <div class="flex flex-row items-center">
-                <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
-                <span class="ml-[9px]">Password is required</span>
-              </div>
+              <dp-input-error
+                [message]="'Password is required'"
+              ></dp-input-error>
             </mat-error>
             <button
               type="button"

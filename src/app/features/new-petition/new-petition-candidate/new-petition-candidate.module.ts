@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewPetitionCandidateComponent } from './new-petition-candidate.component';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { BasicCardModule } from 'src/app/shared/basic-card/basic-card.module';
+import { InputErrorModule } from 'src/app/shared/input-error/input-error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { NewPetitionCandidateService } from 'src/app/logic/petition/new-petition-candidate.service';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
 import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
@@ -21,6 +22,7 @@ import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
     BasicCardModule,
     FormsModule,
     ReactiveFormsModule,
+    InputErrorModule,
     MatInputModule,
     MatButtonModule,
     MatSelectModule,

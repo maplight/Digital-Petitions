@@ -5,13 +5,14 @@ import { ViewSignaturesRoutingModule } from './view-signatures-routing.module';
 import { ViewSignaturesAlertModule } from './view-signatures-alert/view-signatures-alert.module';
 import { ReturnLinkModule } from 'src/app/shared/return-link/return-link.module';
 import { BasicSearchEngineModule } from 'src/app/shared/basic-search-engine/basic-search-engine.module';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ViewSignaturesTableModule } from './view-signatures-table/view-signatures-table.module';
 import { LoadingBarModule } from 'src/app/shared/loading/loading-bar.module';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { SortSignaturesModule } from './sort-signatures/sort-signatures.module';
 import { FilterByCategoryModule } from 'src/app/shared/filter-by-category/filter-by-category.module';
 import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-status.module';
+import { ErrorMsgModule } from 'src/app/shared/error-msg/error-msg.module';
 
 @NgModule({
   declarations: [ViewSignaturesComponent],
@@ -28,6 +29,7 @@ import { FilterByStatusModule } from 'src/app/shared/filter-by-status/filter-by-
     LoadingBarModule,
     MatButtonModule,
     SortSignaturesModule,
+    ErrorMsgModule,
   ],
 })
 export class ViewSignaturesModule {}

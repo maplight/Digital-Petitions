@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -83,7 +83,7 @@ describe('NewPetitionComponent', () => {
   it('evaluate that type selector component is default loaded', () => {
     const element = fixture.debugElement.nativeElement.querySelector('h4');
     expect(element.textContent).toEqual(
-      ' Choose the type of petiton you will be submitting '
+      ' Choose the type of petition you will be submitting '
     );
   });
 

@@ -35,7 +35,7 @@
       </h3></ng-template
     >
     <p>
-      {{ issue.detail | cut: characters }}
+      {{ issue.detail | cut : characters }}
       <span
         *ngIf="showMoreOption"
         class="block font-bold text-primary-500 cursor-pointer"
@@ -48,12 +48,14 @@
         <mat-progress-bar
           color="primary"
           [value]="
-            ((signature.approved ?? 0) / (signature.required ?? 1)) * 100
+            ((signature.approved ?? signature.submitted ?? 0) /
+              (signature.required ?? 1)) *
+            100
           "
           [bufferValue]="signature.required ?? 0"
         ></mat-progress-bar>
         <p class="text-[14px] leading-[18px] font-bold">
-          {{ signature.approved ?? 0 }} /
+          {{ signature.approved ?? signature.submitted ?? 0 }} /
           {{ signature.required ?? 0 }} Signatures Submitted
         </p>
       </div>
@@ -61,7 +63,7 @@
 
     <div class="flex flex-col w-full gap-2" *ngIf="showExtraDates">
       <p class="text-sm leading-[18px]">
-        <b>Date Submitted:</b> {{ issue.createdAt | date: "medium" }}
+        <b>Date Submitted:</b> {{ issue.createdAt | date : "medium" }}
       </p>
     </div>
 
@@ -137,19 +139,26 @@
         <mat-progress-bar
           color="primary"
           [value]="
-            ((signature.approved ?? 0) / (signature.required ?? 1)) * 100
+            ((signature.approved ?? signature.submitted ?? 0) /
+              (signature.required ?? 1)) *
+            100
           "
           [bufferValue]="signature.required ?? 0"
         ></mat-progress-bar>
         <p class="text-[14px] leading-[18px] font-bold">
-          {{ signature.approved ?? 0 }} /
-          {{ signature.required ?? 0 }} Signatures Submitted
+          {{ signature.approved ?? signature.submitted ?? 0 }} /
+          {{ signature.required ?? 0 }}
+          {{
+            (signature.required ?? 0) > 1
+              ? "Signatures Submitted"
+              : "Signature Submitted"
+          }}
         </p>
       </div></ng-container
     >
     <div class="flex flex-col w-full gap-2" *ngIf="showExtraDates">
       <p class="text-sm leading-[18px]">
-        <b>Date Submitted:</b> {{ candidate.createdAt | date: "medium" }}
+        <b>Date Submitted:</b> {{ candidate.createdAt | date : "medium" }}
       </p>
     </div>
 

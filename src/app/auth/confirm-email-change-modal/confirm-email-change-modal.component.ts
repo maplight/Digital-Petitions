@@ -5,7 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 import { Router } from '@angular/router';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ConfirmChangeEmailService } from 'src/app/logic/auth/exports';
@@ -38,7 +39,7 @@ export class ConfirmEmailChangeModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         this.dialogRef.close();
-        this.openDialog('Password Successfully Changed!', '', true);
+        this.openDialog('Email successfully changed!', '', true);
       });
     this._confirmChangeEmailLogic.error$
       .pipe(takeUntil(this._unsubscribeAll))

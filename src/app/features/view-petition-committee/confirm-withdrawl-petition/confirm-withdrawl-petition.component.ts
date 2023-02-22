@@ -1,4 +1,3 @@
-import { DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -6,9 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _withdrawlLogic: WithdrawPetitionService,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number },
+    @Inject(MAT_DIALOG_DATA) public data: { id: number; title: string },
     private _dialog: MatDialog,
     private _router: Router
   ) {

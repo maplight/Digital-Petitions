@@ -5,16 +5,15 @@
       We’ve sent a confirmation code to the new email address. Enter the code to
       confirm your new email
     </p>
-    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-6">
+    <form [formGroup]="formGroup" class="w-full grid grid-cols-1 gap-1">
       <dp-loading-bar *ngIf="loading$ | async"></dp-loading-bar>
       <mat-form-field>
         <mat-label>Confirmation Code</mat-label>
         <input type="text" matInput formControlName="code" />
         <mat-error *ngIf="this.formGroup.get('code')?.errors?.['required']">
-          <div class="flex flex-row items-center">
-            <mat-icon [svgIcon]="'custom_icons:c_close'"></mat-icon>
-            <span class="ml-[9px]">Confirmation Code is required</span>
-          </div>
+          <dp-input-error
+            [message]="'Confirmation Code is required'"
+          ></dp-input-error>
         </mat-error>
       </mat-form-field>
     </form>

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, Observable, takeUntil, tap, map } from 'rxjs';
 import {
@@ -9,6 +9,7 @@ import {
 } from 'src/app/core/api/API';
 import { GetCommitteePetitionService } from 'src/app/logic/petition/get-committee-petition.service';
 import { GetPublicPetitionService } from 'src/app/logic/petition/get-public-petition.service';
+import { ViewPetitionNameService } from 'src/app/logic/petition/view-petition-name.service';
 import { ResponsePetition } from 'src/app/shared/models/petition/response-petition';
 import { AlertWithdrawlPetitionComponent } from './alert-withdrawl-petition/alert-withdrawl-petition.component';
 import { ConfirmWithdrawlPetitionComponent } from './confirm-withdrawl-petition/confirm-withdrawl-petition.component';
@@ -35,7 +36,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
     'flex bg-[#FF3030] px-4 py-1 rounded-full items-center justify-center';
   constructor(
     private _getPetitionLogic: GetCommitteePetitionService,
-
+    private _getTitle: ViewPetitionNameService,
     protected _activatedRoute: ActivatedRoute,
     public _alertDialogRef: MatDialogRef<AlertWithdrawlPetitionComponent>,
     public _confirmDalogRef: MatDialogRef<ConfirmWithdrawlPetitionComponent>,
@@ -49,6 +50,10 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.success$ = this._getPetitionLogic.success$.pipe(
       tap((result) => {
+        this._getTitle.setTitle(
+          result?.dataCandidate?.PK! ?? result?.dataIssue?.PK!,
+          result?.dataCandidate?.name! ?? result?.dataIssue?.title!
+        );
         this.setState(result);
       })
     );
