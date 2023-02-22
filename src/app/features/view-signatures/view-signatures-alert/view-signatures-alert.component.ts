@@ -28,7 +28,6 @@ export class ViewSignaturesAlertComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data'].currentValue.message != '') {
       let sub: ReplaySubject<boolean> = new ReplaySubject<boolean>();
-      console.log(changes);
 
       switch (changes['data'].currentValue.type) {
         case 'alert':

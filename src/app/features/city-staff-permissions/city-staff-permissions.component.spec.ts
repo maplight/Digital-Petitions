@@ -117,7 +117,15 @@ describe('CityStaffPermissionsComponent', () => {
 
     component.pageNumber();
 
-    expect(getPetitionsSpy).toHaveBeenCalledOnceWith(true);
+    expect(getPetitionsSpy).toHaveBeenCalledOnceWith(
+      {
+        cursor: 'cursor',
+        limit: 10,
+        searchEmail: 'example@email.com',
+        searchName: 'exampleText',
+      },
+      true
+    );
   });
 
   it('should show a new member dialog when a "openDialogNewMenber" function is called', () => {
