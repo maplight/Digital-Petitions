@@ -11,7 +11,6 @@ export class BasicModalComponent {
   onCancelClick(): void {
     this.dialogRef.close();
   }
-
   @Output()
   sendEvent = new EventEmitter<void>();
 
