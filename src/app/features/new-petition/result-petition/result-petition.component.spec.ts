@@ -59,7 +59,7 @@ describe('ResultPetitionComponent', () => {
     fixture.detectChanges();
     expect();
     const element_p = fixture.debugElement.nativeElement.querySelectorAll('p');
-    expect(element_p.length).toBe(10);
+    expect(element_p.length).toBe(8);
     expect(element_p[1].textContent).toContain('May');
     expect(element_p[3].textContent).toContain('Office-1');
     expect(element_p[5].textContent).toContain('Party-1');

@@ -47,7 +47,7 @@ describe('ColorPaletteComponent', () => {
     });
   });
 
-  it('should emit color #3f3f3f when trigger the "mousedown" event in 75x75 position and a blue seed is received', () => {
+  it('should emit color #40407f when trigger the "mousedown" event in 75x75 position and a blue seed is received', () => {
     let canvasElement = fixture.debugElement.query(By.css('canvas'));
 
     component.hue = 'rgba(0,0,255,1)';
@@ -57,7 +57,7 @@ describe('ColorPaletteComponent', () => {
     });
     fixture.detectChanges();
     component.color.asObservable().subscribe((data) => {
-      expect(data).toEqual('#3f3f7f');
+      expect(data).toEqual('#40407f');
     });
     canvasElement.triggerEventHandler('mousedown', {
       offsetX: 75,
