@@ -61,7 +61,7 @@ describe('GetAllUsersService', () => {
         },
       });
     });
-    service.getMembers(false);
+    service.getMembers({}, false);
   });
 
   it('"success$" should emit a <UserConnection> value when getAllUser emit a correct value', () => {
@@ -94,7 +94,15 @@ describe('GetAllUsersService', () => {
         ],
       });
     });
-    service.getMembers(false);
+    service.getMembers(
+      {
+        cursor: 'cursor',
+        limit: 10,
+        searchEmail: 'example@email.com',
+        searchName: 'searchName',
+      },
+      false
+    );
   });
 
   it('"error$" should emit a "string" value when getAllUser emit a error value', () => {
@@ -107,7 +115,15 @@ describe('GetAllUsersService', () => {
     service.error$.subscribe((data) => {
       expect(data).toEqual('some error');
     });
-    service.getMembers(false);
+    service.getMembers(
+      {
+        cursor: 'cursor',
+        limit: 10,
+        searchEmail: 'example@email.com',
+        searchName: 'exampleName',
+      },
+      false
+    );
   });
 
   it('"loading$" should emit a "boolean" value when getAllUser emit any value', () => {
@@ -121,6 +137,14 @@ describe('GetAllUsersService', () => {
       data ? expect(data).toEqual(true) : expect(data).toEqual(false);
     });
 
-    service.getMembers(false);
+    service.getMembers(
+      {
+        cursor: 'cursor',
+        limit: 10,
+        searchEmail: 'email@example.com',
+        searchName: 'exampleName',
+      },
+      false
+    );
   });
 });
