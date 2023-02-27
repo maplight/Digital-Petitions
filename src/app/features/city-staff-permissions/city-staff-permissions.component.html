@@ -19,7 +19,9 @@
         <mat-form-field appearance="fill">
           <mat-label>Search by Access Level</mat-label>
           <mat-select>
-            <mat-option (click)="searchAccessLevel('Any')">Any</mat-option>
+            <mat-option value="Any" (click)="searchAccessLevel('Any')"
+              >Any</mat-option
+            >
             <mat-option
               *ngFor="let item of filterAccesLevel"
               [value]="item.value"
@@ -47,7 +49,15 @@
   >
   </dp-error-msg>
   <dp-loading-bar *ngIf="(loading$ | async) && loadingUp"></dp-loading-bar>
-  <ng-container *ngIf="items">
+  <ng-template #noResult>
+    <div
+      class="flex flex-row w-full justify-center align-items: center;"
+      *ngIf="!(loading$ | async)"
+    >
+      <h1>Sorry, nothing found</h1>
+    </div></ng-template
+  >
+  <ng-container *ngIf="items.length; else noResult">
     <table mat-table [dataSource]="items" [class]="tableStyle">
       <ng-container matColumnDef="member">
         <th mat-header-cell *matHeaderCellDef>
