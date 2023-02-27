@@ -80,7 +80,7 @@ describe('ConfirmEmailChangeModalComponent', () => {
     ).and.returnValue(of('SUCCESS'));
     fixture.detectChanges();
     expect(functionSpy).toHaveBeenCalledOnceWith(
-      'Password Successfully Changed!',
+      'Email successfully changed!',
       '',
       true
     );

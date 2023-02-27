@@ -197,7 +197,7 @@ describe('Forgot Password', () => {
       $button[2].click();
     });
     cy.get('h4').should(($h4) => {
-      expect($h4[0].textContent).equal('Password Reset');
+      expect($h4[0].textContent).equal('Set New Password');
     });
   });
 });

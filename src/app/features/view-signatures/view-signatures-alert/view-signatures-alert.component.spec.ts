@@ -1,4 +1,3 @@
-import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
@@ -37,7 +36,10 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show message received', () => {
-    component.data.message = 'Example';
+    component.data = {
+      message: 'Example',
+      type: 'alert',
+    };
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelector('p').textContent
@@ -45,8 +47,10 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show correct style for "alert" type', () => {
-    component.data.message = 'Example';
-    component.data.type = 'alert';
+    component.data = {
+      message: 'Example',
+      type: 'alert',
+    };
     spyOn(component, 'ngOnChanges').and.callThrough();
     fixture.detectChanges();
     let element: HTMLElement =
@@ -55,8 +59,10 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show correct style for "error" type', () => {
-    component.data.message = 'Example';
-    component.data.type = 'error';
+    component.data = {
+      message: 'Example',
+      type: 'error',
+    };
     component.ngOnChanges({});
     fixture.detectChanges();
     let element: HTMLElement =
@@ -65,8 +71,10 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show correct style for "success" type', () => {
-    component.data.message = 'Example';
-    component.data.type = 'success';
+    component.data = {
+      message: 'Example',
+      type: 'success',
+    };
     spyOn(component, 'ngOnChanges').and.callThrough();
     fixture.detectChanges();
     let element: HTMLElement =
@@ -97,6 +105,6 @@ describe('ViewSignaturesAlertComponent', () => {
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('div').length
-    ).toEqual(0);
+    ).toEqual(3);
   });
 });

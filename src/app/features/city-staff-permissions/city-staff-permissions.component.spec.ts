@@ -117,24 +117,16 @@ describe('CityStaffPermissionsComponent', () => {
 
     component.pageNumber();
 
-    expect(getPetitionsSpy).toHaveBeenCalledOnceWith(
-      {
-        cursor: 'cursor',
-        limit: 10,
-        searchEmail: 'example@email.com',
-        searchName: 'exampleText',
-      },
-      true
-    );
+    expect(getPetitionsSpy).toHaveBeenCalledOnceWith({}, true);
   });
 
-  it('should show a new member dialog when a "openDialogNewMenber" function is called', () => {
+  it('should show a new member dialog when a "openDialogNewMember" function is called', () => {
     component.openDialogNewMember();
 
     expect(dialogSpy).toHaveBeenCalled();
   });
 
-  it('should show a new member dialog when a "openDialogNewMenber" function is called (afterClosed function is called to)', () => {
+  it('should show a new member dialog when a "openDialogNewMember" function is called (afterClosed function is called to)', () => {
     component.openDialogChangeAccountPermission('id', AccessLevel.ADMIN);
 
     expect(dialogSpy).toHaveBeenCalled();

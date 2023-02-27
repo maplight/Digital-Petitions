@@ -84,7 +84,7 @@ describe('ChangePersonalDetailsModalComponent', () => {
     fixture.detectChanges();
 
     expect(functionSpy).toHaveBeenCalledOnceWith(
-      'Password Successfully Changed!',
+      'Personal Data successfully changed!',
       '',
       true
     );
@@ -108,7 +108,7 @@ describe('ChangePersonalDetailsModalComponent', () => {
     );
   });
 
-  it('should call the funcion "setPersonalDetailsToUpdate" in the service when submit function is called in the component and the form is valid', () => {
+  it('should call the function "setPersonalDetailsToUpdate" in the service when submit function is called in the component and the form is valid', () => {
     const functionSpy = spyOn(
       _changePersonalDetailsService,
       'setPersonalDetailsToUpdate'

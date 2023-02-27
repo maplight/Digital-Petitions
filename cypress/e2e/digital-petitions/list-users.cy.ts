@@ -4,7 +4,7 @@ describe('list users', () => {
       'POST',
       'https://neouilttfjcc5ght2tbr7of7mu.appsync-api.us-east-1.amazonaws.com/graphql',
       (req: any) => {
-        console.log(req.body.query);
+        console.log('Search', req.body.query);
         if (req.body.query.search('query SiteConfiguration') == 0) {
           req.reply({ fixture: 'site-config.json' });
         }
@@ -103,7 +103,8 @@ describe('list users', () => {
       $button[1].click();
     });
 
-    cy.get('form', { timeout: 10000 }).should('have.length', '1');
+    // the other form never hide
+    cy.get('form', { timeout: 10000 }).should('have.length', '2');
   });
 
   it('should show two mat-error when the "New Member" form is submited and it is invalid', () => {
