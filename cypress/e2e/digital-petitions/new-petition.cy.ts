@@ -86,12 +86,12 @@ describe('empty spec', () => {
 
   it('should show new issue petition form when "Continue" button is clicked and issue type is selected', () => {
     cy.wait(2000);
-
     cy.get('mat-radio-button[id="mat-radio-3"]', { timeout: 10000 }).click();
-    cy.wait(1000);
+
     cy.get('button', { timeout: 10000 }).should(($button) => {
       $button[2].click();
     });
+    cy.wait(1000);
     cy.get('h4')
       .contains(
         'Please fill out all fields to submit your issue petition to the city.'
@@ -249,13 +249,13 @@ describe('empty spec', () => {
     cy.get('input[formcontrolname="city"]', { timeout: 10000 }).type('City');
 
     cy.get('mat-select[formcontrolname="state"]', { timeout: 10000 }).click();
-    cy.get('mat-option[id="mat-option-12"]', { timeout: 10000 }).click();
+    cy.get('mat-option[id="mat-option-18"]', { timeout: 10000 }).click();
     cy.wait(1000);
     cy.get('mat-select[formcontrolname="office"]', { timeout: 10000 }).click();
     cy.get('mat-option[id="mat-option-4"]', { timeout: 10000 }).click();
     cy.wait(1000);
     cy.get('mat-select[formcontrolname="party"]', { timeout: 10000 }).click();
-    cy.get('mat-option[id="mat-option-7"]', { timeout: 10000 }).click();
+    cy.get('mat-option[id="mat-option-9"]', { timeout: 10000 }).click();
 
     cy.get('button', { timeout: 10000 }).should(($button) => {
       $button[2].click();
@@ -291,13 +291,13 @@ describe('empty spec', () => {
     cy.get('input[formcontrolname="city"]', { timeout: 10000 }).type('City');
 
     cy.get('mat-select[formcontrolname="state"]', { timeout: 10000 }).click();
-    cy.get('mat-option[id="mat-option-12"]', { timeout: 10000 }).click();
+    cy.get('mat-option[id="mat-option-17"]', { timeout: 10000 }).click();
     cy.wait(1000);
     cy.get('mat-select[formcontrolname="office"]', { timeout: 10000 }).click();
     cy.get('mat-option[id="mat-option-4"]', { timeout: 10000 }).click();
     cy.wait(1000);
     cy.get('mat-select[formcontrolname="party"]', { timeout: 10000 }).click();
-    cy.get('mat-option[id="mat-option-7"]', { timeout: 10000 }).click();
+    cy.get('mat-option[id="mat-option-11"]', { timeout: 10000 }).click();
 
     cy.get('button', { timeout: 10000 }).should(($button) => {
       $button[2].click();
@@ -381,13 +381,13 @@ describe('empty spec', () => {
     cy.get('input[formcontrolname="city"]', { timeout: 10000 }).type('City');
 
     cy.get('mat-select[formcontrolname="state"]', { timeout: 10000 }).click();
-    cy.get('mat-option[id="mat-option-12"]', { timeout: 10000 }).click();
+    cy.get('mat-option[id="mat-option-31"]', { timeout: 10000 }).click();
     cy.wait(1000);
     cy.get('mat-select[formcontrolname="office"]', { timeout: 10000 }).click();
     cy.get('mat-option[id="mat-option-4"]', { timeout: 10000 }).click();
     cy.wait(1000);
     cy.get('mat-select[formcontrolname="party"]', { timeout: 10000 }).click();
-    cy.get('mat-option[id="mat-option-7"]', { timeout: 10000 }).click();
+    cy.get('mat-option[id="mat-option-11"]', { timeout: 10000 }).click();
     cy.wait(1000);
     cy.get('button', { timeout: 10000 }).should(($button) => {
       $button[2].click();
