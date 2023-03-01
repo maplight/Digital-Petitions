@@ -187,7 +187,7 @@ describe('NewPetitionComponent', () => {
     fixture.detectChanges();
     const element = fixture.debugElement.nativeElement.querySelector('h4');
     expect(element.textContent).toEqual(
-      ' Please fill out all fields to submit your candidate for ballot petition. '
+      'Please fill out all fields to submit your candidate for ballot petition.'
     );
   });
 });
