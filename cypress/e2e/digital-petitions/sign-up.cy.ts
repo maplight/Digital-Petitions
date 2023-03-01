@@ -21,7 +21,7 @@ describe('empty spec', () => {
       $a[0].click();
     });
     cy.get('h1').should(($h1) => {
-      expect($h1[0].textContent).equal('Log in');
+      expect($h1[0].textContent).equal('Admin Portal');
     });
   });
 

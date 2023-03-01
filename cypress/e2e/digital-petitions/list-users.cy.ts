@@ -4,7 +4,7 @@ describe('list users', () => {
       'POST',
       'https://neouilttfjcc5ght2tbr7of7mu.appsync-api.us-east-1.amazonaws.com/graphql',
       (req: any) => {
-        console.log('Search', req.body.query);
+        console.log(req.body.query);
         if (req.body.query.search('query SiteConfiguration') == 0) {
           req.reply({ fixture: 'site-config.json' });
         }
