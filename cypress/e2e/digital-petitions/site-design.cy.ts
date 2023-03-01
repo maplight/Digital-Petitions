@@ -94,9 +94,9 @@ describe('empty spec', () => {
     cy.get('dp-color-palette').click({ multiple: true });
     cy.get('dp-color-slider').click({ multiple: true });
     cy.get('p').should(($p) => {
-      expect($p[4].textContent).equal(' #3F7F7D ');
-      expect($p[6].textContent).equal(' #3F7F7D ');
-      expect($p[9].textContent).equal(' #3F7F7D ');
+      expect($p[4].textContent).equal(' #40807B ');
+      expect($p[6].textContent).equal(' #407F7D ');
+      expect($p[9].textContent).equal(' #40807B ');
     });
   });
 
