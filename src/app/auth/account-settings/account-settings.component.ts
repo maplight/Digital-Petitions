@@ -20,6 +20,12 @@ export class AccountSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this._accountService.currentUser;
+
+    this._accountService._updateUser$.subscribe((_) => {
+      if (_) {
+        this.currentUser = this._accountService.currentUser;
+      }
+    });
   }
 
   openDialogPassword(): void {
