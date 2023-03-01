@@ -13,7 +13,7 @@ import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
 })
 export class AccountSettingsComponent implements OnInit, OnDestroy {
   protected currentUser!: CognitoUserFacade | undefined;
-  subscribe: Subscription | undefined;
+  subscription!: Subscription;
   constructor(
     private dialog: MatDialog,
     private _accountService: AccountService
@@ -22,7 +22,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUser = this._accountService.currentUser;
 
-    this.subscribe = this._accountService._updateUser$.subscribe((_) => {
+    this.subscription = this._accountService._updateUser$.subscribe((_) => {
       if (_) {
         this.currentUser = this._accountService.currentUser;
       }
@@ -30,7 +30,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribe?.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   openDialogPassword(): void {
