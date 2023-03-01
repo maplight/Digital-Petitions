@@ -11,7 +11,7 @@ import { CognitoUserFacade } from 'src/app/shared/models/auth/user';
   selector: 'dp-committee-account-settings',
   templateUrl: './account-settings.component.html',
 })
-export class AccountSettingsComponent implements OnInit {
+export class AccountSettingsComponent implements OnInit, OnDestroy {
   protected currentUser!: CognitoUserFacade | undefined;
   subscribe: Subscription | undefined;
   constructor(
