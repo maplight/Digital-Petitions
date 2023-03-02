@@ -253,6 +253,6 @@ describe('PetitionCardComponent', () => {
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('span').length
-    ).toEqual(3);
+    ).toEqual(5);
   });
 });

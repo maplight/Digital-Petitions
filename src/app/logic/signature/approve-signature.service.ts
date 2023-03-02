@@ -43,6 +43,7 @@ export class ApproveSignatureService {
     this.error$ = error$.pipe(
       map((value) => value.error),
       tap((value) => this._loggingService.log(value)),
+      tap((value) => console.log('ERROR', value)),
       shareReplay(1)
     );
 
@@ -51,7 +52,7 @@ export class ApproveSignatureService {
     this.loading$ = merge(
       this.submit$.pipe(
         map((v) => true),
-        tap(() => this._loggingService.log('start'))
+        tap(() => this._loggingService.log('start approve'))
       ),
       end$.pipe(
         map((v) => false),

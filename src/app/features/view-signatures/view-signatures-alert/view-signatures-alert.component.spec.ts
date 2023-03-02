@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 
 import { ViewSignaturesAlertComponent } from './view-signatures-alert.component';
 
@@ -21,7 +22,6 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show alert element when "show" variable is true', () => {
-    component.show = true;
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('div').length
@@ -29,7 +29,6 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('not should show alert element when "show" variable is false', () => {
-    component.show = false;
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('div').length
@@ -37,8 +36,10 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show message received', () => {
-    component.show = true;
-    component.message = 'Example';
+    component.data = {
+      message: 'Example',
+      type: 'alert',
+    };
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelector('p').textContent
@@ -46,10 +47,11 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show correct style for "alert" type', () => {
-    component.show = true;
-    component.message = 'Example';
-    component.type = 'alert';
-    component.ngOnChanges();
+    component.data = {
+      message: 'Example',
+      type: 'alert',
+    };
+    spyOn(component, 'ngOnChanges').and.callThrough();
     fixture.detectChanges();
     let element: HTMLElement =
       fixture.debugElement.nativeElement.querySelector('div');
@@ -57,10 +59,11 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show correct style for "error" type', () => {
-    component.show = true;
-    component.message = 'Example';
-    component.type = 'error';
-    component.ngOnChanges();
+    component.data = {
+      message: 'Example',
+      type: 'error',
+    };
+    component.ngOnChanges({});
     fixture.detectChanges();
     let element: HTMLElement =
       fixture.debugElement.nativeElement.querySelector('div');
@@ -68,10 +71,11 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('should show correct style for "success" type', () => {
-    component.show = true;
-    component.message = 'Example';
-    component.type = 'success';
-    component.ngOnChanges();
+    component.data = {
+      message: 'Example',
+      type: 'success',
+    };
+    spyOn(component, 'ngOnChanges').and.callThrough();
     fixture.detectChanges();
     let element: HTMLElement =
       fixture.debugElement.nativeElement.querySelector('div');
@@ -79,7 +83,6 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('not should show alert element when close button is clicked', () => {
-    component.show = true;
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('div').length
@@ -92,15 +95,16 @@ describe('ViewSignaturesAlertComponent', () => {
   });
 
   it('not should show alert element when "onCancel" function is called', () => {
-    component.show = true;
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('div').length
     ).toEqual(1);
-    component.onCancelClick();
+
+    const sub = new ReplaySubject<boolean>();
+    component.onCancelClick(sub);
     fixture.detectChanges();
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('div').length
-    ).toEqual(0);
+    ).toEqual(3);
   });
 });

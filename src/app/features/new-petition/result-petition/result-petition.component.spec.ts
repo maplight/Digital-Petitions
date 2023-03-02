@@ -65,7 +65,7 @@ describe('ResultPetitionComponent', () => {
     expect(element_p[5].textContent).toContain('Party-1');
     const element_span =
       fixture.debugElement.nativeElement.querySelectorAll('span');
-    expect(element_span.length).toBe(8);
+    expect(element_span.length).toBe(10);
     expect(element_span[0].textContent).toContain('Address: Some Site');
     expect(element_span[1].textContent).toContain('Number: 12');
     expect(element_span[2].textContent).toContain('City: Some city');

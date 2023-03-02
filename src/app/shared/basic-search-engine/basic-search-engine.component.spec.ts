@@ -36,7 +36,7 @@ describe('BasicSearchEngineComponent', () => {
   });
 
   it('should emit form value when search button is clicked and form is valid', () => {
-    component.event.asObservable().subscribe((data) => {
+    component.event.subscribe((data: any) => {
       expect(data).toEqual('search');
     });
     component.formGroup.setValue({ keyword: 'search' });

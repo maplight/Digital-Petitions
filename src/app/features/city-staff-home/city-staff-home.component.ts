@@ -64,7 +64,10 @@ export class CityStaffHomeComponent implements OnInit {
     this.getPetitions();
   }
 
-  search(value: string) {}
+  search(value: string) {
+    this.loadingUp = true;
+    //this.petitions(true);
+  }
 
   filterCategory(value: PetitionType | undefined | 'ANY') {
     this.petitionsByTypeInput.type = value === 'ANY' ? undefined : value;

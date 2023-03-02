@@ -29,7 +29,10 @@
             [disabled]="!!(loading$ | async)"
             [basicRoute]="'/committee/home/'"
           ></dp-petition-card>
-          <div class="flex justify-center w-full" *ngIf="items.length === 0">
+          <div
+            class="flex justify-center w-full"
+            *ngIf="items.length === 0 && !(loading$ | async)"
+          >
             <h3 class="leading-7 font-extrabold">
               You still have no petitions
             </h3>

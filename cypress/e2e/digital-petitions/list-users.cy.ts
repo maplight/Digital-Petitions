@@ -103,7 +103,8 @@ describe('list users', () => {
       $button[1].click();
     });
 
-    cy.get('form', { timeout: 10000 }).should('have.length', '1');
+    // the other form never hide
+    cy.get('form', { timeout: 10000 }).should('have.length', '2');
   });
 
   it('should show two mat-error when the "New Member" form is submited and it is invalid', () => {

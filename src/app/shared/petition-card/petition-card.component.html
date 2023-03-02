@@ -48,12 +48,14 @@
         <mat-progress-bar
           color="primary"
           [value]="
-            ((signature.approved ?? 0) / (signature.required ?? 1)) * 100
+            ((signature.approved ?? signature.submitted ?? 0) /
+              (signature.required ?? 1)) *
+            100
           "
           [bufferValue]="signature.required ?? 0"
         ></mat-progress-bar>
         <p class="text-[14px] leading-[18px] font-bold">
-          {{ signature.approved ?? 0 }} /
+          {{ signature.approved ?? signature.submitted ?? 0 }} /
           {{ signature.required ?? 0 }} Signatures Submitted
         </p>
       </div>
@@ -137,12 +139,15 @@
         <mat-progress-bar
           color="primary"
           [value]="
-            ((signature.approved ?? 0) / (signature.required ?? 1)) * 100
+            ((signature.approved ?? signature.submitted ?? 0) /
+              (signature.required ?? 1)) *
+            100
           "
           [bufferValue]="signature.required ?? 0"
         ></mat-progress-bar>
         <p class="text-[14px] leading-[18px] font-bold">
-          {{ signature.approved ?? 0 }} / {{ signature.required ?? 0 }}
+          {{ signature.approved ?? signature.submitted ?? 0 }} /
+          {{ signature.required ?? 0 }}
           {{
             (signature.required ?? 0) > 1
               ? "Signatures Submitted"

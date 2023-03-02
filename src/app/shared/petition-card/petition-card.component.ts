@@ -66,6 +66,7 @@ export class PetitionCardComponent implements OnInit, OnChanges {
       this.showMoreOption = false;
     }
   }
+
   ngOnInit(): void {
     if (this.data.dataIssue) {
       this.showMoreOption = this.data.dataIssue.detail.length > this.characters;

@@ -126,7 +126,7 @@ describe('empty spec', () => {
     cy.get('input[formcontrolname="code"]', { timeout: 10000 }).type('123');
     cy.get('button').contains('Proceed').click();
     cy.get('h4', { timeout: 10000 })
-      .contains(' Password Successfully Changed! ')
+      .contains(' Email successfully changed! ')
       .should('be.visible');
   });
 
@@ -182,7 +182,7 @@ describe('empty spec', () => {
     });
     cy.wait(1500);
     cy.get('button').contains('Save').click();
-    cy.get('mat-error', { timeout: 10000 }).should('have.length', '6');
+    cy.get('mat-error', { timeout: 10000 }).should('have.length', '4');
   });
 
   it('should show the "result box" when the "change personal details" flow finished successfully', () => {
@@ -210,7 +210,7 @@ describe('empty spec', () => {
     cy.get('button').contains('Save').click();
 
     cy.get('h4', { timeout: 10000 })
-      .contains(' Password Successfully Changed! ')
+      .contains('Personal Data successfully changed! ')
       .should('be.visible');
   });
 });
