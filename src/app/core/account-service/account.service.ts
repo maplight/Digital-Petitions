@@ -44,6 +44,9 @@ export class AccountService {
   public isAuthenticated$: Observable<boolean> =
     this.isAuthenticatedController.asObservable();
 
+  private updateUser$ = new BehaviorSubject<any>({});
+  _updateUser$ = this.updateUser$.asObservable();
+
   /** The CognitoUser as it comes from the Auth.signIn method. */
   private _pristineCognitoUser: any;
 
@@ -292,6 +295,7 @@ export class AccountService {
     Auth.currentAuthenticatedUser()
       .then((data: CognitoUserFacade) => {
         this.currentUser = data;
+        this.updateUser$.next(true);
       })
       .catch((_) => {
         this.currentUser = undefined;
