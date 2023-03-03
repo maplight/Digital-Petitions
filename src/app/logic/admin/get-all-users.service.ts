@@ -73,6 +73,8 @@ export class GetAllUsersService {
   getMembers(searchUsersInput: SearchUsersInput, cursorFlag: boolean) {
     if (cursorFlag) {
       searchUsersInput.cursor = this.cursor;
+    } else {
+      delete searchUsersInput.cursor;
     }
     this.submit$.next(searchUsersInput);
   }
