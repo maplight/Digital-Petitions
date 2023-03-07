@@ -8,7 +8,8 @@ import {
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { TargetPetitionInput } from 'src/app/core/api/API';
 import { WithdrawPetitionService } from 'src/app/logic/petition/withdraw-petition.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _withdrawlLogic: WithdrawPetitionService,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number; title: string },
+    @Inject(MAT_DIALOG_DATA) public data: TargetPetitionInput,
     private _dialog: MatDialog,
     private _router: Router
   ) {
@@ -37,13 +38,17 @@ export class ConfirmWithdrawlPetitionComponent implements OnInit {
   }
   ngOnInit(): void {
     this._withdrawlLogic.success$.subscribe((result) => {
-      this._router.navigate(['/committee/home', this.data.id, result]);
+      this._router.navigate(['/committee/home', this.data.PK, result]);
       this._dialog.closeAll();
     });
     this.loading$ = this._withdrawlLogic.loading$;
+
+    this.error$ = this._withdrawlLogic.error$.pipe(
+      map(() => 'Something happened')
+    );
   }
 
   submit() {
-    this._withdrawlLogic.withdrawPetition(this.data.id);
+    this._withdrawlLogic.withdrawPetition(this.data);
   }
 }
