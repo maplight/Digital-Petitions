@@ -10,6 +10,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
+import { TargetPetitionInput } from 'src/app/core/api/API';
 import { LoggingService } from 'src/app/core/logging/loggin.service';
 import { Result } from 'src/app/shared/models/exports';
 import { PetitionService } from './petition.service';
@@ -20,7 +21,7 @@ export class WithdrawPetitionService {
   public success$: Observable<string | undefined>;
   public loading$: Observable<boolean>;
   public result$: Observable<Result<string>>;
-  private submit$: Subject<number> = new Subject();
+  private submit$: Subject<TargetPetitionInput> = new Subject();
 
   constructor(
     private _petitionService: PetitionService,
@@ -67,7 +68,7 @@ export class WithdrawPetitionService {
   @param id: ID of the petition to withdraw
   */
 
-  withdrawPetition(id: number) {
-    this.submit$.next(id);
+  withdrawPetition(data: TargetPetitionInput) {
+    this.submit$.next(data);
   }
 }

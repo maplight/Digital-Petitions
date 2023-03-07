@@ -54,9 +54,11 @@ import {
   editIssuePetition,
   submitCandidatePetition,
   submitIssuePetition,
+  withdrawPetition,
 } from 'src/graphql/not-generated/mutations';
 import { API } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
+import { result } from 'cypress/types/lodash';
 
 @Injectable({ providedIn: 'root' })
 export class PetitionService {
@@ -264,8 +266,22 @@ export class PetitionService {
     );
   }
 
-  withdrawPetition(data: number): Observable<Result<string>> {
-    return of({ result: 'SUCCESS' }).pipe(delay(3000));
+  withdrawPetition(data: TargetPetitionInput): Observable<Result<string>> {
+    return from(
+      API.graphql({
+        query: withdrawPetition,
+        variables: { data },
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+      }) as Promise<GraphQLResult<EditIssuePetitionMutation>>
+    ).pipe(
+      map((value) => {
+        if (!value.errors) return { result: 'SUCCESS' };
+        else return { error: value.errors[0]?.message };
+      }),
+      catchError((error) => {
+        return of({ error: error.errors?.[0]?.message });
+      })
+    );
   }
 
   approvePetition(

@@ -24,7 +24,10 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
   protected id?: string;
+  private version!: number;
   private _unsubscribeAll: Subject<void> = new Subject();
+
+  withdrawlStatus = PetitionStatus.WITHDRAWN;
 
   protected petition: IssuePetition | CandidatePetition | undefined;
   protected StatusStyleCurrent: string = '';
@@ -34,6 +37,9 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
     'flex bg-[#3AC922] px-4 py-1 rounded-full items-center justify-center';
   protected StatusStyleRed: string =
     'flex bg-[#FF3030] px-4 py-1 rounded-full items-center justify-center';
+  protected StatusStyleGray =
+    'flex bg-[#868B8E] px-4 py-2 rounded-full items-center justify-center ';
+
   constructor(
     private _getPetitionLogic: GetCommitteePetitionService,
     private _getTitle: ViewPetitionNameService,
@@ -54,6 +60,8 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
           result?.dataCandidate?.PK! ?? result?.dataIssue?.PK!,
           result?.dataCandidate?.name! ?? result?.dataIssue?.title!
         );
+        this.version =
+          result?.dataCandidate?.version ?? result?.dataIssue?.version ?? 1;
         this.setState(result);
       })
     );
@@ -86,6 +94,9 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
         case PetitionStatus.ACTIVE:
           this.StatusStyleCurrent = '';
           break;
+        case PetitionStatus.WITHDRAWN:
+          this.StatusStyleCurrent = this.StatusStyleGray;
+          break;
       }
     }
   }
@@ -101,7 +112,8 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
             this._dialog.open(ConfirmWithdrawlPetitionComponent, {
               width: '480px',
               data: {
-                id: this.id,
+                PK: this.id,
+                expectedVersion: this.version,
               },
             });
           }

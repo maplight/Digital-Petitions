@@ -25,7 +25,12 @@
           >
             Edit
           </button>
-          <button mat-flat-button color="primary" (click)="submit()">
+          <button
+            *ngIf="petition.status !== withdrawlStatus"
+            mat-flat-button
+            color="primary"
+            (click)="submit()"
+          >
             Withdraw
           </button>
         </div></ng-container
