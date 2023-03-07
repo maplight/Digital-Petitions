@@ -37,6 +37,8 @@ export class ViewSignaturesComponent implements OnInit, OnDestroy {
   protected disabledSeeMore: boolean = false;
   protected id?: string;
 
+  returnRoute = '/city-staff/home/';
+
   private _signaturesByPetitionInput: SignaturesByPetitionInput = {
     petition: '',
     limit: 10,

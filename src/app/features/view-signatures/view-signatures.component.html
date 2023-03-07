@@ -10,7 +10,9 @@
   >
     <dp-return-link
       class="w-fit"
-      [route]="'/city-staff/home'"
+      [route]="
+        returnRoute + (resultData.dataCandidate?.PK || resultData.dataIssue?.PK)
+      "
       [text]="'Back to Petition List'"
     ></dp-return-link>
     <h3 class="font-bold leading-7">
