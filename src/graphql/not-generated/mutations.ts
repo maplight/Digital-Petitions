@@ -172,6 +172,24 @@ export const submitIssuePetition = /* GraphQL */ `
 `;
 
 /**
+ * Withdraw a previously approved petition.
+ *
+ * Requires the user to be a petitioner and the owner of the target petition.
+ *
+ * Returns the newly updated version and status for the petition.
+ */
+export const withdrawPetition = /* GraphQL */ `
+  mutation WithdrawPetition($data: TargetPetitionInput!) {
+    withdrawPetition(data: $data) {
+      PK
+      updatedAt
+      version
+      status
+    }
+  }
+`;
+
+/**
  * Update the site's look and feel.
  *
  * Requires Admin access level.

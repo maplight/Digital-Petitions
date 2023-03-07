@@ -24,6 +24,7 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
   protected error$!: Observable<string | undefined>;
   protected loading$!: Observable<boolean>;
   protected id?: string;
+  private version!: number;
   private _unsubscribeAll: Subject<void> = new Subject();
 
   protected petition: IssuePetition | CandidatePetition | undefined;
@@ -54,6 +55,8 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
           result?.dataCandidate?.PK! ?? result?.dataIssue?.PK!,
           result?.dataCandidate?.name! ?? result?.dataIssue?.title!
         );
+        this.version =
+          result?.dataCandidate?.version ?? result?.dataIssue?.version ?? 1;
         this.setState(result);
       })
     );
@@ -101,7 +104,8 @@ export class ViewPetitionCommitteeComponent implements OnInit, OnDestroy {
             this._dialog.open(ConfirmWithdrawlPetitionComponent, {
               width: '480px',
               data: {
-                id: this.id,
+                PK: this.id,
+                expectedVersion: this.version,
               },
             });
           }
