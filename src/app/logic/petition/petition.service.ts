@@ -267,7 +267,6 @@ export class PetitionService {
   }
 
   withdrawPetition(data: TargetPetitionInput): Observable<Result<string>> {
-    // return of({ result: 'SUCCESS' }).pipe(delay(3000));
     return from(
       API.graphql({
         query: withdrawPetition,
