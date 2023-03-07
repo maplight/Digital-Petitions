@@ -56,6 +56,7 @@ export const getPetition = {
           deadline
           required
           submitted
+          verified
         }
         status
         type
