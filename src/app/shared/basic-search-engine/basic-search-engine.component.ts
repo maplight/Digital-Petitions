@@ -32,13 +32,14 @@ export class BasicSearchEngineComponent {
   public formGroup: FormGroup;
   constructor(private _fb: FormBuilder) {
     this.formGroup = this._fb.group({
-      keyword: [''],
+      keyword: { value: '', disabled: false },
     });
   }
 
   protected sendFilter() {
     if (!this.disabled) {
       this._event.emit(this.formGroup.value.keyword);
+      this.formGroup.controls['keyword'].enable();
     }
   }
 
