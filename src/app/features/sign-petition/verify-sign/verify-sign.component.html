@@ -45,7 +45,9 @@
             <mat-label>License Number</mat-label>
             <input type="text" matInput formControlName="licenseNumber" />
             <mat-error
-              *ngIf="this.formGroupLicense.get('licenseNumber')?.errors?.['required']"
+              *ngIf="
+                this.formGroupLicense.get('licenseNumber')?.errors?.['required']
+              "
             >
               <dp-input-error
                 [message]="'License Number is required'"
@@ -65,7 +67,9 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error
-              *ngIf="this.formGroupLicense.get('dateOfBirth')?.errors?.['required']"
+              *ngIf="
+                this.formGroupLicense.get('dateOfBirth')?.errors?.['required']
+              "
             >
               <dp-input-error
                 [message]="'Date Of Birth is required'"
