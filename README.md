@@ -19,9 +19,9 @@ match the options entered during build.
 The Docker Compose configuration requires `env` files.
 
 - `.env` to store default keys (and values) used to configure
-various services and libraries.
+  various services and libraries.
 - `.env.local` a git ignored file that provides a way to override values
-from `.env` for local development.
+  from `.env` for local development.
 
 Ensure the local file exists:
 
