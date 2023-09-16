@@ -1,0 +1,30 @@
+version: "3.8"
+
+x-shared-config:
+  app_image_name: &app_image_name
+    image: maplight/node:18.17.1-alpine3.18
+
+  app_base: &app_base
+    <<: *app_image_name
+    env_file:
+      - .env
+      - .env.local
+    environment:
+      - HISTFILE=/app/log/.bash_history
+      - NODE_ENV=${NODE_ENV:-development}
+    ports:
+      - 4200:4200
+    stdin_open: true
+    tty: true
+    tmpfs:
+      - /tmp:exec,mode=755
+    user: "1069:1420"
+    volumes:
+      - .:/app:cached
+    working_dir: /app
+
+services:
+  app:
+    <<: *app_base
+    command: run start:docker
+    entrypoint: npm
