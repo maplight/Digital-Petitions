@@ -9,9 +9,14 @@
           [ngClass]="'rounded-[4px] border border-gray-300 w-10 h-10'"
           [ngStyle]="{ 'background-color': color || 'white' }"
         ></div>
-        <p class="text-sm leading-4">
-          {{ color | uppercase }}
-        </p>
+        <input
+          (input)="sendInputColor($event)"
+          [(ngModel)]="color"
+          class="w-full"
+          maxlength="7"
+          name="color"
+          type="text"
+        />
       </div>
     </mat-expansion-panel-header>
     <div class="flex flex-row gap-2 rounded-md">
