@@ -24,9 +24,8 @@ export class ColorPickerComponent implements OnInit {
   @Output() eventColor: EventEmitter<string | null> = new EventEmitter();
 
   // Emit color from input
-  sendInputColor(event: Event | null) {
-    const target = event?.target as HTMLInputElement;
-    this.eventColor.emit(target.value);
+  sendInputColor(_event: Event | null) {
+    this.eventColor.emit(this.color);
   }
 
   // Emit color from palette
