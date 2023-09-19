@@ -2,17 +2,19 @@
   <mat-expansion-panel
     hideToggle
     class="py-2 px-4 gap-[10px] rounded-lg border border-[#D7D7D7] bg-[#FFFFFF] shadow-none"
+    disabled="isDisabled"
   >
     <mat-expansion-panel-header class="p-0 justify-start">
       <div class="flex flex-row gap-[10px] items-center">
         <div
           [ngClass]="'rounded-[4px] border border-gray-300 w-10 h-10'"
           [ngStyle]="{ 'background-color': color || 'white' }"
+          (click)="onColorClick()"
         ></div>
         <input
           (input)="sendInputColor($event)"
           [(ngModel)]="color"
-          class="w-full"
+          class="text-black w-full"
           maxlength="7"
           name="color"
           type="text"
