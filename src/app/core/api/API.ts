@@ -232,8 +232,9 @@ export type SignatureVerification = {
 
 export type CodeSubmissionResult = {
   __typename: "CodeSubmissionResult",
-  error: boolean,
-  message: string,
+  id?: string | null,
+  title?: string | null,
+  error?: string | null,
 };
 
 export type SiteConfigurationInput = {
@@ -860,8 +861,9 @@ export type SubmitVerificationCodeMutationVariables = {
 export type SubmitVerificationCodeMutation = {
   submitVerificationCode:  {
     __typename: "CodeSubmissionResult",
-    error: boolean,
-    message: string,
+    id?: string | null,
+    title?: string | null,
+    error?: string | null,
   },
 };
 

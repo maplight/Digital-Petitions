@@ -170,8 +170,9 @@ class MockedConfirmSignPetitionService {
   public get success$(): Observable<CodeSubmissionResult | undefined> {
     return of({
       __typename: 'CodeSubmissionResult',
-      error: false,
-      message: '',
+      id: '12345',
+      title: 'Mock Petition',
+      error: null,
     });
   }
   public get loading$(): Observable<boolean> {

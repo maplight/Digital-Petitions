@@ -28,10 +28,10 @@ export class ConfirmSignPetitionComponent implements OnInit {
   ngOnInit(): void {
     this._confirmSignPetitionLogic.success$.subscribe((data) => {
       if (data?.error) {
-        this.localError$.next(data.message);
+        this.localError$.next(data.error);
       } else {
         this._router.navigate([
-          '/petition/result-confirm-code/' + data?.message,
+          '/petition/result-confirm-code/' + data?.title,
         ]);
       }
     });

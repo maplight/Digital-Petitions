@@ -766,8 +766,9 @@ const _getVoterRecordMatchQuery: GetVoterRecordMatchQuery = {
 const _submitVerificationCodeMutation: SubmitVerificationCodeMutation = {
   submitVerificationCode: {
     __typename: 'CodeSubmissionResult',
-    error: false,
-    message: '',
+    id: '12345',
+    title: '',
+    error: null,
   },
 };
 

@@ -42,8 +42,9 @@ type CandidatePetition implements Petition @aws_cognito_user_pools @aws_iam {
 }
 
 type CodeSubmissionResult @aws_iam {
-  error: Boolean!
-  message: String!
+    id: ID
+    title: String
+    error: String
 }
 
 type IssuePetition implements Petition @aws_cognito_user_pools @aws_iam {
