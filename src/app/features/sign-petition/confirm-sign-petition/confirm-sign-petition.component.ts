@@ -18,7 +18,7 @@ export class ConfirmSignPetitionComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _confirmSignPetitionLogic: ConfirmSignPetitionService,
-    private _router: Router
+    private _router: Router,
   ) {
     this.formGroup = this._fb.group({
       code: ['', [Validators.required]],
@@ -28,23 +28,21 @@ export class ConfirmSignPetitionComponent implements OnInit {
   ngOnInit(): void {
     this._confirmSignPetitionLogic.success$.subscribe((data) => {
       if (data?.error) {
-        this.localError$.next(data.message);
+        this.localError$.next(data.error);
       } else {
-        this._router.navigate([
-          '/petition/result-confirm-code/' + data?.message,
-        ]);
+        this._router.navigate(['/petition/result-confirm-code/' + data?.title]);
       }
     });
     this.loading$ = this._confirmSignPetitionLogic.loading$;
     this.error$ = merge(
       this._confirmSignPetitionLogic.error$,
-      this.localError$
+      this.localError$,
     );
   }
   submit() {
     if (this.formGroup.valid) {
       this._confirmSignPetitionLogic.setConfirmationCode(
-        this.formGroup.value.code
+        this.formGroup.value.code,
       );
     }
   }

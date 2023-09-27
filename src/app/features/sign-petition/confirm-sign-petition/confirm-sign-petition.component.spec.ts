@@ -65,7 +65,7 @@ describe('ConfirmSignPetitionComponent', () => {
     fixture = TestBed.createComponent(ConfirmSignPetitionComponent);
     component = fixture.componentInstance;
     _getConfirmSignPetitionService = fixture.debugElement.injector.get(
-      ConfirmSignPetitionService
+      ConfirmSignPetitionService,
     );
   });
 
@@ -76,7 +76,7 @@ describe('ConfirmSignPetitionComponent', () => {
   it('must call the service when submitting with a valid form', () => {
     const callSpy = spyOn(
       _getConfirmSignPetitionService,
-      'setConfirmationCode'
+      'setConfirmationCode',
     );
     component.ngOnInit();
     component.formGroup.patchValue({ code: '123345' });
@@ -102,7 +102,7 @@ describe('ConfirmSignPetitionComponent', () => {
     spyOnProperty(
       _getConfirmSignPetitionService,
       'loading$',
-      'get'
+      'get',
     ).and.returnValue(of(false));
 
     component.ngOnInit();
@@ -119,13 +119,13 @@ describe('ConfirmSignPetitionComponent', () => {
     spyOnProperty(
       _getConfirmSignPetitionService,
       'error$',
-      'get'
+      'get',
     ).and.returnValue(of('error'));
 
     spyOnProperty(
       _getConfirmSignPetitionService,
       'loading$',
-      'get'
+      'get',
     ).and.returnValue(of(false));
 
     component.ngOnInit();
@@ -142,13 +142,13 @@ describe('ConfirmSignPetitionComponent', () => {
     spyOnProperty(
       _getConfirmSignPetitionService,
       'error$',
-      'get'
+      'get',
     ).and.returnValue(of('error'));
 
     spyOnProperty(
       _getConfirmSignPetitionService,
       'loading$',
-      'get'
+      'get',
     ).and.returnValue(of(true));
 
     component.ngOnInit();
@@ -170,8 +170,9 @@ class MockedConfirmSignPetitionService {
   public get success$(): Observable<CodeSubmissionResult | undefined> {
     return of({
       __typename: 'CodeSubmissionResult',
-      error: false,
-      message: '',
+      id: '12345',
+      title: 'Mock Petition',
+      error: null,
     });
   }
   public get loading$(): Observable<boolean> {

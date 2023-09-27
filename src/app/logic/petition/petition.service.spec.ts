@@ -38,7 +38,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _submitIssuePetitionMutation });
-      })
+      }),
     );
     service.newIssuePetition({ detail: '', title: '' }).subscribe((data) => {
       expect(data.result).toEqual(_issuePetition);
@@ -50,7 +50,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.newIssuePetition({ detail: '', title: '' }).subscribe((data) => {
@@ -63,7 +63,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _submitCandidatePetitionMutation });
-      })
+      }),
     );
     service
       .newCandidatePetition({
@@ -82,7 +82,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service
@@ -102,7 +102,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _submitSignatureMutation });
-      })
+      }),
     );
     service
       .signPetition({
@@ -139,7 +139,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service
@@ -163,7 +163,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getVoterRecordMatchQuery });
-      })
+      }),
     );
     service
       .getVoterRecordMatch({
@@ -192,7 +192,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service
@@ -213,11 +213,11 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _submitVerificationCodeMutation });
-      })
+      }),
     );
     service.confirmSignaturePetition('').subscribe((data) => {
       expect(data.result).toEqual(
-        _submitVerificationCodeMutation.submitVerificationCode
+        _submitVerificationCodeMutation.submitVerificationCode,
       );
       done();
     });
@@ -227,7 +227,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.confirmSignaturePetition('').subscribe((data) => {
@@ -240,7 +240,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _editIssuePetitionMutation });
-      })
+      }),
     );
     service
       .editPetitionIssue({ expectedVersion: 0, PK: '' })
@@ -254,7 +254,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service
@@ -269,7 +269,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _editCandidatePetitionMutation });
-      })
+      }),
     );
     service
       .editPetitionCandidate({ expectedVersion: 0, PK: '' })
@@ -283,7 +283,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service
@@ -298,7 +298,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionQueryIssue });
-      })
+      }),
     );
     service.getPublicPetition('').subscribe((data) => {
       expect(data.result).toEqual({ dataIssue: _issuePetition });
@@ -310,7 +310,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionQueryCandidate });
-      })
+      }),
     );
     service.getPublicPetition('').subscribe((data) => {
       expect(data.result).toEqual({ dataCandidate: _candidatePetition });
@@ -322,7 +322,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getPublicPetition('').subscribe((data) => {
@@ -335,7 +335,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionQueryIssue });
-      })
+      }),
     );
     service.getCommitteePetition('').subscribe((data) => {
       expect(data.result).toEqual({ dataIssue: _issuePetition });
@@ -347,7 +347,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionQueryCandidate });
-      })
+      }),
     );
     service.getCommitteePetition('').subscribe((data) => {
       expect(data.result).toEqual({ dataCandidate: _candidatePetition });
@@ -359,7 +359,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getCommitteePetition('').subscribe((data) => {
@@ -372,7 +372,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionQueryIssue });
-      })
+      }),
     );
     service.getStaffPetition('').subscribe((data) => {
       expect(data.result).toEqual({ dataIssue: _issuePetition });
@@ -384,7 +384,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionQueryCandidate });
-      })
+      }),
     );
     service.getStaffPetition('').subscribe((data) => {
       expect(data.result).toEqual({ dataCandidate: _candidatePetition });
@@ -396,7 +396,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getStaffPetition('').subscribe((data) => {
@@ -409,7 +409,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _approveIssuePetitionMutation });
-      })
+      }),
     );
     service
       .approvePetition({
@@ -428,7 +428,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _approveCandidatePetitionMutation });
-      })
+      }),
     );
     service
       .approvePetition({
@@ -447,7 +447,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service
@@ -467,7 +467,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _rejectIssuePetitionMutation });
-      })
+      }),
     );
     service
       .denyPetition({
@@ -484,7 +484,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _rejectCandidatePetitionMutation });
-      })
+      }),
     );
     service
       .denyPetition({
@@ -501,7 +501,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service
@@ -519,7 +519,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionsByOwnerQuery });
-      })
+      }),
     );
     service.getCommitteePetitions({ owner: '' }).subscribe((data) => {
       expect(data.result).toEqual({
@@ -537,7 +537,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getCommitteePetitions({ owner: '' }).subscribe((data) => {
@@ -550,7 +550,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionsByTypeQuery });
-      })
+      }),
     );
     service.getInactivePetitions({}).subscribe((data) => {
       expect(data.result).toEqual({
@@ -568,7 +568,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getInactivePetitions({}).subscribe((data) => {
@@ -581,7 +581,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionsByTypeQuery });
-      })
+      }),
     );
     service.getCityStaffPetitions({}).subscribe((data) => {
       expect(data.result).toEqual({
@@ -599,7 +599,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getCityStaffPetitions({}).subscribe((data) => {
@@ -612,7 +612,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionsByTypeQuery });
-      })
+      }),
     );
     service.getActivePetitions({}).subscribe((data) => {
       expect(data.result).toEqual({
@@ -630,7 +630,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getActivePetitions({}).subscribe((data) => {
@@ -643,7 +643,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         resolve({ data: _getPetitionsByTypeQuery });
-      })
+      }),
     );
     service.getAnonymousActivePetitions({}).subscribe((data) => {
       expect(data.result).toEqual({
@@ -661,7 +661,7 @@ describe('PetitionService', () => {
     API.graphql = jasmine.createSpy().and.returnValue(
       new Promise((resolve, reject) => {
         reject({ errors: [{ message: 'example' }] });
-      })
+      }),
     );
 
     service.getAnonymousActivePetitions({}).subscribe((data) => {
@@ -766,8 +766,9 @@ const _getVoterRecordMatchQuery: GetVoterRecordMatchQuery = {
 const _submitVerificationCodeMutation: SubmitVerificationCodeMutation = {
   submitVerificationCode: {
     __typename: 'CodeSubmissionResult',
-    error: false,
-    message: '',
+    id: '12345',
+    title: '',
+    error: null,
   },
 };
 

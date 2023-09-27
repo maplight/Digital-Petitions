@@ -348,8 +348,9 @@ export const submitSignature = /* GraphQL */ `
 export const submitVerificationCode = /* GraphQL */ `
   mutation SubmitVerificationCode($code: ID!) {
     submitVerificationCode(code: $code) {
+      id
+      title
       error
-      message
     }
   }
 `;
